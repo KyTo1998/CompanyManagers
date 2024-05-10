@@ -4,15 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompanyManagers.Views.Login"
-        mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" Height="620" Width="450" ResizeMode="CanMinimize" WindowStyle="None"  Title="CompanyManagers">
-    <Border CornerRadius="10" BorderBrush="{StaticResource #3BA59B}" BorderThickness="1">
+    <Border BorderBrush="{StaticResource #3BA59B}" BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" x:Name="Title" Margin="0,0,0,0" Height="40" VerticalAlignment="Top" Width="449.4" Background="{StaticResource colorMoveMouseItem}" MouseLeftButtonDown="Grid_MouseDown">
+            <Grid Grid.Row="0" x:Name="Title"  Height="40" Background="{StaticResource colorMoveMouseItem}" MouseLeftButtonDown="Grid_MouseDown">
                 <Path VerticalAlignment="Center" Data="{StaticResource iconManager}" Stretch="Uniform" Height="22"  Margin="10,0,0,0" HorizontalAlignment="Left" Width="25">
                     <Path.Fill>
                         <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
@@ -32,7 +31,7 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
-                <Border CornerRadius="0 0 10 10">
+                <Border >
                     <Border.Background>
                         <ImageBrush ImageSource="\Resources/Image/BgLogin.png"/>
                     </Border.Background>
