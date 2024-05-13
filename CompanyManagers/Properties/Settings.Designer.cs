@@ -43,6 +43,20 @@ namespace CompanyManagers.Properties
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public bool RememberMe
+        {
+            get
+            {
+                return ((bool)(this["RememberMe"]));
+            }
+            set
+            {
+                this["RememberMe"] = value;
+            }
+        }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string TokenTL
         {
             get

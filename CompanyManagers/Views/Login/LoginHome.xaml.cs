@@ -1,8 +1,14 @@
-﻿using System;
+﻿using CompanyManagers.Controllers;
+using CompanyManagers.Models.Logins;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +35,9 @@ namespace CompanyManagers.Views.Login
                 PropertyChanged(this, new PropertyChangedEventArgs(newName));
             }
         }
+        Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.CultureInvariant | RegexOptions.Singleline);
+        Regex regexPhone = new Regex(@"^((09|03|07|08|05|02)+([0-9]{8})\b)$", RegexOptions.CultureInvariant | RegexOptions.Singleline);
+        Regex regexPhone1 = new Regex(@"^((09|03|07|08|05|02)+([0-9]{9})\b)$", RegexOptions.CultureInvariant | RegexOptions.Singleline);
         public static int TypeLogin { get; set; }
         public bool RememberPassword { get; set; }
 
@@ -45,8 +54,12 @@ namespace CompanyManagers.Views.Login
         public LoginHome()
         {
             InitializeComponent();
-            checkRememberPass(true);
-            Pass = "";
+            checkRememberPass(Properties.Settings.Default.RememberMe);
+            if (Properties.Settings.Default.RememberMe)
+            {
+                txtEmail.Text = Properties.Settings.Default.User;
+                txtPasswordHide.Password = Properties.Settings.Default.Pass;
+            }
         }
 
         private void openPagelogin(object sender, MouseButtonEventArgs e)
@@ -102,11 +115,70 @@ namespace CompanyManagers.Views.Login
             boderEmail.BorderBrush = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FFB1A9A9");
         }
 
-        private void LoginEnter(object sender, KeyEventArgs e)
+        public void LoginStart(int typeLogin, string userName, string passWord)
         {
-
+            using(WebClient client = new WebClient())
+            {
+                client.QueryString.Add("account", userName);
+                client.QueryString.Add("password", passWord);
+                client.QueryString.Add("type", typeLogin.ToString());
+                client.UploadValuesCompleted += (sender, e) => 
+                { 
+                    RootLogin dataLogin = JsonConvert.DeserializeObject<RootLogin>(UnicodeEncoding.UTF8.GetString(e.Result));
+                    if (dataLogin.data.data != null)
+                    {
+                        if (Properties.Settings.Default.RememberMe)
+                        {
+                            Properties.Settings.Default.User = userName;
+                            Properties.Settings.Default.Pass = pass;
+                            Properties.Settings.Default.Type365 = typeLogin.ToString();
+                            Properties.Settings.Default.RememberMe = true;
+                            Properties.Settings.Default.Save();
+                        }
+                        else
+                        {
+                            Properties.Settings.Default.User = "";
+                            Properties.Settings.Default.Pass = "";
+                            Properties.Settings.Default.RememberMe = false;
+                            Properties.Settings.Default.Save();
+                        }
+                    }
+                };
+                client.UploadValuesTaskAsync(UrlApi.apiLogin, "POST", client.QueryString);
+            }
         }
 
+        private void LoginEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (txtEmail.Text.Length != 0 && (regex.IsMatch(txtEmail.Text) || regexPhone.IsMatch(txtEmail.Text) || regexPhone1.IsMatch(txtEmail.Text)))
+                {
+                    btLogin.IsEnabled = false;
+                    btLogin.Cursor = Cursors.Wait;
+                    btLogin.Background = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FF4C5BD4");
+                    LoginStart(TypeLogin, txtEmail.Text, txtPasswordHide.Password);
+                }
+                else if ((pass.Length == 0))
+                {
+                    boderPassword.BorderBrush = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FFFF3333");
+                    lbWrongPassword.Visibility = Visibility.Visible;
+                    lbWrongPassword.Text = "Mật khẩu không được để trống";
+                }
+                else
+                {
+
+                    boderEmail.BorderBrush = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FFFF3333");
+                    lbWrongEmail.Visibility = Visibility.Visible;
+                    lbWrongEmail.Text = "Định dạng email không chính xác";
+                }
+            }
+            
+        }
+        private void LoginClick(object sender, MouseButtonEventArgs e)
+        {
+            LoginStart(TypeLogin, txtEmail.Text, txtPasswordHide.Password);
+        }
         private void hideShowPassword(object sender, MouseButtonEventArgs e)
         {
             if (txtPasswordHide.Visibility == Visibility.Collapsed)
@@ -132,12 +204,20 @@ namespace CompanyManagers.Views.Login
 
         private void ChangeRememberPassword(object sender, MouseButtonEventArgs e)
         {
-            checkRememberPass(RememberPassword);
+            if (Properties.Settings.Default.RememberMe == false)
+            {
+                Properties.Settings.Default.RememberMe = true;
+            }
+            else
+            {
+                Properties.Settings.Default.RememberMe = false;
+            }
+            checkRememberPass(Properties.Settings.Default.RememberMe);
         }
-        private void checkRememberPass(bool flag)
+        private void checkRememberPass(bool rememberPassword)
         {
-            RememberPassword = flag;
-            if (flag)
+            Properties.Settings.Default.RememberMe = rememberPassword;
+            if (rememberPassword)
             {
                 checkBoxFalse.Visibility = Visibility.Hidden;
                 checkBoxTrue.Visibility = Visibility.Visible;
@@ -153,10 +233,7 @@ namespace CompanyManagers.Views.Login
 
         }
 
-        private void LoginClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
+       
 
         private void LinkGuide_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
