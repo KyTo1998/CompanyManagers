@@ -29,15 +29,29 @@ namespace CompanyManagers.Properties
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Token
+        public string TokenCom
         {
             get
             {
-                return ((string)(this["Token"]));
+                return ((string)(this["TokenCom"]));
             }
             set
             {
-                this["Token"] = value;
+                this["TokenCom"] = value;
+            }
+        }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string TokenEp
+        {
+            get
+            {
+                return ((string)(this["TokenEp"]));
+            }
+            set
+            {
+                this["TokenEp"] = value;
             }
         }
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -54,60 +68,19 @@ namespace CompanyManagers.Properties
                 this["RememberMe"] = value;
             }
         }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TokenTL
+        public string UserCom
         {
             get
             {
-                return ((string)(this["TokenTL"]));
+                return ((string)(this["UserCom"]));
             }
             set
             {
-                this["TokenTL"] = value;
-            }
-        }
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string User
-        {
-            get
-            {
-                return ((string)(this["User"]));
-            }
-            set
-            {
-                this["User"] = value;
-            }
-        }
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Pass
-        {
-            get
-            {
-                return ((string)(this["Pass"]));
-            }
-            set
-            {
-                this["Pass"] = value;
-            }
-        }
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Check
-        {
-            get
-            {
-                return ((string)(this["Check"]));
-            }
-            set
-            {
-                this["Check"] = value;
+                this["UserCom"] = value;
             }
         }
         [global::System.Configuration.UserScopedSettingAttribute()]
@@ -127,6 +100,20 @@ namespace CompanyManagers.Properties
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PassCom
+        {
+            get
+            {
+                return ((string)(this["PassCom"]));
+            }
+            set
+            {
+                this["PassCom"] = value;
+            }
+        }
+         [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PassEp
         {
             get
@@ -136,6 +123,20 @@ namespace CompanyManagers.Properties
             set
             {
                 this["PassEp"] = value;
+            }
+        }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Check
+        {
+            get
+            {
+                return ((string)(this["Check"]));
+            }
+            set
+            {
+                this["Check"] = value;
             }
         }
         [global::System.Configuration.UserScopedSettingAttribute()]

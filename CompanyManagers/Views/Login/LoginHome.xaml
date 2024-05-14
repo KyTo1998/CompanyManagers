@@ -20,14 +20,35 @@
                         </LinearGradientBrush>
                     </Path.Fill>
                 </Path>
-                <TextBlock VerticalAlignment="Center" Text="Company Managers" Margin="38,0,0,10" Foreground="#FF4C5BD4" Padding="0" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" LineHeight="1"/>
+                <TextBlock VerticalAlignment="Center" Text="Company Managers" Margin="38,0,0,10" Foreground="#FF4C5BD4" Padding="0" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" LineHeight="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                 <TextBlock VerticalAlignment="Center" Text="Timviec365" HorizontalAlignment="Left" Margin="38,14,0,0" FontSize="10" Foreground="#FF4C5BD4"/>
                 <Grid x:Name="Minimimize" Cursor="Hand"  Margin="0,14,94,0" HorizontalAlignment="Right" Width="15" Height="15" VerticalAlignment="Top" MouseLeftButtonDown="Minimimize_MouseLeftButtonDown" Background="Transparent" >
                     <Line Cursor="Hand" X1="0" Y1="7" X2="15" Y2="7"  StrokeThickness="1.2" Stroke="Black" Fill="#00A52323" />
                 </Grid>
                 <Path  x:Name="Maximimize" Data="{StaticResource maximinze}" Cursor="Hand" Fill="#02FFFFFF" Margin="0,13,55,0" Stretch="Fill" Stroke="#CCCCCC" Width="15" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" StrokeThickness="1" MouseLeftButtonDown="Maximimize_MouseLeftButtonDown" ></Path>
-                <Grid x:Name="CloseWindow" Cursor="Hand" Width="15" Height="15" Margin="0,13,16,0" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="CloseWindow_MouseLeftButtonDown" Background="White" >
-                    <Path Data="{StaticResource iconClose}" Stroke="Black" StrokeThickness="1.2" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="15" Margin="0" Width="15" />
+                <Grid x:Name="CloseWindow" Cursor="Hand" Width="15" Height="15" Margin="0,13,16,0" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="CloseWindow_MouseLeftButtonDown" Background="White">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource colorMoveMouseItem}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Path Data="{StaticResource iconClose}" StrokeThickness="1.2" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="15" Margin="0" Width="15">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Setter Property="Stroke" Value="Black"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=CloseWindow, Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Stroke" Value="{StaticResource colorRemoveRed}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
@@ -36,7 +57,7 @@
                         <ImageBrush ImageSource="\Resources/Image/BgLogin.png"/>
                     </Border.Background>
                 </Border>
-                <StackPanel x:Name="stpSelectLogin" VerticalAlignment="Center" Margin="0 0 0 50" Visibility="Collapsed">
+                <StackPanel x:Name="stpSelectLogin" VerticalAlignment="Center" Margin="0 0 0 50" Visibility="Visible">
                     <Border x:Name="btnCompany" Margin="0 0 0 10" Cursor="Hand" HorizontalAlignment="Center" BorderThickness="1" CornerRadius="15"  Width="315" Height="60" BorderBrush="#FF4C5BD4"  MouseLeftButtonDown="openPagelogin" Visibility="Visible">
                         <Border.Style>
                             <Style TargetType="Border" >
@@ -148,7 +169,7 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-                <Grid x:Name="grFormLogin" Visibility="Visible" VerticalAlignment="Top" Margin="0 20 0 0">
+                <Grid x:Name="grFormLogin" Visibility="Collapsed" VerticalAlignment="Top" Margin="0 20 0 0">
                     <StackPanel x:Name="spPhone">
                         <Border VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Grid>
@@ -156,10 +177,10 @@
                                     <ColumnDefinition Width="25"/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Path Grid.Column="0" Margin="-50 0 0 0" Data="{StaticResource iconReturn}" Cursor="Hand" Stretch="Fill" Stroke="#FF4C5BD4" StrokeThickness="3" Height="25" Width="13" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#00F9F9F9" MouseLeftButtonDown="returnSelectLogin"/>
+                                <Path Grid.Column="0" Margin="-100 0 0 0" Data="{StaticResource iconReturn}" Cursor="Hand" Stretch="Fill" Stroke="#FF4C5BD4" StrokeThickness="3" Height="25" Width="13" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#00F9F9F9" MouseLeftButtonDown="returnSelectLogin"/>
                                 <StackPanel Grid.Column="1" Margin="-20 0 0 0">
                                     <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{StaticResource iconManager}" Fill="{StaticResource colorBlue}"/>
-                                    <TextBlock Text="Đăng nhập tài khoản của bạn" Foreground="{StaticResource colorBlue}" FontSize="18" FontWeight="SemiBold"/>
+                                    <TextBlock x:Name="tb_TitelLogin"  Foreground="{StaticResource colorBlue}" FontSize="18" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -183,7 +204,7 @@
                                 </Grid>
                             </StackPanel>
                         </Border>
-                        <TextBlock x:Name="lbWrongEmail"  Visibility="Hidden" Text="Email hoặc số điện thoại không đúng, hoặc không tồn tại!" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,39.6,0" Foreground="#FFFF3333" ></TextBlock>
+                        <TextBlock x:Name="lbWrongEmail"  Visibility="Hidden"  Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,39.6,0" Foreground="#FFFF3333" ></TextBlock>
                         <Border Margin="0 20 0 0" x:Name="boderPassword" CornerRadius="15" BorderThickness="1" Width="370" Height="42" HorizontalAlignment="Center" VerticalAlignment="Top" BorderBrush="#FF999999">
                             <StackPanel Orientation="Horizontal">
                                 <Path Data="{StaticResource password}" StrokeThickness="0" Width="22" Height="24" Stroke="#FF666666" Fill="#FF666666" Margin="14,0,0,0"></Path>
@@ -211,7 +232,8 @@
                                 </Border>
                             </StackPanel>
                         </Border>
-                        <TextBlock x:Name="lbWrongPassword" Visibility="Hidden" Text="Mật khẩu bạn nhập không đúng, xin vui lòng nhập lại" Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,39.6,0" Foreground="#FFFF3333" ></TextBlock>
+                        <TextBlock x:Name="lbWrongPassword" Visibility="Hidden"  Height="15" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,39.6,0" Foreground="#FFFF3333" ></TextBlock>
+                        <TextBlock x:Name="lbWrongUserPass" Visibility="Hidden"  Height="15" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0 15 0 0" Foreground="#FFFF3333" TextWrapping="Wrap" ></TextBlock>
                         <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
                             <Grid Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,0,0,0" MouseLeftButtonDown="ChangeRememberPassword">
                                 <Canvas x:Name="checkBoxTrue" Visibility="Hidden" Cursor="Hand" Width="20" Height="20"  HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -225,44 +247,35 @@
                             </Grid>
                             <TextBlock x:Name="forgetPassword" Text="Quên mật khẩu ?" Cursor="Hand" FontSize="16" Height="22" Width="124" Margin="85,0,40,0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#00000000" MouseLeftButtonDown="forgetPassword_MouseLeftButtonDown"></TextBlock>
                         </StackPanel>
-                        <Border x:Name="btLogin" Margin="0,25,0,0" CornerRadius="15" Cursor="Hand" Width="370" HorizontalAlignment="Center" Background="#FF4C5BD4" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2" MouseLeftButtonDown="LoginClick">
-                            <TextBlock Text="Đăng nhập" TextAlignment="Center" Foreground="White" Padding="8,8,0,0" FontSize="18" FontWeight="Bold"></TextBlock>
+                        <Border x:Name="btLogin" Margin="0,25,0,0" BorderThickness="1" BorderBrush="{StaticResource ColorBlue}" CornerRadius="15" Cursor="Hand" Width="370" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2" MouseLeftButtonDown="LoginClick">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="{StaticResource ColorBlue}"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource colorMoveMouseItem}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="Đăng nhập" TextAlignment="Center" Padding="8,8,0,0" FontSize="18" FontWeight="Bold">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=btLogin, Path=IsMouseOver}" Value="true">
+                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Border>
-                        <Grid  Margin="0 20 0 0">
-                            <StackPanel x:Name="GuideEmployee" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
-                                <TextBlock Text="Ứng viên/Timviec365 chi tiết" Foreground="#666666" FontSize="14" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" FontStyle="Italic"></TextBlock>
-                                <TextBlock Text="tại đây" Foreground="#FF4C5BD4" FontSize="14" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,0,0,0" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonDown="LinkGuide_MouseLeftButtonDown" IsHitTestVisible="True" FontStyle="Italic"></TextBlock>
-                            </StackPanel>
-                            <StackPanel x:Name="GuideStaff" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
-                                <TextBlock Text="Xem hướng dẫn" Foreground="#666666" FontSize="14" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" FontStyle="Italic"></TextBlock>
-                                <TextBlock Text="tại đây" Foreground="#FF4C5BD4" FontSize="14" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="top" Margin="5,0,0,0" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonDown="LinkGuide_MouseLeftButtonDown" IsHitTestVisible="True"  FontStyle="Italic"></TextBlock>
-                            </StackPanel>
-                            <StackPanel x:Name="GuideCompany" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
-                                <TextBlock Text="NTD chi tiết" Foreground="#666666" FontSize="14" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0" FontStyle="Italic"></TextBlock>
-                                <TextBlock Text="tại đây" Foreground="#FF4C5BD4" FontSize="14" FontWeight="Normal" HorizontalAlignment="Left" VerticalAlignment="top" Margin="5,0,0,0" TextDecorations="Underline" Cursor="Hand" MouseLeftButtonDown="LinkGuide_MouseLeftButtonDown" IsHitTestVisible="True"  FontStyle="Italic"></TextBlock>
-                            </StackPanel>
-                        </Grid>
                         <Grid Margin="0 40 0 0">
                             <TextBlock  Text="Bạn chưa có tài khoản? " TextAlignment="Center" Margin="104,0,0,0" FontSize="16" Foreground="#FF626060"  Height="22" VerticalAlignment="Top" Width="166" HorizontalAlignment="Left"/>
                             <TextBlock  Cursor="Hand" Text="Đăng Ký"  Margin="275,0,84,0" Foreground="#FF4C5BD4" FontWeight="Bold" RenderTransformOrigin="0.869,0.486" FontSize="16" Height="25" VerticalAlignment="Top" MouseLeftButtonDown="RegisterClick"/>
                         </Grid>
                     </StackPanel>
-                    <!--<StackPanel x:Name="spQRCode" Visibility="Visible">
-                        <Border Margin="0 40 0 20" Width="250" Height="250">
-                            <Border.Background>
-                                <ImageBrush x:Name="QrCodeImage"/>
-                            </Border.Background>
-                            <tool:LoadingSpinner x:Name="loadding" Visibility="Collapsed"></tool:LoadingSpinner>
-                        </Border>
-                        <TextBlock x:Name="guide1" Margin="0 0 0 0" Text="Sử dụng ứng dụng Chat365 để quét mã QR" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="16" Foreground="#474747" Visibility="Visible"></TextBlock>
-                        <TextBlock x:Name="guide2" Margin="0 15 0 0" Text="Hướng dẫn quét" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Normal" FontSize="16" Foreground="#4c5bd4" Cursor="Hand" Background="Transparent" MouseLeftButtonDown="GuideQrCode_MouseLeftButtonDown" Visibility="Visible"></TextBlock>
-                        <Border x:Name="bdMoreOption" Margin="0 15 0 0" CornerRadius="8" Width="135" Height="38" Background="#f7f8fc" Cursor="Hand" MouseLeftButtonDown="MoreOption_MouseLeftButtonDown" Visibility="Visible">
-                            <TextBlock Text="Tùy chọn khác" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Normal" FontSize="16" Foreground="#474747"></TextBlock>
-                        </Border>
-                        --><!--<Border Margin="0 15 0 0" CornerRadius="8" Width="135" Height="22" Background="Transparent" Cursor="Hand" MouseLeftButtonDown="forgetPassword_MouseLeftButtonDown">
-                    <TextBlock Text="Quên mật khẩu ?" Cursor="Hand" FontSize="16" Height="22" Width="124" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#00000000"></TextBlock>
-                </Border>--><!--
-                    </StackPanel>-->
                 </Grid>
             </Grid>
         </Grid>

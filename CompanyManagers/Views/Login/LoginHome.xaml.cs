@@ -1,10 +1,13 @@
 ﻿using CompanyManagers.Controllers;
 using CompanyManagers.Models.Logins;
+using CompanyManagers.Views.Home;
 using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -18,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace CompanyManagers.Views.Login
 {
@@ -27,7 +31,6 @@ namespace CompanyManagers.Views.Login
     public partial class LoginHome : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged(string newName)
         {
             if (PropertyChanged != null)
@@ -38,7 +41,7 @@ namespace CompanyManagers.Views.Login
         Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.CultureInvariant | RegexOptions.Singleline);
         Regex regexPhone = new Regex(@"^((09|03|07|08|05|02)+([0-9]{8})\b)$", RegexOptions.CultureInvariant | RegexOptions.Singleline);
         Regex regexPhone1 = new Regex(@"^((09|03|07|08|05|02)+([0-9]{9})\b)$", RegexOptions.CultureInvariant | RegexOptions.Singleline);
-        public static int TypeLogin { get; set; }
+        public static string TypeLogin { get; set; }
         public bool RememberPassword { get; set; }
 
         string pass;
@@ -51,26 +54,46 @@ namespace CompanyManagers.Views.Login
                 OnPropertyChanged("Pass");
             }
         }
+        ManagerHome ManagerHome { get; set; }
         public LoginHome()
         {
             InitializeComponent();
+            this.DataContext = this;
             checkRememberPass(Properties.Settings.Default.RememberMe);
-            if (Properties.Settings.Default.RememberMe)
-            {
-                txtEmail.Text = Properties.Settings.Default.User;
-                txtPasswordHide.Password = Properties.Settings.Default.Pass;
-            }
+            Pass = "";
         }
 
         private void openPagelogin(object sender, MouseButtonEventArgs e)
         {
             if ((sender as Border).Name.Equals("btnCompany"))
             {
-                TypeLogin = 1;
+                TypeLogin = "1";
+                tb_TitelLogin.Text = "Tài khoản công ty";
+                if (Properties.Settings.Default.RememberMe)
+                {
+                    txtEmail.Text = Properties.Settings.Default.UserCom;
+                    txtPasswordHide.Password = Properties.Settings.Default.PassCom;
+                }
+                else
+                {
+                    txtEmail.Text = "";
+                    txtPasswordHide.Password = "";
+                }
             }
             else if ((sender as Border).Name.Equals("btnEmployee"))
             {
-                TypeLogin = 2;
+                TypeLogin = "2";
+                tb_TitelLogin.Text = "Tài khoản nhân viên";
+                if (Properties.Settings.Default.RememberMe)
+                {
+                    txtEmail.Text = Properties.Settings.Default.UserEp;
+                    txtPasswordHide.Password = Properties.Settings.Default.PassEp;
+                }
+                else
+                {
+                    txtEmail.Text = "";
+                    txtPasswordHide.Password = "";
+                }
             }
             stpSelectLogin.Visibility = Visibility.Collapsed;
             grFormLogin.Visibility = Visibility.Visible;
@@ -78,12 +101,12 @@ namespace CompanyManagers.Views.Login
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            this.DragMove();
         }
 
         private void Minimimize_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            this.WindowState = WindowState.Minimized;
         }
         private void Maximimize_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -91,7 +114,8 @@ namespace CompanyManagers.Views.Login
         }
         private void CloseWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+            this.Close();
         }
         private void returnSelectLogin(object sender, MouseButtonEventArgs e)
         {
@@ -115,42 +139,103 @@ namespace CompanyManagers.Views.Login
             boderEmail.BorderBrush = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FFB1A9A9");
         }
 
-        public void LoginStart(int typeLogin, string userName, string passWord)
+        public async  void LoginStart(string typeLogin, string userName, string passWord)
         {
-            using(WebClient client = new WebClient())
+            try
             {
-                client.QueryString.Add("account", userName);
-                client.QueryString.Add("password", passWord);
-                client.QueryString.Add("type", typeLogin.ToString());
-                client.UploadValuesCompleted += (sender, e) => 
-                { 
-                    RootLogin dataLogin = JsonConvert.DeserializeObject<RootLogin>(UnicodeEncoding.UTF8.GetString(e.Result));
-                    if (dataLogin.data.data != null)
+                var options = new RestClientOptions("https://api.timviec365.vn")
+                {
+                    MaxTimeout = -1,
+                };
+                var client = new RestClient(options);
+                var request = new RestRequest("/api/qlc/employee/login", Method.Post);
+                request.AlwaysMultipartFormData = true;
+                request.AddParameter("account", userName);
+                request.AddParameter("password", passWord);
+                request.AddParameter("type", typeLogin);
+                RestResponse response = await client.ExecuteAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    RootLogin dataLogin = JsonConvert.DeserializeObject<RootLogin>(response.Content);
+                    if (dataLogin.data != null)
                     {
+                        this.Hide();
+                        CheckTypeSaveAcount(typeLogin, userName, passWord, dataLogin.data.data.access_token);
+                        ManagerHome = new ManagerHome(dataLogin.data.data, this);
+                        try
+                        {
+                            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(async () =>
+                            {
+                                var workingArea = System.Windows.SystemParameters.WorkArea;
+                                ManagerHome.Width = workingArea.Right - 300;
+                                ManagerHome.Height = workingArea.Bottom - 100;
+                                ManagerHome.Show();
+                            }));
+                        }
+                        catch
+                        {
+                            ManagerHome.Show();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                lbWrongUserPass.Visibility = Visibility.Visible;
+                lbWrongUserPass.Text = "Tài khoản hoặc mật khẩu không chính xác!";
+            }
+        }
+        public void CheckTypeSaveAcount(string typeLogin, string userName, string passWord, string token)
+        {
+            try
+            {
+                switch (typeLogin)
+                    {
+                    case "1":
                         if (Properties.Settings.Default.RememberMe)
                         {
-                            Properties.Settings.Default.User = userName;
-                            Properties.Settings.Default.Pass = pass;
+                            Properties.Settings.Default.UserCom = userName;
+                            Properties.Settings.Default.PassCom = pass;
                             Properties.Settings.Default.Type365 = typeLogin.ToString();
+                            Properties.Settings.Default.TokenCom = token;
                             Properties.Settings.Default.RememberMe = true;
                             Properties.Settings.Default.Save();
                         }
                         else
                         {
-                            Properties.Settings.Default.User = "";
-                            Properties.Settings.Default.Pass = "";
+                            Properties.Settings.Default.UserCom = "";
+                            Properties.Settings.Default.PassCom = "";
                             Properties.Settings.Default.RememberMe = false;
                             Properties.Settings.Default.Save();
                         }
+                        break;
+                    case "2":
+                        if (Properties.Settings.Default.RememberMe)
+                        {
+                            Properties.Settings.Default.UserEp = userName;
+                            Properties.Settings.Default.PassEp = pass;
+                            Properties.Settings.Default.Type365 = typeLogin.ToString();
+                            Properties.Settings.Default.TokenEp = token;
+                            Properties.Settings.Default.RememberMe = true;
+                            Properties.Settings.Default.Save();
+                        }
+                        else
+                        {
+                            Properties.Settings.Default.UserEp = "";
+                            Properties.Settings.Default.PassEp = "";
+                            Properties.Settings.Default.RememberMe = false;
+                            Properties.Settings.Default.Save();
+                        }
+                        break;
                     }
-                };
-                client.UploadValuesTaskAsync(UrlApi.apiLogin, "POST", client.QueryString);
+            }
+            catch (Exception)
+            {
             }
         }
-
-        private void LoginEnter(object sender, KeyEventArgs e)
+        public void CheckLogin()
         {
-            if (e.Key == Key.Enter)
+            try
             {
                 if (txtEmail.Text.Length != 0 && (regex.IsMatch(txtEmail.Text) || regexPhone.IsMatch(txtEmail.Text) || regexPhone1.IsMatch(txtEmail.Text)))
                 {
@@ -163,21 +248,31 @@ namespace CompanyManagers.Views.Login
                 {
                     boderPassword.BorderBrush = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FFFF3333");
                     lbWrongPassword.Visibility = Visibility.Visible;
-                    lbWrongPassword.Text = "Mật khẩu không được để trống";
+                    lbWrongPassword.Text = "Mật khẩu không được để trống!";
+
                 }
                 else
                 {
-
                     boderEmail.BorderBrush = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FFFF3333");
                     lbWrongEmail.Visibility = Visibility.Visible;
-                    lbWrongEmail.Text = "Định dạng email không chính xác";
+                    lbWrongEmail.Text = "Sai định dạng tài khoản!";
                 }
+            }
+            catch (Exception)
+            {
+            }
+        }
+        private void LoginEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                CheckLogin();
             }
             
         }
         private void LoginClick(object sender, MouseButtonEventArgs e)
         {
-            LoginStart(TypeLogin, txtEmail.Text, txtPasswordHide.Password);
+            CheckLogin();
         }
         private void hideShowPassword(object sender, MouseButtonEventArgs e)
         {
@@ -207,10 +302,12 @@ namespace CompanyManagers.Views.Login
             if (Properties.Settings.Default.RememberMe == false)
             {
                 Properties.Settings.Default.RememberMe = true;
+                Properties.Settings.Default.Save();
             }
             else
             {
                 Properties.Settings.Default.RememberMe = false;
+                Properties.Settings.Default.Save();
             }
             checkRememberPass(Properties.Settings.Default.RememberMe);
         }
@@ -232,8 +329,6 @@ namespace CompanyManagers.Views.Login
         {
 
         }
-
-       
 
         private void LinkGuide_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

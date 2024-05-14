@@ -4,9 +4,142 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompanyManagers.Views.Home"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        mc:Ignorable="d" Background="Transparent" AllowsTransparency="True"
+        Title="Company Manager" MinHeight="690" MinWidth="824" 
+        WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" x:Name="pageTitle" MouseLeftButtonDown="pageTitle_MouseDown" Background="{DynamicResource ColorBlue}" CornerRadius="10 10 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" x:Name="logoInTitle" Cursor="Hand" MouseLeftButtonUp="ShowDetailAcount">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" BorderThickness="1" BorderBrush="#666" Width="50" Height="50"  CornerRadius="20">
+                            <Border.Background>
+                                <ImageBrush x:Name="Avatar" ImageSource="\Resources/Image/AvatarUser.png" />
+                            </Border.Background>
+                        </Border>
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock VerticalAlignment="Top" x:Name="tb_NameUser" Text="Company Manager"  Foreground="{StaticResource colorWriter}" Padding="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" LineHeight="1"/>
+                            <TextBlock VerticalAlignment="Top" x:Name="tb_IdUser" Text="Timviec365" HorizontalAlignment="Left"  FontSize="15" Foreground="{StaticResource colorWriter}"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" x:Name="Minimimize" Cursor="Hand" Height="25" VerticalAlignment="Center" MouseLeftButtonDown="Minimimize_MouseLeftButtonDown" Background="#02FFFFFF">
+                            <Line X1="0" Y1="7" X2="15" Y2="7"  StrokeThickness="1.2" Stroke="{StaticResource colorWriter}" Fill="{DynamicResource ColorBlue}" Height="15" Width="15" />
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid Cursor="Hand" x:Name="NormalSize"   Visibility="Collapsed" MouseLeftButtonDown="NormalSize_MouseLeftButtonDown" Background="#02FFFFFF" VerticalAlignment="Top"  Height="25" Width="40"  >
+                                <Path Data="{StaticResource NormalSize}"  Fill="{StaticResource ColorBlue}" Margin="0,4,0,0" Stretch="Fill" Stroke="{StaticResource colorWriter}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="0.8" ></Path>
+                            </Grid>
+                            <Grid  Cursor="Hand" x:Name="Maximimize"  Visibility="Visible"  MouseLeftButtonDown="Maximimize_MouseLeftButtonDown" Background="#02FFFFFF"  Height="25" Width="40" VerticalAlignment="Center"  >
+                                <Path  Data="{StaticResource maximinze}"  Fill="{StaticResource ColorBlue}" Margin="0,4,0,0" Stretch="Fill" Stroke="{StaticResource colorWriter}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Top" StrokeThickness="1"></Path>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Column="2" x:Name="CloseWindow" Cursor="Hand" MouseLeftButtonDown="CloseWindow_MouseLeftButtonDown" Background="#02FFFFFF" VerticalAlignment="Center" Height="25" >
+                            <Path Data="{DynamicResource iconClose}" Stroke="{StaticResource colorWriter}" StrokeThickness="1.2" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="15" Margin="0,4,0,0" Width="15" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Grid Grid.Row="1" Background="{StaticResource colorBackgroundItem1}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" x:Name="btn_BackToBack" Height="40" Cursor="Hand" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <DockPanel>
+                        <Path Data="{StaticResource iconArrowLeft}" Width="30" Margin="0 0 5 0" Height="16" Stretch="Fill">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Fill" Value="{StaticResource colorText1}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=btn_BackToBack, Path=IsMouseOver}" Value="true">
+                                            <Setter Property="Fill" Value="{StaticResource ColorBlue}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                        <TextBlock x:Name="txbBackToBack" VerticalAlignment="Center" FontSize="16" Text="Quay lại">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=btn_BackToBack, Path=IsMouseOver}" Value="true">
+                                            <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </DockPanel>
+                </Border>
+            </Grid>
+            <Border Grid.Row="2" Background="{StaticResource colorBackgroundItem1}" CornerRadius="0 0 10 10">
+                <ContentControl IsTabStop="False" x:Name="PageFunction" Grid.ColumnSpan="2" ></ContentControl>
+            </Border>
+        </Grid>
+        <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Visibility="Visible">
+            <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="#ffffff" CornerRadius="10">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10" Opacity="0.4" ShadowDepth="0" />
+                </Border.Effect>
+                <StackPanel>
+                    <Border x:Name="btn_ThongTinTK" Width="230" Height="40" Background="Transparent" CornerRadius="15,15,0,0" Cursor="Hand">
+                        <Border.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="#0000" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource colorMoveMouseItem}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Resources>
+                        <DockPanel Margin="12,0,0,0">
+                            <Border Width="17" Height="17">
+                                <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="{DynamicResource iconAcount1}" Fill="#474747" Stretch="Fill" />
+                            </Border>
+                            <TextBlock Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#474747" Text="Thông tin tài khoản" />
+                        </DockPanel>
+                    </Border>
+                    <Border x:Name="LogOut" Width="230" Height="40" Background="Transparent" Cursor="Hand">
+                        <DockPanel Margin="12,0,0,0">
+                            <Border Width="17" Height="17">
+                                <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="{DynamicResource iconLogout}" Stretch="Fill" Stroke="#474747" StrokeThickness="2" />
+                            </Border>
+                            <TextBlock Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#474747" Text="Đăng xuất" />
+                        </DockPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
