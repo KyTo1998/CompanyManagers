@@ -14,18 +14,19 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" x:Name="pageTitle" MouseLeftButtonDown="pageTitle_MouseDown" Background="{DynamicResource ColorBlue}" CornerRadius="10 10 0 0">
+            <Border Grid.Row="0" x:Name="pageTitle" MouseLeftButtonDown="pageTitle_MouseDown" Background="{DynamicResource colorTitlePopupThemeGreen}" CornerRadius="10 10 0 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" x:Name="logoInTitle" Cursor="Hand" MouseLeftButtonUp="ShowDetailAcount">
+                    <Grid Grid.Column="0" x:Name="logoInTitle" MouseLeftButtonDown="logoInTitle_MouseLeftButtonDown" Background="Transparent" Cursor="Hand">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" BorderThickness="1" BorderBrush="#666" Width="50" Height="50"  CornerRadius="20">
+                        <Border Grid.Column="0" BorderThickness="1" BorderBrush="#666" Width="50" Height="50"  CornerRadius="50">
                             <Border.Background>
                                 <ImageBrush x:Name="Avatar" ImageSource="\Resources/Image/AvatarUser.png" />
                             </Border.Background>
@@ -35,7 +36,11 @@
                             <TextBlock VerticalAlignment="Top" x:Name="tb_IdUser" Text="Timviec365" HorizontalAlignment="Left"  FontSize="15" Foreground="{StaticResource colorWriter}"/>
                         </StackPanel>
                     </Grid>
-                    <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0">
+                    <DockPanel Width="90" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Path Width="21" Height="20" Data="{DynamicResource iconDongHo}" RenderTransformOrigin="0.206,0.992" Stretch="Fill" Stroke="#4C5BD4" StrokeThickness="2.5" />
+                        <TextBlock Name="dynamicTextBlock" Grid.Column="0" Margin="0,5,0,0" VerticalAlignment="Center" FontFamily="Harlow Solid Italic" FontSize="20" FontWeight="Medium" Foreground="#4C5BD4" />
+                    </DockPanel>
+                    <Grid Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40"/>
                             <ColumnDefinition Width="40"/>
@@ -46,10 +51,10 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid Cursor="Hand" x:Name="NormalSize"   Visibility="Collapsed" MouseLeftButtonDown="NormalSize_MouseLeftButtonDown" Background="#02FFFFFF" VerticalAlignment="Top"  Height="25" Width="40"  >
-                                <Path Data="{StaticResource NormalSize}"  Fill="{StaticResource ColorBlue}" Margin="0,4,0,0" Stretch="Fill" Stroke="{StaticResource colorWriter}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="0.8" ></Path>
+                                <Path Data="{StaticResource NormalSize}"  Fill="{StaticResource colorTitlePopupThemeGreen}" Margin="0,4,0,0" Stretch="Fill" Stroke="{StaticResource colorWriter}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="0.8" ></Path>
                             </Grid>
                             <Grid  Cursor="Hand" x:Name="Maximimize"  Visibility="Visible"  MouseLeftButtonDown="Maximimize_MouseLeftButtonDown" Background="#02FFFFFF"  Height="25" Width="40" VerticalAlignment="Center"  >
-                                <Path  Data="{StaticResource maximinze}"  Fill="{StaticResource ColorBlue}" Margin="0,4,0,0" Stretch="Fill" Stroke="{StaticResource colorWriter}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Top" StrokeThickness="1"></Path>
+                                <Path  Data="{StaticResource maximinze}"  Fill="{StaticResource colorTitlePopupThemeGreen}" Margin="0,4,0,0" Stretch="Fill" Stroke="{StaticResource colorWriter}" Width="15" Height="15" HorizontalAlignment="Center" VerticalAlignment="Top" StrokeThickness="1"></Path>
                             </Grid>
                         </Grid>
                         <Grid Grid.Column="2" x:Name="CloseWindow" Cursor="Hand" MouseLeftButtonDown="CloseWindow_MouseLeftButtonDown" Background="#02FFFFFF" VerticalAlignment="Center" Height="25" >
@@ -75,7 +80,15 @@
                         </Style>
                     </Border.Style>
                     <DockPanel>
-                        <Path Data="{StaticResource iconArrowLeft}" Width="30" Margin="0 0 5 0" Height="16" Stretch="Fill">
+                        <Path Data="{StaticResource iconRightArrowz}" Width="15" Margin="0 2 5 0" Height="15" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="180"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
                             <Path.Style>
                                 <Style TargetType="Path">
                                     <Setter Property="Fill" Value="{StaticResource colorText1}"/>
@@ -106,7 +119,7 @@
                 <ContentControl IsTabStop="False" x:Name="PageFunction" Grid.ColumnSpan="2" ></ContentControl>
             </Border>
         </Grid>
-        <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Visibility="Visible">
+        <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Visibility="Collapsed">
             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="#ffffff" CornerRadius="10">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10" Opacity="0.4" ShadowDepth="0" />

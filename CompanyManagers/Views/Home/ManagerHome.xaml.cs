@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,57 +44,43 @@ namespace CompanyManagers.Views.Home
                 switch (IsFull)
                 {
                     case 0:
-                        /*gridMain.Margin = new Thickness(10);*/
                         this.WindowState = WindowState.Normal;
                         Width = oldWidth;
                         Height = oldHeight;
                         Left = oldLeft;
                         Top = oldTop;
-                        this.ResizeMode = ResizeMode.CanResize;
+                        this.ResizeMode = ResizeMode.CanResizeWithGrip;
                         NormalSize.Visibility = Visibility.Collapsed;
                         Maximimize.Visibility = Visibility.Visible;
                         logoInTitle.Margin = new Thickness(0, 0, 0, 0);
-                        pageTitle.Height = 40;
-                        /*pageDisplay.Margin = new Thickness(0, 40, 0, 0);
-                        pageLoading.Margin = new Thickness(0, 40, 0, 0);*/
                         break;
                     case 1:
                         oldWidth = this.ActualWidth;
                         oldHeight = this.ActualHeight;
                         oldTop = this.Top;
                         oldLeft = this.Left;
-                        /*gridMain.Margin = new Thickness(0);*/
                         this.WindowState = WindowState.Normal;
                         Left = workingArea.TopLeft.X;
                         Top = workingArea.TopLeft.Y;
                         Width = workingArea.Width;
                         Height = workingArea.Height;
-                        this.ResizeMode = ResizeMode.CanMinimize;
+                        this.ResizeMode = ResizeMode.CanResizeWithGrip;
                         NormalSize.Visibility = Visibility.Visible;
                         Maximimize.Visibility = Visibility.Collapsed;
-                        pageTitle.Height = 40;
-                        logoInTitle.Margin = new Thickness(0, 0, 0, 0);
-                        /*pageDisplay.Margin = new Thickness(0, 40, 0, 0);
-                        pageLoading.Margin = new Thickness(0, 40, 0, 0);*/
                         break;
                     case 2:
                         oldWidth = workingArea.Right - 440;
                         oldHeight = workingArea.Bottom - 180;
                         oldLeft = (workingArea.Right / 2) - (this.oldWidth / 2);
                         oldTop = (workingArea.Bottom / 2) - (this.oldHeight / 2);
-                        /*gridMain.Margin = new Thickness(0);*/
                         this.WindowState = WindowState.Normal;
                         Left = workingArea.TopLeft.X;
                         Top = workingArea.TopLeft.Y;
                         Width = workingArea.Width;
                         Height = workingArea.Height;
-                        this.ResizeMode = ResizeMode.NoResize;
+                        this.ResizeMode = ResizeMode.CanResizeWithGrip;
                         NormalSize.Visibility = Visibility.Visible;
                         Maximimize.Visibility = Visibility.Collapsed;
-                        pageTitle.Height = 40;
-                        logoInTitle.Margin = new Thickness(0, 0, 0, 0);
-                        /*pageDisplay.Margin = new Thickness(0, 40, 0, 0);
-                        pageLoading.Margin = new Thickness(0, 40, 0, 0);*/
                         break;
                     default:
                         break;
@@ -132,10 +119,37 @@ namespace CompanyManagers.Views.Home
                     tb_IdUser.Text = userCurrent.user_info.ep_id.ToString();
                     break;
             }
-            
+            StartDynamicText();
             
         }
+        private Thread textUpdateThread;
+        private void StartDynamicText()
+        {
+            try
+            {
+                textUpdateThread = new Thread(() =>
+                {
+                    while (true)
+                    {
+                        // Thay đổi nội dung của TextBlock
+                        Dispatcher.Invoke(() =>
+                        {
+                            dynamicTextBlock.Text = "" + DateTime.Now.ToString("HH:mm:ss");
+                        });
 
+                        // Đợi 1 giây trước khi cập nhật lại
+                        Thread.Sleep(1000);
+                    }
+                });
+
+                textUpdateThread.Start();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
         private void pageTitle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -162,7 +176,7 @@ namespace CompanyManagers.Views.Home
             this.Close();
         }
 
-        private void ShowDetailAcount(object sender, MouseButtonEventArgs e)
+        private void logoInTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (bor_DetailAcount.Visibility == Visibility.Collapsed)
             {
