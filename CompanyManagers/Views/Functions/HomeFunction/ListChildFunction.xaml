@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.Functions.HomeFunction"
              mc:Ignorable="d">
-    <Grid x:Name="grFunctionTimeKeeping" Margin="10 10 10 10">
+    <Grid x:Name="grFunctionTimeKeeping" HorizontalAlignment="Left" Margin="10 35 10 10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="70" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="6*" />
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
@@ -26,14 +26,14 @@
                             <ControlTemplate TargetType="ListViewItem">
                                 <Grid Grid.Row="1" x:Name="btnCaiDatWifi" Cursor="Hand" VerticalAlignment="Center" Margin="0 0 0 20">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40" />
+                                        <ColumnDefinition Width="50" />
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" CornerRadius="50" Height="40" Background="{StaticResource ColorBlue}">
-                                        <TextBlock Foreground="{StaticResource colorWriter}" Text="{Binding idChildFunction}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20"/>
+                                    <Border Grid.Column="0" CornerRadius="50" Height="50" Background="{StaticResource ColorBlue}">
+                                        <TextBlock Foreground="{StaticResource colorWriter}" Text="{Binding idChildFunction}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" FontFamily="Salsa"/>
                                     </Border>
                                     <Border x:Name="bdFunction1" Grid.Column="1" Margin="10 0 0 0">
-                                        <TextBlock x:Name="txbFunction1" Text="{Binding nameChildFunction}" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
+                                        <TextBlock x:Name="txbFunction1" Text="{Binding nameChildFunction}" FontSize="20" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center" FontFamily="Salsa"/>
                                     </Border>
                                 </Grid>
                             </ControlTemplate>

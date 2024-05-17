@@ -59,6 +59,9 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                 dataFunction.Add(new DataFunction() { idFunction = 3, nameFunction = "Tính lương", colorFunction1 = "#FF5B4D", colorFunction2 = "#C1403A"});
             }
             dataFunction = dataFunction.ToList();
+            DataFunction dataFunc = new DataFunction();
+            ListChildFunction lstChildFunction = new ListChildFunction(this, null, null);
+            ManagerHome.PageChildFunction.Content = lstChildFunction;
         }
 
         private void ShowListManager(object sender, MouseButtonEventArgs e)

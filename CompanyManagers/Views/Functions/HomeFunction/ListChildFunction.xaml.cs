@@ -43,23 +43,42 @@ namespace CompanyManagers.Views.Functions.HomeFunction
             InitializeComponent();
             this.pageListFunction = _pageListFunction;
             this.dataFunction = _dataFunction;
-            switch (_dataFunction.idFunction)
+            if (Properties.Settings.Default.Type365 == "1" && _dataChildFunction == null)
             {
-                case 1:
-                    tb_TitleFunction.Text = _dataFunction.nameFunction;
-                    break;
-                case 2:
-                    tb_TitleFunction.Text = _dataFunction.nameFunction;
-                    break;
-                case 3:
-                    tb_TitleFunction.Text = _dataFunction.nameFunction;
-                    break;
-                case 4:
-                    tb_TitleFunction.Text = _dataFunction.nameFunction;
-                    break;
+                dataChildFunction = new List<DataChildFunction>();
+                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Thiết lập cơ cấu tổ chức" });
+                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Thiết lập vị trí" });
+                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Quản lý nhân viên" });
+                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 4, nameChildFunction = "Danh sách ứng viên" });
+                dataChildFunction = dataChildFunction.ToList();
+                tb_TitleFunction.Text = "Quản lý công ty";
             }
-            dataChildFunction = _dataChildFunction;
-            
+            else if (Properties.Settings.Default.Type365 == "2" && _dataChildFunction == null)
+            {
+                dataChildFunction = new List<DataChildFunction>();
+                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Tạo đề xuất" });
+                dataChildFunction = dataChildFunction.ToList();
+                tb_TitleFunction.Text = "Tạo đề xuất";
+            }
+            else
+            {
+                switch (_dataFunction.idFunction)
+                {
+                    case 1:
+                        tb_TitleFunction.Text = _dataFunction.nameFunction;
+                        break;
+                    case 2:
+                        tb_TitleFunction.Text = _dataFunction.nameFunction;
+                        break;
+                    case 3:
+                        tb_TitleFunction.Text = _dataFunction.nameFunction;
+                        break;
+                    case 4:
+                        tb_TitleFunction.Text = _dataFunction.nameFunction;
+                        break;
+                }
+                dataChildFunction = _dataChildFunction;
+            }
         }
     }
 }

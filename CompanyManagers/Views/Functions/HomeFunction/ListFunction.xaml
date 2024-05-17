@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.Functions.HomeFunction"
              mc:Ignorable="d" Background="Transparent">
-    <Grid HorizontalAlignment="Center">
+    <Grid HorizontalAlignment="Right">
         <ListView x:Name="lsvListFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataFunction, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="10" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -57,7 +57,7 @@
                                         </Border.Background>
                                     </Border>
                                     <Border Style="{StaticResource ListFunction04}">
-                                        <TextBlock Text="{Binding idFunction}" HorizontalAlignment="Center" VerticalAlignment='Center'/>
+                                        <TextBlock Text="{Binding idFunction}" HorizontalAlignment="Center" VerticalAlignment='Center' FontWeight="Medium" FontFamily="Salsa"/>
                                     </Border>
                                     <Border Height="50" Margin="250,35,90,35">
                                         <Image Source="{DynamicResource iconGachDrawingImage}" Margin="42,0,-42,0"/>

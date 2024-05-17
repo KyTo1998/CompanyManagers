@@ -18,7 +18,6 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" x:Name="logoInTitle" MouseLeftButtonDown="logoInTitle_MouseLeftButtonDown" Background="Transparent" Cursor="Hand">
@@ -33,13 +32,15 @@
                         </Border>
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <TextBlock VerticalAlignment="Top" x:Name="tb_NameUser" Text="Company Manager"  Foreground="{StaticResource colorWriter}" Padding="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" LineHeight="1"/>
-                            <TextBlock VerticalAlignment="Top" x:Name="tb_IdUser" Text="Timviec365" HorizontalAlignment="Left"  FontSize="15" Foreground="{StaticResource colorWriter}"/>
+                            <WrapPanel>
+                                <TextBlock Margin="0 0 20 0" VerticalAlignment="Top" x:Name="tb_IdUser" Text="Timviec365" HorizontalAlignment="Left"  FontSize="15" Foreground="{StaticResource colorWriter}"/>
+                                <DockPanel Width="90" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Path Width="16" Height="16" Data="{DynamicResource iconDongHo}" RenderTransformOrigin="0.206,0.992" Stretch="Fill" Stroke="#FFFFFF" StrokeThickness="1.5" />
+                                    <TextBlock Name="dynamicTextBlock" Grid.Column="0" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="15" FontWeight="Medium" Foreground="#FFFFFF" />
+                                </DockPanel>
+                            </WrapPanel>
                         </StackPanel>
                     </Grid>
-                    <DockPanel Width="90" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Path Width="21" Height="20" Data="{DynamicResource iconDongHo}" RenderTransformOrigin="0.206,0.992" Stretch="Fill" Stroke="#4C5BD4" StrokeThickness="2.5" />
-                        <TextBlock Name="dynamicTextBlock" Grid.Column="0" Margin="0,5,0,0" VerticalAlignment="Center" FontFamily="Harlow Solid Italic" FontSize="20" FontWeight="Medium" Foreground="#4C5BD4" />
-                    </DockPanel>
                     <Grid Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0 0 10 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40"/>
@@ -122,8 +123,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <ContentControl Grid.Column="0" MinWidth="420" IsTabStop="False" x:Name="PageFunction"  ></ContentControl>
-                        <ContentControl Grid.Column="1" MinWidth="420" IsTabStop="False" x:Name="PageChildFunction" ></ContentControl>
+                        <ContentControl Grid.Column="0" MinWidth="420" IsTabStop="False" x:Name="PageFunction"></ContentControl>
+                        <ContentControl Grid.Column="1" MinWidth="420" IsTabStop="False" x:Name="PageChildFunction"></ContentControl>
                     </Grid>
                 </ScrollViewer>
             </Border>
