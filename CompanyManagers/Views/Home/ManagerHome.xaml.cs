@@ -1,4 +1,5 @@
 ﻿using CompanyManagers.Models.Logins;
+using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,8 @@ namespace CompanyManagers.Views.Home
                     break;
             }
             StartDynamicText();
+            ListFunction lstFunction = new ListFunction(this);
+            PageFunction.Content = lstFunction;
             
         }
         private Thread textUpdateThread;

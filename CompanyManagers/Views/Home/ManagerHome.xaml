@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompanyManagers.Views.Home"
         mc:Ignorable="d" Background="Transparent" AllowsTransparency="True"
-        Title="Company Manager" MinHeight="690" MinWidth="824" 
+        Title="Company Manager" MinHeight="690" MinWidth="850" 
         WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid>
@@ -116,7 +116,16 @@
                 </Border>
             </Grid>
             <Border Grid.Row="2" Background="{StaticResource colorBackgroundItem1}" CornerRadius="0 0 10 10">
-                <ContentControl IsTabStop="False" x:Name="PageFunction" Grid.ColumnSpan="2" ></ContentControl>
+                <ScrollViewer x:Name="scrollMain">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <ContentControl Grid.Column="0" MinWidth="420" IsTabStop="False" x:Name="PageFunction"  ></ContentControl>
+                        <ContentControl Grid.Column="1" MinWidth="420" IsTabStop="False" x:Name="PageChildFunction" ></ContentControl>
+                    </Grid>
+                </ScrollViewer>
             </Border>
         </Grid>
         <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Visibility="Collapsed">
