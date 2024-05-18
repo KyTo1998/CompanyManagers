@@ -25,6 +25,16 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ListViewItem">
                                 <Grid Grid.Row="1" x:Name="btnCaiDatWifi" Cursor="Hand" VerticalAlignment="Center" Margin="0 0 0 20">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50" />
                                         <ColumnDefinition/>
@@ -33,7 +43,18 @@
                                         <TextBlock Foreground="{StaticResource colorWriter}" Text="{Binding idChildFunction}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" FontFamily="Salsa"/>
                                     </Border>
                                     <Border x:Name="bdFunction1" Grid.Column="1" Margin="10 0 0 0">
-                                        <TextBlock x:Name="txbFunction1" Text="{Binding nameChildFunction}" FontSize="20" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center" FontFamily="Salsa"/>
+                                        <TextBlock x:Name="txbFunction1" Text="{Binding nameChildFunction}" FontSize="20" FontWeight="Medium" VerticalAlignment="Center" FontFamily="Salsa">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=btnCaiDatWifi, Path=IsMouseOver}" Value="true">
+                                                            <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
                                     </Border>
                                 </Grid>
                             </ControlTemplate>

@@ -18,6 +18,19 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="ListViewItem">
                                 <Grid Width="400" x:Name="FunctionManager" MouseLeftButtonUp="ShowListManager">
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="True">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50*"/>
                                         <ColumnDefinition/>
@@ -38,7 +51,21 @@
                                                 <GradientStop Color="#FFBFF7FD" Offset ="0.7"/>
                                             </LinearGradientBrush>
                                         </Border.Background>
-                                        <TextBlock x:Name="txbQuanLyCongTy" Text="{Binding nameFunction}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock x:Name="txbQuanLyCongTy" Text="{Binding nameFunction}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
+                                                            <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
+                                                            <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
                                     </Border>
                                     <Border Style="{StaticResource BorderListFunction03}">
                                         <Border.Background>
@@ -57,34 +84,55 @@
                                         </Border.Background>
                                     </Border>
                                     <Border Style="{StaticResource ListFunction04}">
-                                        <TextBlock Text="{Binding idFunction}" HorizontalAlignment="Center" VerticalAlignment='Center' FontWeight="Medium" FontFamily="Salsa"/>
+                                        <TextBlock Text="{Binding idFunction}" HorizontalAlignment="Center" VerticalAlignment='Center' FontWeight="Medium" FontFamily="Salsa">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
+                                                            <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
+                                                            <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
                                     </Border>
                                     <Border Height="50" Margin="250,35,90,35">
                                         <Image Source="{DynamicResource iconGachDrawingImage}" Margin="42,0,-42,0"/>
                                     </Border>
-                                    <Border Height="30" Width="30" Margin="325 0 0 0">
+                                    <Border Height="35" Width="35" Margin="325 0 0 0">
                                         <Grid>
-                                            <Image Margin="-15,0,15,0">
-                                                <Image.Style>
-                                                    <Style TargetType="Image">
-                                                        <Setter Property="Source" Value="{x:Null}"/>
+                                            <Path Margin="-15,0,15,0">
+                                                <Path.Style>
+                                                    <Style TargetType="Path">
+                                                        <Setter Property="Data" Value="{x:Null}"/>
+                                                        <Setter Property="Stroke" Value="{StaticResource colorText1}"/>
                                                         <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
+                                                                <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
+                                                                <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                            </DataTrigger>
                                                             <DataTrigger Binding="{Binding idFunction}" Value="1">
-                                                                <Setter Property="Source" Value="{DynamicResource iconWordDrawingImage}"/>
+                                                                <Setter Property="Data" Value="{DynamicResource iconGlobal}"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding idFunction}" Value="2">
-                                                                <Setter Property="Source" Value="{DynamicResource iconTimeDrawingImage}"/>
+                                                                <Setter Property="Data" Value="{DynamicResource iconTimeKeeping}"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding idFunction}" Value="3">
-                                                                <Setter Property="Source" Value="{DynamicResource iconDatabaseDrawingImage}"/>
+                                                                <Setter Property="Data" Value="{DynamicResource iconData}"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding idFunction}" Value="4">
-                                                                <Setter Property="Source" Value="{DynamicResource iconListDrawingImage}"/>
+                                                                <Setter Property="Data" Value="{DynamicResource iconNote}"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
-                                                </Image.Style>
-                                            </Image>
+                                                </Path.Style>
+                                            </Path>
                                         </Grid>
                                     </Border>
                                 </Grid>

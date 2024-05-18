@@ -38,12 +38,19 @@ namespace CompanyManagers.Views.Functions.HomeFunction
             get { return _dataFunction; }
             set { _dataFunction = value; OnPropertyChanged("dataFunction");}
         }
+        private string _type365;
+        public string type365
+        {
+            get { return _type365; }
+            set { _type365 = value; OnPropertyChanged("type365");}
+        }
         ManagerHome ManagerHome { get; set; }
         public ListFunction(ManagerHome managerHome)
         {
             InitializeComponent();
             ManagerHome = managerHome;
             dataFunction = managerHome.dataFunctionHome.ToList();
+            type365 = Properties.Settings.Default.Type365;
             ListChildFunction lstChildFunction = new ListChildFunction(ManagerHome,managerHome.dataFunctionHome.Find(x =>x.idFunction == 1));
             ManagerHome.PageChildFunction.Content = lstChildFunction;
         }
