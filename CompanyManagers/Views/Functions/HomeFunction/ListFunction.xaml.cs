@@ -1,21 +1,12 @@
 ﻿using CompanyManagers.Models.HomeFunction;
-using CompanyManagers.Models.Logins;
 using CompanyManagers.Views.Home;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace CompanyManagers.Views.Functions.HomeFunction
 {
@@ -45,14 +36,22 @@ namespace CompanyManagers.Views.Functions.HomeFunction
             set { _type365 = value; OnPropertyChanged("type365");}
         }
         ManagerHome ManagerHome { get; set; }
+         private List<DataChildFunction> _dataChildFunction;
+        public List<DataChildFunction> dataChildFunction 
+        {
+            get { return _dataChildFunction; }
+            set { _dataChildFunction = value; OnPropertyChanged("dataChildFunction");}
+        }
         public ListFunction(ManagerHome managerHome)
         {
             InitializeComponent();
             ManagerHome = managerHome;
             dataFunction = managerHome.dataFunctionHome.ToList();
             type365 = Properties.Settings.Default.Type365;
-            ListChildFunction lstChildFunction = new ListChildFunction(ManagerHome,managerHome.dataFunctionHome.Find(x =>x.idFunction == 1));
-            ManagerHome.PageChildFunction.Content = lstChildFunction;
+            dataChildFunction = managerHome.dataFunctionHome.Find(x =>x.idFunction == 1).dataChildFunction;
+            tb_TitleFunction.Text = managerHome.dataFunctionHome.Find(x =>x.idFunction == 1).nameFunction;
+            /*ListChildFunction lstChildFunction = new ListChildFunction(ManagerHome,);
+            ManagerHome.PageChildFunction.Content = lstChildFunction;*/
         }
 
         private void ShowListManager(object sender, MouseButtonEventArgs e)
@@ -62,15 +61,15 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                 DataFunction dataFunction = (DataFunction)(sender as Grid).DataContext;
                 if (dataFunction != null)
                 {
-                    ListChildFunction lstChildFunction = new ListChildFunction(ManagerHome,dataFunction);
-                    ManagerHome.PageChildFunction.Content = lstChildFunction;
+                    dataChildFunction = dataFunction.dataChildFunction;
+                     tb_TitleFunction.Text = dataFunction.nameFunction;
+                   /* ListChildFunction lstChildFunction = new ListChildFunction(ManagerHome,dataFunction);
+                    ManagerHome.PageChildFunction.Content = lstChildFunction;*/
                 }
             }
             catch (Exception)
             {
             }
-            
-
         }
     }
 }

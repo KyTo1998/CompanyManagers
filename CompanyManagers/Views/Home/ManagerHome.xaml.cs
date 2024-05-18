@@ -305,5 +305,10 @@ namespace CompanyManagers.Views.Home
                 bor_DetailAcount.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void AdddscrollMain(object sender, MouseWheelEventArgs e)
+        {
+            scrollMain.ScrollToVerticalOffset(scrollMain.VerticalOffset - e.Delta);
+        }
     }
 }

@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Resources/ResourceIcon.xaml"/>
                 <ResourceDictionary Source="Resources/Style.xaml"/>
                 <ResourceDictionary Source="Resources/ResourceImage.xaml"/>
+                <ResourceDictionary Source="Resources/ResourceScroll.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

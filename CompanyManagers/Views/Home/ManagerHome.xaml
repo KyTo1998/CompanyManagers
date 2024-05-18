@@ -117,15 +117,8 @@
                 </Border>
             </Grid>
             <Border Grid.Row="2" Background="{StaticResource colorBackgroundItem1}" CornerRadius="0 0 10 10">
-                <ScrollViewer x:Name="scrollMain">
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <ContentControl Grid.Column="0" MinWidth="420" IsTabStop="False" x:Name="PageFunction"></ContentControl>
-                        <ContentControl Grid.Column="1" MinWidth="420" IsTabStop="False" x:Name="PageChildFunction"></ContentControl>
-                    </Grid>
+                <ScrollViewer x:Name="scrollMain" PreviewMouseWheel="AdddscrollMain" Margin="10">
+                    <ContentControl IsTabStop="False" x:Name="PageFunction"></ContentControl>
                 </ScrollViewer>
             </Border>
         </Grid>

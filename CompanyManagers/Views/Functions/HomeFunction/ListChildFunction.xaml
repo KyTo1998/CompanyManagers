@@ -5,63 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.Functions.HomeFunction"
              mc:Ignorable="d">
-    <Grid x:Name="grFunctionTimeKeeping" HorizontalAlignment="Left" Margin="10 35 10 10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="6*" />
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0">
-            <TextBlock x:Name="tb_TitleFunction" Foreground="{StaticResource colorBlue}" FontSize="26" FontWeight="Medium" HorizontalAlignment="Center"/>
-        </Border>
-        <ListView Grid.Row="1" x:Name="lsvListChildFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataChildFunction, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="10 0 10 10" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor},Path=ActualWidth}"></StackPanel>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListViewItem">
-                                <Grid Grid.Row="1" x:Name="btnCaiDatWifi" Cursor="Hand" VerticalAlignment="Center" Margin="0 0 0 20">
-                                    <Grid.Style>
-                                        <Style TargetType="Grid">
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="Transparent"/>
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Grid.Style>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" CornerRadius="50" Height="50" Background="{StaticResource ColorBlue}">
-                                        <TextBlock Foreground="{StaticResource colorWriter}" Text="{Binding idChildFunction}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" FontFamily="Salsa"/>
-                                    </Border>
-                                    <Border x:Name="bdFunction1" Grid.Column="1" Margin="10 0 0 0">
-                                        <TextBlock x:Name="txbFunction1" Text="{Binding nameChildFunction}" FontSize="20" FontWeight="Medium" VerticalAlignment="Center" FontFamily="Salsa">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=btnCaiDatWifi, Path=IsMouseOver}" Value="true">
-                                                            <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                    </Border>
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+    <Grid>
+        
     </Grid>
 </UserControl>
