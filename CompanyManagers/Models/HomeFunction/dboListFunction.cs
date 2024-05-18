@@ -47,6 +47,12 @@ namespace CompanyManagers.Models.HomeFunction
             get { return _colorFunction2; }
             set { _colorFunction2 = value; OnPropertyChanged("colorFunction2");}
         }
-         
+        private List<DataChildFunction> _dataChildFunction;
+
+        public List<DataChildFunction> dataChildFunction 
+        {
+            get { return _dataChildFunction; }
+            set { _dataChildFunction = value; OnPropertyChanged("dataChildFunction");}
+        }
     }
 }

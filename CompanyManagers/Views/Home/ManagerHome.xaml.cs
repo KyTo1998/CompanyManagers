@@ -1,4 +1,5 @@
-﻿using CompanyManagers.Models.Logins;
+﻿using CompanyManagers.Models.HomeFunction;
+using CompanyManagers.Models.Logins;
 using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
 using System;
@@ -95,6 +96,12 @@ namespace CompanyManagers.Views.Home
         double oldTop = 690;
         double oldLeft = 690;
 
+        private List<DataFunction> _dataFunctionHome;
+        public List<DataFunction> dataFunctionHome 
+        {
+            get { return _dataFunctionHome; }
+            set { _dataFunctionHome = value; OnPropertyChanged("dataFunctionHome");}
+        }
         private DataUserLogin _UserCurrent;
         public DataUserLogin UserCurrent 
         {
@@ -121,6 +128,7 @@ namespace CompanyManagers.Views.Home
                     break;
             }
             StartDynamicText();
+            AddFunctionSytem();
             ListFunction lstFunction = new ListFunction(this);
             PageFunction.Content = lstFunction;
             
@@ -149,9 +157,116 @@ namespace CompanyManagers.Views.Home
             }
             catch (Exception)
             {
-                throw;
             }
+        }
 
+        public void AddFunctionSytem()
+        {
+            try
+            {
+                dataFunctionHome = new List<DataFunction>();
+                if (Properties.Settings.Default.Type365 == "1")
+                {
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 1,
+                        nameFunction = "Quản lý công ty",
+                        colorFunction1 = "#FFA13B",
+                        colorFunction2 = "#E8811A",
+                        dataChildFunction = new List<DataChildFunction> 
+                        { 
+                            new DataChildFunction { idChildFunction = 1, nameChildFunction = "Thiết lập cơ cấu tổ chức" },
+                            new DataChildFunction { idChildFunction = 2, nameChildFunction = "Thiết lập vị trí"},
+                            new DataChildFunction { idChildFunction = 3, nameChildFunction = "Quản lý nhân viên"},
+                            new DataChildFunction { idChildFunction = 2, nameChildFunction = "Thiết lập cơ cấu tổ chức"}
+                        }
+                    });
+                    dataFunctionHome.Add(new DataFunction() 
+                    { 
+                        idFunction = 2, 
+                        nameFunction = "Chấm công", 
+                        colorFunction1 = "#97C25F", 
+                        colorFunction2 = "#7DA047", 
+                        dataChildFunction = new List<DataChildFunction> 
+                        { 
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Cấu hình chấm công"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Quản lý ca làm việc"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Quản lý Lịch làm việc"},
+                            new DataChildFunction() { idChildFunction = 4, nameChildFunction = "Xuất công"},
+                            new DataChildFunction() { idChildFunction = 5, nameChildFunction = "Lịch sử điểm danh"}
+                        } 
+                    });
+                    dataFunctionHome.Add(new DataFunction() 
+                    { 
+                        idFunction = 3, 
+                        nameFunction = "Cài đặt lương", 
+                        colorFunction1 = "#8069FF", 
+                        colorFunction2 = "#5E53C9",
+                        dataChildFunction = new List<DataChildFunction> 
+                        {
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Cài đặt lương cơ bản"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Cài đặt đi muộn - về sớm"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Cài đặt nghỉ phép"},
+                            new DataChildFunction() { idChildFunction = 4, nameChildFunction = "Cài đặt bảo hiểm"},
+                            new DataChildFunction() { idChildFunction = 5, nameChildFunction = "Cài đặt phụ cấp"},
+                            new DataChildFunction() { idChildFunction = 6, nameChildFunction = "Cài đặt thuế"},
+                            new DataChildFunction() { idChildFunction = 7, nameChildFunction = "Cộng công"},
+                            new DataChildFunction() { idChildFunction = 8, nameChildFunction = "Thưởng phạt"},
+                            new DataChildFunction() { idChildFunction = 9, nameChildFunction = "Hoa hồng"}
+                        } 
+                    });
+                    dataFunctionHome.Add(new DataFunction() 
+                    { 
+                        idFunction = 4, 
+                        nameFunction = "Cài đặt đề xuất",
+                        colorFunction1 = "#FF5B4D", colorFunction2 = "#C1403A", 
+                        dataChildFunction = new List<DataChildFunction> 
+                        {  
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Cài đặt đề xuất"}
+                        } 
+                    });
+                }   
+                else
+                {   
+                    dataFunctionHome.Add(new DataFunction() 
+                    { 
+                        idFunction = 1, 
+                        nameFunction = "Tạo đề xuất", 
+                        colorFunction1 = "#FFA13B", 
+                        colorFunction2 = "#E8811A",
+                        dataChildFunction = new List<DataChildFunction> 
+                        {  
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Tạo đề xuất"}
+                        } 
+                    });
+                    dataFunctionHome.Add(new DataFunction() 
+                    { 
+                        idFunction = 2, 
+                        nameFunction = "Lịch sử", 
+                        colorFunction1 = "#97C25F", 
+                        colorFunction2 = "#7DA047",
+                        dataChildFunction = new List<DataChildFunction> 
+                        {  
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Chấm công"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Lương hiện tại"}
+                        }  
+                    });
+                    dataFunctionHome.Add(new DataFunction() 
+                    { 
+                        idFunction = 3, 
+                        nameFunction = "Tính lương", 
+                        colorFunction1 = "#FF5B4D", 
+                        colorFunction2 = "#C1403A",
+                        dataChildFunction = new List<DataChildFunction> 
+                        {  
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Xem bảng công"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Xem bảng lương"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Xem lịch làm việc"}
+                        }
+                    }); 
+                }
+            }
+            catch (Exception) { }
         }
         private void pageTitle_MouseDown(object sender, MouseButtonEventArgs e)
         {

@@ -1,4 +1,5 @@
 ﻿using CompanyManagers.Models.HomeFunction;
+using CompanyManagers.Views.Home;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,31 +37,13 @@ namespace CompanyManagers.Views.Functions.HomeFunction
             get { return _dataChildFunction; }
             set { _dataChildFunction = value; OnPropertyChanged("dataChildFunction");}
         }
-        ListFunction pageListFunction { get; set; }
         DataFunction dataFunction;
-        public ListChildFunction(ListFunction _pageListFunction, DataFunction _dataFunction, List<DataChildFunction> _dataChildFunction)
+        ManagerHome ManagerHome { get; set; }
+        public ListChildFunction(ManagerHome managerHome, DataFunction _dataFunction)
         {
             InitializeComponent();
-            this.pageListFunction = _pageListFunction;
+            this.ManagerHome = managerHome;
             this.dataFunction = _dataFunction;
-            if (Properties.Settings.Default.Type365 == "1" && _dataChildFunction == null)
-            {
-                dataChildFunction = new List<DataChildFunction>();
-                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Thiết lập cơ cấu tổ chức" });
-                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Thiết lập vị trí" });
-                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Quản lý nhân viên" });
-                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 4, nameChildFunction = "Danh sách ứng viên" });
-                dataChildFunction = dataChildFunction.ToList();
-                tb_TitleFunction.Text = "Quản lý công ty";
-            }
-            else if (Properties.Settings.Default.Type365 == "2" && _dataChildFunction == null)
-            {
-                dataChildFunction = new List<DataChildFunction>();
-                dataChildFunction.Add(new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Tạo đề xuất" });
-                dataChildFunction = dataChildFunction.ToList();
-                tb_TitleFunction.Text = "Tạo đề xuất";
-            }
-            else
             {
                 switch (_dataFunction.idFunction)
                 {
@@ -77,7 +60,7 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                         tb_TitleFunction.Text = _dataFunction.nameFunction;
                         break;
                 }
-                dataChildFunction = _dataChildFunction;
+                dataChildFunction = _dataFunction.dataChildFunction;
             }
         }
     }
