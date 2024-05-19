@@ -294,16 +294,16 @@ namespace CompanyManagers.Views.Home
             this.Close();
         }
 
-        private void logoInTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ShowOutPut(object sender, MouseButtonEventArgs e)
         {
-            if (bor_DetailAcount.Visibility == Visibility.Collapsed)
+            /*if (bor_DetailAcount.Visibility == Visibility.Collapsed)
             {
                 bor_DetailAcount.Visibility = Visibility.Visible;
             }
             else 
             {
                 bor_DetailAcount.Visibility = Visibility.Collapsed;
-            }
+            }*/
         }
 
         private void AdddscrollMain(object sender, MouseWheelEventArgs e)

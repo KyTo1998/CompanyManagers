@@ -23,11 +23,11 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                 PropertyChanged(this, new PropertyChangedEventArgs(newName));
             }
         }
-        private List<DataFunction> _dataFunction;
-        public List<DataFunction> dataFunction 
+        private List<DataFunction> _dataListFunction;
+        public List<DataFunction> dataListFunction 
         {
-            get { return _dataFunction; }
-            set { _dataFunction = value; OnPropertyChanged("dataFunction");}
+            get { return _dataListFunction; }
+            set { _dataListFunction = value; OnPropertyChanged("dataListFunction");}
         }
         private string _type365;
         public string type365
@@ -36,22 +36,21 @@ namespace CompanyManagers.Views.Functions.HomeFunction
             set { _type365 = value; OnPropertyChanged("type365");}
         }
         ManagerHome ManagerHome { get; set; }
-         private List<DataChildFunction> _dataChildFunction;
-        public List<DataChildFunction> dataChildFunction 
+         private List<DataChildFunction> _dataListChildFunction;
+        public List<DataChildFunction> dataListChildFunction
         {
-            get { return _dataChildFunction; }
-            set { _dataChildFunction = value; OnPropertyChanged("dataChildFunction");}
+            get { return _dataListChildFunction; }
+            set { _dataListChildFunction = value; OnPropertyChanged("dataListChildFunction");}
         }
         public ListFunction(ManagerHome managerHome)
         {
             InitializeComponent();
             ManagerHome = managerHome;
-            dataFunction = managerHome.dataFunctionHome.ToList();
+            dataListFunction = managerHome.dataFunctionHome.ToList();
             type365 = Properties.Settings.Default.Type365;
-            dataChildFunction = managerHome.dataFunctionHome.Find(x =>x.idFunction == 1).dataChildFunction;
+            dataListChildFunction = managerHome.dataFunctionHome.Find(x =>x.idFunction == 1).dataChildFunction;
             tb_TitleFunction.Text = managerHome.dataFunctionHome.Find(x =>x.idFunction == 1).nameFunction;
-            /*ListChildFunction lstChildFunction = new ListChildFunction(ManagerHome,);
-            ManagerHome.PageChildFunction.Content = lstChildFunction;*/
+            managerHome.dataFunctionHome.Find(x => x.idFunction == 1).statusClickFunction = true;
         }
 
         private void ShowListManager(object sender, MouseButtonEventArgs e)
@@ -59,12 +58,37 @@ namespace CompanyManagers.Views.Functions.HomeFunction
             try
             {
                 DataFunction dataFunction = (DataFunction)(sender as Grid).DataContext;
+                dataFunction.statusClickFunction = false;
                 if (dataFunction != null)
                 {
-                    dataChildFunction = dataFunction.dataChildFunction;
-                     tb_TitleFunction.Text = dataFunction.nameFunction;
-                   /* ListChildFunction lstChildFunction = new ListChildFunction(ManagerHome,dataFunction);
-                    ManagerHome.PageChildFunction.Content = lstChildFunction;*/
+                    dataListChildFunction = dataFunction.dataChildFunction;
+                    tb_TitleFunction.Text = dataFunction.nameFunction;
+                    foreach (var item in dataListFunction)
+                    {
+                        if (dataFunction.idFunction == item.idFunction)
+                        {
+                            item.statusClickFunction = true;
+                        }
+                        else
+                        {
+                            item.statusClickFunction = false;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void ShowLisChildManager(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                DataChildFunction dataChildFunction = (DataChildFunction)(sender as Grid).DataContext;
+                if (dataChildFunction != null)
+                {
+
                 }
             }
             catch (Exception)

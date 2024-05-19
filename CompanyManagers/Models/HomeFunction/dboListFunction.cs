@@ -47,6 +47,14 @@ namespace CompanyManagers.Models.HomeFunction
             get { return _colorFunction2; }
             set { _colorFunction2 = value; OnPropertyChanged("colorFunction2");}
         }
+
+        private bool _statusClickFunction;
+        public bool statusClickFunction
+        {
+            get { return _statusClickFunction; }
+            set { _statusClickFunction = value; OnPropertyChanged("statusClickFunction"); }
+        }
+
         private List<DataChildFunction> _dataChildFunction;
 
         public List<DataChildFunction> dataChildFunction 

@@ -14,13 +14,23 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" x:Name="pageTitle" MouseLeftButtonDown="pageTitle_MouseDown" Background="{DynamicResource colorTitlePopupThemeGreen}" CornerRadius="10 10 0 0">
+            <Border Grid.Row="0" x:Name="pageTitle" Background="{StaticResource colorTitlePopupThemeGreen}" MouseLeftButtonDown="ShowOutPut" CornerRadius="10 10 0 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" x:Name="logoInTitle" MouseLeftButtonDown="logoInTitle_MouseLeftButtonDown" Background="Transparent" Cursor="Hand">
+                    <Grid Grid.Column="0" x:Name="logoInTitle" Cursor="Hand">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="True">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition/>
@@ -69,7 +79,7 @@
                     <ColumnDefinition Width="130"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" x:Name="btn_BackToBack" Height="40" Cursor="Hand" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <Border Grid.Column="0" x:Name="btn_BackToBack"  Height="40" Cursor="Hand" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="Transparent"/>
@@ -122,14 +132,24 @@
                 </ScrollViewer>
             </Border>
         </Grid>
-        <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Visibility="Collapsed">
+        <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" Visibility="Collapsed" VerticalAlignment="Top" Background="Transparent">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=logoInTitle,Path=IsEnabled}" Value="true">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Background="#ffffff" CornerRadius="10">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="10" Opacity="0.4" ShadowDepth="0" />
                 </Border.Effect>
                 <StackPanel>
                     <Border x:Name="btn_ThongTinTK" Width="230" Height="40" Background="Transparent" CornerRadius="15,15,0,0" Cursor="Hand">
-                        <Border.Resources>
+                        <Border.Style>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="Background" Value="#0000" />
                                 <Style.Triggers>
@@ -138,20 +158,74 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
-                        </Border.Resources>
+                        </Border.Style>
                         <DockPanel Margin="12,0,0,0">
                             <Border Width="17" Height="17">
-                                <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="{DynamicResource iconAcount1}" Fill="#474747" Stretch="Fill" />
+                                <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="{DynamicResource iconAcount1}" Stretch="Fill">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="Fill" Value="{StaticResource colorText1}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=btn_ThongTinTK, Path=IsMouseOver}" Value="true">
+                                                    <Setter Property="Fill" Value="{StaticResource ColorBlue}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
                             </Border>
-                            <TextBlock Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#474747" Text="Thông tin tài khoản" />
+                            <TextBlock Margin="16,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Text="Thông tin tài khoản">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=btn_ThongTinTK, Path=IsMouseOver}" Value="true">
+                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </DockPanel>
                     </Border>
                     <Border x:Name="LogOut" Width="230" Height="40" Background="Transparent" Cursor="Hand">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="#0000" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="{DynamicResource colorMoveMouseItem}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <DockPanel Margin="12,0,0,0">
                             <Border Width="17" Height="17">
-                                <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="{DynamicResource iconLogout}" Stretch="Fill" Stroke="#474747" StrokeThickness="2" />
+                                <Path HorizontalAlignment="Center" VerticalAlignment="Center" Data="{DynamicResource iconLogout}" Stretch="Fill" StrokeThickness="2">
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="Stroke" Value="{StaticResource colorText1}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=LogOut, Path=IsMouseOver}" Value="true">
+                                                    <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
                             </Border>
-                            <TextBlock Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Foreground="#474747" Text="Đăng xuất" />
+                            <TextBlock Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Text="Đăng xuất">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=LogOut, Path=IsMouseOver}" Value="true">
+                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </DockPanel>
                     </Border>
                 </StackPanel>
