@@ -11,7 +11,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" x:Name="Title"  Height="40" Background="{StaticResource colorMoveMouseItem}" MouseLeftButtonDown="Grid_MouseDown">
+            <Grid Grid.Row="0" x:Name="TitleLoginHome"  Height="40" Background="{StaticResource colorMoveMouseItem}" MouseLeftButtonDown="Grid_MouseDown">
                 <Path VerticalAlignment="Center" Data="{StaticResource iconManager}" Stretch="Uniform" Height="22"  Margin="10,0,0,0" HorizontalAlignment="Left" Width="25">
                     <Path.Fill>
                         <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">

@@ -164,7 +164,7 @@ namespace CompanyManagers.Views.Login
                         ManagerHome = new ManagerHome(dataLogin.data.data, this);
                         try
                         {
-                            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(async () =>
+                            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
                             {
                                 var workingArea = System.Windows.SystemParameters.WorkArea;
                                 ManagerHome.Width = workingArea.Right - 300;

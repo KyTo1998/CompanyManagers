@@ -6,206 +6,208 @@
              xmlns:local="clr-namespace:CompanyManagers.Views.Functions.HomeFunction"
              mc:Ignorable="d" Background="Transparent">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="10">
-            <ListView HorizontalAlignment="Center" x:Name="lsvListFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataFunction, RelativeSource={RelativeSource AncestorType=UserControl}}"  BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor},Path=ActualWidth}"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <Grid Width="400" x:Name="FunctionManager" MouseLeftButtonUp="ShowListManager">
-                                        <Grid.Style>
-                                            <Style TargetType="Grid">
-                                                <Setter Property="Background" Value="Transparent"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="Transparent"/>
-                                                    </Trigger>
-                                                    <Trigger Property="IsEnabled" Value="True">
-                                                        <Setter Property="Background" Value="Transparent"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Grid.Style>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50*"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border Style="{StaticResource BorderListFunction01}" Background="{Binding colorFunction1}" Margin="334,0,0,0" Width="48"/>
-                                        <Border Cursor="Hand" Style="{StaticResource BorderListFunction02}">
-                                            <Border.Background>
-                                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                                    <LinearGradientBrush.RelativeTransform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform CenterY="0.5" CenterX="0.5"/>
-                                                            <SkewTransform CenterX="0.5" CenterY="0.5"/>
-                                                            <RotateTransform Angle="85" CenterX="0.5" CenterY="0.5"/>
-                                                            <TranslateTransform/>
-                                                        </TransformGroup>
-                                                    </LinearGradientBrush.RelativeTransform>
-                                                    <GradientStop Color="#FFFFFF"/>
-                                                    <GradientStop Color="#FFBFF7FD" Offset ="0.7"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock x:Name="txbQuanLyCongTy" Text="{Binding nameFunction}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
-                                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
-                                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Style="{StaticResource BorderListFunction03}">
-                                            <Border.Background>
-                                                <LinearGradientBrush EndPoint="2,1" StartPoint="{DynamicResource LinearGradientBrushStartPoint1}">
-                                                    <LinearGradientBrush.Transform>
-                                                        <TransformGroup>
-                                                            <ScaleTransform/>
-                                                            <SkewTransform AngleX="50" AngleY="20"/>
-                                                            <RotateTransform/>
-                                                            <TranslateTransform/>
-                                                        </TransformGroup>
-                                                    </LinearGradientBrush.Transform>
-                                                    <GradientStop Color="{Binding colorFunction1}"/>
-                                                    <GradientStop Color="{Binding colorFunction2}" Offset="0"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                        </Border>
-                                        <Border Style="{StaticResource ListFunction04}">
-                                            <TextBlock Text="{Binding idFunction}" HorizontalAlignment="Center" VerticalAlignment='Center' FontWeight="Medium" FontFamily="Salsa">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
-                                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
-                                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                        <Border Height="50" Margin="250,35,90,35">
-                                            <Image Source="{DynamicResource iconGachDrawingImage}" Margin="42,0,-42,0"/>
-                                        </Border>
-                                        <Border Height="35" Width="35" Margin="325 0 0 0">
-                                            <Grid>
-                                                <Path Margin="-15,0,15,0">
-                                                    <Path.Style>
-                                                        <Style TargetType="Path">
-                                                            <Setter Property="Data" Value="{x:Null}"/>
-                                                            <Setter Property="Stroke" Value="{StaticResource colorText1}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="10">
+                <ListView HorizontalAlignment="Center" x:Name="lsvListFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataFunction, RelativeSource={RelativeSource AncestorType=UserControl}}"  BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel ></StackPanel> <!--Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor},Path=ActualWidth}"-->
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Grid Width="400" x:Name="FunctionManager" MouseLeftButtonUp="ShowListManager">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsEnabled" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50*"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Style="{StaticResource BorderListFunction01}" Background="{Binding colorFunction1}" Margin="334,0,0,0" Width="48"/>
+                                            <Border Cursor="Hand" Style="{StaticResource BorderListFunction02}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                        <LinearGradientBrush.RelativeTransform>
+                                                            <TransformGroup>
+                                                                <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                                                                <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                                                                <RotateTransform Angle="85" CenterX="0.5" CenterY="0.5"/>
+                                                                <TranslateTransform/>
+                                                            </TransformGroup>
+                                                        </LinearGradientBrush.RelativeTransform>
+                                                        <GradientStop Color="#FFFFFF"/>
+                                                        <GradientStop Color="#FFBFF7FD" Offset ="0.7"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <TextBlock x:Name="txbQuanLyCongTy" Text="{Binding nameFunction}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
-                                                                    <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
                                                                 </DataTrigger>
                                                                 <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
-                                                                    <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding idFunction}" Value="1">
-                                                                    <Setter Property="Data" Value="{DynamicResource iconGlobal}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding idFunction}" Value="2">
-                                                                    <Setter Property="Data" Value="{DynamicResource iconTimeKeeping}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding idFunction}" Value="3">
-                                                                    <Setter Property="Data" Value="{DynamicResource iconData}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding idFunction}" Value="4">
-                                                                    <Setter Property="Data" Value="{DynamicResource iconNote}"/>
+                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>
-                                                    </Path.Style>
-                                                </Path>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-        </Grid>
-        <Grid Grid.Column="1" x:Name="grFunctionTimeKeeping" Margin="10 35 10 10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
-                <RowDefinition Height="6*" />
-            </Grid.RowDefinitions>
-            <Border Grid.Row="0">
-                <TextBlock x:Name="tb_TitleFunction" Foreground="{StaticResource colorBlue}" FontSize="26" FontWeight="Medium" HorizontalAlignment="Center"/>
-            </Border>
-            <ListView Grid.Row="1" x:Name="lsvListChildFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataChildFunction, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="10 0 10 10" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl,Mode=FindAncestor},Path=ActualWidth}"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <Grid Grid.Row="1" x:Name="btnCaiDatWifi" Cursor="Hand" VerticalAlignment="Center" Margin="0 0 0 20">
-                                        <Grid.Style>
-                                            <Style TargetType="Grid">
-                                                <Setter Property="Background" Value="Transparent"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="Transparent"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Grid.Style>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="50" />
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border Grid.Column="0" CornerRadius="50" Height="50" Background="{StaticResource ColorBlue}">
-                                            <TextBlock Foreground="{StaticResource colorWriter}" Text="{Binding idChildFunction}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" FontFamily="Salsa"/>
-                                        </Border>
-                                        <Border x:Name="bdFunction1" Grid.Column="1" Margin="10 0 0 0">
-                                            <TextBlock x:Name="txbFunction1" Text="{Binding nameChildFunction}" FontSize="20" FontWeight="Medium" VerticalAlignment="Center" FontFamily="Salsa">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=btnCaiDatWifi, Path=IsMouseOver}" Value="true">
-                                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
-                                            </TextBlock>
-                                        </Border>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
+                                            <Border Style="{StaticResource BorderListFunction03}">
+                                                <Border.Background>
+                                                    <LinearGradientBrush EndPoint="2,1" StartPoint="{DynamicResource LinearGradientBrushStartPoint1}">
+                                                        <LinearGradientBrush.Transform>
+                                                            <TransformGroup>
+                                                                <ScaleTransform/>
+                                                                <SkewTransform AngleX="50" AngleY="20"/>
+                                                                <RotateTransform/>
+                                                                <TranslateTransform/>
+                                                            </TransformGroup>
+                                                        </LinearGradientBrush.Transform>
+                                                        <GradientStop Color="{Binding colorFunction1}"/>
+                                                        <GradientStop Color="{Binding colorFunction2}" Offset="0"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <Border Style="{StaticResource ListFunction04}">
+                                                <TextBlock Text="{Binding idFunction}" HorizontalAlignment="Center" VerticalAlignment='Center' FontWeight="Medium" FontFamily="Salsa">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
+                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
+                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
+                                            <Border Height="50" Margin="250,35,90,35">
+                                                <Image Source="{DynamicResource iconGachDrawingImage}" Margin="42,0,-42,0"/>
+                                            </Border>
+                                            <Border Height="35" Width="35" Margin="325 0 0 0">
+                                                <Grid>
+                                                    <Path Margin="-15,0,15,0">
+                                                        <Path.Style>
+                                                            <Style TargetType="Path">
+                                                                <Setter Property="Data" Value="{x:Null}"/>
+                                                                <Setter Property="Stroke" Value="{StaticResource colorText1}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true">
+                                                                        <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="false">
+                                                                        <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding idFunction}" Value="1">
+                                                                        <Setter Property="Data" Value="{DynamicResource iconGlobal}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding idFunction}" Value="2">
+                                                                        <Setter Property="Data" Value="{DynamicResource iconTimeKeeping}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding idFunction}" Value="3">
+                                                                        <Setter Property="Data" Value="{DynamicResource iconData}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding idFunction}" Value="4">
+                                                                        <Setter Property="Data" Value="{DynamicResource iconNote}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Path.Style>
+                                                    </Path>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
+            <Grid Grid.Column="1" x:Name="gr_ChildFunction" Margin="10 35 10 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="6*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0">
+                    <TextBlock x:Name="tb_TitleFunction" Foreground="{StaticResource colorBlue}" FontSize="26" FontWeight="Medium" HorizontalAlignment="Center"/>
+                </Border>
+                <ListView Grid.Row="1" x:Name="lsvListChildFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataChildFunction, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="10 0 10 10" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Grid Grid.Row="1" x:Name="btnCaiDatWifi" Cursor="Hand" VerticalAlignment="Center" Margin="0 0 0 20">
+                                            <Grid.Style>
+                                                <Style TargetType="Grid">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="Transparent"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50" />
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <Border Grid.Column="0" CornerRadius="50" Height="50" Background="{StaticResource ColorBlue}">
+                                                <TextBlock Foreground="{StaticResource colorWriter}" Text="{Binding idChildFunction}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" FontFamily="Salsa"/>
+                                            </Border>
+                                            <Border x:Name="bdFunction1" Grid.Column="1" Margin="10 0 0 0">
+                                                <TextBlock x:Name="txbFunction1" Text="{Binding nameChildFunction}" FontSize="20" FontWeight="Medium" VerticalAlignment="Center" FontFamily="Salsa">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=btnCaiDatWifi, Path=IsMouseOver}" Value="true">
+                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Border>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
