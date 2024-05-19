@@ -110,11 +110,7 @@
     </ApplicationDefinition>
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
-    <Compile Include="Models\HomeFunction\dboListChildFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
-    <Compile Include="Views\Functions\HomeFunction\ListChildFunction.xaml.cs">
-      <DependentUpon>ListChildFunction.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Functions\HomeFunction\ListFunction.xaml.cs">
       <DependentUpon>ListFunction.xaml</DependentUpon>
     </Compile>
@@ -130,10 +126,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\Style.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Functions\HomeFunction\ListChildFunction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
