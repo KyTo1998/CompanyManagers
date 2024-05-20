@@ -67,6 +67,10 @@ namespace CompanyManagers.Views.Login
             txtEmail.Text = userName;
             stpSelectLogin.Visibility = Visibility.Collapsed;
             grFormLogin.Visibility = Visibility.Visible;
+            if (Properties.Settings.Default.Type365 == "1")
+                tb_TitelLogin.Text = "Tài khoản công ty";
+            else tb_TitelLogin.Text = "Tài khoản nhân viên";
+            
         }
         private void openPagelogin(object sender, MouseButtonEventArgs e)
         {

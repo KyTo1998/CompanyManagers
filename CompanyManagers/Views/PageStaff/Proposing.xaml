@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="CompanyManagers.Views.PageStaff.Proposing"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="Hôm nay, ngày 20/05/2024" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+            <Grid Grid.Column="1" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Cursor="Hand" Margin="0 0 5 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{StaticResource colorBackgroundItem1}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <DockPanel HorizontalAlignment="Center" Margin="5">
+                        <Border Height="20" Width="20" Margin="0 3 5 0" BorderThickness="1.5" CornerRadius="15" BorderBrush="{StaticResource colorBlue}">
+                            <TextBlock Text="+" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-7,0,0"/>
+                        </Border>
+                        <TextBlock Text="Tạo đề xuất" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+                    </DockPanel>
+                </Border>
+                <Border Grid.Column="1" Cursor="Hand" Margin="5 0 0 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{StaticResource colorBackgroundItem1}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Text="Đề xuất của tôi" HorizontalAlignment="Center" Margin="5" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+                </Border>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0 20 0 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Cursor="Hand" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
+                </Border.Effect>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageGreen}"/>
+                    <TextBlock Text="Tổng số đề xuất" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageGreen}"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" Cursor="Hand" Margin="10 0 10 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
+                </Border.Effect>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageOrange}"/>
+                    <TextBlock Text="Đề xuất đang chờ duyệt" TextAlignment="Center" TextWrapping="Wrap" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageOrange}"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="2" Cursor="Hand" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
+                </Border.Effect>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextMessageLink}"/>
+                    <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextMessageLink}"/>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="3" Cursor="Hand" Margin="10 0 0 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
+                </Border.Effect>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource ColorPrink}"/>
+                    <TextBlock Text="Đề xuất đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource ColorPrink}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
