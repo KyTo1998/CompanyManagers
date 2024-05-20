@@ -88,7 +88,15 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                 DataChildFunction dataChildFunction = (DataChildFunction)(sender as Grid).DataContext;
                 if (dataChildFunction != null)
                 {
+                    if (Properties.Settings.Default.Type365 == "2")
+                    {
+                        switch (dataChildFunction.nameChildFunction)
+                        {
+                            case "Loại đề xuất":
 
+                                break;
+                        }
+                    }
                 }
             }
             catch (Exception)

@@ -227,7 +227,7 @@ namespace CompanyManagers.Views.Home
                         colorFunction2 = "#E8811A",
                         dataChildFunction = new List<DataChildFunction> 
                         {  
-                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Tạo đề xuất"}
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Loại đề xuất"}
                         } 
                     });
                     dataFunctionHome.Add(new DataFunction() 

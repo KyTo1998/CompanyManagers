@@ -132,7 +132,7 @@
                 </ScrollViewer>
             </Border>
         </Grid>
-        <Frame IsTabStop="False" x:Name="PagePopup" Margin="0,100,0,0" NavigationUIVisibility="Hidden"></Frame>
+        <Frame IsTabStop="False" x:Name="PagePopup" Margin="0,60,0,0" NavigationUIVisibility="Hidden"></Frame>
         <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" Visibility="Collapsed" VerticalAlignment="Top" Background="Transparent">
             <Grid.Style>
                 <Style TargetType="Grid">
