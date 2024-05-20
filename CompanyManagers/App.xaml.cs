@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using System.Windows;
 
 namespace CompanyManagers
@@ -17,7 +12,7 @@ namespace CompanyManagers
         {
             try
             {
-                if (e.Args.Length > 0)
+                /*if (e.Args.Length > 0)
                 {
                     CompanyManagers.Properties.Settings.Default.UserLinkApp = e.Args[0];
                     CompanyManagers.Properties.Settings.Default.PassMD5 = e.Args[1];
@@ -30,7 +25,7 @@ namespace CompanyManagers
                     CompanyManagers.Properties.Settings.Default.PassMD5 = "";
                     CompanyManagers.Properties.Settings.Default.Type365 = "";
                     CompanyManagers.Properties.Settings.Default.IdDeXuat = "";
-                }
+                }*/
             }
             catch { }
             

@@ -108,6 +108,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Popups\PagePopupGrayColor.xaml.cs">
+      <DependentUpon>PagePopupGrayColor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
@@ -117,6 +120,13 @@
     <Compile Include="Views\Login\LoginHome.xaml.cs">
       <DependentUpon>LoginHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Logout\PageLogout.xaml.cs">
+      <DependentUpon>PageLogout.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Common\Popups\PagePopupGrayColor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\ResourceImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Login\LoginHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Logout\PageLogout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,5 +226,6 @@
   <ItemGroup>
     <Resource Include="icons8-512.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

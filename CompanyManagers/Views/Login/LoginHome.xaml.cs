@@ -12,15 +12,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace CompanyManagers.Views.Login
@@ -62,7 +57,17 @@ namespace CompanyManagers.Views.Login
             checkRememberPass(Properties.Settings.Default.RememberMe);
             Pass = "";
         }
-
+        public LoginHome(string statusLogout, string userName)
+        {
+            InitializeComponent();
+            this.DataContext = this;
+            checkRememberPass(Properties.Settings.Default.RememberMe);
+            Pass = "";
+            this.Show();
+            txtEmail.Text = userName;
+            stpSelectLogin.Visibility = Visibility.Collapsed;
+            grFormLogin.Visibility = Visibility.Visible;
+        }
         private void openPagelogin(object sender, MouseButtonEventArgs e)
         {
             if ((sender as Border).Name.Equals("btnCompany"))
@@ -157,26 +162,47 @@ namespace CompanyManagers.Views.Login
                 if (response.IsSuccessStatusCode)
                 {
                     RootLogin dataLogin = JsonConvert.DeserializeObject<RootLogin>(response.Content);
-                    if (dataLogin.data != null)
+                    if (dataLogin.data.data.type.ToString() != TypeLogin)
                     {
-                        this.Hide();
-                        CheckTypeSaveAcount(typeLogin, userName, passWord, dataLogin.data.data.access_token);
-                        ManagerHome = new ManagerHome(dataLogin.data.data, this);
-                        try
+                        if (dataLogin.data.data.type == 1)
                         {
-                            await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
-                            {
-                                var workingArea = System.Windows.SystemParameters.WorkArea;
-                                ManagerHome.Width = workingArea.Right - 300;
-                                ManagerHome.Height = workingArea.Bottom - 100;
-                                ManagerHome.Show();
-                            }));
+                            lbWrongUserPass.Visibility = Visibility.Visible;
+                            lbWrongUserPass.Text = "Tài khoản đang đăng nhập là tài khoản công ty!";
                         }
-                        catch
+                        else
                         {
-                            ManagerHome.Show();
+                            lbWrongUserPass.Visibility = Visibility.Visible;
+                            lbWrongUserPass.Text = "Tài khoản đang đăng nhập là tài khoản nhân viên!";
                         }
                     }
+                    else
+                    {
+                        if (dataLogin.data != null)
+                        {
+                            this.Hide();
+                            CheckTypeSaveAcount(typeLogin, userName, passWord, dataLogin.data.data.access_token);
+                            ManagerHome = new ManagerHome(dataLogin.data.data, this);
+                            try
+                            {
+                                await Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
+                                {
+                                    var workingArea = System.Windows.SystemParameters.WorkArea;
+                                    ManagerHome.Width = workingArea.Right - 300;
+                                    ManagerHome.Height = workingArea.Bottom - 100;
+                                    ManagerHome.Show();
+                                }));
+                            }
+                            catch
+                            {
+                                ManagerHome.Show();
+                            }
+                        }
+                    } 
+                }
+                else
+                {
+                    lbWrongUserPass.Visibility = Visibility.Visible;
+                    lbWrongUserPass.Text = "Tài khoản hoặc mật khẩu không chính xác!";
                 }
             }
             catch (Exception)
@@ -239,9 +265,7 @@ namespace CompanyManagers.Views.Login
             {
                 if (txtEmail.Text.Length != 0 && (regex.IsMatch(txtEmail.Text) || regexPhone.IsMatch(txtEmail.Text) || regexPhone1.IsMatch(txtEmail.Text)))
                 {
-                    btLogin.IsEnabled = false;
-                    btLogin.Cursor = Cursors.Wait;
-                    btLogin.Background = (System.Windows.Media.Brush)new BrushConverter().ConvertFrom("#FF4C5BD4");
+                    btLogin.Cursor = Cursors.Hand;
                     LoginStart(TypeLogin, txtEmail.Text, txtPasswordHide.Password);
                 }
                 else if ((pass.Length == 0))
@@ -260,6 +284,7 @@ namespace CompanyManagers.Views.Login
             }
             catch (Exception)
             {
+
             }
         }
         private void LoginEnter(object sender, KeyEventArgs e)
@@ -268,11 +293,16 @@ namespace CompanyManagers.Views.Login
             {
                 CheckLogin();
             }
-            
         }
         private void LoginClick(object sender, MouseButtonEventArgs e)
         {
-            CheckLogin();
+            try
+            {
+                CheckLogin();
+            }
+            catch (Exception)
+            {
+            }
         }
         private void hideShowPassword(object sender, MouseButtonEventArgs e)
         {

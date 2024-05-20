@@ -1,24 +1,15 @@
-﻿using CompanyManagers.Models.HomeFunction;
+﻿using CompanyManagers.Common.Popups;
+using CompanyManagers.Models.HomeFunction;
 using CompanyManagers.Models.Logins;
 using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
+using CompanyManagers.Views.Logout;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CompanyManagers.Views.Home
 {
@@ -108,7 +99,7 @@ namespace CompanyManagers.Views.Home
             get { return _UserCurrent; }
             set { _UserCurrent = value; OnPropertyChanged("UserCurrent");}
         }
-
+         public PagePopupGrayColor PagePopupGrayColor { get; set; }
         LoginHome loginHome { get; set; }
         public ManagerHome(DataUserLogin userCurrent, LoginHome _loginHome)
         {
@@ -296,19 +287,33 @@ namespace CompanyManagers.Views.Home
 
         private void ShowOutPut(object sender, MouseButtonEventArgs e)
         {
-            /*if (bor_DetailAcount.Visibility == Visibility.Collapsed)
+            if (bor_DetailAcount.Visibility == Visibility.Collapsed)
             {
                 bor_DetailAcount.Visibility = Visibility.Visible;
             }
-            else 
+            else
             {
                 bor_DetailAcount.Visibility = Visibility.Collapsed;
-            }*/
+            }
         }
 
         private void AdddscrollMain(object sender, MouseWheelEventArgs e)
         {
             scrollMain.ScrollToVerticalOffset(scrollMain.VerticalOffset - e.Delta);
+        }
+
+        private void ShowPopupLogout(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                PagePopupGrayColor = new PagePopupGrayColor(this);
+                PagePopupGrayColor.Popup1.NavigationService.Navigate(new PageLogout(this, loginHome));
+                PagePopup.NavigationService.Navigate(PagePopupGrayColor);
+                bor_DetailAcount.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception)
+            {
+            } 
         }
     }
 }

@@ -1,0 +1,73 @@
+﻿<Page x:Class="CompanyManagers.Views.Logout.PageLogout"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CompanyManagers.Views.Logout"
+             mc:Ignorable="d" Title="PageLogout">
+    <Grid Width="335" Height="230">
+        <Border  Effect="{StaticResource z-depth1}" x:Name="borderPopupLogout" CornerRadius="10"  Background="{DynamicResource colorWriter}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Border>
+        <StackPanel Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <Path Data="{StaticResource LogoLogout}" Fill="{DynamicResource colorBlue}" Width="50" Stretch="Fill" Height="50" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="tb_HeaderLogout" Foreground="{DynamicResource colorBlue}" Margin="0 15 0 15" FontSize="20" FontWeight="Bold" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Text="Đăng xuất"></TextBlock>
+            <TextBlock x:Name="tb_TextExplain" Foreground="{DynamicResource colorBlue}" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Bạn chắc chắn muốn đăng xuất?"></TextBlock>
+            <Grid HorizontalAlignment="Center" Width="295" Margin="0 15 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" x:Name="btnCancel" Cursor="Hand" MinWidth="125" Height="40" CornerRadius="15" BorderThickness="1" BorderBrush="{DynamicResource colorBlue}" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="CancelLogout">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{StaticResource colorWriter}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Text="Hủy" TextAlignment="Center" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorBlue}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=btnCancel, Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+                <Border Grid.Column="1" x:Name="btnYes" Cursor="Hand" MinWidth="125" Height="40" BorderBrush="{StaticResource colorBlue}" CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="ConfirmLogout">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Background" Value="{StaticResource colorBlue}"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock x:Name="tb_ButtonLogout" Text="Đăng xuất" TextAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=btnYes, Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+            </Grid>
+           
+        </StackPanel>
+    </Grid>
+</Page>

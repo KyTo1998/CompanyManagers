@@ -132,6 +132,7 @@
                 </ScrollViewer>
             </Border>
         </Grid>
+        <Frame IsTabStop="False" x:Name="PagePopup" Margin="0,100,0,0" NavigationUIVisibility="Hidden"></Frame>
         <Grid x:Name="bor_DetailAcount" Width="230" Margin="0,60,10,0" HorizontalAlignment="Left" Visibility="Collapsed" VerticalAlignment="Top" Background="Transparent">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -188,7 +189,7 @@
                             </TextBlock>
                         </DockPanel>
                     </Border>
-                    <Border x:Name="LogOut" Width="230" Height="40" Background="Transparent" Cursor="Hand">
+                    <Border x:Name="LogOut" MouseLeftButtonUp="ShowPopupLogout" Width="230" Height="40" Background="Transparent" Cursor="Hand">
                         <Border.Style>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="Background" Value="#0000" />
