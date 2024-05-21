@@ -1,6 +1,6 @@
 ﻿using CompanyManagers.Models.HomeFunction;
 using CompanyManagers.Views.Home;
-using CompanyManagers.Views.PageStaff;
+using CompanyManagers.Views.PageStaff.Proposing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -94,8 +94,9 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                         switch (dataChildFunction.nameChildFunction)
                         {
                             case "Loại đề xuất":
-                                Proposing proposing = new Proposing();
-                                ManagerHome.PageFunction.Content = proposing;
+                                ProposingHome proposingHome = new ProposingHome(ManagerHome);
+                                ManagerHome.PageFunction.Content = proposingHome;
+                                ManagerHome.backToBack = "proposingHomeBack";
                                 break;
                         }
                     }

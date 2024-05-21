@@ -11,5 +11,9 @@ namespace CompanyManagers.Controllers
         #region Login
         public const string apiLogin = "https://api.timviec365.vn/api/qlc/employee/login";
         #endregion
+        #region Proposing
+        public const string apiShowHomeProposing = "http://210.245.108.202:3005/api/vanthu/catedx/showHome";
+         public const string apiCategoryProposing = "http://210.245.108.202:3005/api/vanthu/catedx/showlistcate";
+        #endregion
     }
 }

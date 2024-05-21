@@ -99,6 +99,13 @@ namespace CompanyManagers.Views.Home
             get { return _UserCurrent; }
             set { _UserCurrent = value; OnPropertyChanged("UserCurrent");}
         }
+
+        private string _backToBack;
+        public string backToBack 
+        {
+            get { return _backToBack; }
+            set { _backToBack = value; OnPropertyChanged("backToBack");}
+        }
          public PagePopupGrayColor PagePopupGrayColor { get; set; }
         LoginHome loginHome { get; set; }
         public ManagerHome(DataUserLogin userCurrent, LoginHome _loginHome)
@@ -314,6 +321,21 @@ namespace CompanyManagers.Views.Home
             catch (Exception)
             {
             } 
+        }
+
+        private void BackToBack(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if(backToBack == "proposingHomeBack")
+                {
+                    ListFunction lstFunction = new ListFunction(this);
+                    PageFunction.Content = lstFunction;
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

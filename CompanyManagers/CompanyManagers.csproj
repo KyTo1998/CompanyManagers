@@ -62,15 +62,6 @@
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Toolkit.Win32.UI.XamlHost.Managed, Version=6.1.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Toolkit.UI.XamlHost.6.1.2\lib\net462\Microsoft.Toolkit.Win32.UI.XamlHost.Managed.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Toolkit.Wpf.UI.Controls, Version=6.1.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Toolkit.Wpf.UI.Controls.6.1.2\lib\net462\Microsoft.Toolkit.Wpf.UI.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Toolkit.Wpf.UI.XamlHost, Version=6.1.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Toolkit.Wpf.UI.XamlHost.6.1.2\lib\net462\Microsoft.Toolkit.Wpf.UI.XamlHost.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -132,6 +123,8 @@
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
+    <Compile Include="Models\ModelsPageStaff\dboCategoryProposing.cs" />
+    <Compile Include="Models\ModelsPageStaff\dboProposingHome.cs" />
     <Compile Include="Views\Functions\HomeFunction\ListFunction.xaml.cs">
       <DependentUpon>ListFunction.xaml</DependentUpon>
     </Compile>
@@ -141,8 +134,8 @@
     <Compile Include="Views\Logout\PageLogout.xaml.cs">
       <DependentUpon>PageLogout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PageStaff\Proposing.xaml.cs">
-      <DependentUpon>Proposing.xaml</DependentUpon>
+    <Compile Include="Views\PageStaff\Proposing\ProposingHome.xaml.cs">
+      <DependentUpon>ProposingHome.xaml</DependentUpon>
     </Compile>
     <Page Include="Common\Popups\PagePopupGrayColor.xaml">
       <SubType>Designer</SubType>
@@ -192,7 +185,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PageStaff\Proposing.xaml">
+    <Page Include="Views\PageStaff\Proposing\ProposingHome.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
