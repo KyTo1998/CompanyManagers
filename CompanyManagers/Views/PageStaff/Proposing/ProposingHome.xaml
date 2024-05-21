@@ -17,13 +17,13 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" x:Name="tb_TitelTime" VerticalAlignment="Center"  FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+            <TextBlock Grid.Column="0" x:Name="tb_TitelTime" VerticalAlignment="Center" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
             <Grid Grid.Column="1" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Cursor="Hand" Margin="0 0 5 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
+                <Border Grid.Column="0" MouseLeftButtonUp="ShowListCategoryProposing" Cursor="Hand" Margin="0 0 5 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="{StaticResource colorBackgroundItem1}"/>
@@ -68,7 +68,7 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountSumProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageGreen}"/>
+                    <TextBlock x:Name="tb_CountSumProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageGreen}"/>
                     <TextBlock Text="Tổng số đề xuất" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageGreen}"/>
                 </StackPanel>
             </Border>
@@ -77,7 +77,7 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountWaitProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageOrange}"/>
+                    <TextBlock x:Name="tb_CountWaitProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageOrange}"/>
                     <TextBlock Text="Đề xuất đang chờ duyệt" TextAlignment="Center" TextWrapping="Wrap" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageOrange}"/>
                 </StackPanel>
             </Border>
@@ -86,7 +86,7 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextMessageLink}"/>
+                    <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorTextMessageLink}"/>
                     <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextMessageLink}"/>
                 </StackPanel>
             </Border>
@@ -95,7 +95,7 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountApprovedProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource ColorPrink}"/>
+                    <TextBlock x:Name="tb_CountApprovedProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource ColorPrink}"/>
                     <TextBlock Text="Đề xuất đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource ColorPrink}"/>
                 </StackPanel>
             </Border>

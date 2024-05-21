@@ -266,11 +266,6 @@ namespace CompanyManagers.Views.Home
             }
             catch (Exception) { }
         }
-        private void pageTitle_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
-        }
-
         private void Minimimize_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -336,6 +331,11 @@ namespace CompanyManagers.Views.Home
             catch (Exception)
             {
             }
+        }
+
+        private void pageTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
         }
     }
 }

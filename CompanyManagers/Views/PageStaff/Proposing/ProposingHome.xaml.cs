@@ -55,7 +55,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             managerHome = _managerHome;
             tb_TitelTime.Text = $"Hôm Nay, ngày {DateTime.Now.ToString("dd/MM/yyyy")}";
             GetCategoryProposing();
-            GetProposingShowHome();
         }
 
         public async void GetProposingShowHome()
@@ -77,7 +76,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             listProposingHome = dataProposing.data.data.ToList();
                             foreach (var item in listProposingHome)
                             {
-                                item.type_dx_string = listCategoyProposingHome.Find(x => x._id == item.type_dx).name_cate_dx;
+                                item.type_dx_string = listCategoyProposingHome.Find(x => x._id == item.type_dx.ToString()).name_cate_dx;
                             }
                         }
                     };
@@ -100,10 +99,23 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     {
                         Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(UnicodeEncoding.UTF8.GetString(e.Result));
                         listCategoyProposingHome = dataCategoryProposing.data.showcatedx.ToList();
-                        /*GetProposingShowHome();*/
+                        GetProposingShowHome();
                     };
                      await request.UploadValuesTaskAsync(UrlApi.apiCategoryProposing, request.Headers);
                 }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void ShowListCategoryProposing(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                ListProposing listProposing = new ListProposing(managerHome, listCategoyProposingHome);
+                managerHome.PageFunction.Content = listProposing;
+                managerHome.backToBack = "proposingListCategoryBack";
             }
             catch (Exception)
             {
