@@ -120,6 +120,12 @@
     <Compile Include="Common\Popups\PagePopupGrayColor.xaml.cs">
       <DependentUpon>PagePopupGrayColor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Tool\DatePicker.xaml.cs">
+      <DependentUpon>DatePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Tool\SearchBar.xaml.cs">
+      <DependentUpon>SearchBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Extention.cs" />
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
@@ -145,6 +151,14 @@
       <DependentUpon>ProposingHome.xaml</DependentUpon>
     </Compile>
     <Page Include="Common\Popups\PagePopupGrayColor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Tool\DatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Tool\SearchBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompanyManagers.Views.Home;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,42 @@ namespace CompanyManagers.Views.PageStaff.Proposing
     /// </summary>
     public partial class ListProposingMine : UserControl
     {
-        public ListProposingMine()
+        ManagerHome managerHome { get; set; }
+        public ListProposingMine(ManagerHome _managerHome)
         {
             InitializeComponent();
+            managerHome = _managerHome;
+        }
+
+        private void Send_SelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+        private void SendCatePro_SelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+        private void TimeSearchStartSend(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+        private void TimeSearchStopSend(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void TimeSearchStartRespon(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void TimeSearchStopRespon(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void SearchProposing(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -124,5 +124,18 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
             }
         }
+
+        private void ShowProposingIsMe(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome);
+                managerHome.PageFunction.Content = listProposingMine;
+                managerHome.backToBack = "BackToProposingHome";
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

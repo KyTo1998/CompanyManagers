@@ -2,15 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -19,7 +20,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0"  MouseEnter="HoverProposing" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
+            <Border Grid.Column="0" x:Name="ClickSend" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                 </Border.Effect>
@@ -38,8 +39,8 @@
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Height="25" Width="25" VerticalAlignment="Center" BorderThickness="1" CornerRadius="50" BorderBrush="{StaticResource colorTitlePopupThemeOrange}">
-                        <Path Stretch="Fill" Height="18" Width="14">
+                    <Border Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" BorderThickness="1.5" CornerRadius="50" BorderBrush="{StaticResource colorTitlePopupThemeOrange}">
+                        <Path Stretch="Fill" Height="20" Width="16">
                             <Path.Style>
                                 <Style TargetType="Path">
                                     <Setter Property="Data" Value="{StaticResource iconSend}"/>
@@ -48,10 +49,21 @@
                             </Path.Style>
                         </Path>
                     </Border>
-                    <TextBlock Grid.Column="1" Text="Tôi gửi đi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
+                    <TextBlock Grid.Column="1" Text="Tôi gửi đi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ClickSend,Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource colorTitlePopupThemeOrange}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Grid>
             </Border>
-            <Border Grid.Column="1" MouseEnter="HoverProposing" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
+            <Border Grid.Column="1" x:Name="ClickRespon" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                 </Border.Effect>
@@ -70,8 +82,8 @@
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Height="25" Width="25" VerticalAlignment="Center" BorderThickness="1" CornerRadius="50" BorderBrush="{StaticResource colorThemeMesageGreen}">
-                        <Path Stretch="Fill" Height="18" Width="14">
+                    <Border Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" BorderThickness="1.5" CornerRadius="50" BorderBrush="{StaticResource colorThemeMesageGreen}">
+                        <Path Stretch="Fill" Height="20" Width="16">
                             <Path.Style>
                                 <Style TargetType="Path">
                                     <Setter Property="Data" Value="{StaticResource iconRespon}"/>
@@ -80,10 +92,21 @@
                             </Path.Style>
                         </Path>
                     </Border>
-                    <TextBlock Grid.Column="1" Text="Gửi đến tôi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
+                    <TextBlock Grid.Column="1" Text="Gửi đến tôi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ClickRespon,Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource colorThemeMesageGreen}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Grid>
             </Border>
-            <Border Grid.Column="2" MouseEnter="HoverProposing" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
+            <Border Grid.Column="2" x:Name="ClickFollow" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                 </Border.Effect>
@@ -102,8 +125,8 @@
                         <ColumnDefinition Width="50"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Height="25" Width="25" VerticalAlignment="Center" BorderThickness="1" CornerRadius="50" BorderBrush="{StaticResource colorTextMessageLink}">
-                        <Path Stretch="Fill" Height="18" Width="14">
+                    <Border Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center" BorderThickness="1.5" CornerRadius="50" BorderBrush="{StaticResource colorTextMessageLink}">
+                        <Path Stretch="Fill" Height="20" Width="16">
                             <Path.Style>
                                 <Style TargetType="Path">
                                     <Setter Property="Data" Value="{StaticResource iconProposingYes}"/>
@@ -112,12 +135,235 @@
                             </Path.Style>
                         </Path>
                     </Border>
-                    <TextBlock Grid.Column="1" Text="Đang theo dõi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
+                    <TextBlock Grid.Column="1" Text="Đang theo dõi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ClickFollow,Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource colorTextMessageLink}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Grid>
             </Border>
         </Grid>
         <Grid Grid.Row="1">
-            
+            <Border x:Name="IsClickSend" Height="40" CornerRadius="10" BorderBrush="{StaticResource ColorGreen}" BorderThickness="1" Visibility="Collapsed">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="display_userName"/>
+                    <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
+                    <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
+                    <DockPanel Grid.Column="3" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
+                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" FontSize="16" FontWeight="Medium"/>
+                    </DockPanel>
+                </Grid>
+            </Border>
+            <Border x:Name="IsClickRespon" Height="40" CornerRadius="10" BorderBrush="{StaticResource ColorGreen}" BorderThickness="1">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <tool:SearchBar x:Name="searchKeyRespon" Grid.Column="0" Cursor="Hand" PlaceHolder="Người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="display_userName"/>
+                    <tool:SearchBar x:Name="searchKeyCateProRespon" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="display_userName"/>
+                    <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5">
+                        <Grid>
+                            <TextBox x:Name="tb_SearchProposing" Height="40" MinWidth="200" Margin="5 10 5 -5" TextChanged="SearchProposing" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
+                            <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Tìm tên đề xuất"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=tb_SearchProposing, Path=Text}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                    <tool:DatePicker x:Name="dateTimeStartRespon" Grid.Column="3" Cursor="Hand" SelectedDateChange="TimeSearchStartRespon"/>
+                    <tool:DatePicker x:Name="dateTimeStopRespon" Grid.Column="4" Cursor="Hand" SelectedDateChange="TimeSearchStopRespon"/>
+                    <DockPanel Grid.Column="5" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" FontSize="16" FontWeight="Medium"/>
+                    </DockPanel>
+                </Grid>
+            </Border>
         </Grid>
+        <Border Grid.Row="2" CornerRadius="15 15 0 0" BorderThickness="1 1 1 0" BorderBrush="{StaticResource ColorGreen}" Background="{StaticResource #D0D0D0}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" x:Name="ClickALl" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Text="Tất cả" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ClickALl,Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+                <Border Grid.Column="1" x:Name="ClickWait" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" VerticalAlignment="Center">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Text="Đang chờ duyệt" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ClickWait,Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+                <Border Grid.Column="2" x:Name="ClickApproved" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" VerticalAlignment="Center">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Text="Đã phê duyệt" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ClickApproved,Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+                <Border Grid.Column="3" x:Name="CLickGivingUp" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0" Cursor="Hand" VerticalAlignment="Center">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock Text="Đã từ trối" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=CLickGivingUp,Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+            </Grid>
+        </Border>
+        <!--<ListView HorizontalAlignment="Center" x:Name="lsvProposingStaff" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataListFunction, RelativeSource={RelativeSource AncestorType=UserControl}}"  BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel ></StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>-->
+        <Border Grid.Row="3" Height="50" BorderThickness="0 0 0 1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="10">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="1" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"  FontSize="16">
+                    <Run Text="Tô Ngọc Ký" FontWeight="Medium"/>
+                    <Run Text="(" FontWeight="Regular"/>
+                    <Run Text="Phòng 4 - Phòng trí tuệ nhân tạo AI" FontWeight="Regular"/>
+                    <Run Text=")" FontWeight="Regular"/>
+                    <Run Text="Đề xuất xin nghỉ có việc đột xuất" FontWeight="Regular"/>
+                </TextBlock>
+                <Border Grid.Column="2" HorizontalAlignment="Center">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Height="15" VerticalAlignment="Center" Width="15" Background="{StaticResource ColorGreen}" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="15"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="Chờ công ty duyệt" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+                    </Grid>
+                </Border>
+                <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="22/05/2024" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

@@ -11,7 +11,7 @@
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Height="40" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" HorizontalAlignment="Right">
+        <Border Grid.Row="0" Height="40" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" HorizontalAlignment="Left">
             <Grid x:Name="grWidth" MinWidth="400">
                 <DockPanel Margin="5 0 5 0">
                     <Grid>
