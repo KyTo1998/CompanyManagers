@@ -13,7 +13,7 @@ namespace CompanyManagers.Controllers
         #endregion
         #region Proposing
         public const string apiShowHomeProposing = "http://210.245.108.202:3005/api/vanthu/catedx/showHome";
-         public const string apiCategoryProposing = "http://210.245.108.202:3005/api/vanthu/catedx/showlistcate";
+         public const string apiCategoryProposing = "https://api.timviec365.vn/api/vanthu/catedx/searchcate";
         #endregion
     }
 }

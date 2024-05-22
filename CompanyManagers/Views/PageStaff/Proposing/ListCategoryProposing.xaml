@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CompanyManagers.Views.PageStaff.Proposing.ListProposing"
+﻿<UserControl x:Class="CompanyManagers.Views.PageStaff.Proposing.ListCategoryProposing"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -15,8 +15,8 @@
             <Grid x:Name="grWidth" MinWidth="400">
                 <DockPanel Margin="5 0 5 0">
                     <Grid>
-                        <TextBox x:Name="tb_SearchProposing" Height="40" MinWidth="200" Margin="5 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
-                        <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Tìm theo tên đề xuất ..." Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                        <TextBox x:Name="tb_SearchProposing" Height="40" MinWidth="200" Margin="5 10 5 -5" TextChanged="SearchProposing" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
+                        <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Tìm theo tên đề xuất ..."  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -47,7 +47,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
-                                    <Border x:Name="ShowCreateProposing" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
+                                    <Border x:Name="ShowCreateProposing" MouseEnter="HoverProposing" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
                                         <Border.Effect>
                                             <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                                         </Border.Effect>
@@ -73,19 +73,13 @@
                                                             <Style TargetType="Path">
                                                                 <Setter Property="Data" Value="{StaticResource iconProposing}"/>
                                                                 <Setter Property="Fill" Value="{StaticResource colorText1}"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding Type_duyet}" Value="5">
-                                                                        <Setter Property="Data" Value="{StaticResource iconProposingYes}"/>
-                                                                        <Setter Property="Fill" Value="{StaticResource ColorGreen}"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
                                                             </Style>
                                                         </Path.Style>
                                                     </Path>
                                                 </Border>
                                                 <StackPanel Grid.Column="1">
                                                     <TextBlock Text="{Binding name_cate_dx}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
-                                                    <TextBlock Margin="0 5 0 5" Text="{Binding mota_dx}" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
+                                                    <TextBlock Margin="0 5 0 5" Text="{Binding mieuta_maudon}" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
                                                 </StackPanel>
                                             </Grid>
                                             <Border HorizontalAlignment="Center">
@@ -93,9 +87,20 @@
                                                     <Style TargetType="Border">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=ShowCreateProposing, Path=IsMouseOver}" Value="true">
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding ElementName=ShowCreateProposing, Path=IsMouseOver}" Value="true"/>
+                                                                    <Condition Binding="{Binding statusHoverProposing}" Value="true"/>
+                                                                </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible"/>
-                                                            </DataTrigger>
+                                                            </MultiDataTrigger>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding ElementName=ShowCreateProposing, Path=IsMouseOver}" Value="true"/>
+                                                                    <Condition Binding="{Binding statusHoverProposing}" Value="false"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </MultiDataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </Border.Style>

@@ -96,7 +96,7 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                             case "Loại đề xuất":
                                 ProposingHome proposingHome = new ProposingHome(ManagerHome);
                                 ManagerHome.PageFunction.Content = proposingHome;
-                                ManagerHome.backToBack = "proposingHomeBack";
+                                ManagerHome.backToBack = "BackToManagerHome";
                                 break;
                         }
                     }

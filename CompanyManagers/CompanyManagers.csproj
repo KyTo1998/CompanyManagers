@@ -120,6 +120,7 @@
     <Compile Include="Common\Popups\PagePopupGrayColor.xaml.cs">
       <DependentUpon>PagePopupGrayColor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\Extention.cs" />
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
@@ -134,8 +135,11 @@
     <Compile Include="Views\Logout\PageLogout.xaml.cs">
       <DependentUpon>PageLogout.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PageStaff\Proposing\ListProposing.xaml.cs">
-      <DependentUpon>ListProposing.xaml</DependentUpon>
+    <Compile Include="Views\PageStaff\Proposing\ListCategoryProposing.xaml.cs">
+      <DependentUpon>ListCategoryProposing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageStaff\Proposing\ListProposingMine.xaml.cs">
+      <DependentUpon>ListProposingMine.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PageStaff\Proposing\ProposingHome.xaml.cs">
       <DependentUpon>ProposingHome.xaml</DependentUpon>
@@ -188,7 +192,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PageStaff\Proposing\ListProposing.xaml">
+    <Page Include="Views\PageStaff\Proposing\ListCategoryProposing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PageStaff\Proposing\ListProposingMine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,21 +4,13 @@ using CompanyManagers.Views.Home;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -42,8 +34,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             set { _listProposingHome = value; OnPropertyChanged("listProposingHome"); }
         } 
 
-        private List<Showcatedx_CategoryProposing> _listCategoryProposingHome;
-        public List<Showcatedx_CategoryProposing> listCategoyProposingHome
+        private List<Result_CategoryProposing> _listCategoryProposingHome;
+        public List<Result_CategoryProposing> listCategoyProposingHome
         {
             get { return _listCategoryProposingHome; }
             set { _listCategoryProposingHome = value; OnPropertyChanged("listCategoyProposingHome"); }
@@ -76,7 +68,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             listProposingHome = dataProposing.data.data.ToList();
                             foreach (var item in listProposingHome)
                             {
-                                item.type_dx_string = listCategoyProposingHome.Find(x => x._id == item.type_dx.ToString()).name_cate_dx;
+                                item.type_dx_string = listCategoyProposingHome.Find(x => x.cate_dx == item.type_dx).name_cate_dx;
                             }
                         }
                     };
@@ -92,17 +84,28 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                using (WebClient request = new WebClient())
+                for (int i = 1; i <= 10; i++)
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
-                    request.UploadValuesCompleted += (s, e) =>
+                    using (WebClient request = new WebClient())
                     {
-                        Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(UnicodeEncoding.UTF8.GetString(e.Result));
-                        listCategoyProposingHome = dataCategoryProposing.data.showcatedx.ToList();
-                        GetProposingShowHome();
-                    };
-                     await request.UploadValuesTaskAsync(UrlApi.apiCategoryProposing, request.Headers);
+                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                        request.QueryString.Add("page", $"{i}");
+                        request.UploadValuesCompleted += (s, e) =>
+                        {
+                            Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(UnicodeEncoding.UTF8.GetString(e.Result));
+                            if (listCategoyProposingHome == null)
+                            {
+                                listCategoyProposingHome = new List<Result_CategoryProposing>();
+                            }
+                            foreach (var item in dataCategoryProposing.data.result)
+                            {
+                                listCategoyProposingHome.Add(item);
+                            }
+                        };
+                        await request.UploadValuesTaskAsync(UrlApi.apiCategoryProposing, request.QueryString);
+                    }
                 }
+                GetProposingShowHome();
             }
             catch (Exception)
             {
@@ -113,9 +116,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListProposing listProposing = new ListProposing(managerHome, listCategoyProposingHome);
+                ListCategoryProposing listProposing = new ListCategoryProposing(managerHome, listCategoyProposingHome);
                 managerHome.PageFunction.Content = listProposing;
-                managerHome.backToBack = "proposingListCategoryBack";
+                managerHome.backToBack = "BackToProposingHome";
             }
             catch (Exception)
             {

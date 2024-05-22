@@ -4,6 +4,7 @@ using CompanyManagers.Models.Logins;
 using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
 using CompanyManagers.Views.Logout;
+using CompanyManagers.Views.PageStaff.Proposing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -322,10 +323,16 @@ namespace CompanyManagers.Views.Home
         {
             try
             {
-                if(backToBack == "proposingHomeBack")
+                if (backToBack == "BackToManagerHome")
                 {
                     ListFunction lstFunction = new ListFunction(this);
                     PageFunction.Content = lstFunction;
+                }
+                else if(backToBack == "BackToProposingHome")
+                {
+                    ProposingHome proposingHome = new ProposingHome(this);
+                    PageFunction.Content = proposingHome;
+                    backToBack = "BackToManagerHome";
                 }
             }
             catch (Exception)
