@@ -129,7 +129,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListProposingMine listProposingMine = new ListProposingMine(managerHome);
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome);
                 managerHome.PageFunction.Content = listProposingMine;
                 managerHome.backToBack = "BackToProposingHome";
             }

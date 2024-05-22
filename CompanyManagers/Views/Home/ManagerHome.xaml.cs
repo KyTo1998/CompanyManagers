@@ -1,13 +1,19 @@
 ﻿using CompanyManagers.Common.Popups;
+using CompanyManagers.Controllers;
 using CompanyManagers.Models.HomeFunction;
 using CompanyManagers.Models.Logins;
+using CompanyManagers.Models.ModelsAll;
+using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
 using CompanyManagers.Views.Logout;
 using CompanyManagers.Views.PageStaff.Proposing;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Net;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -101,6 +107,13 @@ namespace CompanyManagers.Views.Home
             set { _UserCurrent = value; OnPropertyChanged("UserCurrent");}
         }
 
+        private List<Info_StaffAll> _dataListStaffAll;
+        public List<Info_StaffAll> dataListStaffAll
+        {
+            get { return _dataListStaffAll; }
+            set { _dataListStaffAll = value; OnPropertyChanged("dataListStaffAll"); }
+        }
+
         private string _backToBack;
         public string backToBack 
         {
@@ -130,7 +143,7 @@ namespace CompanyManagers.Views.Home
             AddFunctionSytem();
             ListFunction lstFunction = new ListFunction(this);
             PageFunction.Content = lstFunction;
-            
+            GetListStaffAll();
         }
         private Thread textUpdateThread;
         private void StartDynamicText()
@@ -157,6 +170,34 @@ namespace CompanyManagers.Views.Home
             catch (Exception)
             {
             }
+        }
+
+        public async void GetListStaffAll()
+        {
+            try 
+            {
+                using (WebClient request = new WebClient())
+                {
+                    if (Properties.Settings.Default.Type365 == "1")
+                    {
+                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenCom);
+                    }
+                    else
+                    {
+                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                    }
+                    request.UploadValuesCompleted += (s, e) =>
+                    {
+                        Root_StaffAll dataStaffAll = JsonConvert.DeserializeObject<Root_StaffAll>(UnicodeEncoding.UTF8.GetString(e.Result));
+                        if (dataStaffAll.data.items != null)
+                        {
+                            dataListStaffAll = dataStaffAll.data.items;
+                        }
+                    };
+                    await request.UploadValuesTaskAsync(UrlApi.apiListStaffAll, request.Headers);
+                }
+            }
+            catch (Exception) { }
         }
 
         public void AddFunctionSytem()

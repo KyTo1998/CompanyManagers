@@ -37,7 +37,7 @@ namespace CompanyManagers.Views.Functions.HomeFunction
             set { _type365 = value; OnPropertyChanged("type365");}
         }
         ManagerHome ManagerHome { get; set; }
-         private List<DataChildFunction> _dataListChildFunction;
+        private List<DataChildFunction> _dataListChildFunction;
         public List<DataChildFunction> dataListChildFunction
         {
             get { return _dataListChildFunction; }

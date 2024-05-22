@@ -130,6 +130,7 @@
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
+    <Compile Include="Models\ModelsAll\ListSatffInCompany.cs" />
     <Compile Include="Models\ModelsPageStaff\dboCategoryProposing.cs" />
     <Compile Include="Models\ModelsPageStaff\dboProposingHome.cs" />
     <Compile Include="Views\Functions\HomeFunction\ListFunction.xaml.cs">
