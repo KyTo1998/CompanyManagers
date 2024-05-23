@@ -51,7 +51,7 @@ namespace CompanyManagers.Common.Tool
             }
             OnPropertyChanged("Months");
             Part_TextBox.Text = "dd/MM/yyyy";
-            this.SelectedDate = DateTime.Now;
+            this.SelectedDate = null;
 
         }
 

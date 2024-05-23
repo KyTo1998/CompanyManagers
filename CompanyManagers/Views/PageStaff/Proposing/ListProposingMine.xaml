@@ -7,6 +7,17 @@
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- Define a color animation for the Border's background -->
+        <Storyboard x:Key="BlinkingEffect">
+            <ColorAnimation
+                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                From="Red" To="Yellow"
+                Duration="0:0:0.5"
+                AutoReverse="True"
+                RepeatBehavior="Forever" />
+        </Storyboard>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
@@ -367,7 +378,17 @@
             </Border>
         </Grid>
         <Grid Grid.Row="1">
-            <Border x:Name="IsClickSend" Height="40" CornerRadius="10" BorderBrush="{StaticResource ColorGreen}" BorderThickness="1" Visibility="Collapsed">
+            <Border x:Name="IsClickSend" Height="40" CornerRadius="10" BorderBrush="{StaticResource ColorGreen}" BorderThickness="1">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
@@ -375,15 +396,25 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="display_userName"/>
+                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="ep_name"/>
                     <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
                     <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
-                    <DockPanel Grid.Column="3" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
+                    <DockPanel Grid.Column="3" MouseLeftButtonUp="SearchProposingSendTo" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
                         <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" FontSize="16" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>
             <Border x:Name="IsClickRespon" Height="40" CornerRadius="10" BorderBrush="{StaticResource ColorGreen}" BorderThickness="1">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
                 <Grid >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.5*"/>
@@ -420,7 +451,7 @@
                 </Grid>
             </Border>
         </Grid>
-        <Border Grid.Row="2" CornerRadius="15 15 0 0" BorderThickness="1 1 1 0" BorderBrush="{StaticResource ColorGreen}" Background="{StaticResource #D0D0D0}">
+        <Border Grid.Row="2" CornerRadius="15 15 0 0" BorderThickness="1 1 1 0" BorderBrush="{StaticResource ColorGreen}" Background="LightBlue">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -428,13 +459,17 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" x:Name="ClickALl" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
+                <Border Grid.Column="0" x:Name="ClickALl" MouseLeftButtonUp="FilterAll" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" Background="Transparent" VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="BorderThickness" Value="0"/>
                             <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="True">
                                     <Setter Property="BorderThickness" Value="0 0 0 1"/>
                                     <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
                                 </Trigger>
@@ -446,21 +481,53 @@
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
                                 <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=ClickSend, Path=IsMouseOver}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="All"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickSend, Path=IsEnabled}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Null}"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickSend, Path=IsEnabled}" Value="true"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickSend, Path=IsMouseOver}" Value="false"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <!--<TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=ClickALl,Path=IsMouseOver}" Value="true">
                                         <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
+                        </TextBlock.Style>-->
                     </TextBlock>
                 </Border>
-                <Border Grid.Column="1" x:Name="ClickWait" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" VerticalAlignment="Center">
+                <Border Grid.Column="1" x:Name="ClickWait" MouseLeftButtonUp="FilterWait" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="BorderThickness" Value="0"/>
                             <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="True">
                                     <Setter Property="BorderThickness" Value="0 0 0 1"/>
                                     <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
                                 </Trigger>
@@ -472,21 +539,53 @@
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
                                 <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=ClickWait, Path=IsMouseOver}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Wait"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickWait, Path=IsEnabled}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Null}"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickWait, Path=IsEnabled}" Value="true"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickWait, Path=IsMouseOver}" Value="false"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <!--<TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=ClickWait,Path=IsMouseOver}" Value="true">
                                         <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
+                        </TextBlock.Style>-->
                     </TextBlock>
                 </Border>
-                <Border Grid.Column="2" x:Name="ClickApproved" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" VerticalAlignment="Center">
+                <Border Grid.Column="2" x:Name="ClickApproved" MouseLeftButtonUp="FilterApproved" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" Cursor="Hand" VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="BorderThickness" Value="0"/>
                             <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="True">
                                     <Setter Property="BorderThickness" Value="0 0 0 1"/>
                                     <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
                                 </Trigger>
@@ -498,21 +597,53 @@
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
                                 <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=ClickApproved, Path=IsMouseOver}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Approved"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickApproved, Path=IsEnabled}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Null}"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickApproved, Path=IsEnabled}" Value="true"></Condition>
+                                            <Condition Binding="{Binding ElementName=ClickApproved, Path=IsMouseOver}" Value="false"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <!--<TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=ClickApproved,Path=IsMouseOver}" Value="true">
                                         <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
+                        </TextBlock.Style>-->
                     </TextBlock>
                 </Border>
-                <Border Grid.Column="3" x:Name="CLickGivingUp" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0" Cursor="Hand" VerticalAlignment="Center">
+                <Border Grid.Column="3" x:Name="CLickGivingUp" MouseLeftButtonUp="FilterGivingUp" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0" Cursor="Hand" VerticalAlignment="Center">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="BorderThickness" Value="0"/>
                             <Setter Property="BorderBrush" Value="{StaticResource colorWriter}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderThickness" Value="0 0 0 1"/>
+                                    <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="True">
                                     <Setter Property="BorderThickness" Value="0 0 0 1"/>
                                     <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
                                 </Trigger>
@@ -524,18 +655,59 @@
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
                                 <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding ElementName=CLickGivingUp, Path=IsMouseOver}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="GivingUp"></Condition>
+                                            <Condition Binding="{Binding ElementName=CLickGivingUp, Path=IsEnabled}" Value="true"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Null}"></Condition>
+                                            <Condition Binding="{Binding ElementName=CLickGivingUp, Path=IsEnabled}" Value="true"></Condition>
+                                            <Condition Binding="{Binding ElementName=CLickGivingUp, Path=IsMouseOver}" Value="false"></Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <!--<TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=CLickGivingUp,Path=IsMouseOver}" Value="true">
                                         <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                        </TextBlock.Style>
+                        </TextBlock.Style>-->
                     </TextBlock>
                 </Border>
             </Grid>
         </Border>
-        <StackPanel Grid.Row="3">
-            <ListView HorizontalAlignment="Center" x:Name="lsvProposingStaff" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataListFunction, RelativeSource={RelativeSource AncestorType=UserControl}}"  BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Grid.Row="3" x:Name="ShowListProposing">
+            <ListView HorizontalAlignment="Center" x:Name="lsvProposingStaff" ScrollViewer.CanContentScroll="False" Width="{Binding ElementName=ShowListProposing, Path=ActualWidth}" Background="Transparent"  BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.Style>
+                    <Style TargetType="ListView">
+                        <Setter Property="ItemsSource" Value="{x:Null}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                <Setter Property="ItemsSource" Value="{Binding listProposingSendAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2">
+                                <Setter Property="ItemsSource" Value="{x:Null}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Style>
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel ></StackPanel>
@@ -546,7 +718,17 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
-                                    <Border Height="50" BorderThickness="0 0 0 1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="10">
+                                    <Border Height="50" BorderThickness="0 0 0 1" Cursor="Hand" BorderBrush="{StaticResource ColorGreen}" CornerRadius="10">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="LightBlue"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
                                         <Grid VerticalAlignment="Center">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="30"/>
@@ -554,25 +736,111 @@
                                                 <ColumnDefinition Width="1.5*"/>
                                                 <ColumnDefinition Width="0.5*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="1" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+                                            <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="{Binding Order}" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
                                             <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"  FontSize="16">
-                                                <Run Text="Tô Ngọc Ký" FontWeight="Medium"/>
+                                                <Run Text="{Binding name_user}" FontWeight="Medium"/>
                                                 <Run Text="(" FontWeight="Regular"/>
-                                                <Run Text="Phòng 4 - Phòng trí tuệ nhân tạo AI" FontWeight="Regular"/>
+                                                <Run Text="{Binding organizeDetailName }" FontWeight="Regular"/>
                                                 <Run Text=")" FontWeight="Regular"/>
-                                                <Run Text="Đề xuất xin nghỉ có việc đột xuất" FontWeight="Regular"/>
+                                                <Run Text="{Binding name_dx}" FontWeight="Regular"/>
                                             </TextBlock>
-                                            <Border Grid.Column="2" HorizontalAlignment="Center">
+                                            <Border Grid.Column="2" Margin="20 0 0 0" HorizontalAlignment="Left">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="30"/>
+                                                        <ColumnDefinition Width="40"/>
                                                         <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Border Grid.Column="0" Height="15" VerticalAlignment="Center" Width="15" Background="{StaticResource ColorGreen}" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="15"/>
-                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="Chờ công ty duyệt" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+                                                    <Border Grid.Column="0" Height="15" VerticalAlignment="Center" HorizontalAlignment="Left" Width="15" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="15">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="BorderBrush" Value="{StaticResource ColorOrange3}"/>
+                                                                <Setter Property="Background" Value="{StaticResource ColorOrange3}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="5">
+                                                                        <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                                                        <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="3">
+                                                                        <Setter Property="BorderBrush" Value="{StaticResource colorRemoveRed}"/>
+                                                                        <Setter Property="Background" Value="{StaticResource colorRemoveRed}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="0">
+                                                                        <DataTrigger.EnterActions>
+                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                        </DataTrigger.EnterActions>
+                                                                        <DataTrigger.ExitActions>
+                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                        </DataTrigger.ExitActions>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="6">
+                                                                        <DataTrigger.EnterActions>
+                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                        </DataTrigger.EnterActions>
+                                                                        <DataTrigger.ExitActions>
+                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                        </DataTrigger.ExitActions>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="7">
+                                                                        <DataTrigger.EnterActions>
+                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                        </DataTrigger.EnterActions>
+                                                                        <DataTrigger.ExitActions>
+                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                        </DataTrigger.ExitActions>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="10">
+                                                                        <DataTrigger.EnterActions>
+                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                        </DataTrigger.EnterActions>
+                                                                        <DataTrigger.ExitActions>
+                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                        </DataTrigger.ExitActions>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="11">
+                                                                        <DataTrigger.EnterActions>
+                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                        </DataTrigger.EnterActions>
+                                                                        <DataTrigger.ExitActions>
+                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                        </DataTrigger.ExitActions>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                    </Border>
+                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Text" Value=""/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="0">
+                                                                        <Setter Property="Text" Value="Tiếp nhận"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="3">
+                                                                        <Setter Property="Text" Value="Từ trối"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="5">
+                                                                        <Setter Property="Text" Value="Chấp thuận"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="6">
+                                                                        <Setter Property="Text" Value="Bắt buộc đi làm"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="7">
+                                                                        <Setter Property="Text" Value="Đã được tiếp nhận"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="10">
+                                                                        <Setter Property="Text" Value="Chờ lãnh đạo còn lại duyệt"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="11">
+                                                                        <Setter Property="Text" Value="Chờ công ty duyệt"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
                                                 </Grid>
                                             </Border>
-                                            <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="22/05/2024" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+                                            <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="{Binding time_create_display}" TextWrapping="Wrap" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
                                         </Grid>
                                     </Border>
                                 </ControlTemplate>

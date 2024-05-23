@@ -192,6 +192,11 @@ namespace CompanyManagers.Views.Home
                         if (dataStaffAll.data.items != null)
                         {
                             dataListStaffAll = dataStaffAll.data.items;
+                            Info_StaffAll dataStaff = new Info_StaffAll();
+                            dataStaff.ep_id = -1;
+                            dataStaff.ep_name = "Tất cả";
+                            dataListStaffAll.Insert(0, dataStaff);
+                           
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.apiListStaffAll, request.Headers);
