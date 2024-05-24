@@ -12,7 +12,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -114,6 +116,26 @@ namespace CompanyManagers.Views.Home
             set { _dataListStaffAll = value; OnPropertyChanged("dataListStaffAll"); }
         }
 
+        private List<Item_ShiftAll> _dataListShiftAll;
+        public List<Item_ShiftAll> dataListShiftAll
+        {
+            get { return _dataListShiftAll; }
+            set { _dataListShiftAll = value; OnPropertyChanged("dataListShiftAll"); }
+        }
+
+        private List<ListUsersDuyet> _dataListUserComfrim;
+        public List<ListUsersDuyet> dataListUserComfrim
+        {
+            get { return _dataListUserComfrim; }
+            set { _dataListUserComfrim = value; OnPropertyChanged("dataListUserComfrim"); }
+        }
+
+        private List<ListUsersTheoDoi> _dataListUserFollow;
+        public List<ListUsersTheoDoi> dataListUserFollow
+        {
+            get { return _dataListUserFollow; }
+            set { _dataListUserFollow = value; OnPropertyChanged("dataListUserFollow"); }
+        }
         private string _backToBack;
         public string backToBack 
         {
@@ -144,6 +166,12 @@ namespace CompanyManagers.Views.Home
             ListFunction lstFunction = new ListFunction(this);
             PageFunction.Content = lstFunction;
             GetListStaffAll();
+            GetListShiftAll();
+            if (Properties.Settings.Default.Type365 == "2")
+            {
+                GetListComfirmAndFollow();
+                GetListComfirmAndFollow();
+            }
         }
         private Thread textUpdateThread;
         private void StartDynamicText()
@@ -205,6 +233,60 @@ namespace CompanyManagers.Views.Home
             catch (Exception) { }
         }
 
+        public async void GetListShiftAll()
+        {
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Get, UrlApi.apiListShiftAll);
+                if (Properties.Settings.Default.Type365 == "1")
+                {
+                    request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.TokenCom);
+                }
+                else
+                {
+                    request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                }
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var returl = await response.Content.ReadAsStringAsync();
+                    Root_ShiftAll dataShiftAll = JsonConvert.DeserializeObject<Root_ShiftAll>(returl);
+                    if (dataShiftAll.data.items != null && dataShiftAll.data.items.Count > 0)
+                    {
+                        dataListShiftAll = dataShiftAll.data.items.ToList();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public async void GetListComfirmAndFollow()
+        {
+            try
+            {
+                using (WebClient request = new WebClient())
+                {
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                    request.UploadValuesCompleted += (s, e) =>
+                    {
+                        Root_ComfrimAndFollow dataComfrimAndFollow = JsonConvert.DeserializeObject<Root_ComfrimAndFollow>(UnicodeEncoding.UTF8.GetString(e.Result));
+                        if(dataComfrimAndFollow.data != null)
+                        {
+                            dataListUserComfrim = dataComfrimAndFollow.data.listUsersDuyet.ToList();
+                            dataListUserFollow = dataComfrimAndFollow.data.listUsersTheoDoi.ToList();
+
+                        }
+                    };
+                    await request.UploadValuesTaskAsync(UrlApi.apiListComfrimFollow, request.Headers);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         public void AddFunctionSytem()
         {
             try

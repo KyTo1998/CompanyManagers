@@ -105,6 +105,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
 
         public void StartApi()
         {
+            statusError = 0;
             LoadingSpinner.Visibility = System.Windows.Visibility.Visible;
         }
         public async void GetProposingSendToAll()

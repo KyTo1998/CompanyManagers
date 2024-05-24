@@ -35,9 +35,22 @@
                         </Style>
                     </Border.Style>
                     <DockPanel HorizontalAlignment="Center" Margin="5">
-                        <Border Height="20" Width="20" Margin="0 3 5 0" BorderThickness="1.5" CornerRadius="15" BorderBrush="{StaticResource colorBlue}">
-                            <TextBlock Text="+" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-7,0,0"/>
-                        </Border>
+                        <Path Data="{StaticResource iconLoadingTime}" RenderTransformOrigin=".5,.5" Margin="0 0 10 0" Height="25" Width="25" Stretch="Fill" Fill="{StaticResource ColorBlue}">
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard >
+                                            <Storyboard  Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)">
+                                                <DoubleAnimation From="0" To="360" BeginTime="0:0:0" Duration="0:0:1" RepeatBehavior="Forever"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Path.Triggers>
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="0"/>
+                            </Path.RenderTransform>
+                        </Path>
                         <TextBlock Text="Tạo đề xuất" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
                     </DockPanel>
                 </Border>

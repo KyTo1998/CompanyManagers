@@ -402,16 +402,16 @@
                 </Border.Style>
                 <Grid >
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
                     <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="ep_name"/>
                     <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
                     <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
-                    <DockPanel Grid.Column="3" MouseLeftButtonUp="SearchProposingSendTo" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"> 
-                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" FontSize="16" FontWeight="Medium"/>
+                    <DockPanel Grid.Column="3" MouseLeftButtonUp="SearchProposingSendTo" Background="Transparent" Cursor="Hand">
+                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>
@@ -433,7 +433,7 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
                     <tool:SearchBar x:Name="searchKeyRespon" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người gửi đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16"/>
                     <tool:SearchBar x:Name="searchKeyCateProRespon" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="name_cate_dx"/>
@@ -456,8 +456,8 @@
                     </Border>
                     <tool:DatePicker x:Name="dateTimeStartRespon" Grid.Column="3" Cursor="Hand" SelectedDateChange="TimeSearchStartRespon"/>
                     <tool:DatePicker x:Name="dateTimeStopRespon" Grid.Column="4" Cursor="Hand" SelectedDateChange="TimeSearchStopRespon"/>
-                    <DockPanel Grid.Column="5" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock Text="Tìm kiếm" MouseLeftButtonUp="SearchProposingSendToMe" Foreground="{StaticResource ColorGreen}" FontSize="16" FontWeight="Medium"/>
+                    <DockPanel Grid.Column="5" Cursor="Hand" MouseLeftButtonUp="SearchProposingSendToMe" Background="Transparent">
+                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>

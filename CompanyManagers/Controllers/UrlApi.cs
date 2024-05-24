@@ -21,5 +21,9 @@ namespace CompanyManagers.Controllers
         #region Staff
         public const string apiListStaffAll = "https://api.timviec365.vn/api/qlc/managerUser/listAll";
         #endregion
+        #region Shift
+        public const string apiListShiftAll = "https://api.timviec365.vn/api/qlc/shift/list";
+        public const string apiListComfrimFollow = "https://api.timviec365.vn/api/vanthu/dexuat/showadd";
+        #endregion
     }
 }

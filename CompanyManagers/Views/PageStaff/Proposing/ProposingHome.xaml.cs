@@ -58,18 +58,24 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
                     request.UploadValuesCompleted += (s, e) =>
                     {
-                        Root_Proposing dataProposing = JsonConvert.DeserializeObject<Root_Proposing>(UnicodeEncoding.UTF8.GetString(e.Result));
-                        if (dataProposing != null)
+                        try
                         {
-                            tb_CountSumProposing.Text = dataProposing.data.totaldx.ToString();
-                            tb_CountWaitProposing.Text = dataProposing.data.dxChoDuyet.ToString();
-                            tb_CountApprovedProposing.Text = dataProposing.data.dxduyet.ToString();
-                            tb_CountNecessaryProposing.Text = dataProposing.data.dxCanduyet.ToString();
-                            listProposingHome = dataProposing.data.data.ToList();
-                            foreach (var item in listProposingHome)
+                            Root_Proposing dataProposing = JsonConvert.DeserializeObject<Root_Proposing>(UnicodeEncoding.UTF8.GetString(e.Result));
+                            if (dataProposing != null)
                             {
-                                item.type_dx_string = listCategoyProposingHome.Find(x => x.cate_dx == item.type_dx).name_cate_dx;
+                                tb_CountSumProposing.Text = dataProposing.data.totaldx.ToString();
+                                tb_CountWaitProposing.Text = dataProposing.data.dxChoDuyet.ToString();
+                                tb_CountApprovedProposing.Text = dataProposing.data.dxduyet.ToString();
+                                tb_CountNecessaryProposing.Text = dataProposing.data.dxCanduyet.ToString();
+                                listProposingHome = dataProposing.data.data.ToList();
+                                foreach (var item in listProposingHome)
+                                {
+                                    item.type_dx_string = listCategoyProposingHome.Find(x => x.cate_dx == item.type_dx).name_cate_dx;
+                                }
                             }
+                        }
+                        catch (Exception)
+                        {
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.apiShowHomeProposing, request.Headers);
@@ -94,19 +100,25 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         request.QueryString.Add("page", numberPage.ToString());
                         request.UploadValuesCompleted += (s, e) =>
                         {
-                            Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(UnicodeEncoding.UTF8.GetString(e.Result));
-                            if (dataCategoryProposing.data != null)
+                            try
                             {
-                                TotalPages = dataCategoryProposing.data.totalPages;
-                                if (listCategoyProposingHome == null)
+                                Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(UnicodeEncoding.UTF8.GetString(e.Result));
+                                if (dataCategoryProposing.data != null)
                                 {
-                                    listCategoyProposingHome = new List<Result_CategoryProposing>();
+                                    TotalPages = dataCategoryProposing.data.totalPages;
+                                    if (listCategoyProposingHome == null)
+                                    {
+                                        listCategoyProposingHome = new List<Result_CategoryProposing>();
+                                    }
+                                    foreach (var item in dataCategoryProposing.data.result)
+                                    {
+                                        listCategoyProposingHome.Add(item);
+                                    }
+                                    numberPage++;
                                 }
-                                foreach (var item in dataCategoryProposing.data.result)
-                                {
-                                    listCategoyProposingHome.Add(item);
-                                }
-                                numberPage ++;
+                            }
+                            catch (Exception)
+                            {
                             }
                         };
                         await request.UploadValuesTaskAsync(UrlApi.apiCategoryProposing, request.QueryString);

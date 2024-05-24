@@ -58,6 +58,26 @@
   <PropertyGroup>
     <ApplicationIcon>icons8-512.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -134,6 +154,8 @@
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
     <Compile Include="Models\ModelsAll\ListSatffInCompany.cs" />
+    <Compile Include="Models\ModelsAll\ListShiftInCompany.cs" />
+    <Compile Include="Models\ModelsAll\ListUserComfirmAndFollow.cs" />
     <Compile Include="Models\ModelsPageStaff\dboCategoryProposing.cs" />
     <Compile Include="Models\ModelsPageStaff\dboProposingHome.cs" />
     <Compile Include="Models\ModelsPageStaff\dboProposingSendToAll.cs" />
@@ -151,6 +173,9 @@
     </Compile>
     <Compile Include="Views\PageStaff\Proposing\ListProposingMine.xaml.cs">
       <DependentUpon>ListProposingMine.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageStaff\Proposing\pageCreateNewProposing.xaml.cs">
+      <DependentUpon>pageCreateNewProposing.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PageStaff\Proposing\ProposingHome.xaml.cs">
       <DependentUpon>ProposingHome.xaml</DependentUpon>
@@ -220,6 +245,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PageStaff\Proposing\ListProposingMine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PageStaff\Proposing\pageCreateNewProposing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
