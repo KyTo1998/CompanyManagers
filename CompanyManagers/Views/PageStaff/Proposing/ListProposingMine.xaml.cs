@@ -28,6 +28,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 PropertyChanged(this, new PropertyChangedEventArgs(newName));
             }
         }
+        private int _statusError;
+        public int statusError
+        {
+            get { return _statusError; }
+            set { _statusError = value; OnPropertyChanged("statusError"); }
+        }
+
         private int _typeClickProposing;
         public int typeClickProposing
         {
@@ -71,10 +78,40 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             GetProposingSendToAll();
         }
 
+        public void LoadDataProposing(Root_ProposingSendAll dataProposing)
+        {
+            if (dataProposing.data.data != null && dataProposing.data.data.Count > 0)
+            {
+                ListProposingSendAll.UpdateOrder(dataProposing.data.data);
+                listProposingSendAllLocal = dataProposing.data.data.ToList();
+                listProposingSendAll = dataProposing.data.data.ToList();
+                LoadingSpinner.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                statusError = 1;
+                ListProposingSendAll.UpdateOrder(dataProposing.data.data);
+                listProposingSendAllLocal = dataProposing.data.data.ToList();
+                listProposingSendAll = dataProposing.data.data.ToList();
+                LoadingSpinner.Visibility = System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        public void LoadErroGetApi()
+        {
+            statusError = 2;
+            LoadingSpinner.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        public void StartApi()
+        {
+            LoadingSpinner.Visibility = System.Windows.Visibility.Visible;
+        }
         public async void GetProposingSendToAll()
         {
             try
             {
+                StartApi();
                 using (WebClient request = new WebClient())
                 {
                     request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
@@ -93,15 +130,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         try
                         {
                             Root_ProposingSendAll dataProposingSendAll = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(e.Result));
-                            if (dataProposingSendAll.data.data != null)
-                            {
-                                ListProposingSendAll.UpdateOrder(dataProposingSendAll.data.data);
-                                listProposingSendAllLocal = dataProposingSendAll.data.data.ToList();
-                                listProposingSendAll = dataProposingSendAll.data.data.ToList();
-                            }
+                            LoadDataProposing(dataProposingSendAll);
                         }
                         catch (Exception)
                         {
+                            LoadErroGetApi();
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.apiProposingSendToAll, request.QueryString);
@@ -109,6 +142,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             catch (Exception)
             {
+                LoadErroGetApi();
             }
         }
 
@@ -116,20 +150,21 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
+                StartApi();
                 using (WebClient request = new WebClient())
                 {
                     request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
-                    if (searchKeyRespon.SelectedItem != null && ((Info_StaffAll)searchKeySend.SelectedItem).ep_id > 0)
+                    if (searchKeyRespon.SelectedItem != null && ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id > 0)
                     {
-                        request.QueryString.Add("id_user", ((Info_StaffAll)searchKeySend.SelectedItem).ep_id.ToString());
+                        request.QueryString.Add("id_user", ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id.ToString());
                     }
                     if (tb_SearchProposing.Text != null || tb_SearchProposing.Text != "")
                     {
                         request.QueryString.Add("name_dx", tb_SearchProposing.Text);
                     }
-                    if (searchKeyCateProRespon.SelectedItem != null && ((Result_CategoryProposing)searchKeySend.SelectedItem)._id > 0)
+                    if (searchKeyCateProRespon.SelectedItem != null && ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id > 0)
                     {
-                        request.QueryString.Add("type_dx", ((Result_CategoryProposing)searchKeySend.SelectedItem)._id.ToString());
+                        request.QueryString.Add("type_dx", ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id.ToString());
                     }
                     if (dateTimeStartRespon.SelectedDate != null || dateTimeStartRespon.SelectedDate != null)
                     {
@@ -142,15 +177,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         try
                         {
                             Root_ProposingSendAll dataProposingSendToMe = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(e.Result));
-                            if (dataProposingSendToMe.data.data != null)
-                            {
-                                ListProposingSendAll.UpdateOrder(dataProposingSendToMe.data.data);
-                                listProposingSendAllLocal = dataProposingSendToMe.data.data.ToList();
-                                listProposingSendAll = dataProposingSendToMe.data.data.ToList();
-                            }
+                            LoadDataProposing(dataProposingSendToMe);
                         }
                         catch (Exception)
                         {
+                            LoadErroGetApi();
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.apiProposingSendToMe, request.QueryString);
@@ -158,6 +189,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             catch (Exception)
             {
+                LoadErroGetApi();
             }
         }
 
@@ -165,6 +197,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
+                StartApi();
                 using (WebClient request = new WebClient())
                 {
                     request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
@@ -174,16 +207,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     {
                         try
                         {
-                            Root_ProposingSendAll dataProposingSendToMe = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(e.Result));
-                            if (dataProposingSendToMe.data.data != null)
-                            {
-                                ListProposingSendAll.UpdateOrder(dataProposingSendToMe.data.data);
-                                listProposingSendAllLocal = dataProposingSendToMe.data.data.ToList();
-                                listProposingSendAll = dataProposingSendToMe.data.data.ToList();
-                            }
+                            Root_ProposingSendAll dataProposingFollow = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(e.Result));
+                            LoadDataProposing(dataProposingFollow);
                         }
                         catch (Exception)
                         {
+                            LoadErroGetApi();
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.apiProposingFollow, request.QueryString);
@@ -191,6 +220,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             catch (Exception)
             {
+                LoadErroGetApi();
             }
         }
         private void Send_SelectionChange(object sender, SelectionChangedEventArgs e)
@@ -262,7 +292,16 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
             }
         }
-       
+        private void SearchProposingSendToMe(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                GetProposingSendToMe();
+            }
+            catch (Exception)
+            {
+            }
+        }
         private void FilterAll(object sender, MouseButtonEventArgs e)
         {
             typeClickFilterProposing = 1;
@@ -272,7 +311,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             ListProposingSendAll.UpdateOrder(listProposingSendAllLocal);
             listProposingSendAll = listProposingSendAllLocal.ToList();
-            GetProposingFollow(typeClickFilterProposing);
         }
 
         private void FilterWait(object sender, MouseButtonEventArgs e)
@@ -338,5 +376,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
              ListProposingSendAll.UpdateOrder(listProposingSendAllSearch);
             listProposingSendAll = listProposingSendAllSearch.ToList();
         }
+
+        
     }
 }

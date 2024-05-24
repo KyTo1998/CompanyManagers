@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-              xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
+             xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -435,7 +435,7 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeyRespon" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16"/>
+                    <tool:SearchBar x:Name="searchKeyRespon" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người gửi đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16"/>
                     <tool:SearchBar x:Name="searchKeyCateProRespon" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="name_cate_dx"/>
                     <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5">
                         <Grid>
@@ -457,7 +457,7 @@
                     <tool:DatePicker x:Name="dateTimeStartRespon" Grid.Column="3" Cursor="Hand" SelectedDateChange="TimeSearchStartRespon"/>
                     <tool:DatePicker x:Name="dateTimeStopRespon" Grid.Column="4" Cursor="Hand" SelectedDateChange="TimeSearchStopRespon"/>
                     <DockPanel Grid.Column="5" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" FontSize="16" FontWeight="Medium"/>
+                        <TextBlock Text="Tìm kiếm" MouseLeftButtonUp="SearchProposingSendToMe" Foreground="{StaticResource ColorGreen}" FontSize="16" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>
@@ -731,167 +731,249 @@
                 </Border>
             </Grid>
         </Border>
-        <StackPanel Grid.Row="3" x:Name="ShowListProposing">
-            <ListView HorizontalAlignment="Center" x:Name="lsvProposingStaff" ScrollViewer.CanContentScroll="False" Width="{Binding ElementName=ShowListProposing, Path=ActualWidth}" Background="Transparent"  BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListView.Style>
-                    <Style TargetType="ListView">
-                        <Setter Property="ItemsSource" Value="{x:Null}"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
-                                <Setter Property="ItemsSource" Value="{Binding listProposingSendAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2">
-                                <Setter Property="ItemsSource" Value="{Binding listProposingSendAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3">
-                                <Setter Property="ItemsSource" Value="{Binding listProposingSendAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.Style>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel ></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <Border Height="50" BorderThickness="0 0 0 1" Cursor="Hand" BorderBrush="{StaticResource ColorGreen}" CornerRadius="10">
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="Transparent"/>
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="LightBlue"/>
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <Grid VerticalAlignment="Center">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="40"/>
-                                                <ColumnDefinition Width="3*"/>
-                                                <ColumnDefinition Width="1*"/>
-                                                <ColumnDefinition Width="0.5*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border Width="25" Height="25" CornerRadius="30" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
-                                                <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Order}" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
-                                            </Border>
-                                            <TextBlock Grid.Column="1" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"  FontSize="16">
+        <Grid Grid.Row="3" x:Name="ShowListProposing">
+            <StackPanel>
+                <ListView HorizontalAlignment="Center" x:Name="lsvProposingStaff" ScrollViewer.CanContentScroll="False" Width="{Binding ElementName=ShowListProposing, Path=ActualWidth}" Background="Transparent"  BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.Style>
+                        <Style TargetType="ListView">
+                            <Setter Property="ItemsSource" Value="{x:Null}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                    <Setter Property="ItemsSource" Value="{Binding listProposingSendAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2">
+                                    <Setter Property="ItemsSource" Value="{Binding listProposingSendAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3">
+                                    <Setter Property="ItemsSource" Value="{Binding listProposingSendAll, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Style>
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel ></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border Height="50" BorderThickness="0 0 0 1" Cursor="Hand" BorderBrush="{StaticResource ColorGreen}" CornerRadius="10">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="LightBlue"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Grid VerticalAlignment="Center">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="40"/>
+                                                    <ColumnDefinition Width="3*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="0.8*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Width="25" Height="25" CornerRadius="30" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                                                    <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Order}" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="1" Margin="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"  FontSize="16">
                                                 <Run Text="{Binding name_user}" FontWeight="Medium"/>
                                                 <Run Text="(" FontWeight="Regular"/>
                                                 <Run Text="{Binding organizeDetailName }" FontWeight="Regular"/>
                                                 <Run Text=")" FontWeight="Regular"/>
                                                 <Run Text="{Binding name_dx}" FontWeight="Regular"/>
-                                            </TextBlock>
-                                            <Border Grid.Column="2" Margin="20 0 0 0" HorizontalAlignment="Left">
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Border Grid.Column="0" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="15">
-                                                        <Border.Style>
-                                                            <Style TargetType="Border">
-                                                                <Setter Property="BorderBrush" Value="{StaticResource ColorOrange3}"/>
-                                                                <Setter Property="Background" Value="{StaticResource ColorOrange3}"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="5">
-                                                                        <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
-                                                                        <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="3">
-                                                                        <Setter Property="BorderBrush" Value="{StaticResource colorRemoveRed}"/>
-                                                                        <Setter Property="Background" Value="{StaticResource colorRemoveRed}"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="0">
-                                                                        <DataTrigger.EnterActions>
-                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
-                                                                        </DataTrigger.EnterActions>
-                                                                        <DataTrigger.ExitActions>
-                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
-                                                                        </DataTrigger.ExitActions>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="6">
-                                                                        <DataTrigger.EnterActions>
-                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
-                                                                        </DataTrigger.EnterActions>
-                                                                        <DataTrigger.ExitActions>
-                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
-                                                                        </DataTrigger.ExitActions>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="7">
-                                                                        <DataTrigger.EnterActions>
-                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
-                                                                        </DataTrigger.EnterActions>
-                                                                        <DataTrigger.ExitActions>
-                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
-                                                                        </DataTrigger.ExitActions>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="10">
-                                                                        <DataTrigger.EnterActions>
-                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
-                                                                        </DataTrigger.EnterActions>
-                                                                        <DataTrigger.ExitActions>
-                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
-                                                                        </DataTrigger.ExitActions>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="11">
-                                                                        <DataTrigger.EnterActions>
-                                                                            <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
-                                                                        </DataTrigger.EnterActions>
-                                                                        <DataTrigger.ExitActions>
-                                                                            <StopStoryboard BeginStoryboardName="BlinkingEffect" />
-                                                                        </DataTrigger.ExitActions>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </Border.Style>
-                                                    </Border>
-                                                    <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16">
-                                                        <TextBlock.Style>
-                                                            <Style TargetType="TextBlock">
-                                                                <Setter Property="Text" Value=""/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="0">
-                                                                        <Setter Property="Text" Value="Tiếp nhận"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="3">
-                                                                        <Setter Property="Text" Value="Từ trối"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="5">
-                                                                        <Setter Property="Text" Value="Chấp thuận"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="6">
-                                                                        <Setter Property="Text" Value="Bắt buộc đi làm"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="7">
-                                                                        <Setter Property="Text" Value="Đã được tiếp nhận"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="10">
-                                                                        <Setter Property="Text" Value="Chờ lãnh đạo còn lại duyệt"/>
-                                                                    </DataTrigger>
-                                                                    <DataTrigger Binding="{Binding type_duyet}" Value="11">
-                                                                        <Setter Property="Text" Value="Chờ công ty duyệt"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </TextBlock.Style>
-                                                    </TextBlock>
-                                                </Grid>
-                                            </Border>
-                                            <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="{Binding time_create_display}" TextWrapping="Wrap" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
+                                                </TextBlock>
+                                                <Border Grid.Column="2" Margin="20 0 0 0" HorizontalAlignment="Left">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="40"/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Border Grid.Column="0" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Width="15" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="15">
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <Setter Property="BorderBrush" Value="{StaticResource ColorOrange3}"/>
+                                                                    <Setter Property="Background" Value="{StaticResource ColorOrange3}"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="5">
+                                                                            <Setter Property="BorderBrush" Value="{StaticResource ColorGreen}"/>
+                                                                            <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="3">
+                                                                            <Setter Property="BorderBrush" Value="{StaticResource colorRemoveRed}"/>
+                                                                            <Setter Property="Background" Value="{StaticResource colorRemoveRed}"/>
+                                                                        </DataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3"/>
+                                                                                <Condition Binding="{Binding type_duyet}" Value="0"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="BorderBrush" Value="LightBlue"/>
+                                                                            <Setter Property="Background" Value="LightBlue"/>
+                                                                        </MultiDataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="0">
+                                                                            <DataTrigger.EnterActions>
+                                                                                <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                            </DataTrigger.EnterActions>
+                                                                            <DataTrigger.ExitActions>
+                                                                                <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                            </DataTrigger.ExitActions>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="6">
+                                                                            <DataTrigger.EnterActions>
+                                                                                <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                            </DataTrigger.EnterActions>
+                                                                            <DataTrigger.ExitActions>
+                                                                                <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                            </DataTrigger.ExitActions>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="7">
+                                                                            <DataTrigger.EnterActions>
+                                                                                <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                            </DataTrigger.EnterActions>
+                                                                            <DataTrigger.ExitActions>
+                                                                                <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                            </DataTrigger.ExitActions>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="10">
+                                                                            <DataTrigger.EnterActions>
+                                                                                <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                            </DataTrigger.EnterActions>
+                                                                            <DataTrigger.ExitActions>
+                                                                                <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                            </DataTrigger.ExitActions>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="11">
+                                                                            <DataTrigger.EnterActions>
+                                                                                <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                                            </DataTrigger.EnterActions>
+                                                                            <DataTrigger.ExitActions>
+                                                                                <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                                            </DataTrigger.ExitActions>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+                                                        </Border>
+                                                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Text" Value=""/>
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3"/>
+                                                                                <Condition Binding="{Binding type_duyet}" Value="0"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Text" Value="Xem chi tiết"/>
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2"/>
+                                                                                <Condition Binding="{Binding type_duyet}" Value="0"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Text" Value="Tiếp nhận"/>
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding typeClickProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
+                                                                                <Condition Binding="{Binding type_duyet}" Value="0"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Text" Value="Tiếp nhận"/>
+                                                                        </MultiDataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="3">
+                                                                            <Setter Property="Text" Value="Từ trối"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="5">
+                                                                            <Setter Property="Text" Value="Chấp thuận"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="6">
+                                                                            <Setter Property="Text" Value="Bắt buộc đi làm"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="7">
+                                                                            <Setter Property="Text" Value="Đã được tiếp nhận"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="10">
+                                                                            <Setter Property="Text" Value="Chờ lãnh đạo còn lại duyệt"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="11">
+                                                                            <Setter Property="Text" Value="Chờ công ty duyệt"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                </Border>
+                                                <TextBlock Grid.Column="3" HorizontalAlignment="Center" Text="{Binding time_create_display}" TextWrapping="Wrap" Foreground="{StaticResource colorText1}" FontWeight="Regular" FontSize="16"/>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </StackPanel>
+            <Grid x:Name="LoadingSpinner" Visibility="Collapsed">
+                <tool:PopupLoading></tool:PopupLoading>
+            </Grid>
+            <StackPanel x:Name="ShowNoticationDataNull"  VerticalAlignment="Top" Margin="0 100 0 0" HorizontalAlignment="Center">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding statusError, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding statusError, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-        </StackPanel>
+                </StackPanel.Style>
+                <Path HorizontalAlignment="Center" Height="60" Stretch="Fill" Width="50">
+                    <Path.Style>
+                        <Style TargetType="Path">
+                            <Setter Property="Fill" Value="Transparent"/>
+                            <Setter Property="Data" Value="{x:Null}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding statusError, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                    <Setter Property="Fill" Value="{StaticResource ColorGray1}"/>
+                                    <Setter Property="Data" Value="{StaticResource iconDataNull}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding statusError, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2">
+                                    <Setter Property="Fill" Value="{StaticResource ColorOrange3}"/>
+                                    <Setter Property="Data" Value="{StaticResource iconError}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+                <TextBlock x:Name="NoticationDataNull" HorizontalAlignment="Center" FontWeight="Medium" FontSize="25" Opacity="0.5">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Text" Value=""/>
+                            <Setter Property="Foreground" Value="Transparent"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding statusError, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                    <Setter Property="Foreground" Value="{StaticResource ColorGray1}"/>
+                                    <Setter Property="Text" Value="Không có dữ liệu!"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding statusError, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2">
+                                    <Setter Property="Foreground" Value="{StaticResource ColorOrange3}"/>
+                                    <Setter Property="Text" Value="Lỗi hệ thống vui lòng load lại trang!"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

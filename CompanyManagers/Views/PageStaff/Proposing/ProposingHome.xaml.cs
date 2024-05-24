@@ -80,31 +80,38 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
 
+        int numberPage = 1;
+        int TotalPages;
         public async void GetCategoryProposing()
         {
             try
             {
-                for (int i = 1; i <= 10; i++)
+                do
                 {
                     using (WebClient request = new WebClient())
                     {
                         request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
-                        request.QueryString.Add("page", $"{i}");
+                        request.QueryString.Add("page", numberPage.ToString());
                         request.UploadValuesCompleted += (s, e) =>
                         {
                             Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(UnicodeEncoding.UTF8.GetString(e.Result));
-                            if (listCategoyProposingHome == null)
+                            if (dataCategoryProposing.data != null)
                             {
-                                listCategoyProposingHome = new List<Result_CategoryProposing>();
-                            }
-                            foreach (var item in dataCategoryProposing.data.result)
-                            {
-                                listCategoyProposingHome.Add(item);
+                                TotalPages = dataCategoryProposing.data.totalPages;
+                                if (listCategoyProposingHome == null)
+                                {
+                                    listCategoyProposingHome = new List<Result_CategoryProposing>();
+                                }
+                                foreach (var item in dataCategoryProposing.data.result)
+                                {
+                                    listCategoyProposingHome.Add(item);
+                                }
+                                numberPage ++;
                             }
                         };
                         await request.UploadValuesTaskAsync(UrlApi.apiCategoryProposing, request.QueryString);
                     }
-                }
+                } while (numberPage <= TotalPages);
                 GetProposingShowHome();
             }
             catch (Exception)
