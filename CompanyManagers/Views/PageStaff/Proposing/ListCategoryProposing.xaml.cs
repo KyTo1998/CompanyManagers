@@ -1,6 +1,9 @@
-﻿using CompanyManagers.Controllers;
+﻿using CompanyManagers.Common.Popups;
+using CompanyManagers.Controllers;
 using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Views.Home;
+using CompanyManagers.Views.Login;
+using CompanyManagers.Views.Logout;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -88,6 +91,23 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (tb_SearchProposing.Text == "")
                 {
                     listCategoyProposingHome = listCategoyProposingInput.ToList();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void ClickShowCreateProposing(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Result_CategoryProposing dataCategoryProposing = (Result_CategoryProposing)(sender as Border).DataContext;
+                if (dataCategoryProposing != null)
+                {
+                    managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                    managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateNewProposing(managerHome, dataCategoryProposing));
+                    managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
                 }
             }
             catch (Exception)

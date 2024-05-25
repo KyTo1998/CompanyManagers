@@ -47,7 +47,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
-                                    <Border x:Name="ShowCreateProposing" MouseEnter="HoverProposing" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
+                                    <Border x:Name="ShowCreateProposing" MouseLeftButtonUp="ClickShowCreateProposing" MouseEnter="HoverProposing" CornerRadius="10" Margin="5 10 10 10" Cursor="Hand">
                                         <Border.Effect>
                                             <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                                         </Border.Effect>
