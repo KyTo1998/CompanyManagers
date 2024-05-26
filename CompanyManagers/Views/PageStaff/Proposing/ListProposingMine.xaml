@@ -407,7 +407,7 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="ep_name"/>
+                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" BorderThickness="0 0 1 0" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16" DisplayMemberPath="ep_name"/>
                     <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
                     <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
                     <DockPanel Grid.Column="3" MouseLeftButtonUp="SearchProposingSendTo" Background="Transparent" Cursor="Hand">
@@ -435,8 +435,8 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeyRespon" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người gửi đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16"/>
-                    <tool:SearchBar x:Name="searchKeyCateProRespon" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" PlaceHolderForground="#ACACAC" FontSize="16" DisplayMemberPath="name_cate_dx"/>
+                    <tool:SearchBar x:Name="searchKeyRespon" BorderThickness="0 0 1 0" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người gửi đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16"/>
+                    <tool:SearchBar x:Name="searchKeyCateProRespon" BorderThickness="0 0 1 0" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" FontSize="16" DisplayMemberPath="name_cate_dx"/>
                     <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5">
                         <Grid>
                             <TextBox x:Name="tb_SearchProposing" Height="40" MinWidth="200" Margin="5 10 5 -5" TextChanged="SearchProposing" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>

@@ -57,23 +57,26 @@
                                                             <ColumnDefinition Width="auto"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Border x:Name="Border" Grid.ColumnSpan="2" CornerRadius="10" Background="{DynamicResource colorBackgroundItem1}" BorderThickness="0">
-                                                            <TextBlock VerticalAlignment="Center" Margin="10 0" FontSize="{TemplateBinding FontSize}" Foreground="{Binding PlaceHolderForground}" TextTrimming="WordEllipsis">
+                                                            <TextBlock VerticalAlignment="Center" Margin="10 0" FontSize="{TemplateBinding FontSize}" TextTrimming="WordEllipsis">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="TextBlock">
                                                                         <Setter Property="Text" Value="{Binding Text}"></Setter>
+                                                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"></Setter>
                                                                         <Style.Triggers>
                                                                             <DataTrigger Binding="{Binding Text}" Value="">
                                                                                 <Setter Property="Text" Value="{Binding PlaceHolder}"></Setter>
+                                                                                <Setter Property="Foreground" Value="#ACACAC"></Setter>
                                                                             </DataTrigger>
                                                                             <DataTrigger Binding="{Binding Text}" Value="{x:Null}">
                                                                                 <Setter Property="Text" Value="{Binding PlaceHolder}"></Setter>
+                                                                                <Setter Property="Foreground" Value="#ACACAC"></Setter>
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
                                                                 </TextBlock.Style>
                                                             </TextBlock>
                                                         </Border>
-                                                        <Border Grid.Column="1" Background="Transparent" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0 0 1 0" CornerRadius="{Binding CornerRadius}">
+                                                        <Border Grid.Column="1" Background="Transparent" BorderBrush="{StaticResource ColorGreen}" BorderThickness="0" CornerRadius="{Binding CornerRadius}">
                                                             <Path Data="{StaticResource iconSearch}" Fill="#474747" Margin="10 0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"></Path>
                                                         </Border>
                                                     </Grid>

@@ -41,7 +41,7 @@
         <ComboBox Grid.Column="1" IsEditable="False" Focusable="false" ForceCursor="False" IsTabStop="False" Foreground="{Binding Foreground}" Cursor="Hand" SnapsToDevicePixels="True" OverridesDefaultStyle="True">
             <ComboBox.Style>
                 <Style TargetType="{x:Type ComboBox}">
-                    <Setter Property="IsDropDownOpen" Value="{Binding IsDropDownOpen}"/>
+                    <Setter Property="IsDropDownOpen" Value="{Binding IsDropDownOpenSelected}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -57,16 +57,19 @@
                                                             <ColumnDefinition Width="auto"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Border x:Name="Border" Grid.ColumnSpan="2" CornerRadius="10" Background="{DynamicResource colorBackgroundItem1}" BorderThickness="0">
-                                                            <TextBlock VerticalAlignment="Center" Margin="10 0" FontSize="{TemplateBinding FontSize}" Foreground="{Binding PlaceHolderForgroundSelected}" TextTrimming="WordEllipsis">
+                                                            <TextBlock VerticalAlignment="Center" Margin="10 0" FontSize="{TemplateBinding FontSize}" TextTrimming="WordEllipsis">
                                                                 <TextBlock.Style>
                                                                     <Style TargetType="TextBlock">
-                                                                        <Setter Property="Text" Value="{Binding TextSelected, RelativeSource={RelativeSource AncestorType=UserControl}}"></Setter>
+                                                                        <Setter Property="Text" Value="{Binding TextSelected}"></Setter>
+                                                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"></Setter>
                                                                         <Style.Triggers>
-                                                                            <DataTrigger Binding="{Binding TextSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="">
+                                                                            <DataTrigger Binding="{Binding TextSelected}" Value="">
                                                                                 <Setter Property="Text" Value="{Binding PlaceHolderSelected}"></Setter>
+                                                                                <Setter Property="Foreground" Value="#ACACAC"></Setter>
                                                                             </DataTrigger>
-                                                                            <DataTrigger Binding="{Binding TextSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="{x:Null}">
+                                                                            <DataTrigger Binding="{Binding TextSelected}" Value="{x:Null}">
                                                                                 <Setter Property="Text" Value="{Binding PlaceHolderSelected}"></Setter>
+                                                                                <Setter Property="Foreground" Value="#ACACAC"></Setter>
                                                                             </DataTrigger>
                                                                         </Style.Triggers>
                                                                     </Style>
@@ -88,7 +91,7 @@
                                             <Grid Margin="0 8">
                                                 <Border Background="{DynamicResource colorBackgroundItem1}" BorderBrush="black" BorderThickness="1" CornerRadius="10">
                                                     <Grid Margin="10">
-                                                        <ListView x:Name="lv" Background="{DynamicResource colorBackgroundItem1}" SelectedIndex="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" ItemsSource="{Binding Test,RelativeSource={RelativeSource AncestorType=UserControl}}" DisplayMemberPath="{Binding DisplayMemberPath}" SelectionChanged="ListView_SelectionChanged" PreviewMouseLeftButtonDown="lv_PreviewMouseLeftButtonDow" ScrollViewer.ScrollChanged="lv_ScrollChanged">
+                                                        <ListView x:Name="lv" Background="{DynamicResource colorBackgroundItem1}" SelectedIndex="{Binding SelectedIndexSelected,RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" ItemsSource="{Binding TestSelected,RelativeSource={RelativeSource AncestorType=UserControl}}" DisplayMemberPath="{Binding DisplayMemberPathSelected}" SelectionChanged="ListView_SelectionChanged" PreviewMouseLeftButtonDown="lv_PreviewMouseLeftButtonDow" ScrollViewer.ScrollChanged="lv_ScrollChanged">
                                                             <ListView.ItemContainerStyle>
                                                                 <Style TargetType="ListViewItem">
                                                                     <Setter Property="Cursor" Value="Hand"></Setter>
@@ -119,7 +122,7 @@
                                                                 <Style TargetType="TextBlock">
                                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                                     <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding Test.Count,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0">
+                                                                        <DataTrigger Binding="{Binding TestSelected.Count,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0">
                                                                             <Setter Property="Visibility" Value="Visible"/>
                                                                         </DataTrigger>
                                                                     </Style.Triggers>

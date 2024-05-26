@@ -34,13 +34,13 @@ namespace CompanyManagers.Common.Tool
             InitializeComponent();
              this.DataContext = this;
         }
-        public class searchItem
+        public class searchItemSelected
         {
             public string Name { get; set; }
             public object Data { get; set; }
         }
 
-        public bool IsDropDownOpenSelected
+        /*public bool IsDropDownOpenSelected
         {
             get { return (bool)GetValue(IsDropDownOpenProperty); }
             set
@@ -50,8 +50,13 @@ namespace CompanyManagers.Common.Tool
         }
         // Using a DependencyProperty as the backing store for IsDropDownOpen.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsDropDownOpenProperty =
-            DependencyProperty.Register("IsDropDownOpenSelected", typeof(bool), typeof(SearchBar), new PropertyMetadata(false));
-
+            DependencyProperty.Register("IsDropDownOpenSelected", typeof(bool), typeof(SearchBar), new PropertyMetadata(false));*/
+        private bool _IsDropDownOpenSelected;
+        public bool IsDropDownOpenSelected
+        {
+            get { return _IsDropDownOpenSelected; }
+            set { _IsDropDownOpenSelected = value;OnPropertyChanged("IsDropDownOpenSelected"); }
+        }
         public int CornerRadiusSelected
         {
             get { return (int)GetValue(CornerRadiusProperty); }
@@ -77,10 +82,10 @@ namespace CompanyManagers.Common.Tool
             DependencyProperty.Register("ItemsSourceSelected", typeof(IEnumerable<object>), typeof(SearchBar), new PropertyMetadata(new List<object>()));
 
 
-        private List<searchItem> _Test = new List<searchItem>();
-        public List<searchItem> Test
+        private List<searchItemSelected> _TestSelected = new List<searchItemSelected>();
+        public List<searchItemSelected> TestSelected
         {
-            get { return _Test; }
+            get { return _TestSelected; }
         }
 
 
@@ -147,7 +152,7 @@ namespace CompanyManagers.Common.Tool
 
 
 
-        public String TextSelected
+        /*public String TextSelected
         {
             get { return (String)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
@@ -155,7 +160,7 @@ namespace CompanyManagers.Common.Tool
 
         // Using a DependencyProperty as the backing store for Text.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("TextSelected", typeof(String), typeof(SearchBar));
+            DependencyProperty.Register("TextSelected", typeof(String), typeof(SearchBar));*/
 
 
 
@@ -246,12 +251,12 @@ namespace CompanyManagers.Common.Tool
             if (ItemsSourceSelected != null)
             {
                 itemType = ItemsSourceSelected.GetType().GetGenericArguments().Single();
-                _Test = new List<searchItem>();
+                _TestSelected = new List<searchItemSelected>();
                 if (itemType == typeof(string))
                 {
                     ItemsSourceSelected.ToList().ForEach(i =>
                     {
-                        _Test.Add(new searchItem() { Name = (i as string), Data = ItemsSourceSelected.ToList()[ItemsSourceSelected.ToList().IndexOf(i)] });
+                        _TestSelected.Add(new searchItemSelected() { Name = (i as string), Data = ItemsSourceSelected.ToList()[ItemsSourceSelected.ToList().IndexOf(i)] });
                     });
                     OnPropertyChanged("Test");
                     return;
@@ -293,7 +298,7 @@ namespace CompanyManagers.Common.Tool
                     }
                     for (int i = 0; i < list.Count; i++)
                     {
-                        _Test.Add(new searchItem() { Name = list[i], Data = ItemsSourceSelected.ToList()[i] });
+                        _TestSelected.Add(new searchItemSelected() { Name = list[i], Data = ItemsSourceSelected.ToList()[i] });
                     }
                     OnPropertyChanged("Test");
                 }
@@ -306,92 +311,20 @@ namespace CompanyManagers.Common.Tool
                     });
                     for (int i = 0; i < list.Count; i++)
                     {
-                        _Test.Add(new searchItem() { Name = list[i], Data = ItemsSourceSelected.ToList()[i] });
+                        _TestSelected.Add(new searchItemSelected() { Name = list[i], Data = ItemsSourceSelected.ToList()[i] });
                     }
                     OnPropertyChanged("Test");
                 }
             }
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //var textbox = sender as TextBox;
-            //_Test = new List<searchItem>();
-            //if (itemType == typeof(string))
-            //{
-            //    var list = new List<string>();
-            //    ItemsSource.ToList().ForEach(i =>
-            //    {
-            //        var txt = i as string;
-            //        if (RemoveUnicode(txt).ToLower().Contains(RemoveUnicode(textbox.Text).ToLower()))
-            //        {
-            //            _Test.Add(new searchItem() { Name = txt, Data = ItemsSource.ToList()[ItemsSource.ToList().IndexOf(i)] });
-            //        }
-            //    });
-            //    OnPropertyChanged("Test");
-            //}
-            //else
-            //{
-            //    if (!string.IsNullOrEmpty(DisplayMemberPath))
-            //    {
-            //        var list = new List<string>();
-            //        if (DisplayMemberPath.Contains(","))
-            //        {
-            //            var dis = DisplayMemberPath.Split(',').ToList();
-            //            ItemsSource.ToList().ForEach(item =>
-            //            {
-            //                var txt = new List<string>();
-            //                foreach (var p in item.GetType().GetProperties())
-            //                {
-            //                    if (dis.Contains(p.Name))
-            //                    {
-            //                        txt.Add(p.GetValue(item, null).ToString());
-            //                    }
-            //                }
-
-            //                var temp = "";
-            //                if (!string.IsNullOrEmpty(DisplayChar.ToString())) temp = (string.Join(" " + DisplayChar.ToString() + " ", txt));
-            //                else temp = string.Join(" ", txt);
-            //                if (RemoveUnicode(temp).ToLower().Contains(RemoveUnicode(textbox.Text.ToLower())))
-            //                {
-            //                    var i = ItemsSource.ToList().IndexOf(item);
-            //                    _Test.Add(new searchItem() { Name = temp, Data = ItemsSource.ToList()[i] });
-            //                }
-            //            });
-            //        }
-            //        else
-            //        {
-            //            ItemsSource.ToList().ForEach(item =>
-            //            {
-            //                var txt = new List<string>();
-            //                foreach (var p in item.GetType().GetProperties())
-            //                {
-            //                    if (p.Name == DisplayMemberPath)
-            //                    {
-            //                        txt.Add(p.GetValue(item, null).ToString());
-            //                    }
-            //                }
-            //                var temp = string.Join(" ", txt);
-            //                if (RemoveUnicode(temp).ToLower().Contains(RemoveUnicode(textbox.Text.ToLower())))
-            //                {
-            //                    var i = ItemsSource.ToList().IndexOf(item);
-            //                    _Test.Add(new searchItem() { Name = temp, Data = ItemsSource.ToList()[i] });
-            //                }
-            //            });
-            //        }
-            //        OnPropertyChanged("Test");
-            //    }
-            //}
-
-            //if (Test.Count <= 0)
-            //{
-
-            //}
-        }
+        private string _TextSelected;
+        
+        public string TextSelected { get { return _TextSelected; } set { _TextSelected = value; OnPropertyChanged("TextSelected"); } }
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var z = (sender as ListView).SelectedItem as searchItem;
+            var z = (sender as ListView).SelectedItem as searchItemSelected;
             SelectedItemSelected = null;
-            TextSelected = "";
+            TextSelected = null;
             if (z != null)
             {
                 TextSelected = z.Name;
@@ -405,9 +338,9 @@ namespace CompanyManagers.Common.Tool
         }
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_Test.Count <= 0) Refresh();
+            if (_TestSelected.Count <= 0) Refresh();
             _PopupMaxWith = this.ActualWidth;
-            foreach (var item in Test)
+            foreach (var item in TestSelected)
             {
                 if (!string.IsNullOrEmpty(item.Name))
                 {
@@ -447,7 +380,7 @@ namespace CompanyManagers.Common.Tool
         {
             if (e.Key == Key.Down)
             {
-                if (SelectedIndexSelected + 1 < Test.Count) SelectedIndexSelected++;
+                if (SelectedIndexSelected + 1 < TestSelected.Count) SelectedIndexSelected++;
             }
             if (e.Key == Key.Up)
             {
