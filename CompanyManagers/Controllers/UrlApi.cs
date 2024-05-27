@@ -24,6 +24,7 @@ namespace CompanyManagers.Controllers
         #region Shift
         public const string apiListShiftAll = "https://api.timviec365.vn/api/qlc/shift/list";
         public const string apiListComfrimFollow = "https://api.timviec365.vn/api/vanthu/dexuat/showadd";
+        public const string apiListShiftForDay = "https://api.timviec365.vn/api/vanthu/dexuat/empShiftInDay";
         #endregion
     }
 }

@@ -182,6 +182,7 @@
     <Compile Include="Models\ModelsPageStaff\dboCategoryProposing.cs" />
     <Compile Include="Models\ModelsPageStaff\dboProposingHome.cs" />
     <Compile Include="Models\ModelsPageStaff\dboProposingSendToAll.cs" />
+    <Compile Include="Models\ModelsShift\StaffShiftInDay.cs" />
     <Compile Include="Views\Functions\HomeFunction\ListFunction.xaml.cs">
       <DependentUpon>ListFunction.xaml</DependentUpon>
     </Compile>

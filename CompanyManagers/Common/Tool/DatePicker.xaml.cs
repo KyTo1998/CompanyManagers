@@ -390,7 +390,7 @@ namespace CompanyManagers.Common.Tool
             textBoxFormat();
         }
 
-        private void XoaNgay(object sender, MouseButtonEventArgs e)
+        public void XoaNgay(object sender, MouseButtonEventArgs e)
         {
             Part_TextBox.Text = "";
             SelectedDate = null;
