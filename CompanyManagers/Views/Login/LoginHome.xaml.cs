@@ -212,7 +212,7 @@ namespace CompanyManagers.Views.Login
             catch (Exception)
             {
                 lbWrongUserPass.Visibility = Visibility.Visible;
-                lbWrongUserPass.Text = "Tài khoản hoặc mật khẩu không chính xác!";
+                lbWrongUserPass.Text = "Lỗi hệ thống vui lòng thử lại sau!";
             }
         }
         public void CheckTypeSaveAcount(string typeLogin, string userName, string passWord, string token)
@@ -227,7 +227,7 @@ namespace CompanyManagers.Views.Login
                             Properties.Settings.Default.UserCom = userName;
                             Properties.Settings.Default.PassCom = pass;
                             Properties.Settings.Default.Type365 = typeLogin.ToString();
-                            Properties.Settings.Default.TokenCom = token;
+                            Properties.Settings.Default.Token = token;
                             Properties.Settings.Default.RememberMe = true;
                             Properties.Settings.Default.Save();
                         }
@@ -245,7 +245,7 @@ namespace CompanyManagers.Views.Login
                             Properties.Settings.Default.UserEp = userName;
                             Properties.Settings.Default.PassEp = pass;
                             Properties.Settings.Default.Type365 = typeLogin.ToString();
-                            Properties.Settings.Default.TokenEp = token;
+                            Properties.Settings.Default.Token = token;
                             Properties.Settings.Default.RememberMe = true;
                             Properties.Settings.Default.Save();
                         }

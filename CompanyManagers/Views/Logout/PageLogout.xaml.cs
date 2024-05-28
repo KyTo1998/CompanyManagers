@@ -31,7 +31,7 @@ namespace CompanyManagers.Views.Logout
             {
                 if (Properties.Settings.Default.Type365 == "1")
                 {
-                    Properties.Settings.Default.TokenCom = "";
+                    Properties.Settings.Default.Token = "";
                     Properties.Settings.Default.PassCom = "";
                     Properties.Settings.Default.RememberMe = true;
                     Properties.Settings.Default.Save();
@@ -41,7 +41,7 @@ namespace CompanyManagers.Views.Logout
                 }
                 else 
                 {
-                    Properties.Settings.Default.TokenEp = "";
+                    Properties.Settings.Default.Token = "";
                     Properties.Settings.Default.PassEp = "";
                     Properties.Settings.Default.RememberMe = true;
                     Properties.Settings.Default.Save();

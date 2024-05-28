@@ -29,29 +29,15 @@ namespace CompanyManagers.Properties
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TokenCom
+        public string Token
         {
             get
             {
-                return ((string)(this["TokenCom"]));
+                return ((string)(this["Token"]));
             }
             set
             {
-                this["TokenCom"] = value;
-            }
-        }
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TokenEp
-        {
-            get
-            {
-                return ((string)(this["TokenEp"]));
-            }
-            set
-            {
-                this["TokenEp"] = value;
+                this["Token"] = value;
             }
         }
         [global::System.Configuration.UserScopedSettingAttribute()]

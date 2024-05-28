@@ -115,7 +115,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 StartApi();
                 using (WebClient request = new WebClient())
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     if (searchKeySend.SelectedItem != null && ((Info_StaffAll)searchKeySend.SelectedItem).ep_id > 0)
                     {
                         request.QueryString.Add("id_user_duyet", ((Info_StaffAll)searchKeySend.SelectedItem).ep_id.ToString());
@@ -154,7 +154,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 StartApi();
                 using (WebClient request = new WebClient())
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     if (searchKeyRespon.SelectedItem != null && ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id > 0)
                     {
                         request.QueryString.Add("id_user", ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id.ToString());
@@ -201,7 +201,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 StartApi();
                 using (WebClient request = new WebClient())
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     request.QueryString.Add("type", type.ToString());
                     request.QueryString.Add("pageSize", "1000");
                     request.UploadValuesCompleted += (s, e) =>

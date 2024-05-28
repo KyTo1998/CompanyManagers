@@ -55,7 +55,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 using (WebClient request = new WebClient())
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     request.UploadValuesCompleted += (s, e) =>
                     {
                         try
@@ -96,7 +96,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     using (WebClient request = new WebClient())
                     {
-                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                         request.QueryString.Add("page", numberPage.ToString());
                         request.UploadValuesCompleted += (s, e) =>
                         {

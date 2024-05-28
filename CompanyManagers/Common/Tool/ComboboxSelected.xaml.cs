@@ -258,7 +258,7 @@ namespace CompanyManagers.Common.Tool
                     {
                         _TestSelected.Add(new searchItemSelected() { Name = (i as string), Data = ItemsSourceSelected.ToList()[ItemsSourceSelected.ToList().IndexOf(i)] });
                     });
-                    OnPropertyChanged("Test");
+                    OnPropertyChanged("TestSelected");
                     return;
                 }
                 if (!string.IsNullOrEmpty(DisplayMemberPathSelected))
@@ -300,7 +300,7 @@ namespace CompanyManagers.Common.Tool
                     {
                         _TestSelected.Add(new searchItemSelected() { Name = list[i], Data = ItemsSourceSelected.ToList()[i] });
                     }
-                    OnPropertyChanged("Test");
+                    OnPropertyChanged("TestSelected");
                 }
                 else
                 {
@@ -313,7 +313,7 @@ namespace CompanyManagers.Common.Tool
                     {
                         _TestSelected.Add(new searchItemSelected() { Name = list[i], Data = ItemsSourceSelected.ToList()[i] });
                     }
-                    OnPropertyChanged("Test");
+                    OnPropertyChanged("TestSelected");
                 }
             }
         }

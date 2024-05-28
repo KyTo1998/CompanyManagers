@@ -4,6 +4,7 @@ using CompanyManagers.Models.HomeFunction;
 using CompanyManagers.Models.Logins;
 using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsPageStaff;
+using CompanyManagers.Models.ModelsShift;
 using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
 using CompanyManagers.Views.Logout;
@@ -136,6 +137,13 @@ namespace CompanyManagers.Views.Home
             get { return _dataListUserFollow; }
             set { _dataListUserFollow = value; OnPropertyChanged("dataListUserFollow"); }
         }
+
+        private List<StaffShiftInDay> _dataListStaffShiftInDay;
+        public List<StaffShiftInDay> dataListStaffShiftInDay
+        {
+            get { return _dataListStaffShiftInDay; }
+            set { _dataListStaffShiftInDay = value; OnPropertyChanged("dataListStaffShiftInDay"); }
+        }
         private string _backToBack;
         public string backToBack 
         {
@@ -144,6 +152,7 @@ namespace CompanyManagers.Views.Home
         }
          public PagePopupGrayColor PagePopupGrayColor { get; set; }
         LoginHome loginHome { get; set; }
+        pageCreateNewProposing pageNewProposing { get; set; }
         public ManagerHome(DataUserLogin userCurrent, LoginHome _loginHome)
         {
             InitializeComponent();
@@ -173,6 +182,7 @@ namespace CompanyManagers.Views.Home
                 GetListComfirmAndFollow();
             }
         }
+
         private Thread textUpdateThread;
         private void StartDynamicText()
         {
@@ -206,14 +216,7 @@ namespace CompanyManagers.Views.Home
             {
                 using (WebClient request = new WebClient())
                 {
-                    if (Properties.Settings.Default.Type365 == "1")
-                    {
-                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenCom);
-                    }
-                    else
-                    {
-                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
-                    }
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     request.UploadValuesCompleted += (s, e) =>
                     {
                         Root_StaffAll dataStaffAll = JsonConvert.DeserializeObject<Root_StaffAll>(UnicodeEncoding.UTF8.GetString(e.Result));
@@ -239,14 +242,7 @@ namespace CompanyManagers.Views.Home
             {
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Get, UrlApi.apiListShiftAll);
-                if (Properties.Settings.Default.Type365 == "1")
-                {
-                    request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.TokenCom);
-                }
-                else
-                {
-                    request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.TokenEp);
-                }
+                request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token); 
                 var response = await client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
                 {
@@ -269,7 +265,7 @@ namespace CompanyManagers.Views.Home
             {
                 using (WebClient request = new WebClient())
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.TokenEp);
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     request.UploadValuesCompleted += (s, e) =>
                     {
                         Root_ComfrimAndFollow dataComfrimAndFollow = JsonConvert.DeserializeObject<Root_ComfrimAndFollow>(UnicodeEncoding.UTF8.GetString(e.Result));
@@ -281,6 +277,40 @@ namespace CompanyManagers.Views.Home
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.apiListComfrimFollow, request.Headers);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        public async void GetShiftForDay(string dateShift, string idStaff)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiListShiftForDay);
+                request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token);
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(dateShift), "day");
+                if (Properties.Settings.Default.Type365 == "1")
+                {
+                    content.Add(new StringContent(idStaff), "ep_id");
+                }
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
+                {
+                    var resContent = await response.Content.ReadAsStringAsync();
+                    Root_StaffShiftInDay dataStaffShiftInDay = JsonConvert.DeserializeObject<Root_StaffShiftInDay>(resContent);
+                    if (dataStaffShiftInDay.list != null)
+                    {
+                        StaffShiftInDay dataShift = new StaffShiftInDay();
+                        dataShift.shift_name = "Cả ngày(tất cả các ca)";
+                        dataShift.shift_id = 0;
+                        dataStaffShiftInDay.list.Insert(0, dataShift);
+                        dataListStaffShiftInDay = dataStaffShiftInDay.list.ToList();
+                    }
                 }
             }
             catch (Exception)

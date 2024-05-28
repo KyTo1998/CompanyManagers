@@ -269,9 +269,55 @@
                                 <Run Text="Ca nghỉ" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <tool:ComboboxSelected x:Name="ShiftOnLeave" SelectionChangedSelected="ClickShiftOnLeave" PlaceHolderSelected="Chọn ca làm việc" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" BorderBrush="{StaticResource ColorGreen}"/>
+                            <tool:ComboboxSelected x:Name="ShiftOnLeave" SelectionChangedSelected="ClickShiftOnLeave" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
                         </StackPanel>
                     </Grid>
+                    <DataGrid Name="lsvListShifForDay" Style="{StaticResource DataGrid1}" ItemsSource="{Binding listShiftSelect, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 15 0 10" MinRowHeight="50" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <DataGrid.OpacityMask>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Border Background="#FFFFFF" CornerRadius="15" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid},Path=ActualHeight}"></Border>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </DataGrid.OpacityMask>
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="0.5*" Header="STT">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" HorizontalAlignment="Left" FontSize="16" Foreground="#4c5bd4"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Header="Ca nghỉ" Width="2*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="16" Text="{Binding}"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="2*" Header="Ngày bắt đầu nghỉ">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="16" Text="{Binding tt_phat.tong_phat_formatted}"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="2*" Header="Ngày kết thúc nghỉ">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock FontSize="16" Text="{Binding }"></TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="0.5*" Header="Xóa">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Path Data="{StaticResource iconDelete}" Fill="{StaticResource colorRemoveRed}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="4" Margin="10">
