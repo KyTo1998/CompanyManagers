@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -113,64 +114,69 @@
                 </StackPanel>
             </Border>
         </Grid>
-        <StackPanel Grid.Row="2">
-            <TextBlock VerticalAlignment="Center" Text="Đề xuất gần đây" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
-            <ListView x:Name="lsvProposingNow" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listProposingHome, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel></WrapPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListViewItem">
-                                    <Border CornerRadius="10" Margin="5 10 10 10" Cursor="Hand" Background="{StaticResource colorBackgroundItem1}">
-                                        <Border.Effect>
-                                            <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
-                                        </Border.Effect>
-                                        <Grid Margin="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50"/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <Border Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center">
-                                                <Path Stretch="Fill">
-                                                    <Path.Style>
-                                                        <Style TargetType="Path">
-                                                            <Setter Property="Data" Value="{StaticResource iconProposingNo}"/>
-                                                            <Setter Property="Fill" Value="{StaticResource colorText1}"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Type_duyet}" Value="5">
-                                                                    <Setter Property="Data" Value="{StaticResource iconProposingYes}"/>
-                                                                    <Setter Property="Fill" Value="{StaticResource ColorGreen}"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Path.Style>
-                                                </Path>
-                                            </Border>
-                                            <StackPanel Grid.Column="1">
-                                                <TextBlock Text="{Binding name_dx}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
-                                                <TextBlock Margin="0 5 0 5" Text="{Binding type_dx_string}" FontSize="15" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="2*"/>
-                                                        <ColumnDefinition Width="1*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <TextBlock Grid.Column="0" Text="{Binding type_duyet}" FontSize="12" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
-                                                    <TextBlock Grid.Column="1" Text="{Binding time_duyet_display}" Margin="0 0 10 0" HorizontalAlignment="Right" FontSize="12" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
-                                                </Grid>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid x:Name="LoadingSpinner" Visibility="Collapsed">
+                <tool:PopupLoading></tool:PopupLoading>
+            </Grid>
+            <StackPanel>
+                <TextBlock VerticalAlignment="Center" Text="Đề xuất gần đây" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+                <ListView x:Name="lsvProposingNow" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listProposingHome, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel></WrapPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <Border CornerRadius="10" Margin="5 10 10 10" Cursor="Hand" Background="{StaticResource colorBackgroundItem1}">
+                                            <Border.Effect>
+                                                <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
+                                            </Border.Effect>
+                                            <Grid Margin="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Border Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center">
+                                                    <Path Stretch="Fill">
+                                                        <Path.Style>
+                                                            <Style TargetType="Path">
+                                                                <Setter Property="Data" Value="{StaticResource iconProposingNo}"/>
+                                                                <Setter Property="Fill" Value="{StaticResource colorText1}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Type_duyet}" Value="5">
+                                                                        <Setter Property="Data" Value="{StaticResource iconProposingYes}"/>
+                                                                        <Setter Property="Fill" Value="{StaticResource ColorGreen}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Path.Style>
+                                                    </Path>
+                                                </Border>
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Text="{Binding name_dx}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
+                                                    <TextBlock Margin="0 5 0 5" Text="{Binding type_dx_string}" FontSize="15" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="2*"/>
+                                                            <ColumnDefinition Width="1*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding type_duyet}" FontSize="12" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
+                                                        <TextBlock Grid.Column="1" Text="{Binding time_duyet_display}" Margin="0 0 10 0" HorizontalAlignment="Right" FontSize="12" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
+                                                    </Grid>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

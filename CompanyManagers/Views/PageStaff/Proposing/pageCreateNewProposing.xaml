@@ -6,8 +6,8 @@
              xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" MinHeight="690" MinWidth="860" MaxWidth="1000" MaxHeight="800">
-    <Border CornerRadius="10" BorderThickness="0.5" BorderBrush="LightBlue" Background="{StaticResource colorBackgroundItem1}">
-        <Grid>
+    <Border CornerRadius="10" Height="{Binding ElementName=detailProposing, Path=ActualHeight}" BorderThickness="0.5" BorderBrush="LightBlue" Background="{StaticResource colorBackgroundItem1}">
+        <Grid x:Name="detailProposing">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="Auto"/>
@@ -156,169 +156,183 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="3" Margin="10">
-                <StackPanel x:Name="NghiPhep">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="2*"/>
-                        </Grid.ColumnDefinitions>
-                        <DockPanel Grid.Column="0">
-                            <CheckBox IsHitTestVisible="False" VerticalAlignment="Center" IsChecked="False" x:Name="cbSelectYesPlan">
-                                <CheckBox.Style>
-                                    <Style TargetType="CheckBox">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type CheckBox}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource ColorGreen}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
-                                                            <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
-                                                        </Border>
-                                                        <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
-                                                    </StackPanel>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsChecked" Value="False">
-                                                            <Setter TargetName="checkboxPath" Property="Visibility" Value="Hidden"></Setter>
-                                                            <Setter TargetName="checkboxBorder" Property="Background" Value="Transparent"></Setter>
-                                                        </Trigger>
-                                                        <Trigger Property="IsChecked" Value="True">
-                                                            <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
-                                                            <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorThemeGreen}"></Setter>
-                                                        </Trigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsMouseOver" Value="True"/>
-                                                                <Condition Property="IsChecked" Value="False"/>
-                                                            </MultiTrigger.Conditions>
-                                                        </MultiTrigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </CheckBox.Style>
-                            </CheckBox>
-                            <TextBlock FontSize="16" FontWeight="Regular" VerticalAlignment="Center" Margin="10 0 0 0">
+                <Grid>
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding typeCategoryProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <StackPanel x:Name="NghiPhep">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <DockPanel Grid.Column="0">
+                                <CheckBox IsHitTestVisible="True" VerticalAlignment="Center" x:Name="cbSelectYesPlan" Checked="SelectYesPlan">
+                                    <CheckBox.Style>
+                                        <Style TargetType="CheckBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource ColorGreen}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
+                                                            </Border>
+                                                            <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
+                                                        </StackPanel>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="False">
+                                                                <Setter TargetName="checkboxPath" Property="Visibility" Value="Hidden"></Setter>
+                                                                <Setter TargetName="checkboxBorder" Property="Background" Value="Transparent"></Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
+                                                                <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorThemeGreen}"></Setter>
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsMouseOver" Value="True"/>
+                                                                    <Condition Property="IsChecked" Value="False"/>
+                                                                </MultiTrigger.Conditions>
+                                                            </MultiTrigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+                                <TextBlock FontSize="16" FontWeight="Regular" VerticalAlignment="Center" Margin="10 0 0 0">
                                 <Run Text="Đề xuất có kế hoạch" Foreground="{DynamicResource colorText1}"/>
                                 <Run Text="*" Foreground="{DynamicResource colorRemoveRed}"/>
-                            </TextBlock>
-                        </DockPanel>
-                        <DockPanel Grid.Column="1">
-                            <CheckBox IsHitTestVisible="False" VerticalAlignment="Center" IsChecked="False" x:Name="cbSelectNoPlan">
-                                <CheckBox.Style>
-                                    <Style TargetType="CheckBox">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type CheckBox}">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource ColorGreen}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
-                                                            <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
-                                                        </Border>
-                                                        <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
-                                                    </StackPanel>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsChecked" Value="False">
-                                                            <Setter TargetName="checkboxPath" Property="Visibility" Value="Hidden"></Setter>
-                                                            <Setter TargetName="checkboxBorder" Property="Background" Value="Transparent"></Setter>
-                                                        </Trigger>
-                                                        <Trigger Property="IsChecked" Value="True">
-                                                            <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
-                                                            <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorThemeGreen}"></Setter>
-                                                        </Trigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsMouseOver" Value="True"/>
-                                                                <Condition Property="IsChecked" Value="False"/>
-                                                            </MultiTrigger.Conditions>
-                                                        </MultiTrigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </CheckBox.Style>
-                            </CheckBox>
-                            <TextBlock FontSize="16" FontWeight="Regular" VerticalAlignment="Center" Margin="10 0 0 0">
+                                </TextBlock>
+                            </DockPanel>
+                            <DockPanel Grid.Column="1">
+                                <CheckBox IsHitTestVisible="True" Cursor="Hand" VerticalAlignment="Center" x:Name="cbSelectNoPlan" Checked="SelectNoPlan">
+                                    <CheckBox.Style>
+                                        <Style TargetType="CheckBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource ColorGreen}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
+                                                            </Border>
+                                                            <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
+                                                        </StackPanel>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsChecked" Value="False">
+                                                                <Setter TargetName="checkboxPath" Property="Visibility" Value="Hidden"></Setter>
+                                                                <Setter TargetName="checkboxBorder" Property="Background" Value="Transparent"></Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsChecked" Value="True">
+                                                                <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
+                                                                <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorThemeGreen}"></Setter>
+                                                            </Trigger>
+                                                            <MultiTrigger>
+                                                                <MultiTrigger.Conditions>
+                                                                    <Condition Property="IsMouseOver" Value="True"/>
+                                                                    <Condition Property="IsChecked" Value="False"/>
+                                                                </MultiTrigger.Conditions>
+                                                            </MultiTrigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </CheckBox.Style>
+                                </CheckBox>
+                                <TextBlock FontSize="16" FontWeight="Regular" VerticalAlignment="Center" Margin="10 0 0 0">
                                 <Run Text="Đề xuất đột xuất" Foreground="{DynamicResource colorText1}"/>
                                 <Run Text="*" Foreground="{DynamicResource colorRemoveRed}"/>
-                            </TextBlock>
-                        </DockPanel>
-                    </Grid>
-                    <Grid Margin="0 15 0 0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1.5*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <TextBlock FontSize="16" FontWeight="Medium">
+                                </TextBlock>
+                            </DockPanel>
+                        </Grid>
+                        <Grid Margin="0 15 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Ngày bắt đầu nghỉ" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
-                            </TextBlock>
-                            <tool:DatePicker x:Name="StartDateOnLeave" SelectedDateChange="SelectedStartDateOnLeave" BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="10 0 10 0">
-                            <TextBlock FontSize="16" FontWeight="Medium">
+                                </TextBlock>
+                                <tool:DatePicker x:Name="StartDateOnLeave" SelectedDateChange="SelectedStartDateOnLeave" BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="10 0 10 0">
+                                <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Ngày kết thúc nghỉ" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
-                            </TextBlock>
-                            <tool:DatePicker x:Name="EndDateOnLeave" SelectedDateChange="SelectedEndDateOnLeave" IsEnabled="False" BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2" Margin="10 0 10 0">
-                            <TextBlock FontSize="16" FontWeight="Medium">
+                                </TextBlock>
+                                <tool:DatePicker x:Name="EndDateOnLeave" SelectedDateChange="SelectedEndDateOnLeave" IsEnabled="False" BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Margin="10 0 10 0">
+                                <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Ca nghỉ" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
-                            </TextBlock>
-                            <tool:ComboboxSelected x:Name="ShiftOnLeave" SelectionChangedSelected="ClickShiftOnLeave" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
-                        </StackPanel>
-                    </Grid>
-                    <DataGrid Name="lsvListShifForDay" Style="{StaticResource DataGrid1}" ItemsSource="{Binding listShiftSelect, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 15 0 10" MinRowHeight="50" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                        <DataGrid.OpacityMask>
-                            <VisualBrush>
-                                <VisualBrush.Visual>
-                                    <Border Background="#FFFFFF" CornerRadius="15" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid},Path=ActualHeight}"></Border>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </DataGrid.OpacityMask>
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="0.5*" Header="STT">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}" HorizontalAlignment="Left" FontSize="16" Foreground="#4c5bd4"></TextBlock>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Header="Ca nghỉ" Width="2*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock FontSize="16" Text="{Binding}"></TextBlock>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="2*" Header="Ngày bắt đầu nghỉ">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock FontSize="16" Text="{Binding tt_phat.tong_phat_formatted}"></TextBlock>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="2*" Header="Ngày kết thúc nghỉ">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock FontSize="16" Text="{Binding }"></TextBlock>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn Width="0.5*" Header="Xóa">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Path Data="{StaticResource iconDelete}" Fill="{StaticResource colorRemoveRed}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </StackPanel>
+                                </TextBlock>
+                                <tool:ComboboxSelected x:Name="ShiftOnLeave" SelectionChangedSelected="ClickShiftOnLeave" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                            </StackPanel>
+                        </Grid>
+                        <DataGrid Name="lsvListShifForDay" Visibility="Collapsed" Style="{StaticResource DataGrid1}" LoadingRow="LoadNumRowShifForDay" ItemsSource="{Binding listShiftSelect, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 15 0 10" MinRowHeight="50" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <DataGrid.OpacityMask>
+                                <VisualBrush>
+                                    <VisualBrush.Visual>
+                                        <Border Background="#FFFFFF" CornerRadius="15" Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid},Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid},Path=ActualHeight}"></Border>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </DataGrid.OpacityMask>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="0.5*" Header="STT">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Header, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource colorText1}"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Ca nghỉ" Width="2*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding nameShif}" FontSize="16" FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource colorText1}" TextWrapping="Wrap"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="2*" Header="Ngày bắt đầu nghỉ">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding startDate}" FontSize="16" FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource colorText1}" TextWrapping="Wrap"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="2*" Header="Ngày kết thúc nghỉ">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding endDate}" FontSize="16" FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource colorText1}" TextWrapping="Wrap"></TextBlock>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Width="0.5*" Header="Xóa">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border MouseLeftButtonUp="DeleteShiftOnLeave" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" Background="Transparent">
+                                                <Path Data="{StaticResource iconDelete}"   HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{StaticResource colorRemoveRed}"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Grid>
             </Grid>
             <Grid Grid.Row="4" Margin="10">
                 <StackPanel>
@@ -488,58 +502,63 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="7" Margin="10 0 10 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" x:Name="ClickCancel" Margin="10 10 20 10" Height="40" MinWidth="200" HorizontalAlignment="Right" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
+                <StackPanel>
+                    <TextBlock x:Name="tb_ValidateProposing" Visibility="Collapsed" FontSize="16" FontWeight="Regular" Foreground="{StaticResource ColorRed}" Margin="0 0 0 5"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" x:Name="CancelProposing" MouseLeftButtonUp="ClickCancel" Margin="10 10 20 10" Height="40" MinWidth="200" HorizontalAlignment="Right" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="Hủy bỏ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=CancelProposing, Path=IsMouseOver}" Value="true">
+                                                <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Border>
+                        <Border Grid.Column="1" x:Name="CreateProposing" MouseLeftButtonUp="ClickCreateProposing"  Height="40" MinWidth="200" HorizontalAlignment="Left" Margin="20 10 10 10" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                            <Border.Style>
+                                <Style TargetType="Border">
                                     <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <TextBlock Text="Hủy bỏ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ClickCancel, Path=IsMouseOver}" Value="true">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock Text="Tạo đề xuất" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Border>
-                <Border Grid.Column="1" Height="40" MinWidth="200" HorizontalAlignment="Left" Margin="20 10 10 10" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-                    <TextBlock Text="Tạo đề xuất" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ClickCancel, Path=IsMouseOver}" Value="true">
-                                        <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Border>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=CreateProposing, Path=IsMouseOver}" Value="true">
+                                                <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+                </StackPanel>
             </Grid>
         </Grid>
     </Border>

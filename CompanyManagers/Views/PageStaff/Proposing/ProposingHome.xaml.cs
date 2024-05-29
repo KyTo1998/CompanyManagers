@@ -7,9 +7,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static CompanyManagers.Views.Home.ManagerHome;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -88,42 +91,41 @@ namespace CompanyManagers.Views.PageStaff.Proposing
 
         int numberPage = 1;
         int TotalPages;
+
         public async void GetCategoryProposing()
         {
             try
             {
                 do
                 {
-                    using (WebClient request = new WebClient())
+                    LoadingSpinner.Visibility= System.Windows.Visibility.Visible;
+                    var client = HttpClientSingleton.Instance;
+                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiCategoryProposing);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                    var content = new MultipartFormDataContent();
+                    content.Add(new StringContent(numberPage.ToString()), "page");
+                    request.Content = content;
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
                     {
-                        request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
-                        request.QueryString.Add("page", numberPage.ToString());
-                        request.UploadValuesCompleted += (s, e) =>
+                        var resConten = await response.Content.ReadAsStringAsync();
+                        Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(resConten);
+                        if (dataCategoryProposing.data != null)
                         {
-                            try
+                            TotalPages = dataCategoryProposing.data.totalPages;
+                            if (listCategoyProposingHome == null)
                             {
-                                Root_CategoryProposing dataCategoryProposing = JsonConvert.DeserializeObject<Root_CategoryProposing>(UnicodeEncoding.UTF8.GetString(e.Result));
-                                if (dataCategoryProposing.data != null)
-                                {
-                                    TotalPages = dataCategoryProposing.data.totalPages;
-                                    if (listCategoyProposingHome == null)
-                                    {
-                                        listCategoyProposingHome = new List<Result_CategoryProposing>();
-                                    }
-                                    foreach (var item in dataCategoryProposing.data.result)
-                                    {
-                                        listCategoyProposingHome.Add(item);
-                                    }
-                                    numberPage++;
-                                }
+                                listCategoyProposingHome = new List<Result_CategoryProposing>();
                             }
-                            catch (Exception)
+                            foreach (var item in dataCategoryProposing.data.result)
                             {
+                                listCategoyProposingHome.Add(item);
                             }
-                        };
-                        await request.UploadValuesTaskAsync(UrlApi.apiCategoryProposing, request.QueryString);
+                            numberPage++;
+                        }
                     }
                 } while (numberPage <= TotalPages);
+                LoadingSpinner.Visibility= System.Windows.Visibility.Collapsed;
                 GetProposingShowHome();
             }
             catch (Exception)

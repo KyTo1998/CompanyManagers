@@ -11,7 +11,7 @@ namespace CompanyManagers.Models.ModelsShift
     public class StaffShiftInDay
     {
         public string _id { get; set; }
-        public int shift_id { get; set; }
+        public string shift_id  { get; set; }
         public int com_id { get; set; }
         public string shift_name { get; set; }
         public string start_time { get; set; }

@@ -210,6 +210,17 @@ namespace CompanyManagers.Views.Home
             }
         }
 
+        public static class HttpClientSingleton
+        {
+            private static readonly HttpClient httpClient = new HttpClient();
+            static HttpClientSingleton()
+            {
+                // Thiết lập các cấu hình chung cho HttpClient, nếu cần
+                httpClient.Timeout = TimeSpan.FromSeconds(30);
+            }
+            public static HttpClient Instance => httpClient;
+        }
+
         public async void GetListStaffAll()
         {
             try 
@@ -307,7 +318,7 @@ namespace CompanyManagers.Views.Home
                     {
                         StaffShiftInDay dataShift = new StaffShiftInDay();
                         dataShift.shift_name = "Cả ngày(tất cả các ca)";
-                        dataShift.shift_id = 0;
+                        dataShift.shift_id = "";
                         dataStaffShiftInDay.list.Insert(0, dataShift);
                         dataListStaffShiftInDay = dataStaffShiftInDay.list.ToList();
                     }
