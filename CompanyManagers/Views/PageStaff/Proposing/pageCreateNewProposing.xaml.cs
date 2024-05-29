@@ -94,6 +94,81 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
         }
         #region Nghỉ Phép
+        public async void CreateProposingOnLeave()
+        {
+            try
+            {
+                if (cbSelectYesPlan.IsChecked == false && cbSelectNoPlan.IsChecked == false)
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    tb_ValidateProposing.Text = "Chưa chọn loại đề xuất";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (StartDateOnLeave.SelectedDate == null || EndDateOnLeave.SelectedDate == null)
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    tb_ValidateProposing.Text = "Chưa chọn ngày bắt đầu hoặc kết thúc";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (ShiftOnLeave.SelectedIndexSelected < 0)
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    tb_ValidateProposing.Text = "Chưa ca nghỉ";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (statusValidate)
+                {
+                    var data = new lstJsonOnLeave();
+                    foreach (var item in listShiftSelect)
+                    {
+                        data.nghi_phep.Add(item.nghi_phep);
+                    }
+                    string jsonString = JsonConvert.SerializeObject(data);
+
+                    List<string> listUserConfirm = new List<string>();
+                    foreach (var item in dataListUserComfrim)
+                    {
+                        listUserConfirm.Add(item.idQLC.ToString());
+                    }
+                    string userConfirm = String.Join(",", listUserConfirm);
+                    var client = HttpClientSingleton.Instance;
+                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiCreateProposingOnLeave);
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                    var content = new MultipartFormDataContent();
+                    content.Add(new StringContent(""), "fileKem");
+                    content.Add(new StringContent(jsonString), "noi_dung");
+                    content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
+                    content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Confirm.ToString()), "kieu_duyet");
+                    content.Add(new StringContent(typePlan.ToString()), "loai_np");
+                    content.Add(new StringContent(tb_InputReasonCreateProposing.Text), "ly_do");
+                    content.Add(new StringContent(userConfirm), "id_user_duyet");
+                    content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
+                    request.Content = content;
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        dataListUserComfrim.Clear();
+                        listShiftSelect.Clear();
+                        managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thành công", ""));
+                    }
+                }
+            }
+            catch (System.Exception)
+            {
+            }
+        }
         private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
         {
             
@@ -231,20 +306,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
 
         private void ClickCancel(object sender, MouseButtonEventArgs e)
         {
-            tb_InputNameProposing.Text = string.Empty;
-            tb_InputReasonCreateProposing.Text = string.Empty;
-            StartDateOnLeave.SelectedDate = null;
-            EndDateOnLeave.SelectedDate = null;
-            ShiftOnLeave.SelectedIndexSelected = 0;
-            SelectTypeComfirm.SelectedIndexSelected = 0;
-            SelectUserComfirm.SelectedIndex = 0;
-            SelectUserFollow.SelectedIndex = 0;
-            cbSelectNoPlan.IsChecked = false;
-            cbSelectYesPlan.IsChecked = false;
-            lsvListShifForDay.Visibility = Visibility.Collapsed;
-            listShiftSelect.Clear();
+            pagePopupGrayColor = new PagePopupGrayColor(managerHome);
+            pagePopupGrayColor.Popup.NavigationService.Navigate(null);
+            managerHome.PagePopup.NavigationService.Navigate(null);
         }
-        private void CheckValidatePro()
+        private void CheckValidateProposing()
         {
             try
             {
@@ -254,41 +320,25 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_ValidateProposing.Text = "Tên đề xuất không được để trống";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (SelectTypeComfirm.SelectedIndexSelected == 0)
+                else if (SelectTypeComfirm.SelectedIndexSelected < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     tb_ValidateProposing.Text = "Chưa chọn kiểu duyệt";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (string.IsNullOrEmpty(tb_InputReasonCreateProposing.Text))
+                else if (string.IsNullOrEmpty(tb_InputReasonCreateProposing.Text))
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     tb_ValidateProposing.Text = "Lý do không được để trống";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                } 
-                if (SelectUserFollow.SelectedIndex == 0)
+                else if (SelectUserFollow.SelectedIndex < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     tb_ValidateProposing.Text = "Chưa chọn người theo dõi";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (SelectUserComfirm.SelectedIndex == 0)
+                else if (dataListUserComfrim == null)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     tb_ValidateProposing.Text = "Chưa chọn người xét duyệt";
@@ -305,89 +355,17 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
 
-        public async void CreateProposingOnLeave()
-        {
-            try
-            {
-                if (cbSelectYesPlan.IsChecked == false && cbSelectNoPlan.IsChecked == false)
-                {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    tb_ValidateProposing.Text = "Chưa chọn loại đề xuất";
-                    statusValidate = false;
-                }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (StartDateOnLeave.SelectedDate == null || EndDateOnLeave.SelectedDate == null)
-                {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    tb_ValidateProposing.Text = "Chưa chọn ngày bắt đầu hoặc kết thúc";
-                    statusValidate = false;
-                }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (ShiftOnLeave.SelectedIndexSelected == 0)
-                {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    tb_ValidateProposing.Text = "Chưa ca nghỉ";
-                    statusValidate = false;
-                }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (statusValidate)
-                {
-                    var data = new lstJsonOnLeave(); 
-                    foreach (var item in listShiftSelect)
-                    {
-                        data.nghi_phep.Add(item.nghi_phep);
-                    }
-                    string jsonString = JsonConvert.SerializeObject(data);
-
-                    List<string> listUserConfirm = new List<string>();
-                    foreach (var item in dataListUserComfrim)
-                    {
-                        listUserConfirm.Add(item.idQLC.ToString());
-                    }
-                    string userConfirm = String.Join(",", listUserConfirm);
-                    var client = HttpClientSingleton.Instance;
-                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiCreateProposingOnLeave);
-                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
-                    var content = new MultipartFormDataContent();
-                    content.Add(new StringContent(""), "fileKem");
-                    content.Add(new StringContent(jsonString), "noi_dung");
-                    content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
-                    content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Confirm.ToString()), "kieu_duyet");
-                    content.Add(new StringContent(typePlan.ToString()), "loai_np");
-                    content.Add(new StringContent(tb_InputReasonCreateProposing.Text), "ly_do");
-                    content.Add(new StringContent(userConfirm), "id_user_duyet");
-                    content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
-                    request.Content = content;
-                    var response = await client.SendAsync(request);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        
-                    }
-                }
-            }
-            catch (System.Exception)
-            {
-            }
-        }
         private void ClickCreateProposing(object sender, MouseButtonEventArgs e)
         {
             try
             {
-                CheckValidatePro();
+                CheckValidateProposing();
                 if (statusValidate)
                 {
                     switch (dataCategoryProposing.cate_dx)
                     {
                         case 1:
+                            CreateProposingOnLeave();
                             break;
                     }
 
@@ -396,6 +374,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             catch (System.Exception)
             {
             }
+        }
+
+        private void ScollCreateProposing(object sender, MouseWheelEventArgs e)
+        {
+            scoll.ScrollToVerticalOffset(scoll.VerticalOffset - e.Delta);
         }
     }
 }

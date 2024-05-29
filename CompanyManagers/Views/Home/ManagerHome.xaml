@@ -128,7 +128,7 @@
                     </Border>
                 </Grid>
                 <Border Grid.Row="2" Background="{StaticResource colorBackgroundItem1}" CornerRadius="0 0 10 10">
-                    <ScrollViewer x:Name="scrollMain" PreviewMouseWheel="AdddscrollMain" Margin="10">
+                    <ScrollViewer x:Name="scrollMain" PreviewMouseWheel="AdddscrollMain" VerticalScrollBarVisibility="Hidden" Margin="10">
                         <ContentControl IsTabStop="False" x:Name="PageFunction"></ContentControl>
                     </ScrollViewer>
                 </Border>

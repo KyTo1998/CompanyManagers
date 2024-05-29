@@ -165,7 +165,7 @@
                                                             <ColumnDefinition Width="1*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <TextBlock Grid.Column="0" Text="{Binding type_duyet}" FontSize="12" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
-                                                        <TextBlock Grid.Column="1" Text="{Binding time_duyet_display}" Margin="0 0 10 0" HorizontalAlignment="Right" FontSize="12" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
+                                                        <TextBlock Grid.Column="1" Text="{Binding time_create}" Margin="0 0 10 0" HorizontalAlignment="Right" FontSize="12" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
                                                     </Grid>
                                                 </StackPanel>
                                             </Grid>

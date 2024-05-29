@@ -160,6 +160,9 @@
     <Compile Include="Common\Popups\PagePopupGrayColor.xaml.cs">
       <DependentUpon>PagePopupGrayColor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Popups\PopupNoticationAll.xaml.cs">
+      <DependentUpon>PopupNoticationAll.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Common\Tool\ComboboxSelected.xaml.cs">
       <DependentUpon>ComboboxSelected.xaml</DependentUpon>
     </Compile>
@@ -205,6 +208,10 @@
       <DependentUpon>ProposingHome.xaml</DependentUpon>
     </Compile>
     <Page Include="Common\Popups\PagePopupGrayColor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Popups\PopupNoticationAll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
