@@ -19,6 +19,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using static CompanyManagers.Common.Tool.DatePicker;
 using static CompanyManagers.Views.Home.ManagerHome;
+using Microsoft.Win32;
+using System.Drawing.Imaging;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -155,6 +157,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     content.Add(new StringContent(tb_InputReasonCreateProposing.Text), "ly_do");
                     content.Add(new StringContent(userConfirm), "id_user_duyet");
                     content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
+                    int numberFile = 0;
+                    foreach (var item in managerHome.lstInfoFileCreateProposing)
+                    {
+                        content.Add(new StreamContent(File.OpenRead(item.FullName)), $"fileKem[{numberFile}]", item.FullName);
+                        numberFile++;
+                    }
                     request.Content = content;
                     var response = await client.SendAsync(request);
                     if (response.IsSuccessStatusCode)
@@ -292,10 +300,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             
         }
 
-        private void DeleteFileGim(object sender, MouseButtonEventArgs e)
-        {
-
-        }
+        
 
         private void ClosePopupCreateProposing(object sender, MouseButtonEventArgs e)
         {
@@ -368,7 +373,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             CreateProposingOnLeave();
                             break;
                     }
-
                 }
             }
             catch (System.Exception)
@@ -379,6 +383,29 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         private void ScollCreateProposing(object sender, MouseWheelEventArgs e)
         {
             scoll.ScrollToVerticalOffset(scoll.VerticalOffset - e.Delta);
+        }
+
+        private void AddFileGimForProposing(object sender, MouseButtonEventArgs e)
+        {
+            OpenFileDialog selectFile = new OpenFileDialog();
+            selectFile.Filter = "All files (*.*)|*.*";
+            selectFile.Multiselect = true;
+            if (selectFile.ShowDialog() == true)
+            {
+               managerHome.selectionFile(selectFile.FileNames, lsvFileGim);
+               lsvFileGim.Visibility = Visibility.Visible;
+               TextHidenFileGim.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void DeleteFileGim(object sender, MouseButtonEventArgs e)
+        {
+            InfoFile infoFile = (InfoFile)(sender as Border).DataContext;
+            if (infoFile != null)
+            {
+                lsvFileGim.Items.Remove(infoFile);
+                lsvFileGim.Items.Refresh();
+            }
         }
     }
 }

@@ -450,15 +450,15 @@
                             <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Tài liệu đính kèm" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
-                            <Border BorderThickness="1" Cursor="Hand" BorderBrush="{StaticResource ColorGreen}" Height="40" CornerRadius="5">
+                            <Border BorderThickness="1" Cursor="Hand" Background="Transparent" BorderBrush="{StaticResource ColorGreen}" MinHeight="40" CornerRadius="5">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="50"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
-                                        <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Thêm tài liệu đính kèm"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                                        <ListView x:Name="lsvFileGim" HorizontalAlignment="Left" Background="Transparent" Visibility="Collapsed" ItemsSource="{Binding dataListUserComfrim, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="5 5 -10 5" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                        <TextBlock x:Name="TextHidenFileGim" FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Thêm tài liệu đính kèm"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <ListView x:Name="lsvFileGim" HorizontalAlignment="Left" Background="Transparent" Visibility="Collapsed" Margin="5 5 -10 5" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel Orientation="Horizontal"></WrapPanel>
@@ -472,7 +472,7 @@
                                                                 <WrapPanel Margin="0 0 10 5" Orientation="Horizontal" Background="{DynamicResource colorMoveMouseItem}">
                                                                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
                                                                         <DockPanel Margin="2">
-                                                                            <TextBlock Text="{Binding NameFile}" FontSize="16" Foreground="{DynamicResource colorText1}" VerticalAlignment="Center"/>
+                                                                            <TextBlock Text="{Binding Path = NameDisplay}" FontSize="16" Foreground="{DynamicResource colorText1}" VerticalAlignment="Center"/>
                                                                             <Border x:Name="btnDeleteFileGim" MouseLeftButtonDown="DeleteFileGim" Cursor="Hand" Margin="5 -15 -10 0" CornerRadius="20" Width="15" Height="15" >
                                                                                 <Border.Style>
                                                                                     <Style TargetType="Border">
@@ -498,7 +498,9 @@
                                             </ListView.ItemContainerStyle>
                                         </ListView>
                                     </Grid>
-                                    <Path Grid.Column="1" Data="{StaticResource iconAddFile}" HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{StaticResource ColorGreen}"/>
+                                    <Border Grid.Column="1" Cursor="Hand" Background="Transparent" MouseLeftButtonUp="AddFileGimForProposing">
+                                        <Path  Data="{StaticResource iconAddFile}"  HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{StaticResource ColorGreen}"/>
+                                    </Border>
                                 </Grid>
                             </Border>
                         </StackPanel>

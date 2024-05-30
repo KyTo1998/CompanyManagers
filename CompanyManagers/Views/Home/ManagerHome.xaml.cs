@@ -13,13 +13,18 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 
 namespace CompanyManagers.Views.Home
 {
@@ -209,14 +214,104 @@ namespace CompanyManagers.Views.Home
             {
             }
         }
+        public static BitmapImage ConvertByteArrayToBitmapImage(Byte[] bytes)
+        {
+            try
+            {
+                var stream = new MemoryStream(bytes);
+                stream.Seek(0, SeekOrigin.Begin);
+                var image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = stream;
+                image.EndInit();
+                return image;
+            }
+            catch (Exception)
+            {
+                System.Windows.MessageBox.Show("Vui lòng chọn đúng định dạng ảnh");
+                return null;
+            }
+        }
 
+        private List<InfoFile> _lstInfoFileCreateProposing;
+        public List<InfoFile> lstInfoFileCreateProposing
+        {
+            get { return _lstInfoFileCreateProposing; }
+            set {  _lstInfoFileCreateProposing = value;OnPropertyChanged("lstInfoFileCreateProposing"); }
+        }
+        public void selectionFile(string[] listFile, ListView nameListUi)
+        {
+            try
+            {
+                foreach (string file1 in listFile)
+                {
+                    FileInfo fileInfo = new FileInfo(file1);
+                    if (fileInfo.Length <= (1024 * 1024 * 50))
+                    {
+                        if ((fileInfo.Name.ToUpper().EndsWith(".JPEG") || fileInfo.Name.ToUpper().EndsWith(".JPG") || fileInfo.Name.ToUpper().EndsWith(".PNG") || fileInfo.Name.ToUpper().EndsWith(".GIF")) &&(ConvertByteArrayToBitmapImage(File.ReadAllBytes(fileInfo.FullName)) != null))
+                        {
+                            InfoFile SetFile = new InfoFile();
+                            SetFile.SizeFile = fileInfo.Length;
+                            SetFile.NameDisplay = fileInfo.Name;
+                            var AvartarPath = Environment.GetEnvironmentVariable("APPDATA") + @"\CompanyManagers\uploadFile\";
+                            if (!Directory.Exists(AvartarPath))
+                            {
+                                Directory.CreateDirectory(AvartarPath);
+                            }
+                            SetFile.FullName = fileInfo.FullName;
+                            SetFile.TypeFile = "sendPhoto";
+                            SetFile.Source = ConvertByteArrayToBitmapImage(File.ReadAllBytes(fileInfo.FullName));
+                            SetFile.ImageSource = fileInfo.FullName;
+                            if (!nameListUi.Items.Contains(SetFile))
+                            {
+                                nameListUi.Items.Add(SetFile);
+                                if (lstInfoFileCreateProposing == null)
+                                {
+                                    lstInfoFileCreateProposing = new List<InfoFile>();
+                                }
+                                lstInfoFileCreateProposing.Add(SetFile);
+                            }
+                        }
+                        else
+                        {
+                            InfoFile SetFile = new InfoFile();
+                            SetFile.SizeFile = fileInfo.Length;
+                            SetFile.NameDisplay = fileInfo.Name;
+                            var AvartarPath = Environment.GetEnvironmentVariable("APPDATA") + @"\CompanyManagers\uploadFile\";
+                            if (!Directory.Exists(AvartarPath))
+                            {
+                                Directory.CreateDirectory(AvartarPath);
+                            }
+                            SetFile.FullName = fileInfo.FullName;
+                            SetFile.TypeFile = "sendFile";
+                            SetFile.LinkFile = fileInfo.FullName;
+                            if (!nameListUi.Items.Contains(SetFile))
+                            {
+                                nameListUi.Items.Add(SetFile);
+                                if (lstInfoFileCreateProposing == null)
+                                {
+                                    lstInfoFileCreateProposing = new List<InfoFile>();
+                                }
+                                lstInfoFileCreateProposing.Add(SetFile);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Bạn đã chọn tệp có kích thước quá lớn, giới hạn là 50MB", ""));         
+                    }
+                }
+            }
+            catch (Exception)
+            {}
+        }
         public static class HttpClientSingleton
         {
             private static readonly HttpClient httpClient = new HttpClient();
             static HttpClientSingleton()
             {
                 // Thiết lập các cấu hình chung cho HttpClient, nếu cần
-                httpClient.Timeout = TimeSpan.FromSeconds(30);
+                httpClient.Timeout = TimeSpan.FromSeconds(3);
             }
             public static HttpClient Instance => httpClient;
         }
@@ -251,9 +346,9 @@ namespace CompanyManagers.Views.Home
         {
             try
             {
-                var client = new HttpClient();
+                var client = HttpClientSingleton.Instance;
                 var request = new HttpRequestMessage(HttpMethod.Get, UrlApi.apiListShiftAll);
-                request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token); 
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token); 
                 var response = await client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
                 {
@@ -299,9 +394,9 @@ namespace CompanyManagers.Views.Home
         {
             try
             {
-                var client = new HttpClient();
+                 var client = HttpClientSingleton.Instance;
                 var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiListShiftForDay);
-                request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
                 var content = new MultipartFormDataContent();
                 content.Add(new StringContent(dateShift), "day");
                 if (Properties.Settings.Default.Type365 == "1")

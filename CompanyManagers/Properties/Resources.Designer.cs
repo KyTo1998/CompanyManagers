@@ -67,5 +67,14 @@ namespace CompanyManagers.Properties
                 resourceCulture = value;
             }
         }
+
+          /// <summary>
+        ///   Looks up a localized string similar to http://210.245.108.202:9002/.
+        /// </summary>
+         internal static string URL {
+            get {
+                return ResourceManager.GetString("URL", resourceCulture);
+            }
+        }
     }
 }
