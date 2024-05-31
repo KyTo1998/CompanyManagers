@@ -405,6 +405,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 lsvFileGim.Items.Remove(infoFile);
                 lsvFileGim.Items.Refresh();
+                TextHidenFileGim.Visibility = Visibility.Visible;
             }
         }
     }

@@ -105,9 +105,18 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 Result_CategoryProposing dataCategoryProposing = (Result_CategoryProposing)(sender as Border).DataContext;
                 if (dataCategoryProposing != null)
                 {
-                    managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
-                    managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateNewProposing(managerHome, dataCategoryProposing));
-                    managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
+                    if (dataCategoryProposing.cate_dx == 18)
+                    {
+                        managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                        managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateProposedWorkSchedule(managerHome, dataCategoryProposing));
+                        managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
+                    }
+                    else
+                    {
+                        managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                        managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateNewProposing(managerHome, dataCategoryProposing));
+                        managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
+                    }
                 }
             }
             catch (Exception)
