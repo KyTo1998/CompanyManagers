@@ -158,10 +158,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     content.Add(new StringContent(userConfirm), "id_user_duyet");
                     content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
                     int numberFile = 0;
-                    foreach (var item in managerHome.lstInfoFileCreateProposing)
+                    if (managerHome.lstInfoFileCreateProposing != null)
                     {
-                        content.Add(new StreamContent(File.OpenRead(item.FullName)), $"fileKem[{numberFile}]", item.FullName);
-                        numberFile++;
+                        foreach (var item in managerHome.lstInfoFileCreateProposing)
+                        {
+                            content.Add(new StreamContent(File.OpenRead(item.FullName)), $"fileKem[{numberFile}]", item.FullName);
+                            numberFile++;
+                        }
                     }
                     request.Content = content;
                     var response = await client.SendAsync(request);
