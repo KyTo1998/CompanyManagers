@@ -59,8 +59,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         }
         public class typeConfirm
         {
-            public int id_Confirm { get; set; }
-            public string name_Confirm { get; set; }
+            public int id_Custom { get; set; }
+            public string name_Custom { get; set; }
         }
         List<typeConfirm> lstTypeConfirms = new List<typeConfirm>();
 
@@ -89,8 +89,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             typeCategoryProposing = _dataCategoryProposing.cate_dx;
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
             tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
-            lstTypeConfirms.Add(new typeConfirm() { id_Confirm = 0, name_Confirm = "Duyệt đồng thời" });
-            lstTypeConfirms.Add(new typeConfirm() { id_Confirm = 1, name_Confirm = "Duyệt lần lượt" });
+            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
             SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
@@ -152,7 +152,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     content.Add(new StringContent(""), "fileKem");
                     content.Add(new StringContent(jsonString), "noi_dung");
                     content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
-                    content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Confirm.ToString()), "kieu_duyet");
+                    content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Custom.ToString()), "kieu_duyet");
                     content.Add(new StringContent(typePlan.ToString()), "loai_np");
                     content.Add(new StringContent(tb_InputReasonCreateProposing.Text), "ly_do");
                     content.Add(new StringContent(userConfirm), "id_user_duyet");

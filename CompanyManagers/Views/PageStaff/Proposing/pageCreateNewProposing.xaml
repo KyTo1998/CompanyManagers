@@ -154,7 +154,7 @@
                                 <Run Text="Kiểu kiểm duyệt" Foreground="{StaticResource colorText1}"/>
                                  <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <tool:ComboboxSelected x:Name="SelectTypeComfirm" Cursor="Hand" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Confirm" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                            <tool:ComboboxSelected x:Name="SelectTypeComfirm" Cursor="Hand" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="3" Margin="10">

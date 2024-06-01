@@ -70,12 +70,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             typeCategoryProposing = _dataCategoryProposing.cate_dx;
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
             tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
-            lstTypeConfirms.Add(new typeConfirm() { id_Confirm = 0, name_Confirm = "Duyệt đồng thời" });
-            lstTypeConfirms.Add(new typeConfirm() { id_Confirm = 1, name_Confirm = "Duyệt lần lượt" });
+            lstTypeConfirms.Add(new typeConfirm() {id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+            lstTypeConfirms.Add(new typeConfirm() {id_Custom = 1, name_Custom = "Duyệt lần lượt" });
             SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
-             lstCalendarWork.Add(new typeConfirm() { id_Confirm = 0, name_Confirm = "Thứ 2 - Thứ 6" });
-            lstCalendarWork.Add(new typeConfirm() { id_Confirm = 1, name_Confirm = "Thứ 2 - Thứ 7" });
-            lstCalendarWork.Add(new typeConfirm() { id_Confirm = 2, name_Confirm = "Thứ 2 - CN" });
+             lstCalendarWork.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Thứ 2 - Thứ 6" });
+            lstCalendarWork.Add(new typeConfirm() {id_Custom = 2, name_Custom = "Thứ 2 - Thứ 7" });
+            lstCalendarWork.Add(new typeConfirm() {id_Custom = 3, name_Custom = "Thứ 2 - CN" });
             SelectCalendarWork.ItemsSourceSelected = lstCalendarWork.ToList();
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
