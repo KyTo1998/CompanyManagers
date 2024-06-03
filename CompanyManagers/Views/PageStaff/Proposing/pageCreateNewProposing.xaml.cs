@@ -21,6 +21,7 @@ using static CompanyManagers.Common.Tool.DatePicker;
 using static CompanyManagers.Views.Home.ManagerHome;
 using Microsoft.Win32;
 using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -78,6 +79,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             set { _typeCategoryProposing = value;OnPropertyChanged("typeCategoryProposing");}
         }
         ManagerHome managerHome { set; get; }
+        int userNumberConfirm;
         int typePlan {  get; set; }
         bool statusValidate {  get; set; }
         Result_CategoryProposing dataCategoryProposing;
@@ -89,12 +91,55 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             typeCategoryProposing = _dataCategoryProposing.cate_dx;
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
             tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
-            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
-            SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
         }
+        public async void GetSettingPropose()
+        {
+            try
+            {
+                var data = new
+                {
+                    dexuat_id = dataCategoryProposing.cate_dx,
+                };
+                string jsonData = JsonConvert.SerializeObject(data);
+                var client = HttpClientSingleton.Instance;
+                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingPropose);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                var content = new StringContent(jsonData, null, "application/json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                { 
+                    var resConten = await response.Content.ReadAsStringAsync();
+                    Root_SettingPropose resurlData = JsonConvert.DeserializeObject<Root_SettingPropose>(resConten);
+                    if (resurlData.settingPropose != null)
+                    {
+                        if (resurlData.settingPropose.confirm_level > 0)
+                        {
+                            userNumberConfirm = resurlData.settingPropose.confirm_level;
+                        }
+                        if (resurlData.settingPropose.confirm_type == 2)
+                        {
+                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                        }
+                        else if (resurlData.settingPropose.confirm_type == 1)
+                        {
+                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                        }
+                        else if (resurlData.settingPropose.confirm_type == 3)
+                        {
+                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                            SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        } 
         #region Nghỉ Phép
         public async void CreateProposingOnLeave()
         {
