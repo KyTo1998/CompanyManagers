@@ -19,6 +19,7 @@ namespace CompanyManagers.Controllers
         public const string apiProposingFollow = "https://api.timviec365.vn/api/vanthu/DeXuat/deXuat_follow";
         public const string apiCreateProposingOnLeave = "https://api.timviec365.vn/api/vanthu/dexuat/De_Xuat_Xin_Nghi";
         public const string apiGetSettingPropose = "https://api.timviec365.vn/api/vanthu/dexuat/settingPropose";
+        public const string apiGetSettingComfirm = "https://api.timviec365.vn/api/vanthu/dexuat/settingConfirm";
         #endregion
         #region Staff
         public const string apiListStaffAll = "https://api.timviec365.vn/api/qlc/managerUser/listAll";

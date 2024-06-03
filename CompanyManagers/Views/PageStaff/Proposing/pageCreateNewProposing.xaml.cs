@@ -93,6 +93,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
+            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+            SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
         }
         public async void GetSettingPropose()
         {
@@ -112,22 +115,22 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (response.IsSuccessStatusCode)
                 { 
                     var resConten = await response.Content.ReadAsStringAsync();
-                    Root_SettingPropose resurlData = JsonConvert.DeserializeObject<Root_SettingPropose>(resConten);
-                    if (resurlData.settingPropose != null)
+                    Root_SettingPropose dataSettingPropose = JsonConvert.DeserializeObject<Root_SettingPropose>(resConten);
+                    if (dataSettingPropose.settingPropose != null)
                     {
-                        if (resurlData.settingPropose.confirm_level > 0)
+                        if (dataSettingPropose.settingPropose.confirm_level > 0)
                         {
-                            userNumberConfirm = resurlData.settingPropose.confirm_level;
+                            userNumberConfirm = dataSettingPropose.settingPropose.confirm_level;
                         }
-                        if (resurlData.settingPropose.confirm_type == 2)
+                        if (dataSettingPropose.settingPropose.confirm_type == 2)
                         {
                             lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
                         }
-                        else if (resurlData.settingPropose.confirm_type == 1)
+                        else if (dataSettingPropose.settingPropose.confirm_type == 1)
                         {
                             lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
                         }
-                        else if (resurlData.settingPropose.confirm_type == 3)
+                        else if (dataSettingPropose.settingPropose.confirm_type == 3)
                         {
                             lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
                             lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
@@ -140,6 +143,28 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
             }
         } 
+        public async void GetSettingComfirm()
+        {
+            try
+            {
+                var client = HttpClientSingleton.Instance;
+                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var resConten = await response.Content.ReadAsStringAsync();
+                    Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(resConten);
+                    if (dataSettingComfirm != null)
+                    {
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         #region Nghỉ Phép
         public async void CreateProposingOnLeave()
         {
