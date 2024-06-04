@@ -8,6 +8,7 @@ namespace CompanyManagers.Controllers
 {
     internal class UrlApi
     {
+        public const string LinkTimviec = "https://api.timviec365.vn";
         #region Login
         public const string apiLogin = "https://api.timviec365.vn/api/qlc/employee/login";
         #endregion

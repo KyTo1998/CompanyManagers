@@ -105,6 +105,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 Result_CategoryProposing dataCategoryProposing = (Result_CategoryProposing)(sender as Border).DataContext;
                 if (dataCategoryProposing != null)
                 {
+                    managerHome.GetSettingPropose(dataCategoryProposing.cate_dx);
                     if (dataCategoryProposing.cate_dx == 18)
                     {
                         managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);

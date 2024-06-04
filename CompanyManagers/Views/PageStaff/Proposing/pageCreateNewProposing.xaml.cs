@@ -58,12 +58,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _listShiftSelect; }
             set { _listShiftSelect = value; OnPropertyChanged("listShiftSelect"); }
         }
-        public class typeConfirm
-        {
-            public int id_Custom { get; set; }
-            public string name_Custom { get; set; }
-        }
-        List<typeConfirm> lstTypeConfirms = new List<typeConfirm>();
 
         private List<ListUsersDuyet> _dataListUserComfrim;
         public List<ListUsersDuyet> dataListUserComfrim
@@ -79,7 +73,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             set { _typeCategoryProposing = value;OnPropertyChanged("typeCategoryProposing");}
         }
         ManagerHome managerHome { set; get; }
-        int userNumberConfirm;
         int typePlan {  get; set; }
         bool statusValidate {  get; set; }
         Result_CategoryProposing dataCategoryProposing;
@@ -93,33 +86,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
-            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
-            SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
+            SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();
         }
         
-        public async void GetSettingComfirm()
-        {
-            try
-            {
-                var client = HttpClientSingleton.Instance;
-                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
-                var response = await client.SendAsync(request);
-                if (response.IsSuccessStatusCode)
-                {
-                    var resConten = await response.Content.ReadAsStringAsync();
-                    Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(resConten);
-                    if (dataSettingComfirm != null)
-                    {
-
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
         #region Nghỉ Phép
         public async void CreateProposingOnLeave()
         {

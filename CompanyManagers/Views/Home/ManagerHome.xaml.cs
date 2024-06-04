@@ -10,6 +10,7 @@ using CompanyManagers.Views.Login;
 using CompanyManagers.Views.Logout;
 using CompanyManagers.Views.PageStaff.Proposing;
 using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -150,13 +151,22 @@ namespace CompanyManagers.Views.Home
             get { return _dataListStaffShiftInDay; }
             set { _dataListStaffShiftInDay = value; OnPropertyChanged("dataListStaffShiftInDay"); }
         }
+
+        public class typeConfirm
+        {
+            public int id_Custom { get; set; }
+            public string name_Custom { get; set; }
+        }
+        public List<typeConfirm> lstTypeConfirms = new List<typeConfirm>();
+       
         private string _backToBack;
         public string backToBack 
         {
             get { return _backToBack; }
             set { _backToBack = value; OnPropertyChanged("backToBack");}
         }
-         public PagePopupGrayColor PagePopupGrayColor { get; set; }
+        public int userNumberConfirm { get; set; }
+        public PagePopupGrayColor PagePopupGrayColor { get; set; }
         LoginHome loginHome { get; set; }
         pageCreateNewProposing pageNewProposing { get; set; }
         public ManagerHome(DataUserLogin userCurrent, LoginHome _loginHome)
@@ -187,6 +197,7 @@ namespace CompanyManagers.Views.Home
                 GetListComfirmAndFollow();
                 GetListComfirmAndFollow();
             }
+            GetSettingComfirm();
         }
 
         private Thread textUpdateThread;
@@ -312,7 +323,7 @@ namespace CompanyManagers.Views.Home
             static HttpClientSingleton()
             {
                 // Thiết lập các cấu hình chung cho HttpClient, nếu cần
-                httpClient.Timeout = TimeSpan.FromSeconds(3);
+                httpClient.Timeout = TimeSpan.FromSeconds(30);
             }
             public static HttpClient Instance => httpClient;
         }
@@ -395,7 +406,7 @@ namespace CompanyManagers.Views.Home
         {
             try
             {
-                 var client = HttpClientSingleton.Instance;
+                var client = HttpClientSingleton.Instance;
                 var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiListShiftForDay);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
                 var content = new MultipartFormDataContent();
@@ -434,9 +445,9 @@ namespace CompanyManagers.Views.Home
                     dexuat_id = catePorpose
                 };
                 string jsonData = JsonConvert.SerializeObject(data);
-                var client = HttpClientSingleton.Instance;
+                var client = new HttpClient();
                 var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingPropose);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                request.Headers.Add("Authorization", "Bearer" + Properties.Settings.Default.Token);
                 var content = new StringContent(jsonData, null, "application/json");
                 request.Content = content;
                 var response = await client.SendAsync(request);
@@ -447,24 +458,23 @@ namespace CompanyManagers.Views.Home
                     if (dataSettingPropose.settingPropose != null)
                     {
                         dataSettingPro = dataSettingPropose.settingPropose;
-                        //if (dataSettingPropose.settingPropose.confirm_level > 0)
-                        //{
-                        //    userNumberConfirm = dataSettingPropose.settingPropose.confirm_level;
-                        //}
-                        //if (dataSettingPropose.settingPropose.confirm_type == 2)
-                        //{
-                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
-                        //}
-                        //else if (dataSettingPropose.settingPropose.confirm_type == 1)
-                        //{
-                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-                        //}
-                        //else if (dataSettingPropose.settingPropose.confirm_type == 3)
-                        //{
-                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
-                        //    SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
-                        //}
+                        if (dataSettingPro.confirm_level > 0)
+                        {
+                            userNumberConfirm = dataSettingPro.confirm_level;
+                            if (dataSettingPro.confirm_type == 2)
+                            {
+                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                            }
+                            else if (dataSettingPro.confirm_type == 1)
+                            {
+                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                            }
+                            else if (dataSettingPro.confirm_type == 3)
+                            {
+                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                            }
+                        }
                     }
                 }
             }
@@ -472,7 +482,7 @@ namespace CompanyManagers.Views.Home
             {
             }
         }
-        private List<ListPrivateLevel> _lstDataPrivateLevels;
+        public List<ListPrivateLevel> _lstDataPrivateLevels;
         public List<ListPrivateLevel> lstDataPrivateLevels 
         {
             get { return _lstDataPrivateLevels; }
@@ -484,19 +494,52 @@ namespace CompanyManagers.Views.Home
         {
             try
             {
-                var client = HttpClientSingleton.Instance;
-                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
-                var response = await client.SendAsync(request);
-                if (response.IsSuccessStatusCode)
+                using (WebClient request = new WebClient())
                 {
-                    var resConten = await response.Content.ReadAsStringAsync();
-                    Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(resConten);
-                    if (dataSettingComfirm != null)
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
+                    request.UploadValuesCompleted += (s, e) =>
                     {
-
-                    }
+                        Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(UnicodeEncoding.UTF8.GetString(e.Result));
+                        if (dataSettingComfirm != null)
+                        {
+                            lstDataPrivateLevels = dataSettingComfirm.settingConfirm.listPrivateLevel;
+                        }
+                    };
+                    await request.UploadValuesTaskAsync(UrlApi.apiGetSettingComfirm, request.Headers);
                 }
+                    //var options = new RestClientOptions(UrlApi.LinkTimviec)
+                    //{
+                    //    MaxTimeout = -1,
+                    //};
+                    //var client = new RestClient(options);
+                    //var request = new RestRequest("/api/vanthu/dexuat/settingConfirm", Method.Post);
+                    //request.AddHeader("Authorization", "Bearer " + Properties.Settings.Default.Token);
+                    //RestResponse response = await client.ExecuteAsync(request);
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(response.Content);
+                    //if (dataSettingComfirm != null)
+                    //{
+                       
+                    //}
+                //}
+                
+
+
+
+                //var client = HttpClientSingleton.Instance;
+                //var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
+                //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                ////var client = new HttpClient();
+                ////var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
+                ////request.Headers.Add("Authorization", "Bearer" + Properties.Settings.Default.Token);
+                //var response = await client.SendAsync(request);
+                //if (response.IsSuccessStatusCode)
+                //{
+                //    var resConten = await response.Content.ReadAsStringAsync();
+                //    Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(resConten);
+                    
+                //}
             }
             catch (Exception)
             {
