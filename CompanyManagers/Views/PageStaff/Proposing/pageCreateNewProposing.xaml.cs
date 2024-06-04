@@ -97,52 +97,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
             SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
         }
-        public async void GetSettingPropose()
-        {
-            try
-            {
-                var data = new
-                {
-                    dexuat_id = dataCategoryProposing.cate_dx,
-                };
-                string jsonData = JsonConvert.SerializeObject(data);
-                var client = HttpClientSingleton.Instance;
-                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingPropose);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
-                var content = new StringContent(jsonData, null, "application/json");
-                request.Content = content;
-                var response = await client.SendAsync(request);
-                if (response.IsSuccessStatusCode)
-                { 
-                    var resConten = await response.Content.ReadAsStringAsync();
-                    Root_SettingPropose dataSettingPropose = JsonConvert.DeserializeObject<Root_SettingPropose>(resConten);
-                    if (dataSettingPropose.settingPropose != null)
-                    {
-                        if (dataSettingPropose.settingPropose.confirm_level > 0)
-                        {
-                            userNumberConfirm = dataSettingPropose.settingPropose.confirm_level;
-                        }
-                        if (dataSettingPropose.settingPropose.confirm_type == 2)
-                        {
-                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
-                        }
-                        else if (dataSettingPropose.settingPropose.confirm_type == 1)
-                        {
-                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-                        }
-                        else if (dataSettingPropose.settingPropose.confirm_type == 3)
-                        {
-                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-                            lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
-                            SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        } 
+        
         public async void GetSettingComfirm()
         {
             try

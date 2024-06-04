@@ -25,6 +25,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using static CompanyManagers.Views.PageStaff.Proposing.pageCreateNewProposing;
 
 namespace CompanyManagers.Views.Home
 {
@@ -416,6 +417,84 @@ namespace CompanyManagers.Views.Home
                         dataShift.shift_id = "";
                         dataStaffShiftInDay.list.Insert(0, dataShift);
                         dataListStaffShiftInDay = dataStaffShiftInDay.list.ToList();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+        public SettingPropose dataSettingPro {  get; set; }
+        public async void GetSettingPropose(int catePorpose)
+        {
+            try
+            {
+                var data = new
+                {
+                    dexuat_id = catePorpose
+                };
+                string jsonData = JsonConvert.SerializeObject(data);
+                var client = HttpClientSingleton.Instance;
+                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingPropose);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                var content = new StringContent(jsonData, null, "application/json");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                { 
+                    var resConten = await response.Content.ReadAsStringAsync();
+                    Root_SettingPropose dataSettingPropose = JsonConvert.DeserializeObject<Root_SettingPropose>(resConten);
+                    if (dataSettingPropose.settingPropose != null)
+                    {
+                        dataSettingPro = dataSettingPropose.settingPropose;
+                        //if (dataSettingPropose.settingPropose.confirm_level > 0)
+                        //{
+                        //    userNumberConfirm = dataSettingPropose.settingPropose.confirm_level;
+                        //}
+                        //if (dataSettingPropose.settingPropose.confirm_type == 2)
+                        //{
+                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                        //}
+                        //else if (dataSettingPropose.settingPropose.confirm_type == 1)
+                        //{
+                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                        //}
+                        //else if (dataSettingPropose.settingPropose.confirm_type == 3)
+                        //{
+                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                        //    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                        //    SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
+                        //}
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+        private List<ListPrivateLevel> _lstDataPrivateLevels;
+        public List<ListPrivateLevel> lstDataPrivateLevels 
+        {
+            get { return _lstDataPrivateLevels; }
+            set {  _lstDataPrivateLevels = value; OnPropertyChanged("lstDataPrivateLevels"); }
+        }
+        public List<ListPrivateType> listPrivateType { get; set; }
+        public List<ListPrivateTime> listPrivateTime { get; set; }
+        public async void GetSettingComfirm()
+        {
+            try
+            {
+                var client = HttpClientSingleton.Instance;
+                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+                var response = await client.SendAsync(request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var resConten = await response.Content.ReadAsStringAsync();
+                    Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(resConten);
+                    if (dataSettingComfirm != null)
+                    {
+
                     }
                 }
             }
