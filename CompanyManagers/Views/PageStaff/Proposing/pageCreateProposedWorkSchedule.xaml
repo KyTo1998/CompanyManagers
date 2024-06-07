@@ -69,7 +69,7 @@
                                 </TextBlock>
                                 <Border BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5">
                                     <Grid>
-                                        <Border x:Name="btnDeleteUserConfirmAll" MouseLeftButtonDown="DeleteUserConfirmAll" Cursor="Hand" Visibility="Collapsed" CornerRadius="20" Width="15" Height="15" Margin="455,1,2,50" >
+                                        <Border x:Name="btnDeleteUserConfirmAll" MouseLeftButtonDown="DeleteUserConfirmAll" Cursor="Hand" Visibility="Collapsed" CornerRadius="20" Width="15" Height="15" Margin="440,1,0,50" >
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Background" Value="#E93434"></Setter>
@@ -164,7 +164,7 @@
                                 <Run Text="Chọn lịch làm việc" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
-                                <tool:ComboboxSelected x:Name="SelectCalendarWork" Cursor="Hand" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Confirm" PlaceHolderSelected="Chọn lịch làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                                <tool:ComboboxSelected x:Name="SelectCalendarWork" Cursor="Hand" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn lịch làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
                             </StackPanel>
                             <StackPanel x:Name="stp_FileGim" Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">

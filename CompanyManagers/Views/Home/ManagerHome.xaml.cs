@@ -436,7 +436,7 @@ namespace CompanyManagers.Views.Home
             }
         }
         public SettingPropose dataSettingPro {  get; set; }
-        public async void GetSettingPropose(int catePorpose)
+        public void GetSettingPropose(int catePorpose)
         {
             try
             {
@@ -445,16 +445,12 @@ namespace CompanyManagers.Views.Home
                     dexuat_id = catePorpose
                 };
                 string jsonData = JsonConvert.SerializeObject(data);
-                var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingPropose);
-                request.Headers.Add("Authorization", "Bearer" + Properties.Settings.Default.Token);
-                var content = new StringContent(jsonData, null, "application/json");
-                request.Content = content;
-                var response = await client.SendAsync(request);
-                if (response.IsSuccessStatusCode)
-                { 
-                    var resConten = await response.Content.ReadAsStringAsync();
-                    Root_SettingPropose dataSettingPropose = JsonConvert.DeserializeObject<Root_SettingPropose>(resConten);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.apiGetSettingPropose,"POST", jsonData);
+                    Root_SettingPropose dataSettingPropose = JsonConvert.DeserializeObject<Root_SettingPropose>(resData);
                     if (dataSettingPropose.settingPropose != null)
                     {
                         dataSettingPro = dataSettingPropose.settingPropose;
@@ -488,6 +484,18 @@ namespace CompanyManagers.Views.Home
             get { return _lstDataPrivateLevels; }
             set {  _lstDataPrivateLevels = value; OnPropertyChanged("lstDataPrivateLevels"); }
         }
+        private List<ListPrivateType> _listPrivateTypes;
+        public List<ListPrivateType> listPrivateTypes
+        {
+            get { return _listPrivateTypes; }
+            set { _listPrivateTypes = value; OnPropertyChanged("listPrivateTypes"); }
+        }
+        private List<ListPrivateTime> _listPrivateTimes;
+        public List<ListPrivateTime> listPrivateTimes
+        {
+            get { return _listPrivateTimes; }
+            set { _listPrivateTimes = value; OnPropertyChanged("listPrivateTimes"); }
+        }
         public List<ListPrivateType> listPrivateType { get; set; }
         public List<ListPrivateTime> listPrivateTime { get; set; }
         public async void GetSettingComfirm()
@@ -503,43 +511,12 @@ namespace CompanyManagers.Views.Home
                         if (dataSettingComfirm != null)
                         {
                             lstDataPrivateLevels = dataSettingComfirm.settingConfirm.listPrivateLevel;
+                            listPrivateTypes = dataSettingComfirm.settingConfirm.listPrivateType;
+                            listPrivateTimes = dataSettingComfirm.settingConfirm.listPrivateTime;
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.apiGetSettingComfirm, request.Headers);
                 }
-                    //var options = new RestClientOptions(UrlApi.LinkTimviec)
-                    //{
-                    //    MaxTimeout = -1,
-                    //};
-                    //var client = new RestClient(options);
-                    //var request = new RestRequest("/api/vanthu/dexuat/settingConfirm", Method.Post);
-                    //request.AddHeader("Authorization", "Bearer " + Properties.Settings.Default.Token);
-                    //RestResponse response = await client.ExecuteAsync(request);
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(response.Content);
-                    //if (dataSettingComfirm != null)
-                    //{
-                       
-                    //}
-                //}
-                
-
-
-
-                //var client = HttpClientSingleton.Instance;
-                //var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
-                //request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
-                ////var client = new HttpClient();
-                ////var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiGetSettingComfirm);
-                ////request.Headers.Add("Authorization", "Bearer" + Properties.Settings.Default.Token);
-                //var response = await client.SendAsync(request);
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    var resConten = await response.Content.ReadAsStringAsync();
-                //    Root_SettingComfirm dataSettingComfirm = JsonConvert.DeserializeObject<Root_SettingComfirm>(resConten);
-                    
-                //}
             }
             catch (Exception)
             {

@@ -22,6 +22,8 @@ using static CompanyManagers.Views.Home.ManagerHome;
 using Microsoft.Win32;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using CompanyManagers.Views.Login;
+using CompanyManagers.Views.Logout;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -118,6 +120,16 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     tb_ValidateProposing.Text = "Chưa ca nghỉ";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (dataListUserComfrim.Count < managerHome.userNumberConfirm)
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    tb_ValidateProposing.Text = $"Số người duyệt là {managerHome.userNumberConfirm}";
                     statusValidate = false;
                 }
                 else

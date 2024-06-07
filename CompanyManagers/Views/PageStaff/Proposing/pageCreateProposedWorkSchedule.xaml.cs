@@ -31,7 +31,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _typeCategoryProposing; }
             set { _typeCategoryProposing = value;OnPropertyChanged("typeCategoryProposing");}
         }
-        List<typeConfirm> lstTypeConfirms = new List<typeConfirm>();
         public class CalendarWork
         {
             public int id_CalendarWork { get; set; }
@@ -44,6 +43,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             get { return _listShiftAll; }
             set { _listShiftAll = value; OnPropertyChanged("listShiftAll"); }
+        }
+
+        private List<ListUsersDuyet> _dataListUserComfrim;
+        public List<ListUsersDuyet> dataListUserComfrim
+        {
+            get { return _dataListUserComfrim; }
+            set { _dataListUserComfrim = value; OnPropertyChanged("dataListUserComfrim"); }
         }
         private bool _statusScoll;
         public bool statusScoll
@@ -61,10 +67,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             typeCategoryProposing = _dataCategoryProposing.cate_dx;
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
             tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
-            lstTypeConfirms.Add(new typeConfirm() {id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-            lstTypeConfirms.Add(new typeConfirm() {id_Custom = 1, name_Custom = "Duyệt lần lượt" });
-            SelectTypeComfirm.ItemsSourceSelected = lstTypeConfirms.ToList();
-             lstCalendarWork.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Thứ 2 - Thứ 6" });
+            SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();
+            lstCalendarWork.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Thứ 2 - Thứ 6" });
             lstCalendarWork.Add(new typeConfirm() {id_Custom = 2, name_Custom = "Thứ 2 - Thứ 7" });
             lstCalendarWork.Add(new typeConfirm() {id_Custom = 3, name_Custom = "Thứ 2 - CN" });
             SelectCalendarWork.ItemsSourceSelected = lstCalendarWork.ToList();
@@ -78,7 +82,28 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         }
         private void SelectionChangeUserComfirm(object sender, SelectionChangedEventArgs e)
         {
-            
+            if (SelectUserComfirm.Text != null)
+            {
+                ListUsersDuyet dataUserComfirm = new ListUsersDuyet();
+                dataUserComfirm = SelectUserComfirm.SelectedItem as ListUsersDuyet;
+                lsvUserComfirmSelected.Visibility = Visibility.Visible;
+                if (dataListUserComfrim == null)
+                {
+                    dataListUserComfrim = new List<ListUsersDuyet>();
+                }
+                if (!dataListUserComfrim.Contains(dataUserComfirm))
+                {
+                    dataListUserComfrim.Add(dataUserComfirm);
+                    if (dataListUserComfrim.Count > 1)
+                    {
+                        btnDeleteUserConfirmAll.Visibility = Visibility.Visible;
+                    }
+                }
+                dataListUserComfrim = dataListUserComfrim.ToList();
+                SelectUserComfirm.PlaceHolder = null;
+                SelectUserComfirm.Text = null;
+                SelectUserComfirm.VerticalAlignment = VerticalAlignment.Center;
+            }
         }
         private void SelectionChangeUserFollow(object sender, SelectionChangedEventArgs e)
         {
@@ -91,7 +116,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
       
         private void DeleteUserConfirmAll(object sender, MouseButtonEventArgs e)
         {
-
+            if (dataListUserComfrim.Count > 0)
+            {
+                dataListUserComfrim.Clear();
+                btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
+                lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
+                SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                dataListUserComfrim = dataListUserComfrim.ToList();
+            }
         }
 
         private void DeleteFileGim(object sender, MouseButtonEventArgs e)
@@ -120,7 +152,21 @@ namespace CompanyManagers.Views.PageStaff.Proposing
 
         private void DeleteUserConfirm(object sender, MouseButtonEventArgs e)
         {
-
+            ListUsersDuyet dataUserComfirm = (ListUsersDuyet)(sender as Border).DataContext;
+            if (dataUserComfirm != null)
+            {
+                dataListUserComfrim.Remove(dataUserComfirm);
+                if (dataListUserComfrim.Count == 0)
+                {
+                    lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
+                    SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                }
+                if (dataListUserComfrim.Count == 1)
+                {
+                    btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
+                }
+                dataListUserComfrim = dataListUserComfrim.ToList();
+            }
         }
 
         private void ScollCreateProposing(object sender, MouseWheelEventArgs e)
