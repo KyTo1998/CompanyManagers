@@ -8,7 +8,7 @@
              mc:Ignorable="d"  MinWidth="860" MaxWidth="1000">
     <Grid>
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-            <Border MouseLeftButtonDown="CloseBox" CornerRadius="10">
+            <Border MouseLeftButtonDown="CloseBox" CornerRadius="10" Background="AntiqueWhite">
                 <WrapPanel PreviewMouseWheel="ScollCreateProposing" HorizontalAlignment="Center">
                     <Border Grid.Column="0" MinWidth="420" MaxWidth="490" x:Name="detailProposing" Margin="0 10 10 0" CornerRadius="10" Background="WhiteSmoke">
                         <Border.Effect>
@@ -304,7 +304,7 @@
                             <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                         </Border.Effect>
                         <StackPanel x:Name="stp_ShowCalendar" Margin="10 0 10 0">
-                            <TextBlock Text="Tháng 06-2024" FontSize="20" FontWeight="Medium" Foreground="{StaticResource ColorGreen}" HorizontalAlignment="Center">
+                            <TextBlock FontSize="20" FontWeight="Medium" Foreground="{StaticResource ColorGreen}" HorizontalAlignment="Center">
                             <Run Text="Tháng"/>
                             <Run x:Name="MonthCalendar"/>
                             </TextBlock>
@@ -397,14 +397,14 @@
                                                                         </MultiDataTrigger>
                                                                         <MultiDataTrigger>
                                                                             <MultiDataTrigger.Conditions>
-                                                                                <Condition Binding="{Binding ca}" Value="0"/>
+                                                                                <Condition Binding="{Binding shiftSelected}" Value="0"/>
                                                                             </MultiDataTrigger.Conditions>
                                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                                         </MultiDataTrigger>
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
-                                                            <TextBlock Text="{Binding ca}" FontSize="14" FontWeight="Regular" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding shiftSelected}" FontSize="14" FontWeight="Regular" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                         </Border>
                                                     </Grid>
                                                 </ControlTemplate>
