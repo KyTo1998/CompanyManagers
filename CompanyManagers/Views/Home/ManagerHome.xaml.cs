@@ -158,6 +158,7 @@ namespace CompanyManagers.Views.Home
             public string name_Custom { get; set; }
         }
         public List<typeConfirm> lstTypeConfirms = new List<typeConfirm>();
+        public List<typeConfirm> lstTypeConfirmsLocal = new List<typeConfirm>();
        
         private string _backToBack;
         public string backToBack 
@@ -459,16 +460,25 @@ namespace CompanyManagers.Views.Home
                             userNumberConfirm = dataSettingPro.confirm_level;
                             if (dataSettingPro.confirm_type == 2)
                             {
-                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                                if (lstTypeConfirms.Count == 0)
+                                {
+                                    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                                }
                             }
                             else if (dataSettingPro.confirm_type == 1)
                             {
-                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                                if (lstTypeConfirms.Count == 0)
+                                {
+                                    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                                }
                             }
                             else if (dataSettingPro.confirm_type == 3)
                             {
-                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
-                                lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                                if (lstTypeConfirms.Count < 2)
+                                {
+                                    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 0, name_Custom = "Duyệt đồng thời" });
+                                    lstTypeConfirms.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Duyệt lần lượt" });
+                                }
                             }
                         }
                     }

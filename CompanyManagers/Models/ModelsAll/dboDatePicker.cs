@@ -18,7 +18,7 @@ namespace CompanyManagers.Models.ModelsAll
         }
 
         public int id;
-        public int ngay { get; set; }
+        public int DayInCalendar { get; set; }
         public string ngayString { get; set; } = "";
 
         public int _shiftSelected;
@@ -28,7 +28,7 @@ namespace CompanyManagers.Models.ModelsAll
             set
             {
                 _shiftSelected = value;
-                OnPropertyChanged("0");
+                OnPropertyChanged("shiftSelected");
             }
         }
 
@@ -43,7 +43,7 @@ namespace CompanyManagers.Models.ModelsAll
                 OnPropertyChanged("statusClick");
             }
         }
-        //public List<Item_CaLamViec> dsca { get; set; }
+        public List<Item_ShiftAll> listShiftAll { get; set; }
         //public List<Item_CaLamViec> caThayDoi { get; set; }
     }
 }

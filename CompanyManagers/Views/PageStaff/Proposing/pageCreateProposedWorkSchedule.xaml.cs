@@ -2,9 +2,11 @@
 using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Views.Home;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -57,6 +59,20 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _statusScoll; }
             set { _statusScoll = value; OnPropertyChanged("statusScoll"); }
         }
+
+        private List<lichlamviec> _listLichProposing;
+
+        public List<lichlamviec> listLichProposing
+        {
+            get { return _listLichProposing; }
+            set
+            {
+                _listLichProposing = value;
+                OnPropertyChanged("listLichProposing");
+            }
+        }
+
+        int startDay, selectedDay; string date;
         Result_CategoryProposing dataCategoryProposing;
         ManagerHome managerHome { set; get; }
         public pageCreateProposedWorkSchedule(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing)
@@ -76,9 +92,121 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
             listShiftAll = _managerHome.dataListShiftAll.ToList();
         }
+
+        public void LoadDataCalendarWork(int monthSelected, int yearSelected, typeConfirm selectedStartToEnd)
+        {
+            try
+            {
+                startDay = (int)new DateTime(yearSelected, monthSelected, 1).DayOfWeek;
+                listLichProposing = new List<lichlamviec>();
+                if (monthSelected - 1 > 0)
+                {
+                    for (int i = 0; i < startDay; i++)
+                    {
+                        var x = DateTime.DaysInMonth(yearSelected, monthSelected - 1);
+                        listLichProposing.Add(
+                            new lichlamviec() { id = listLichProposing.Count, DayInCalendar = x - i, shiftSelected = 0, statusClick = 0 });
+                    }
+
+                    listLichProposing.Reverse();
+                }
+                else if (monthSelected - 1 == 0)
+                {
+                    for (int i = 0; i < startDay; i++)
+                    {
+                        var x = DateTime.DaysInMonth(yearSelected - 1, 12);
+                        listLichProposing.Add(
+                            new lichlamviec() { id = listLichProposing.Count, DayInCalendar = x - i, });
+                    }
+
+                    listLichProposing.Reverse();
+                }
+
+
+                for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                {
+                    List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
+                    var d = new lichlamviec()
+                    { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, listShiftAll = listShift };
+                    listLichProposing.Add(d);
+                }
+
+                int n = 42 - listLichProposing.Count;
+                for (int i = 1; i <= n; i++)
+                {
+                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = 0, statusClick = 0 };
+                    listLichProposing.Add(d);
+                }
+
+                date = StartDateOnLeave.SelectedDate + "";
+                for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                {
+                    string ngayString = "";
+                    List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
+                    int x = (int)new DateTime(yearSelected, monthSelected, listLichProposing[i + startDay - 1].DayInCalendar).DayOfWeek;
+                    if (DateTime.Parse(date).Day <= listLichProposing[i + startDay - 1].DayInCalendar)
+                    {
+
+                        ngayString = yearSelected + "-" + monthSelected + "-" + listLichProposing[i + startDay - 1].DayInCalendar;
+                        if (selectedStartToEnd != null)
+                        {
+                            if (selectedStartToEnd.id_Custom == 1)
+                            {
+                                if (x >= 1 && x < 6)
+                                {
+                                    foreach (var item in listShiftAll)
+                                    {
+                                        listShift.Add(item);
+                                    }
+
+                                }
+                            }
+
+                            if (selectedStartToEnd.id_Custom == 2)
+                            {
+                                if (x >= 1 && x < 7) 
+                                {
+                                    foreach (var item in listShiftAll)
+                                    {
+                                        listShift.Add(item);
+                                    }
+                                }
+                            }
+
+                            if (selectedStartToEnd.id_Custom == 3)
+                            {
+                                foreach (var item in listShiftAll)
+                                {
+                                    listShift.Add(item);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in listShiftAll)
+                            {
+                                listShift.Add(item);
+                            }
+                        }
+
+                    }
+
+                    var d = new lichlamviec()
+                    { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, listShiftAll = listShift, ngayString = ngayString };
+                    listLichProposing[i + startDay - 1] = d;
+                }
+                listLichProposing = listLichProposing.ToList();
+            }
+            catch (System.Exception)
+            {
+            }
+        }
         private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
         {
-            
+            typeConfirm selectedStartToEnd = new typeConfirm();
+            selectedStartToEnd = SelectCalendarWork.SelectedItemSelected as typeConfirm;
+            LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd);
+
         }
         private void SelectionChangeUserComfirm(object sender, SelectionChangedEventArgs e)
         {
@@ -111,7 +239,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         }
         private void SelectedStartDateOnLeave(object sender, SelectionChangedEventArgs e)
         {
-            
+            MonthCalendar.Text = StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy");
+            LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, null);
         }
       
         private void DeleteUserConfirmAll(object sender, MouseButtonEventArgs e)
@@ -213,6 +342,5 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
              borSelectedShift.Visibility = Visibility.Collapsed;
         }
-       
     }
 }
