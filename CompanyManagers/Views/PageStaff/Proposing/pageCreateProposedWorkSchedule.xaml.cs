@@ -99,6 +99,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 startDay = (int)new DateTime(yearSelected, monthSelected, 1).DayOfWeek;
                 listLichProposing = new List<lichlamviec>();
+                // Lấy số ngày dầu tiên trong tuần của tháng trước
                 if (monthSelected - 1 > 0)
                 {
                     for (int i = 0; i < startDay; i++)
@@ -107,7 +108,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         listLichProposing.Add(
                             new lichlamviec() { id = listLichProposing.Count, DayInCalendar = x - i, shiftSelected = 0, statusClick = 0 });
                     }
-
                     listLichProposing.Reverse();
                 }
                 else if (monthSelected - 1 == 0)
@@ -118,17 +118,99 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         listLichProposing.Add(
                             new lichlamviec() { id = listLichProposing.Count, DayInCalendar = x - i, });
                     }
-
                     listLichProposing.Reverse();
                 }
-
-
-                for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                List<int> lstPastDays = GetAllPastDaysInMonth(monthSelected, yearSelected);
+                List<int> lstSaturdays = GetAllSaturdaysInMonth(monthSelected, yearSelected);
+                List<int> lstSundays = GetAllSundaysInMonth(monthSelected, yearSelected);
+                if (selectedStartToEnd != null)
                 {
-                    List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
-                    var d = new lichlamviec()
-                    { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, listShiftAll = listShift };
-                    listLichProposing.Add(d);
+                    if (selectedStartToEnd.id_Custom == 1)
+                    {
+                        for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                        {
+                            List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
+                            if (lstSundays.Contains(i) || lstSaturdays.Contains(i))
+                            {
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 0, listShiftAll = listShift };
+                                listLichProposing.Add(d);
+                            }
+                            else
+                            {
+                                if (lstPastDays.Contains(i))
+                                {
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift };
+                                    listLichProposing.Add(d);
+                                }
+                                else
+                                {
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1,statusPast = 0, listShiftAll = listShift };
+                                    listLichProposing.Add(d);
+                                }
+                            }
+                        }
+                    }
+                    else if (selectedStartToEnd.id_Custom == 2)
+                    {
+                        
+                        for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                        {
+                            List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
+                            if (lstSundays.Contains(i))
+                            {
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 0, listShiftAll = listShift };
+                                listLichProposing.Add(d);
+                            }
+                            else
+                            {
+                                if (lstPastDays.Contains(i))
+                                {
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift };
+                                    listLichProposing.Add(d);
+                                }
+                                else
+                                {
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 0, listShiftAll = listShift };
+                                    listLichProposing.Add(d);
+                                }
+                            }
+                        }
+                    
+                    }
+                    else if (selectedStartToEnd.id_Custom == 3)
+                    {
+                        for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                        {
+                            List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
+                            if (lstPastDays.Contains(i))
+                            {
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift };
+                                listLichProposing.Add(d);
+                            }
+                            else
+                            {
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 0, listShiftAll = listShift };
+                                listLichProposing.Add(d);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                    {
+                        List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
+                        if (lstPastDays.Contains(i))
+                        {
+                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift };
+                            listLichProposing.Add(d);
+                        }
+                        else
+                        {
+                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 0, listShiftAll = listShift };
+                            listLichProposing.Add(d);
+                        }
+                    }
                 }
 
                 int n = 42 - listLichProposing.Count;
@@ -158,10 +240,27 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                     {
                                         listShift.Add(item);
                                     }
-
                                 }
+                                if (lstSundays.Contains(i) || lstSaturdays.Contains(i))
+                                {
+                                    var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 0, listShiftAll = listShift, ngayString = ngayString };
+                                    listLichProposing[i + startDay - 1] = d;
+                                }
+                                else
+                                {
+                                    if (lstPastDays.Contains(i))
+                                    {
+                                        var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift, ngayString = ngayString };
+                                        listLichProposing[i + startDay - 1] = d;
+                                    }
+                                    else
+                                    {
+                                        var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 0, listShiftAll = listShift, ngayString = ngayString };
+                                        listLichProposing[i + startDay - 1] = d;
+                                    }
+                                }
+                                
                             }
-
                             if (selectedStartToEnd.id_Custom == 2)
                             {
                                 if (x >= 1 && x < 7) 
@@ -171,13 +270,40 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                         listShift.Add(item);
                                     }
                                 }
+                                if (lstSundays.Contains(i))
+                                {
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 0, listShiftAll = listShift, ngayString = ngayString };
+                                    listLichProposing[i + startDay - 1] = d;
+                                }
+                                else
+                                {
+                                    if (lstPastDays.Contains(i))
+                                    {
+                                        var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift, ngayString = ngayString };
+                                        listLichProposing[i + startDay - 1] = d;
+                                    }
+                                    else
+                                    {
+                                        var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 0, listShiftAll = listShift, ngayString = ngayString };
+                                        listLichProposing[i + startDay - 1] = d;
+                                    }
+                                }
                             }
-
                             if (selectedStartToEnd.id_Custom == 3)
                             {
                                 foreach (var item in listShiftAll)
                                 {
                                     listShift.Add(item);
+                                }
+                                if (lstPastDays.Contains(i))
+                                {
+                                    var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift, ngayString = ngayString };
+                                    listLichProposing[i + startDay - 1] = d;
+                                }
+                                else
+                                {
+                                    var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 0, listShiftAll = listShift, ngayString = ngayString };
+                                    listLichProposing[i + startDay - 1] = d;
                                 }
                             }
                         }
@@ -187,19 +313,89 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             {
                                 listShift.Add(item);
                             }
+                            if (lstPastDays.Contains(i))
+                            {
+                                var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 1, listShiftAll = listShift, ngayString = ngayString };
+                                listLichProposing[i + startDay - 1] = d;
+                            }
+                            else
+                            {
+                                var d = new lichlamviec() { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, statusPast = 0, listShiftAll = listShift, ngayString = ngayString };
+                                listLichProposing[i + startDay - 1] = d;
+                            }
                         }
-
                     }
-
-                    var d = new lichlamviec()
-                    { id = i + startDay - 1, DayInCalendar = i, shiftSelected = listShift.Count, statusClick = 1, listShiftAll = listShift, ngayString = ngayString };
-                    listLichProposing[i + startDay - 1] = d;
                 }
                 listLichProposing = listLichProposing.ToList();
             }
             catch (System.Exception)
             {
             }
+        }
+
+        static List<int> GetAllSaturdaysInMonth(int month, int year)
+        {
+            List<int> saturdays = new List<int>();
+
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
+            {
+                // Kiểm tra xem ngày đó có phải là thứ Bảy không
+                if (date.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    saturdays.Add(date.Day);
+                }
+            }
+
+            return saturdays;
+        }
+
+        static List<int> GetAllSundaysInMonth(int month, int year)
+        {
+            List<int> sundays = new List<int>();
+
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
+            {
+                // Kiểm tra xem ngày đó có phải là Chủ Nhật không
+                if (date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    sundays.Add(date.Day);
+                }
+            }
+
+            return sundays;
+        }
+        static List<int> GetAllPastDaysInMonth(int month, int year)
+        {
+            List<int> pastDays = new List<int>();
+
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            // Lấy ngày hiện tại
+            DateTime today = DateTime.Today;
+
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
+            {
+                // Kiểm tra xem ngày đó có trước ngày hiện tại không
+                if (date < today)
+                {
+                    pastDays.Add(date.Day);
+                }
+            }
+
+            return pastDays;
         }
         private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
         {

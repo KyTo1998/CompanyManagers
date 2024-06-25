@@ -43,6 +43,18 @@ namespace CompanyManagers.Models.ModelsAll
                 OnPropertyChanged("statusClick");
             }
         }
+
+        public int _statusPast;
+
+        public int statusPast
+        {
+            get { return _statusPast; }
+            set
+            {
+                _statusPast = value;
+                OnPropertyChanged("statusPast");
+            }
+        }
         public List<Item_ShiftAll> listShiftAll { get; set; }
         //public List<Item_CaLamViec> caThayDoi { get; set; }
     }
