@@ -152,7 +152,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     }
                     string userConfirm = String.Join(",", listUserConfirm);
                     var client = HttpClientSingleton.Instance;
-                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiCreateProposingOnLeave);
+                    var request = new HttpRequestMessage(HttpMethod.Post,UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CreateProposingOnLeave);
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
                     var content = new MultipartFormDataContent();
                     content.Add(new StringContent(""), "fileKem");

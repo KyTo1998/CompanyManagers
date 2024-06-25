@@ -73,7 +73,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 listProposingHome = dataProposing.data.data.ToList();
                                 foreach (var item in listProposingHome)
                                 {
-                                    item.type_dx_string = listCategoyProposingHome.Find(x => x.cate_dx == item.type_dx).name_cate_dx;
+                                    if (item.type_dx_string != null)
+                                    {
+                                        item.type_dx_string = listCategoyProposingHome.Find(x => x.cate_dx == item.type_dx).name_cate_dx;
+                                    }
                                 }
                             }
                         }
@@ -81,7 +84,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         {
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.apiShowHomeProposing, request.Headers);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ShowHomeProposing, request.Headers);
                 }
             }
             catch (Exception)
@@ -100,7 +103,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     LoadingSpinner.Visibility= System.Windows.Visibility.Visible;
                     var client = HttpClientSingleton.Instance;
-                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiCategoryProposing);
+                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CategoryProposing);
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
                     var content = new MultipartFormDataContent();
                     content.Add(new StringContent(numberPage.ToString()), "page");

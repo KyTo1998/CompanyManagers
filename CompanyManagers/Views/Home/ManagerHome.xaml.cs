@@ -348,7 +348,7 @@ namespace CompanyManagers.Views.Home
                            
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.apiListStaffAll, request.Headers);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Staff + UrlApi.Name_Api_Staff, request.Headers);
                 }
             }
             catch (Exception) { }
@@ -359,7 +359,7 @@ namespace CompanyManagers.Views.Home
             try
             {
                 var client = HttpClientSingleton.Instance;
-                var request = new HttpRequestMessage(HttpMethod.Get, UrlApi.apiListShiftAll);
+                var request = new HttpRequestMessage(HttpMethod.Get, UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftAll);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token); 
                 var response = await client.SendAsync(request);
                 if (response.IsSuccessStatusCode)
@@ -394,7 +394,7 @@ namespace CompanyManagers.Views.Home
 
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.apiListComfrimFollow, request.Headers);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ListComfrimFollow, request.Headers);
                 }
             }
             catch (Exception)
@@ -407,7 +407,7 @@ namespace CompanyManagers.Views.Home
             try
             {
                 var client = HttpClientSingleton.Instance;
-                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.apiListShiftForDay);
+                var request = new HttpRequestMessage(HttpMethod.Post,UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftForDay);
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
                 var content = new MultipartFormDataContent();
                 content.Add(new StringContent(dateShift), "day");
@@ -449,7 +449,7 @@ namespace CompanyManagers.Views.Home
                 {
                     webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
                     webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
-                    var resData = webClient.UploadString(UrlApi.apiGetSettingPropose,"POST", jsonData);
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_GetSettingPropose, "POST", jsonData);
                     Root_SettingPropose dataSettingPropose = JsonConvert.DeserializeObject<Root_SettingPropose>(resData);
                     if (dataSettingPropose.settingPropose != null)
                     {
@@ -515,7 +515,7 @@ namespace CompanyManagers.Views.Home
                             listPrivateTimes = dataSettingComfirm.settingConfirm.listPrivateTime;
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.apiGetSettingComfirm, request.Headers);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_GetSettingComfirm, request.Headers);
                 }
             }
             catch (Exception)

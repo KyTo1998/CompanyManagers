@@ -152,12 +152,12 @@ namespace CompanyManagers.Views.Login
         {
             try
             {
-                var options = new RestClientOptions("https://api.timviec365.vn")
+                var options = new RestClientOptions(UrlApi.Url_Api_Login)
                 {
                     MaxTimeout = -1,
                 };
                 var client = new RestClient(options);
-                var request = new RestRequest("/api/qlc/employee/login", Method.Post);
+                var request = new RestRequest(UrlApi.Name_Api_Login, Method.Post);
                 request.AlwaysMultipartFormData = true;
                 request.AddParameter("account", userName);
                 request.AddParameter("password", passWord);

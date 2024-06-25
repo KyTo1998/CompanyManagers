@@ -138,7 +138,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             LoadErroGetApi();
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.apiProposingSendToAll, request.QueryString);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToAll, request.QueryString);
                 }
             }
             catch (Exception)
@@ -185,7 +185,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             LoadErroGetApi();
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.apiProposingSendToMe, request.QueryString);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToMe, request.QueryString);
                 }
             }
             catch (Exception)
@@ -216,7 +216,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             LoadErroGetApi();
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.apiProposingFollow, request.QueryString);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingFollow, request.QueryString);
                 }
             }
             catch (Exception)
