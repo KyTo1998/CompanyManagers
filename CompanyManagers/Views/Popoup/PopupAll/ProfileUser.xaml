@@ -5,120 +5,78 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.Popoup.PopupAll"
              mc:Ignorable="d">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="517" Height="614">
-        <Border Effect="{StaticResource z-depth1}"  CornerRadius="10" Background="WhiteSmoke" HorizontalAlignment="Center" VerticalAlignment="Center" Width="517" Height="614">
-        </Border>
-        <Border Height="108" Background="{DynamicResource colorTheme}" VerticalAlignment="Top" CornerRadius="10,10,0,0">
-            <TextBlock Grid.Column="0" Text="Hồ sơ nhân viên" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Foreground="{StaticResource colorWriter}"/>
-        </Border>
-        <Border x:Name="Profile_btn_addImg" CornerRadius="50" VerticalAlignment="Top" RenderTransformOrigin="5.623,1.097" Height="100" HorizontalAlignment="Center" Width="100" Margin="0,51,0,50">
-            <Border.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <ImageBrush ImageSource="{Binding Path = UserCurrent.ImageAvatar}" Stretch="UniformToFill"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="1">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                        <GradientStop Color="#93D3F9" Offset="0"/>
-                                        <GradientStop Color="#B0E2FD" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="2">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                        <GradientStop Color="#F9B970" Offset="0"/>
-                                        <GradientStop Color="#F9D67A" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="3">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                        <GradientStop Color="#FF6BE7AD" Offset="0"/>
-                                        <GradientStop Color="#B6E8C3" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="4">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                        <GradientStop Color="#F7B3BE" Offset="0"/>
-                                        <GradientStop Color="#FCC3CC" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding haveTime}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Resources>
+    <Border HorizontalAlignment="Stretch" Background="WhiteSmoke" VerticalAlignment="Stretch" CornerRadius="10" Width="500" Height="{Binding ElementName=scoll,Path=ActualHeight}">
+        <StackPanel x:Name="scoll" Margin="0 0 0 10">
             <Grid>
-                <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" FontWeight="Medium">
-                    <TextBlock.Resources>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="1">
-                                    <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                    <Setter Property="Foreground" Value="#FF0097E8"></Setter>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="2">
-                                    <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                    <Setter Property="Foreground" Value="#FFF78400"></Setter>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="3">
-                                    <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                    <Setter Property="Foreground" Value="#FF005F33"></Setter>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="4">
-                                    <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                    <Setter Property="Foreground" Value="#FFFF0029"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
+                <Border Height="80" Background="{DynamicResource colorTheme}" VerticalAlignment="Top" CornerRadius="10,10,0,0">
+                    <TextBlock Grid.Column="0" Text="Hồ sơ nhân viên" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 20 0 0" FontSize="20" FontWeight="Medium" Foreground="{StaticResource colorWriter}"/>
+                </Border>
+                <Border x:Name="Profile_btn_addImg" CornerRadius="50" VerticalAlignment="Top" RenderTransformOrigin="5.623,1.097" Height="100" HorizontalAlignment="Center" Width="100" Margin="0,51,0,0">
+                    <Border.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="/Resources/Image/AvatarUser.png" Stretch="UniformToFill"/>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
-                    </TextBlock.Resources>
-                </TextBlock>
-                <Border Margin="69,69,0,0" Background="#FFE0E0E0" CornerRadius="20" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <Path Data="{StaticResource iconCamera}" Margin="0" Stretch="Fill" Fill="#747474" Width="20" Height="16"></Path>
+                    </Border.Resources>
+                    <Grid>
+                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" FontWeight="Medium">
+                            <TextBlock.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="1">
+                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
+                                            <Setter Property="Foreground" Value="#FF0097E8"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="2">
+                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
+                                            <Setter Property="Foreground" Value="#FFF78400"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="3">
+                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
+                                            <Setter Property="Foreground" Value="#FF005F33"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="4">
+                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
+                                            <Setter Property="Foreground" Value="#FFFF0029"></Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Resources>
+                        </TextBlock>
+                        <Border Margin="69,69,0,0" Background="#FFE0E0E0" CornerRadius="20" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <Path Data="{StaticResource iconCamera}" Margin="0" Stretch="Fill" Fill="#747474" Width="20" Height="16"></Path>
+                        </Border>
+                    </Grid>
                 </Border>
             </Grid>
-        </Border>
-
-        <TextBox Text="{Binding UserCurrent.UserName}" Visibility="Hidden" x:Name="txt_Profile_Name" FontSize="18" FontWeight="DemiBold" HorizontalAlignment="Center" Foreground="{DynamicResource ColorGray1}" CaretBrush="{DynamicResource ColorGray1}"  VerticalAlignment="Top" Margin="0,160,0,0" Background="Transparent" BorderThickness="0"/>
-        <TextBlock Cursor="Hand" Text="{Binding UserCurrent.UserName}"  TextTrimming="CharacterEllipsis" Visibility="Visible" x:Name="Profile_tb_name" FontSize="18" FontWeight="DemiBold" HorizontalAlignment="Center" Foreground="{DynamicResource colorTheme}" VerticalAlignment="Top" Margin="0,160,0,0" Background="#00000000"></TextBlock>
-        <Border Cursor="Hand" x:Name="btEditUserName" Visibility="Visible" Width="22" Height="22"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,160,26,0" Background="#00FFFDFD">
-            <Path Data="{StaticResource iconPencil}"   Fill="{DynamicResource colorText1}" Stretch="Fill" SnapsToDevicePixels="True" />
-        </Border>
-        <Border Cursor="Hand" x:Name="btDoneEditUserName" Visibility="Hidden" Width="22" Height="22"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,160,26,0" Background="#00FFFDFD">
-            <Path Data="M1 7.42857L8.71429 13.8571L19 1" Stretch="Fill" SnapsToDevicePixels="True" Stroke="{DynamicResource colorText1}" StrokeThickness="2" Width="18" Height="12" />
-        </Border>
-        <Separator x:Name="LineInEditUserName" Visibility="Hidden" Background="{DynamicResource colorTheme}" Height="2" Width="373" VerticalAlignment="Top" Margin="0,187,0,0"/>
-        <ScrollViewer IsTabStop="False" Margin="0,202,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Margin="50 0 0 0">
+                    <TextBox Text="{Binding UserName}" Visibility="Collapsed" x:Name="txt_Profile_Name" FontSize="18" FontWeight="DemiBold" HorizontalAlignment="Center" Foreground="{DynamicResource ColorGray1}" CaretBrush="{DynamicResource ColorGray1}"  VerticalAlignment="Top"  Background="Transparent" BorderThickness="0"/>
+                    <TextBlock Cursor="Hand" Text="{Binding UserName}" TextTrimming="CharacterEllipsis" Visibility="Visible" x:Name="Profile_tb_name" FontSize="18" FontWeight="DemiBold" HorizontalAlignment="Center" Foreground="{DynamicResource colorTheme}" VerticalAlignment="Top"></TextBlock>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Border Cursor="Hand" x:Name="btEditUserName" Visibility="Visible" Width="22" Height="22"  VerticalAlignment="Center" HorizontalAlignment="Center"  Background="#00FFFDFD">
+                        <Path Data="{StaticResource iconPencil}"   Fill="{DynamicResource colorText1}" Stretch="Fill" SnapsToDevicePixels="True" />
+                    </Border>
+                    <Border Cursor="Hand" x:Name="btDoneEditUserName" Visibility="Hidden" Width="22" Height="22"  VerticalAlignment="Center" HorizontalAlignment="Center" Background="#00FFFDFD">
+                        <Path Data="M1 7.42857L8.71429 13.8571L19 1" Stretch="Fill" SnapsToDevicePixels="True" Stroke="{DynamicResource colorText1}" StrokeThickness="2" Width="18" Height="12" />
+                    </Border>
+                </Grid>
+            </Grid>
+            <Separator x:Name="LineInEditUserName" Visibility="Hidden" Background="{DynamicResource colorTheme}" Height="2" Width="373" VerticalAlignment="Top"/>
             <StackPanel Orientation="Vertical">
-                <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
-                <StackPanel Orientation="Horizontal" Height="60">
-                    <Path Data="{StaticResource iconShareContact}" StrokeThickness="0.6" Width="22" Margin="28,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorGray1}" Stroke="{DynamicResource ColorGray1}" />
-                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Text="Tên nhân viên"/>
-                    <TextBlock Margin="0" TextAlignment="Right" FontSize="14" Foreground="{DynamicResource colorText1}" Padding="0,19,24,0" Width="362"  Text="{Binding UserCurrent.UserName}"/>
-                </StackPanel>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
                 <StackPanel Orientation="Horizontal" Height="60">
                     <Path Data="{StaticResource iconPhone}"  Width="22" StrokeThickness="0.7" Margin="28,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorGray1}" Stroke="{DynamicResource ColorGray1}" />
                     <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Text="SĐT"/>
-                    <TextBlock Text="{Binding UserCurrent.Email}" Margin="0" TextAlignment="Right" FontSize="14" Foreground="{DynamicResource colorText1}" Padding="0,19,24,0" Width="413"/>
+                    <TextBlock x:Name="NumberPhoneUser" Text="{Binding UserCurrent.Email}" Margin="0" TextAlignment="Right" FontWeight="Medium" FontSize="18" Foreground="{DynamicResource colorTextForTheme}" Padding="0,19,24,0" Width="413"/>
                 </StackPanel>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
                 <StackPanel Cursor="Hand" Orientation="Horizontal" Height="60" Background="#00000000">
@@ -126,94 +84,99 @@
                     <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="Đổi mật khẩu"/>
                 </StackPanel>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
-                <StackPanel Orientation="Horizontal" Margin="0,15,0,0" HorizontalAlignment="Center">
-                    <Border Cursor="Hand" x:Name="ThemeGradienBlue" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,0,0,0" MouseLeftButtonDown="ChangeThemeClick">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                <GradientStop Color="#4C5BD4" Offset="0"/>
-                                <GradientStop Color="#4C5BD4" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Border x:Name="CheckBoxThemeGradienBlue" Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="White">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="GradienBlue">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Path Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
-                        </Border>
-                    </Border>
-                    <Border Cursor="Hand" x:Name="ThemeGreen" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0"  MouseLeftButtonDown="ChangeThemeClick">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                <GradientStop Color="#3BA59B" Offset="0"/>
-                                <GradientStop Color="#6CD495" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Border x:Name="CheckBoxThemeGreen" Background="White" Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Green">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Path  Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
-                        </Border>
-                    </Border>
-                    <Border Cursor="Hand" x:Name="ThemeOrange" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0" MouseLeftButtonDown="ChangeThemeClick">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                <GradientStop Color="#FC9C80" Offset="0"/>
-                                <GradientStop Color="#FC9C80" Offset="0.5"/>
-                                <GradientStop Color="#FCC88C" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Border Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="White">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="ThemeOrange">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Path Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
-                        </Border>
-                    </Border>
-                    <Border Cursor="Hand" x:Name="ThemePinkSingle" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0" MouseLeftButtonDown="ChangeThemeClick">
-                        <Border.Background>
-                            <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                                <GradientStop Color="#B2DD8CA2" Offset="0"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <Border Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="White">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="ThemePinkSingle">
-                                            <Setter Property="Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Border.Style>
-                            <Path Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
-                        </Border>
-                    </Border>
+                <StackPanel x:Name="LogOut" MouseLeftButtonUp="ShowPopupLogout" Cursor="Hand" Orientation="Horizontal" Height="60" Background="#00000000">
+                    <Path Data="{StaticResource iconLogout}"  Width="22" StrokeThickness="2" Margin="28,0,0,0" Stretch="Uniform" Stroke="{DynamicResource ColorGray1}" />
+                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="Đăng xuất"/>
                 </StackPanel>
+                <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
             </StackPanel>
-        </ScrollViewer>
-    </Grid>
+            <StackPanel Orientation="Horizontal" Margin="0,15,0,20" HorizontalAlignment="Center">
+                <Border Cursor="Hand" x:Name="ThemeGradienBlue" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,0,0,0" MouseLeftButtonDown="ChangeThemeClick">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
+                            <GradientStop Color="#4C5BD4" Offset="0"/>
+                            <GradientStop Color="#4C5BD4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border x:Name="CheckBoxThemeGradienBlue" Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="White">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="GradienBlue">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Path Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
+                    </Border>
+                </Border>
+                <Border Cursor="Hand" x:Name="ThemeGreen" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0"  MouseLeftButtonDown="ChangeThemeClick">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
+                            <GradientStop Color="#3BA59B" Offset="0"/>
+                            <GradientStop Color="#6CD495" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border x:Name="CheckBoxThemeGreen" Background="White" Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Green">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Path  Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
+                    </Border>
+                </Border>
+                <Border Cursor="Hand" x:Name="ThemeOrange" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0" MouseLeftButtonDown="ChangeThemeClick">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
+                            <GradientStop Color="#FC9C80" Offset="0"/>
+                            <GradientStop Color="#FC9C80" Offset="0.5"/>
+                            <GradientStop Color="#FCC88C" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="White">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="ThemeOrange">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Path Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
+                    </Border>
+                </Border>
+                <Border Cursor="Hand" x:Name="ThemePinkSingle" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,0,0,0" MouseLeftButtonDown="ChangeThemeClick">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
+                            <GradientStop Color="#B2DD8CA2" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border Width="20" CornerRadius="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="White">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Theme, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="ThemePinkSingle">
+                                        <Setter Property="Visibility" Value="Visible"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Path Data="{StaticResource checkedCircle}" Height="18.267" Stretch="Fill" Width="18.333" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,1,0.667,0.733"/>
+                    </Border>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Border>
 
 </UserControl>

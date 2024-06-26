@@ -219,7 +219,7 @@
                                             </ListView>
                                         </Grid>
                                         <Border Grid.Column="1" Cursor="Hand" Background="Transparent" MouseLeftButtonUp="AddFileGimForProposing">
-                                            <Path  Data="{StaticResource iconAddFile}"  HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{StaticResource ColorGreen}"/>
+                                            <Path  Data="{StaticResource iconAddFile}"  HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{DynamicResource colorTheme}"/>
                                         </Border>
                                     </Grid>
                                 </Border>
@@ -427,11 +427,11 @@
                                                                     </TextBlock>
                                                                 </Grid>
                                                             </Border>
-                                                            <Border Width="25" Height="25" CornerRadius="25" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" Margin="207,-3,173,33" RenderTransformOrigin="1.083,0.439">
+                                                            <Border Width="25" Height="25" CornerRadius="25" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" Margin="20,-5,-10,30" RenderTransformOrigin="1.083,0.439">
                                                                 <Border.Style>
                                                                     <Style TargetType="Border">
                                                                         <Setter Property="Visibility" Value="Visible"/>
-                                                                        <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                                        <Setter Property="Background" Value="{DynamicResource colorTextForTheme}"/>
                                                                         <Style.Triggers>
                                                                             <MultiDataTrigger>
                                                                                 <MultiDataTrigger.Conditions>
@@ -442,6 +442,20 @@
                                                                             <MultiDataTrigger>
                                                                                 <MultiDataTrigger.Conditions>
                                                                                     <Condition Binding="{Binding shiftSelected}" Value="0"/>
+                                                                                   
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </MultiDataTrigger>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    <Condition Binding="{Binding statusClick}" Value="0"/>
+                                                                                </MultiDataTrigger.Conditions>
+                                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                            </MultiDataTrigger>
+                                                                            <MultiDataTrigger>
+                                                                                <MultiDataTrigger.Conditions>
+                                                                                    
+                                                                                    <Condition Binding="{Binding statusPast}" Value="1"/>
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                                             </MultiDataTrigger>

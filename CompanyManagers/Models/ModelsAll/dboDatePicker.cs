@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CompanyManagers.Models.ModelsAll;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -55,7 +56,8 @@ namespace CompanyManagers.Models.ModelsAll
                 OnPropertyChanged("statusPast");
             }
         }
-        public List<Item_ShiftAll> listShiftAll { get; set; }
-        //public List<Item_CaLamViec> caThayDoi { get; set; }
+        public List<Item_ShiftAll> listShiftSelectedAll { get; set; }
+        
+        public List<Item_ShiftAll> shiftChange { get; set; }
     }
 }

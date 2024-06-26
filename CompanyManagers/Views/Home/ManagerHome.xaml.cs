@@ -20,6 +20,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.PeerToPeer;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -167,10 +168,23 @@ namespace CompanyManagers.Views.Home
             get { return _backToBack; }
             set { _backToBack = value; OnPropertyChanged("backToBack");}
         }
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set { userName = value; OnPropertyChanged("UserName"); }
+        }
+        private string numberPhone;
+        public string NumberPhone
+        {
+            get { return numberPhone; }
+            set { numberPhone = value; OnPropertyChanged("NumberPhone"); }
+        }
         public int userNumberConfirm { get; set; }
         public PagePopupGrayColor PagePopupGrayColor { get; set; }
         LoginHome loginHome { get; set; }
         pageCreateNewProposing pageNewProposing { get; set; }
+        ProfileUser pageProfileUser { get; set; }
         public ManagerHome(DataUserLogin userCurrent, LoginHome _loginHome)
         {
             InitializeComponent();
@@ -180,10 +194,14 @@ namespace CompanyManagers.Views.Home
             switch (userCurrent.type)
             {
                 case 1:
+                    UserName = userCurrent.user_info.com_name;
+                    NumberPhone = userCurrent.user_info.check_phone;
                     tb_NameUser.Text = userCurrent.user_info.com_name;
                     tb_IdUser.Text = userCurrent.user_info.com_id.ToString();
                     break;
                 case 2:
+                    UserName = userCurrent.user_info.ep_name;
+                    NumberPhone = userCurrent.user_info.ep_phone;
                     tb_NameUser.Text = userCurrent.user_info.ep_name;
                     tb_IdUser.Text = userCurrent.user_info.ep_id.ToString();
                     break;
@@ -200,6 +218,61 @@ namespace CompanyManagers.Views.Home
                 GetListComfirmAndFollow();
             }
             GetSettingComfirm();
+            SettingApp();
+        }
+
+        private void SettingApp()
+        {
+            if (Properties.Settings.Default.Theme.Equals(""))
+            {
+                Properties.Settings.Default.Theme = "GradienBlue";
+                Properties.Settings.Default.Save();
+                SettingThemeApp("GradienBlue");
+            }
+            else
+            {
+                SettingThemeApp(Properties.Settings.Default.Theme);
+            }
+        }
+
+        private void SettingThemeApp(string theme)
+        {
+            try
+            {
+                ResourceDictionary Olddict1 = new ResourceDictionary();
+                Olddict1.Source = new Uri("..\\Resources\\Colors\\ResourceThemeBlue.xaml", UriKind.Relative);
+
+                ResourceDictionary Olddict2 = new ResourceDictionary();
+                Olddict2.Source = new Uri("..\\Resources\\Colors\\ResourceThemeGreen.xaml", UriKind.Relative);
+
+                ResourceDictionary Olddict3 = new ResourceDictionary();
+                Olddict3.Source = new Uri("..\\Resources\\Colors\\ResourceThemeOrange.xaml", UriKind.Relative);
+
+                ResourceDictionary Olddict4 = new ResourceDictionary();
+                Olddict4.Source = new Uri("..\\Resources\\Colors\\ResourceThemePink.xaml", UriKind.Relative);
+                if (pageProfileUser == null)
+                {
+                    pageProfileUser = new ProfileUser(this, loginHome);
+                }
+                if (theme.Equals("GradienBlue"))
+                {
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(Olddict1);
+                }
+                else if (theme.Equals("Green"))
+                {
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(Olddict2);
+                }
+                else if (theme.Equals("ThemeOrange"))
+                {
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(Olddict3);
+                }
+                else if (theme.Equals("ThemePinkSingle"))
+                {
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(Olddict4);
+                }
+            }
+            catch (Exception)
+            {}
         }
 
         private Thread textUpdateThread;
@@ -664,13 +737,14 @@ namespace CompanyManagers.Views.Home
 
         private void ShowOutPut(object sender, MouseButtonEventArgs e)
         {
-            if (bor_DetailAcount.Visibility == Visibility.Collapsed)
+            try
             {
-                bor_DetailAcount.Visibility = Visibility.Visible;
+                PagePopupGrayColor = new PagePopupGrayColor(this);
+                PagePopupGrayColor.Popup1.NavigationService.Navigate(new ProfileUser(this, loginHome));
+                PagePopup.NavigationService.Navigate(PagePopupGrayColor);
             }
-            else
+            catch (Exception)
             {
-                bor_DetailAcount.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -679,19 +753,6 @@ namespace CompanyManagers.Views.Home
             scrollMain.ScrollToVerticalOffset(scrollMain.VerticalOffset - e.Delta);
         }
 
-        private void ShowPopupLogout(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                PagePopupGrayColor = new PagePopupGrayColor(this);
-                PagePopupGrayColor.Popup1.NavigationService.Navigate(new PageLogout(this, loginHome));
-                PagePopup.NavigationService.Navigate(PagePopupGrayColor);
-                bor_DetailAcount.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception)
-            {
-            } 
-        }
 
         private void BackToBack(object sender, MouseButtonEventArgs e)
         {
@@ -719,18 +780,5 @@ namespace CompanyManagers.Views.Home
             this.DragMove();
         }
 
-        private void ShowProFileUser(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                PagePopupGrayColor = new PagePopupGrayColor(this);
-                PagePopupGrayColor.Popup1.NavigationService.Navigate(new ProfileUser(this));
-                PagePopup.NavigationService.Navigate(PagePopupGrayColor);
-                bor_DetailAcount.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception)
-            {
-            }
-        }
     }
 }
