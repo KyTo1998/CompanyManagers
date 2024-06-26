@@ -9,6 +9,7 @@ using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
 using CompanyManagers.Views.Logout;
 using CompanyManagers.Views.PageStaff.Proposing;
+using CompanyManagers.Views.Popoup.PopupAll;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -716,6 +717,20 @@ namespace CompanyManagers.Views.Home
         private void pageTitle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void ShowProFileUser(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                PagePopupGrayColor = new PagePopupGrayColor(this);
+                PagePopupGrayColor.Popup1.NavigationService.Navigate(new ProfileUser(this));
+                PagePopup.NavigationService.Navigate(PagePopupGrayColor);
+                bor_DetailAcount.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

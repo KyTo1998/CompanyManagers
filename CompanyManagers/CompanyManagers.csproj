@@ -214,6 +214,9 @@
     <Compile Include="Views\PageStaff\Proposing\ProposingHome.xaml.cs">
       <DependentUpon>ProposingHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popoup\PopupAll\ProfileUser.xaml.cs">
+      <DependentUpon>ProfileUser.xaml</DependentUpon>
+    </Compile>
     <Page Include="Common\Popups\PagePopupGrayColor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -235,6 +238,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Common\Tool\SearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ResourceThemeGreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ResourceThemeBlue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ResourceThemeOrange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Colors\ResourceThemePink.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -266,7 +285,7 @@
       <DependentUpon>ManagerHome.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Resources\ResourceColor.xaml">
+    <Page Include="Resources\Colors\ResourceColor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -299,6 +318,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PageStaff\Proposing\ProposingHome.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Popoup\PopupAll\ProfileUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

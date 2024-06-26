@@ -50,7 +50,7 @@
                                     <ToggleButton Name="ToggleButton" Grid.Column="2" Focusable="false" BorderThickness="{TemplateBinding BorderThickness}" Foreground="{TemplateBinding Foreground}"  BorderBrush="{TemplateBinding BorderBrush}" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press" Click="ToggleButton_Click">
                                         <ToggleButton.Template>
                                             <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                <Border BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5">
+                                                <Border BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition />
@@ -76,7 +76,7 @@
                                                                 </TextBlock.Style>
                                                             </TextBlock>
                                                         </Border>
-                                                        <Border Grid.Column="1"  Background="Transparent" BorderBrush="{StaticResource ColorGreen}" BorderThickness="1 0 0 0" CornerRadius="5">
+                                                        <Border Grid.Column="1"  Background="Transparent" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1 0 0 0" CornerRadius="5">
                                                             <Path VerticalAlignment="Center" Stretch="Uniform" Margin="10 0 10 0" HorizontalAlignment="Center" Fill="#474747" Data="{StaticResource iconArrowBotton}" Height="15" Width="15"/>
                                                         </Border>
                                                     </Grid>

@@ -11,7 +11,7 @@
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Height="40" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}" HorizontalAlignment="Left">
+        <Border Grid.Row="0" Height="40" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Left">
             <Grid x:Name="grWidth" MinWidth="400">
                 <DockPanel Margin="5 0 5 0">
                     <Grid>
@@ -30,7 +30,7 @@
                         </TextBlock>
                     </Grid>
                     <Border x:Name="btn_SelectListSafff" CornerRadius="10" Cursor="Hand" Background="Transparent" Width="36" Height="34" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="144,0,0,0">
-                        <Path Data="{DynamicResource iconSearch}" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="{StaticResource ColorGreen}" StrokeThickness="2" RenderTransformOrigin="-0.353,0.596"/>
+                        <Path Data="{DynamicResource iconSearch}" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="{DynamicResource colorTheme}" StrokeThickness="2" RenderTransformOrigin="-0.353,0.596"/>
                     </Border>
                 </DockPanel>
             </Grid>
@@ -73,13 +73,40 @@
                                                             <Style TargetType="Path">
                                                                 <Setter Property="Data" Value="{StaticResource iconProposing}"/>
                                                                 <Setter Property="Fill" Value="{StaticResource colorText1}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=ShowCreateProposing, Path=IsMouseOver}" Value="true">
+                                                                        <Setter Property="Fill" Value="{DynamicResource colorTheme}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
                                                             </Style>
                                                         </Path.Style>
                                                     </Path>
                                                 </Border>
                                                 <StackPanel Grid.Column="1">
-                                                    <TextBlock Text="{Binding name_cate_dx}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
-                                                    <TextBlock Margin="0 5 0 5" Text="{Binding mieuta_maudon}" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
+                                                    <TextBlock Text="{Binding name_cate_dx}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{DynamicResource colorText1}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=ShowCreateProposing, Path=IsMouseOver}" Value="true">
+                                                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <TextBlock Margin="0 5 0 5" Text="{Binding mieuta_maudon}" FontSize="15" FontWeight="Regular">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Foreground" Value="{DynamicResource colorText1}"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=ShowCreateProposing, Path=IsMouseOver}" Value="true">
+                                                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
                                                 </StackPanel>
                                             </Grid>
                                             <Border HorizontalAlignment="Center" CornerRadius="5" BorderBrush="LightBlue" BorderThickness="0 1 0 0" Width="{Binding ElementName=CategoryProposing, Path=ActualWidth}">
@@ -105,10 +132,10 @@
                                                     </Style>
                                                 </Border.Style>
                                                 <DockPanel Margin="0 5 0 10" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Border Height="15" Width="15" Margin="0 3 5 0" BorderThickness="1.5" CornerRadius="15" BorderBrush="{StaticResource colorBlue}">
-                                                        <TextBlock Text="+" FontWeight="Medium" FontSize="16" Foreground="{StaticResource colorBlue}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-7,0,0"/>
+                                                    <Border Height="15" Width="15" Margin="0 3 5 0" BorderThickness="1.5" CornerRadius="15" BorderBrush="{DynamicResource colorTheme}">
+                                                        <TextBlock Text="+" FontWeight="Medium" FontSize="16" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-7,0,0"/>
                                                     </Border>
-                                                    <TextBlock Text="Tạo đề xuất" FontWeight="Medium" FontSize="16" Foreground="{StaticResource colorBlue}"/>
+                                                    <TextBlock Text="Tạo đề xuất" FontWeight="Medium" FontSize="16" Foreground="{DynamicResource colorTextForTheme}"/>
                                                 </DockPanel>
                                             </Border>
                                         </StackPanel>

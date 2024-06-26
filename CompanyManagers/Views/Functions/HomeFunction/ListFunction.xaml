@@ -66,14 +66,14 @@
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true"></Condition>
                                                                     </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding statusClickFunction}" Value="true"></Condition>
                                                                         <Condition Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="true"></Condition>
                                                                     </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
@@ -114,14 +114,14 @@
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true"></Condition>
                                                                     </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding statusClickFunction}" Value="true"></Condition>
                                                                         <Condition Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="true"></Condition>
                                                                     </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
@@ -151,14 +151,14 @@
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding ElementName=FunctionManager, Path=IsMouseOver}" Value="true"></Condition>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                                        <Setter Property="Stroke" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding statusClickFunction}" Value="true"></Condition>
                                                                             <Condition Binding="{Binding ElementName=FunctionManager, Path=IsEnabled}" Value="true"></Condition>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Stroke" Value="{StaticResource ColorBlue}"/>
+                                                                        <Setter Property="Stroke" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
@@ -211,7 +211,7 @@
                     <RowDefinition Height="6*" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0">
-                    <TextBlock x:Name="tb_TitleFunction" Foreground="{StaticResource colorBlue}" FontSize="26" FontWeight="Medium" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="tb_TitleFunction" Foreground="{DynamicResource colorTheme}" FontSize="26" FontWeight="Medium" HorizontalAlignment="Center"/>
                 </Border>
                 <ListView Grid.Row="1" x:Name="lsvListChildFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataListChildFunction, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="10 0 10 10" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListView.ItemsPanel>
@@ -239,7 +239,7 @@
                                                 <ColumnDefinition Width="50" />
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
-                                            <Border Grid.Column="0" CornerRadius="50" Height="50" Background="{StaticResource ColorBlue}">
+                                            <Border Grid.Column="0" CornerRadius="50" Height="50" Background="{DynamicResource colorTheme}">
                                                 <TextBlock Foreground="{StaticResource colorWriter}" Text="{Binding idChildFunction}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontWeight="Medium" FontFamily="Salsa"/>
                                             </Border>
                                             <Border x:Name="bdFunction1" Grid.Column="1" Margin="10 0 0 0">
@@ -249,7 +249,7 @@
                                                             <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding ElementName=ChildFunction, Path=IsMouseOver}" Value="true">
-                                                                    <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </DataTrigger>
                                                             </Style.Triggers>
                                                         </Style>

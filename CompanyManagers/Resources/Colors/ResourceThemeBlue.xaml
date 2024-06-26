@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <LinearGradientBrush x:Key="colorTheme" EndPoint="1,1" StartPoint="0,1">
+        <GradientStop Color="#4C5BD4" Offset="0"/>
+        <GradientStop Color="#4C5BD4" Offset="1"/>
+    </LinearGradientBrush>
+    <Brush x:Key="colorTextForTheme">#4C5BD4</Brush>
+    <Brush x:Key="colorMoveMouseItem">#1900A9E9</Brush>
+    <Brush x:Key="colorTextMessage">#FFFFFF</Brush>
+    <Brush x:Key="colorTextMessageLink">#FFFFFF</Brush>
+    <Brush x:Key="colorSlection">#3300A9E9</Brush>
+    <Brush x:Key="#D0D0D0">#D0D0D0</Brush>
+</ResourceDictionary>

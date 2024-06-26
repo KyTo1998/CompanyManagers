@@ -18,25 +18,35 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" x:Name="tb_TitelTime" VerticalAlignment="Center" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+            <TextBlock Grid.Column="0" x:Name="tb_TitelTime" VerticalAlignment="Center" FontWeight="Medium" FontSize="20" Foreground="{DynamicResource colorTextForTheme}"/>
             <Grid Grid.Column="1" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" MouseLeftButtonUp="ShowListCategoryProposing" Cursor="Hand" Margin="0 0 5 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
+                <Border Grid.Column="0" x:Name="ViewCreateProposing" MouseLeftButtonUp="ShowListCategoryProposing" Cursor="Hand" Margin="0 0 5 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
                     <Border.Style>
                         <Style TargetType="Border">
-                            <Setter Property="Background" Value="{StaticResource colorBackgroundItem1}"/>
+                            <Setter Property="Background" Value="{DynamicResource colorBackgroundItem1}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                    <Setter Property="Background" Value="{StaticResource colorTheme}"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
                     <DockPanel HorizontalAlignment="Center" Margin="5">
-                        <Path Data="{StaticResource iconLoadingTime}" RenderTransformOrigin=".5,.5" Margin="0 0 10 0" Height="25" Width="25" Stretch="Fill" Fill="{StaticResource ColorBlue}">
+                        <Path Data="{StaticResource iconLoadingTime}" RenderTransformOrigin=".5,.5" Margin="0 0 10 0" Height="25" Width="25" Stretch="Fill">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Setter Property="Fill" Value="{StaticResource colorTextForTheme}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ViewCreateProposing, Path=IsMouseOver}" Value="true">
+                                            <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
                             <Path.Triggers>
                                 <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                     <EventTrigger.Actions>
@@ -52,21 +62,43 @@
                                 <RotateTransform Angle="0"/>
                             </Path.RenderTransform>
                         </Path>
-                        <TextBlock Text="Tạo đề xuất" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+                        <TextBlock Text="Tạo đề xuất" FontWeight="Medium" FontSize="20">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=ViewCreateProposing, Path=IsMouseOver}" Value="true">
+                                            <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </DockPanel>
                 </Border>
-                <Border Grid.Column="1" MouseLeftButtonUp="ShowProposingIsMe" Cursor="Hand" Margin="5 0 0 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
+                <Border Grid.Column="1" x:Name="ViewProposingItMe" MouseLeftButtonUp="ShowProposingIsMe" Cursor="Hand" Margin="5 0 0 0" BorderThickness="1" BorderBrush="{StaticResource colorBlue}" CornerRadius="10">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="{StaticResource colorBackgroundItem1}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                    <Setter Property="Background" Value="{StaticResource colorTheme}"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock Text="Đề xuất của tôi" HorizontalAlignment="Center" Margin="5" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+                    <TextBlock Text="Đề xuất của tôi" HorizontalAlignment="Center" Margin="5" FontWeight="Medium" FontSize="20">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ViewProposingItMe, Path=IsMouseOver}" Value="true">
+                                        <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
                 </Border>
             </Grid>
         </Grid>
@@ -82,8 +114,8 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountSumProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageGreen}"/>
-                    <TextBlock Text="Tổng số đề xuất" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageGreen}"/>
+                    <TextBlock x:Name="tb_CountSumProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="Tổng số đề xuất" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
             <Border Grid.Column="1" Cursor="Hand" Margin="10 0 10 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
@@ -91,8 +123,8 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountWaitProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageOrange}"/>
-                    <TextBlock Text="Đề xuất đang chờ duyệt" TextAlignment="Center" TextWrapping="Wrap" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorThemeMesageOrange}"/>
+                    <TextBlock x:Name="tb_CountWaitProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="Đề xuất đang chờ duyệt" TextAlignment="Center" TextWrapping="Wrap" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
             <Border Grid.Column="2" Cursor="Hand" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
@@ -100,8 +132,8 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorTextMessageLink}"/>
-                    <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextMessageLink}"/>
+                    <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
+                    <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
             <Border Grid.Column="3" Cursor="Hand" Margin="10 0 0 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
@@ -109,8 +141,8 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountApprovedProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource ColorPrink}"/>
-                    <TextBlock Text="Đề xuất đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource ColorPrink}"/>
+                    <TextBlock x:Name="tb_CountApprovedProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
+                    <TextBlock Text="Đề xuất đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
         </Grid>
@@ -119,7 +151,7 @@
                 <tool:PopupLoading></tool:PopupLoading>
             </Grid>
             <StackPanel>
-                <TextBlock VerticalAlignment="Center" Text="Đề xuất gần đây" FontWeight="Medium" FontSize="20" Foreground="{StaticResource colorBlue}"/>
+                <TextBlock VerticalAlignment="Center" Text="Đề xuất gần đây" FontWeight="Medium" FontSize="20" Foreground="{DynamicResource colorTextForTheme}"/>
                 <ListView x:Name="lsvProposingNow" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listProposingHome, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -149,7 +181,7 @@
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding Type_duyet}" Value="5">
                                                                         <Setter Property="Data" Value="{StaticResource iconProposingYes}"/>
-                                                                        <Setter Property="Fill" Value="{StaticResource ColorGreen}"/>
+                                                                        <Setter Property="Fill" Value="{DynamicResource colorTheme}"/>
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>

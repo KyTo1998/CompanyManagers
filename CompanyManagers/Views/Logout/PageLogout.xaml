@@ -22,7 +22,7 @@
                             <Setter Property="Background" Value="{StaticResource colorWriter}"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                    <Setter Property="Background" Value="{StaticResource colorTheme}"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -43,11 +43,11 @@
                 <Border Grid.Column="1" x:Name="btnYes" Cursor="Hand" MinWidth="125" Height="40" BorderBrush="{StaticResource colorBlue}" CornerRadius="15" HorizontalAlignment="Center" VerticalAlignment="Center" MouseLeftButtonDown="ConfirmLogout">
                     <Border.Style>
                         <Style TargetType="Border">
-                            <Setter Property="Background" Value="{StaticResource colorBlue}"/>
+                            <Setter Property="Background" Value="{StaticResource colorTheme}"/>
                             <Setter Property="BorderThickness" Value="0"/>
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                    <Setter Property="Background" Value="{StaticResource colorTheme}"/>
                                     <Setter Property="BorderThickness" Value="1"/>
                                 </Trigger>
                             </Style.Triggers>

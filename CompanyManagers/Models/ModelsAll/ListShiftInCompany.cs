@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,9 +17,21 @@ namespace CompanyManagers.Models.ModelsAll
         public List<Item_ShiftAll> items { get; set; }
     }
 
-    public class Item_ShiftAll
+    public class Item_ShiftAll : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public string _id { get; set; }
+
+        private string _isSeleced = "False";
+        public string isSeleced
+        {
+            get { return _isSeleced; }
+            set { _isSeleced = value; OnPropertyChanged("isSeleced"); }
+        }
         public int shift_id { get; set; }
         public int parentId { get; set; }
         public int com_id { get; set; }

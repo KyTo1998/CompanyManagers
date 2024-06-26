@@ -20,7 +20,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="85"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" x:Name="TitelProposing" MouseLeftButtonUp="ClosePopupCreateProposing" CornerRadius="10 10 0 0" Background="{StaticResource colorThemeGreen}">
+                    <Border Grid.Row="0" x:Name="TitelProposing" MouseLeftButtonUp="ClosePopupCreateProposing" CornerRadius="10 10 0 0" Background="{DynamicResource colorTheme}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -52,7 +52,7 @@
                                                 <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ElementName=NameProposing, Path=IsMouseOver}" Value="true">
-                                                        <Setter Property="Fill" Value="{StaticResource ColorBlue}"/>
+                                                        <Setter Property="Fill" Value="{DynamicResource colorWriter}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -64,7 +64,7 @@
                                                 <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ElementName=NameProposing, Path=IsMouseOver}" Value="true">
-                                                        <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -109,7 +109,7 @@
                                 <Run Text="Tên đề xuất" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <Border MinHeight="40" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                            <Border MinHeight="40" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                 <Grid>
                                     <TextBox x:Name="tb_InputNameProposing" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
                                     <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="Nhập tên đề xuất" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
@@ -131,7 +131,7 @@
                             <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Họ và tên" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
-                            <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                            <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                 <TextBlock x:Name="tb_UserNameCreate" Text="Tô Ngọc Ký" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="Wrap" Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             </Border>
                         </StackPanel>
@@ -139,7 +139,7 @@
                             <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Loại đề xuất" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
-                            <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                            <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                 <TextBlock x:Name="tb_CategoryProposingCreate" Text="Đơn xin nghỉ phép" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="Wrap" Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             </Border>
                         </StackPanel>
@@ -154,7 +154,7 @@
                                 <Run Text="Kiểu kiểm duyệt" Foreground="{StaticResource colorText1}"/>
                                  <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <tool:ComboboxSelected x:Name="SelectTypeComfirm" Cursor="Hand" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                            <tool:ComboboxSelected x:Name="SelectTypeComfirm" Cursor="Hand" BorderBrush="{DynamicResource colorTheme}" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="3" Margin="10">
@@ -184,7 +184,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="{x:Type CheckBox}">
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource ColorGreen}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
                                                                         <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
                                                                     </Border>
                                                                     <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
@@ -196,7 +196,7 @@
                                                                     </Trigger>
                                                                     <Trigger Property="IsChecked" Value="True">
                                                                         <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
-                                                                        <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorThemeGreen}"></Setter>
+                                                                        <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorTheme}"></Setter>
                                                                     </Trigger>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -224,7 +224,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="{x:Type CheckBox}">
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource ColorGreen}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
                                                                         <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
                                                                     </Border>
                                                                     <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
@@ -236,7 +236,7 @@
                                                                     </Trigger>
                                                                     <Trigger Property="IsChecked" Value="True">
                                                                         <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
-                                                                        <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorThemeGreen}"></Setter>
+                                                                        <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorTheme}"></Setter>
                                                                     </Trigger>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -268,14 +268,14 @@
                                         <Run Text="Ngày bắt đầu nghỉ" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:DatePicker x:Name="StartDateOnLeave" SelectedDateChange="SelectedStartDateOnLeave" BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5"/>
+                                        <tool:DatePicker x:Name="StartDateOnLeave" SelectedDateChange="SelectedStartDateOnLeave" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="10 0 10 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                         <Run Text="Ngày kết thúc nghỉ" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:DatePicker x:Name="EndDateOnLeave" SelectedDateChange="SelectedEndDateOnLeave" IsEnabled="False" BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5"/>
+                                        <tool:DatePicker x:Name="EndDateOnLeave" SelectedDateChange="SelectedEndDateOnLeave" IsEnabled="False" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="10 0 10 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
@@ -342,7 +342,7 @@
                                 <Run Text="Lý do" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <Border CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                            <Border CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                 <Grid>
                                     <TextBox x:Name="tb_InputReasonCreateProposing" Height="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
                                     <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập lý do tạo đê xuất"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -371,7 +371,7 @@
                                 <Run Text="Người xét duyệt" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <Border BorderThickness="1" MinHeight="40" BorderBrush="{StaticResource ColorGreen}" CornerRadius="5">
+                            <Border BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5">
                                 <Grid>
                                     <Border x:Name="btnDeleteUserConfirmAll" MouseLeftButtonDown="DeleteUserConfirmAll" Cursor="Hand" Visibility="Collapsed" CornerRadius="20" Width="15" Height="15" Margin="455,1,2,50" >
                                         <Border.Style>
@@ -401,7 +401,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ListViewItem">
                                                                 <WrapPanel Margin="0 0 10 5" Orientation="Horizontal" Background="{DynamicResource colorMoveMouseItem}">
-                                                                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                                                                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                                                         <DockPanel Margin="2">
                                                                             <TextBlock Text="{Binding userName}" FontSize="16" Foreground="{DynamicResource colorText1}" VerticalAlignment="Center"/>
                                                                             <Border x:Name="btnDeleteUserConfirm" MouseLeftButtonDown="DeleteUserConfirm" Cursor="Hand" Margin="5 -15 -10 0" CornerRadius="20" Width="15" Height="15" >
@@ -438,7 +438,7 @@
                                 <Run Text="Người theo dõi" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="1" CornerRadius="5" BorderBrush="{StaticResource ColorGreen}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="Chọn người theo dõi" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
+                            <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="1" CornerRadius="5" BorderBrush="{DynamicResource colorTheme}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="Chọn người theo dõi" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="6" Margin="10">
@@ -450,7 +450,7 @@
                             <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Tài liệu đính kèm" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
-                            <Border BorderThickness="1" Cursor="Hand" Background="Transparent" BorderBrush="{StaticResource ColorGreen}" MinHeight="40" CornerRadius="5">
+                            <Border BorderThickness="1" Cursor="Hand" Background="Transparent" BorderBrush="{DynamicResource colorTheme}" MinHeight="40" CornerRadius="5">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -470,7 +470,7 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ListViewItem">
                                                                 <WrapPanel Margin="0 0 10 5" Orientation="Horizontal" Background="{DynamicResource colorMoveMouseItem}">
-                                                                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                                                                    <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                                                         <DockPanel Margin="2">
                                                                             <TextBlock Text="{Binding Path = NameDisplay}" FontSize="16" Foreground="{DynamicResource colorText1}" VerticalAlignment="Center"/>
                                                                             <Border x:Name="btnDeleteFileGim" MouseLeftButtonDown="DeleteFileGim" Cursor="Hand" Margin="5 -15 -10 0" CornerRadius="20" Width="15" Height="15" >
@@ -499,7 +499,7 @@
                                         </ListView>
                                     </Grid>
                                     <Border Grid.Column="1" Cursor="Hand" Background="Transparent" MouseLeftButtonUp="AddFileGimForProposing">
-                                        <Path  Data="{StaticResource iconAddFile}"  HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{StaticResource ColorGreen}"/>
+                                        <Path  Data="{StaticResource iconAddFile}"  HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{DynamicResource colorTheme}"/>
                                     </Border>
                                 </Grid>
                             </Border>
@@ -513,13 +513,13 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" x:Name="CancelProposing" MouseLeftButtonUp="ClickCancel" Margin="10 10 20 10" Height="40" MinWidth="200" HorizontalAlignment="Right" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
+                                <Border Grid.Column="0" x:Name="CancelProposing" MouseLeftButtonUp="ClickCancel" Margin="10 10 20 10" Height="40" MinWidth="200" HorizontalAlignment="Right" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                     <Border.Style>
                                         <Style TargetType="Border">
                                             <Setter Property="Background" Value="Transparent"/>
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
+                                                    <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>
@@ -527,7 +527,7 @@
                                     <TextBlock Text="Hủy bỏ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
-                                                <Setter Property="Foreground" Value="{StaticResource ColorGreen}"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ElementName=CancelProposing, Path=IsMouseOver}" Value="true">
                                                         <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
@@ -540,10 +540,10 @@
                                 <Border Grid.Column="1" x:Name="CreateProposing" MouseLeftButtonUp="ClickCreateProposing"  Height="40" MinWidth="200" HorizontalAlignment="Left" Margin="20 10 10 10" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{StaticResource ColorGreen}">
                                     <Border.Style>
                                         <Style TargetType="Border">
-                                            <Setter Property="Background" Value="{StaticResource ColorGreen}"/>
+                                            <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{StaticResource colorThemeMesageGreen}"/>
+                                                    <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>

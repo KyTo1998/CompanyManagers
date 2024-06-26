@@ -12,16 +12,11 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" x:Name="TitleLoginHome"  Height="40" Background="{StaticResource colorMoveMouseItem}" MouseLeftButtonDown="Grid_MouseDown">
-                <Path VerticalAlignment="Center" Data="{StaticResource iconManager}" Stretch="Uniform" Height="22"  Margin="10,0,0,0" HorizontalAlignment="Left" Width="25">
-                    <Path.Fill>
-                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,1">
-                            <GradientStop Color="#4250C2"/>
-                            <GradientStop Color="#00A1FF" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Path.Fill>
-                </Path>
-                <TextBlock VerticalAlignment="Center" Text="Company Managers" Margin="38,0,0,10" Foreground="#FF4C5BD4" Padding="0" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" LineHeight="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                <TextBlock VerticalAlignment="Center" Text="Timviec365" HorizontalAlignment="Left" Margin="38,14,0,0" FontSize="10" Foreground="#FF4C5BD4"/>
+                <Path VerticalAlignment="Center" Data="{StaticResource iconManager}" Stretch="Uniform" Height="22"  Margin="10,0,0,0" HorizontalAlignment="Left" Width="25" Fill="{DynamicResource colorTheme}"/>
+
+
+                <TextBlock VerticalAlignment="Center" Text="Company Managers" Margin="38,0,0,10" Foreground="{DynamicResource colorTextForTheme}" Padding="0" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" LineHeight="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                <TextBlock VerticalAlignment="Center" Text="Timviec365" HorizontalAlignment="Left" Margin="38,14,0,0" FontSize="10" Foreground="{DynamicResource colorTextForTheme}"/>
                 <Grid x:Name="Minimimize" Cursor="Hand"  Margin="0,14,94,0" HorizontalAlignment="Right" Width="15" Height="15" VerticalAlignment="Top" MouseLeftButtonDown="Minimimize_MouseLeftButtonDown" Background="Transparent" >
                     <Line Cursor="Hand" X1="0" Y1="7" X2="15" Y2="7"  StrokeThickness="1.2" Stroke="Black" Fill="#00A52323" />
                 </Grid>
@@ -64,7 +59,7 @@
                                 <Setter Property="Background" Value="#00000000"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource colorBlue}"/>
+                                        <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -78,7 +73,7 @@
                             <Path Grid.Column="0" Data="{StaticResource iconCompany}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Path.Style>
                                     <Style TargetType="Path">
-                                        <Setter Property="Fill" Value="{DynamicResource colorBlue}"/>
+                                        <Setter Property="Fill" Value="{DynamicResource colorTheme}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=btnCompany, Path=IsMouseOver}" Value="true">
                                                 <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
@@ -90,7 +85,7 @@
                             <TextBlock Grid.Column="1" Text="CÔNG TY" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="{DynamicResource colorBlue}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=btnCompany, Path=IsMouseOver}" Value="true">
                                                 <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
@@ -102,7 +97,7 @@
                             <Path Grid.Column="2" Data="{StaticResource iconRightArrowz}" VerticalAlignment="Center">
                                 <Path.Style>
                                     <Style TargetType="Path">
-                                        <Setter Property="Fill" Value="{DynamicResource colorBlue}"/>
+                                        <Setter Property="Fill" Value="{DynamicResource colorTheme}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=btnCompany,Path=IsMouseOver}" Value="true">
                                                 <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
@@ -133,7 +128,7 @@
                             <Path Grid.Column="0" Data="{StaticResource iconEmployee}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Path.Style>
                                     <Style TargetType="Path">
-                                        <Setter Property="Fill" Value="{DynamicResource colorBlue}"/>
+                                        <Setter Property="Fill" Value="{DynamicResource colorTheme}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=btnEmployee, Path=IsMouseOver}" Value="true">
                                                 <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
@@ -145,7 +140,7 @@
                             <TextBlock Grid.Column="1" Text="NHÂN VIÊN" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="{DynamicResource colorBlue}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=btnEmployee, Path=IsMouseOver}" Value="true">
                                                 <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
@@ -157,7 +152,7 @@
                             <Path Grid.Column="2" Data="{StaticResource iconRightArrowz}" VerticalAlignment="Center">
                                 <Path.Style>
                                     <Style TargetType="Path">
-                                        <Setter Property="Fill" Value="{DynamicResource #4C5BD4}"/>
+                                        <Setter Property="Fill" Value="{DynamicResource colorTheme}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=btnEmployee,Path=IsMouseOver}" Value="true">
                                                 <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
@@ -180,7 +175,7 @@
                                 <Path Grid.Column="0" Margin="-100 0 0 0" Data="{StaticResource iconReturn}" Cursor="Hand" Stretch="Fill" Stroke="#FF4C5BD4" StrokeThickness="3" Height="25" Width="13" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#00F9F9F9" MouseLeftButtonDown="returnSelectLogin"/>
                                 <StackPanel Grid.Column="1" Margin="-20 0 0 0">
                                     <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{StaticResource iconManager}" Fill="{StaticResource colorBlue}"/>
-                                    <TextBlock x:Name="tb_TitelLogin"  Foreground="{StaticResource colorBlue}" FontSize="18" FontWeight="SemiBold"/>
+                                    <TextBlock x:Name="tb_TitelLogin"  Foreground="{DynamicResource colorTextForTheme}" FontSize="18" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

@@ -14,7 +14,7 @@ namespace CompanyManagers.Controllers
         public const string Name_Api_Login = "qlc/employee/login";
         #endregion
         #region Proposing
-        public const string Url_Api_Proposing = "http://210.245.108.202:3005/api/";
+        public const string Url_Api_Proposing = "https://api.timviec365.vn/api/" /*"http://210.245.108.202:3005/api/"*/;
         public const string Name_Api_ShowHomeProposing = "vanthu/catedx/showHome";
         public const string Name_Api_CategoryProposing = "vanthu/catedx/searchcate";
         public const string Name_Api_ProposingSendToAll = "vanthu/DeXuat/user_send_deXuat_All";

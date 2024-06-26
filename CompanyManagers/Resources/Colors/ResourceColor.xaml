@@ -1,38 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
             
-    <LinearGradientBrush x:Key="colorThemeGreen" EndPoint="1,1" StartPoint="0,1">
-        <GradientStop Color="#3BA59B" Offset="0"/>
-        <GradientStop Color="#6CD495" Offset="1"/>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="colorTitlePopupThemeGreen" EndPoint="1,1" StartPoint="0,1">
-        <GradientStop Color="#3BA59B" Offset="0"/>
-        <GradientStop Color="#6CD495" Offset="1"/>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="colorThemeMesageGreen" EndPoint="1,1" StartPoint="0,1">
-        <GradientStop Color="#3BA59B" Offset="0"/>
-        <GradientStop Color="#6CD495" Offset="1"/>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="colorThemeOrange" EndPoint="1,1" StartPoint="0,1">
-        <GradientStop Color="#FC9C80" Offset="0"/>
-        <GradientStop Color="#FC9C80" Offset="0.5"/>
-        <GradientStop Color="#FCC88C" Offset="1"/>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="colorTitlePopupThemeOrange" EndPoint="1,1" StartPoint="0,1">
-        <GradientStop Color="#FC9C80" Offset="0"/>
-        <GradientStop Color="#FC9C80" Offset="0.5"/>
-        <GradientStop Color="#FCC88C" Offset="1"/>
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="colorThemeMesageOrange" EndPoint="1,1" StartPoint="0,1">
-        <GradientStop Color="#FC9C80" Offset="0"/>
-        <GradientStop Color="#FC9C80" Offset="0.5"/>
-        <GradientStop Color="#FCC88C" Offset="1"/>
-    </LinearGradientBrush>
+    
     <Brush x:Key="colorMoveMouseItem">#196CD495</Brush>
     <Brush x:Key="colorTextMessage">#FFFFFF</Brush>
     <Brush x:Key="colorTextMessageLink">#FF0562FF</Brush>
     <Brush x:Key="colorSlection">#4C6CD495</Brush>
-
     <Brush x:Key="colorWriter">#FFFFFF</Brush>
     <Brush x:Key="colorVachNgan">#EEF0F1</Brush>
     <Brush x:Key="ColorTextBlue">#FF4C5BD4</Brush>
