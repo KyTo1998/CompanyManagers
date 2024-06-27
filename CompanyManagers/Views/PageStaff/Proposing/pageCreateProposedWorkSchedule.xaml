@@ -164,7 +164,7 @@
                                 <Run Text="Chọn lịch làm việc" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
-                                <tool:ComboboxSelected x:Name="SelectCalendarWork" Cursor="Hand" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn lịch làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                                <tool:ComboboxSelected x:Name="SelectCalendarWork" Cursor="Hand" SelectionChangedSelected="ClickSelectCalendarWork" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn lịch làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
                             </StackPanel>
                             <StackPanel x:Name="stp_FileGim" Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
@@ -219,7 +219,7 @@
                                             </ListView>
                                         </Grid>
                                         <Border Grid.Column="1" Cursor="Hand" Background="Transparent" MouseLeftButtonUp="AddFileGimForProposing">
-                                            <Path  Data="{StaticResource iconAddFile}"  HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{DynamicResource colorTheme}"/>
+                                            <Path  Data="{StaticResource iconAddFile}"  HorizontalAlignment="Right" Margin="0 0 10 0" Width="25" Height="25" Stretch="Fill" Fill="{DynamicResource colorText1}"/>
                                         </Border>
                                     </Grid>
                                 </Border>
@@ -348,7 +348,7 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="ListViewItem">
                                                         <Grid Width="64.286" Height="50" Margin="0 10 0 0">
-                                                            <Border Width="40" Height="40" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center"  CornerRadius="50">
+                                                            <Border Width="40" Height="40" MouseLeftButtonDown="SelectShiftForDay" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center"  CornerRadius="50">
                                                                 <Border.Style>
                                                                     <Style TargetType="Border">
                                                                         <Setter Property="BorderThickness" Value="0"/>
@@ -472,10 +472,99 @@
                                     </ListView.ItemContainerStyle>
                                 </ListView>
                             </Border>
+                            <Border x:Name="borSelectedShiftForDay" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5" Margin="0 2 0 0" MouseEnter="SelectedShiftHover" MouseLeave="SelectedShiftOutHover">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding statutSelectDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <ScrollViewer x:Name="scrollSelectedShiftForDay" MaxHeight="200" Margin="10">
+                                    <ItemsControl  x:Name="lsvShiftForDay" BorderThickness="0" ItemsSource="{Binding listShiftAllSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActualWidth}" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <DockPanel Margin="0 0 0 10" MouseLeftButtonDown="SelectedShiftForDayCheckbox" Cursor="Hand" Background="Transparent">
+                                                    <CheckBox IsHitTestVisible="False"  VerticalAlignment="Center" x:Name="cbSelectedShiftForDay" >
+                                                        <CheckBox.Style>
+                                                            <Style TargetType="CheckBox">
+                                                                <Setter Property="Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="{x:Type CheckBox}">
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                                    <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
+                                                                                </Border>
+                                                                                <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
+                                                                            </StackPanel>
+                                                                            <ControlTemplate.Triggers>
+                                                                                <Trigger Property="IsChecked" Value="False">
+                                                                                    <Setter TargetName="checkboxPath" Property="Visibility" Value="Hidden"></Setter>
+                                                                                    <Setter TargetName="checkboxBorder" Property="Background" Value="Transparent"></Setter>
+                                                                                </Trigger>
+                                                                                <Trigger Property="IsChecked" Value="True">
+                                                                                    <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
+                                                                                    <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorTheme}"></Setter>
+                                                                                </Trigger>
+                                                                                <MultiTrigger>
+                                                                                    <MultiTrigger.Conditions>
+                                                                                        <Condition Property="IsMouseOver" Value="True"/>
+                                                                                        <Condition Property="IsChecked" Value="False"/>
+                                                                                    </MultiTrigger.Conditions>
+                                                                                </MultiTrigger>
+                                                                            </ControlTemplate.Triggers>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="IsChecked" Value="False"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding isSelecedForDay}" Value="True">
+                                                                        <Setter Property="IsChecked" Value="True"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </CheckBox.Style>
+                                                    </CheckBox>
+                                                    <TextBlock FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorText1}" Text="{Binding shift_name}" />
+                                                </DockPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
                         </StackPanel>
                     </Border>
                 </WrapPanel>
             </Border>
         </ScrollViewer>
+        <Border x:Name="bor_ShowNotication" Height="{Binding ElementName=stpNotication, Path=ActualHeight}" Background="WhiteSmoke" Margin="0 100 0 0" VerticalAlignment="Top" HorizontalAlignment="Center" CornerRadius="10">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
+            </Border.Effect>
+            <StackPanel x:Name="stpNotication" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <TextBlock x:Name="tb_Notication" Text="Bạn đã chọn tệp có kích thước quá lớn, giới hạn là 25MB" Margin="0 10 0 10" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource colorRemoveRed}" FontWeight="Regular"/>
+                <Border CornerRadius="10" MaxWidth="150" MouseLeftButtonUp="CLickCloseNotication" Cursor="Hand" Background="{StaticResource colorBlue}" Margin="10">
+                    <TextBlock Text="OK" Foreground="{StaticResource colorTextMessage}" FontSize="16" FontWeight="Medium" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+                </Border>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

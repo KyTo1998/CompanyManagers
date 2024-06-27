@@ -32,6 +32,13 @@ namespace CompanyManagers.Models.ModelsAll
             get { return _isSeleced; }
             set { _isSeleced = value; OnPropertyChanged("isSeleced"); }
         }
+
+        private string _isSelecedForDay = "False";
+        public string isSelecedForDay
+        {
+            get { return _isSelecedForDay; }
+            set { _isSelecedForDay = value; OnPropertyChanged("isSelecedForDay"); }
+        }
         public int shift_id { get; set; }
         public int parentId { get; set; }
         public int com_id { get; set; }
