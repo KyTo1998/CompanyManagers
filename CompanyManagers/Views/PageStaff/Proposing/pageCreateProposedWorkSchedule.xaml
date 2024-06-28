@@ -124,7 +124,7 @@
                                                     </Style>
                                                 </ListView.ItemContainerStyle>
                                             </ListView>
-                                            <tool:SearchBar x:Name="SelectUserComfirm" DisplayMemberPath="userName" Margin="0 5 0 0" Cursor="Hand" BorderThickness="0" CornerRadius="5"  SelectionChanged="SelectionChangeUserComfirm" PlaceHolder="Chọn người duyệt" PlaceHolderForground="#ACACAC" FontSize="16"/>
+                                            <tool:SearchBar x:Name="SelectUserComfirm" DisplayMemberPath="userName" Margin="0 5 0 0" Cursor="Hand" BorderThickness="0" CornerRadius="5"  SelectionChanged="SelectionChangeUserComfirm" PlaceHolderForground="#ACACAC" FontSize="16"/>
                                         </StackPanel>
                                     </Grid>
                                 </Border>
@@ -338,7 +338,6 @@
                                 <ListView x:Name="lsvLoadCalendarPicker" ItemsSource="{Binding listLichProposing,RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                                     <ListView.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <!--Width="{Binding RelativeSource={RelativeSource AncestorType=ListView, Mode=FindAncestor}, Path=ActualWidth}"-->
                                             <WrapPanel Width="{Binding ElementName=HeaderCalendarWork, Path=ActualWidth}"/>
                                         </ItemsPanelTemplate>
                                     </ListView.ItemsPanel>
@@ -492,8 +491,8 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <DockPanel Margin="0 0 0 10" MouseLeftButtonDown="SelectedShiftForDayCheckbox" Cursor="Hand" Background="Transparent">
-                                                    <CheckBox IsHitTestVisible="False"  VerticalAlignment="Center" x:Name="cbSelectedShiftForDay" >
+                                                <DockPanel Margin="0 0 0 10" Cursor="Hand" MouseLeftButtonDown="SelectedShiftForDayCheckbox" Background="Transparent">
+                                                    <CheckBox IsHitTestVisible="False"  VerticalAlignment="Center" x:Name="cbSelectedShiftForDay" Checked="SelectShiftPlan">
                                                         <CheckBox.Style>
                                                             <Style TargetType="CheckBox">
                                                                 <Setter Property="Template">

@@ -115,6 +115,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             listShiftAllSelected = _managerHome.dataListShiftAll.ToList();
             tb_InputNameProposing.Text = $"Lịch làm việc cá nhân của {managerHome.UserName}";
             tb_InputReasonCreateProposing.Text = "Tạo lịch làm việc theo tuần";
+            SelectUserComfirm.PlaceHolder = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
         }
         
         public void LoadDataCalendarWork(int monthSelected, int yearSelected, typeConfirm selectedStartToEnd, List<Item_ShiftAll> _listShift)
@@ -306,19 +307,30 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             return pastDays;
         }
-        private bool ValidateCreatePropose()
+        private void ValidateCreatePropose(string type)
         {
-            if (tb_InputNameProposing.Text == "")
+            if (dataListUserComfrim == null) { dataListUserComfrim = new List<ListUsersDuyet>(); }
+            if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateOnLeave")
+            {
+                statusValidate = false;
+                tb_Notication.Text = "Bạn chưa chọn lịch làm việc";
+            }
+            else if (tb_InputNameProposing.Text == "")
             {
                 statusValidate = false;
                 tb_Notication.Text = "Bạn chưa nhập tên đề xuất";
+            }
+            else if (tb_InputReasonCreateProposing.Text == "")
+            {
+                statusValidate = false;
+                tb_Notication.Text = "Bạn chưa nhập lý do tạo đề xuất";
             }
             else if (SelectTypeComfirm.SelectedIndexSelected < 0)
             {
                 statusValidate = false;
                 tb_Notication.Text = "Bạn chưa chọn kiểu duyệt";
             }
-            else if (dataListUserComfrim == null)
+            else if (dataListUserComfrim.Count == 0)
             {
                 statusValidate = false;
                 tb_Notication.Text = $"Bạn chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
@@ -328,21 +340,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 statusValidate = false;
                 tb_Notication.Text = "Bạn chưa chọn người theo dõi";
             }
-            else if (tb_InputReasonCreateProposing.Text == "")
-            {
-                statusValidate = false;
-                tb_Notication.Text = "Bạn chưa nhập lý do tạo đề xuất";
-            }
-            else if (SelectCalendarWork.SelectedIndexSelected < 0)
-            {
-                statusValidate = false;
-                tb_Notication.Text = "Bạn chưa chọn lịch làm việc";
-            }
             else
             {
                 statusValidate = true;
             }
-            return statusValidate;
         }
         private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
         {
@@ -352,7 +353,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         private void ClickSelectCalendarWork(object sender, SelectionChangedEventArgs e)
         {
             selectedStartToEnd = SelectCalendarWork.SelectedItemSelected as typeConfirm;
-            if (StartDateOnLeave.SelectedDate != null)
+            ValidateCreatePropose("ClickSelectCalendarWork");
+            if (statusValidate == true && StartDateOnLeave.SelectedDate != null)
             {
                 LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
             }
@@ -388,7 +390,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         }
         private void SelectedStartDateOnLeave(object sender, SelectionChangedEventArgs e)
         {
-            if (ValidateCreatePropose() == true)
+            ValidateCreatePropose("SelectedStartDateOnLeave");
+            if (statusValidate == true)
             {
                 MonthCalendar.Text = StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy");
                 LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
@@ -404,6 +407,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
                 SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
                 dataListUserComfrim = dataListUserComfrim.ToList();
+                if (dataListUserComfrim.Count == 0)
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
+                }
             }
         }
 
@@ -446,6 +454,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
                 }
+                if (dataListUserComfrim.Count == 0)
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
+                }
                 dataListUserComfrim = dataListUserComfrim.ToList();
             }
         }
@@ -458,10 +471,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
 
-        private void SelectShiftPlan(object sender, RoutedEventArgs e)
-        {
-           
-        }
+       
 
         private void Border_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -495,7 +505,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             Item_ShiftAll dataShiftSelected = (Item_ShiftAll)(sender as DockPanel).DataContext;
             if (dataShiftSelected != null)
             {
-                
                 dataShiftSelected.isSeleced = dataShiftSelected.isSeleced == "True" ? "False" : "True";
                 if (dataShiftSelected.isSeleced == "True")
                 {
@@ -589,7 +598,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 listLichProposing = listLichProposing.ToList();
             }
         }
+        private void SelectShiftPlan(object sender, RoutedEventArgs e)
+        {
 
+        }
         private void CLickCloseNotication(object sender, MouseButtonEventArgs e)
         {
             statusValidate = true;
