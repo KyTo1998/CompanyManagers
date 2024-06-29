@@ -9,7 +9,7 @@
 
     <Border x:Name="popupLoading" CornerRadius="10" Background="Transparent">
         <Grid>
-            <Path Data="{StaticResource Loadding}" RenderTransformOrigin=".5,.5" Stretch="Fill" Width="50" Fill="{DynamicResource colorThemeGreen}" Height="50" VerticalAlignment="Center">
+            <Path Data="{StaticResource Loadding}" RenderTransformOrigin=".5,.5" Stretch="Fill" Width="50" Fill="{DynamicResource colorTheme}" Height="50" VerticalAlignment="Center">
                 <Path.Triggers>
                     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                         <EventTrigger.Actions>

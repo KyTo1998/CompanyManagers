@@ -441,7 +441,6 @@
                                                                             <MultiDataTrigger>
                                                                                 <MultiDataTrigger.Conditions>
                                                                                     <Condition Binding="{Binding shiftSelected}" Value="0"/>
-                                                                                   
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                                             </MultiDataTrigger>
@@ -453,7 +452,6 @@
                                                                             </MultiDataTrigger>
                                                                             <MultiDataTrigger>
                                                                                 <MultiDataTrigger.Conditions>
-                                                                                    
                                                                                     <Condition Binding="{Binding statusPast}" Value="1"/>
                                                                                 </MultiDataTrigger.Conditions>
                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -471,7 +469,22 @@
                                     </ListView.ItemContainerStyle>
                                 </ListView>
                             </Border>
-                            <Border x:Name="borSelectedShiftForDay" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5" Margin="0 2 0 0" MouseEnter="SelectedShiftHover" MouseLeave="SelectedShiftOutHover">
+                            <TextBlock FontSize="18" FontWeight="Regular" >
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding statutSelectDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                                <Run Text="Chọn ca làm việc ngày: " Foreground="{DynamicResource colorText1}"/>
+                                <Run Text="{Binding dateSelectedForDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                <Run Text="của bạn" Foreground="{DynamicResource colorText1}"/>
+                            </TextBlock>
+                            <Border x:Name="borSelectedShiftForDay" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5" Margin="0 15 0 20" MouseEnter="SelectedShiftHover" MouseLeave="SelectedShiftOutHover">
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -492,7 +505,7 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <DockPanel Margin="0 0 0 10" Cursor="Hand" MouseLeftButtonDown="SelectedShiftForDayCheckbox" Background="Transparent">
-                                                    <CheckBox IsHitTestVisible="False"  VerticalAlignment="Center" x:Name="cbSelectedShiftForDay" Checked="SelectShiftPlan">
+                                                    <CheckBox IsHitTestVisible="False"  VerticalAlignment="Center" x:Name="cbSelectedShiftForDay">
                                                         <CheckBox.Style>
                                                             <Style TargetType="CheckBox">
                                                                 <Setter Property="Template">

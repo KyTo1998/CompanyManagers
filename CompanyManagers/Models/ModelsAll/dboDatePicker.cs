@@ -18,9 +18,8 @@ namespace CompanyManagers.Models.ModelsAll
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public int id;
+        public int id { get; set; }
         public int DayInCalendar { get; set; }
-        public string ngayString { get; set; } = "";
 
         public int _shiftSelected;
         public int shiftSelected
@@ -56,8 +55,11 @@ namespace CompanyManagers.Models.ModelsAll
                 OnPropertyChanged("statusPast");
             }
         }
-        public List<Item_ShiftAll> listShiftSelectedAll { get; set; }
-        
-        public List<Item_ShiftAll> shiftChange { get; set; }
+        private List<Item_ShiftAll> _listShiftSelectedAll;
+        public List<Item_ShiftAll> listShiftSelectedAll 
+        { 
+            get { return _listShiftSelectedAll; }
+            set { _listShiftSelectedAll = value; OnPropertyChanged("listShiftSelectedAll"); }
+        }
     }
 }

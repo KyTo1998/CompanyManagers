@@ -93,6 +93,16 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
 
+        private string _dateSelectedForDay;
+        public string dateSelectedForDay
+        {
+            get { return _dateSelectedForDay; }
+            set
+            {
+                _dateSelectedForDay = value;
+                OnPropertyChanged("dateSelectedForDay");
+            }
+        }
         int startDay, selectedDay; string date;
         Result_CategoryProposing dataCategoryProposing;
         ManagerHome managerHome { set; get; }
@@ -505,6 +515,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             Item_ShiftAll dataShiftSelected = (Item_ShiftAll)(sender as DockPanel).DataContext;
             if (dataShiftSelected != null)
             {
+                statutSelectDay = false;
                 dataShiftSelected.isSeleced = dataShiftSelected.isSeleced == "True" ? "False" : "True";
                 if (dataShiftSelected.isSeleced == "True")
                 {
@@ -524,15 +535,31 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             lichlamviec dataSelected = (lichlamviec)(sender as Border).DataContext;
             statutSelectDay = true;
+            shiftChange = new List<Item_ShiftAll>();
+            if (dataSelected.listShiftSelectedAll.Count > 0)
+            {
+                shiftChange = dataSelected.listShiftSelectedAll;
+            }
             if (dataSelected != null)
             {
-                foreach (var item in listShiftAllSelected)
+                dateSelectedForDay = $"{dataSelected.DayInCalendar}-{StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy")}";
+                if (dataSelected.listShiftSelectedAll.Count > 0)
                 {
-                    if (dataSelected.listShiftSelectedAll.Contains(item))
+                    foreach (var item in listShiftAllSelected)
                     {
-                        item.isSelecedForDay = "True";
+                        if (dataSelected.listShiftSelectedAll.Contains(item))
+                        {
+                            item.isSelecedForDay = "True";
+                        }
+                        else
+                        {
+                            item.isSelecedForDay = "False";
+                        }
                     }
-                    else
+                }
+                else
+                {
+                    foreach(var item in listShiftAllSelected)
                     {
                         item.isSelecedForDay = "False";
                     }
@@ -542,7 +569,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     if (item.id == dataSelected.id && item.statusClick == 1)
                     {
-
                         item.statusClick = 2;
                     }
                     else
@@ -556,7 +582,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             
         }
-
+        List<Item_ShiftAll> shiftChange = new List<Item_ShiftAll>();
         private void SelectedShiftForDayCheckbox(object sender, MouseButtonEventArgs e)
         {
             Item_ShiftAll dataShiftSelectedForDay = (Item_ShiftAll)(sender as DockPanel).DataContext;
@@ -567,32 +593,31 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     if (listLichProposing != null)
                     {
-                        foreach (var itemShift in listLichProposing)
-                        {
-                            if (itemShift.listShiftSelectedAll != null)
-                            {
-                                if (itemShift.id == idSelectedForDay)
-                                {
-                                    itemShift.listShiftSelectedAll.Add(dataShiftSelectedForDay);
-                                    itemShift.shiftSelected++;
-                                }
-                            }
-                        }
+                        shiftChange.Add(dataShiftSelectedForDay);
+                        //if (listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.Count == 0)
+                        //{
+                            listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll = shiftChange.ToList();
+                        //}
+                        //else
+                        //{
+                        //    listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.AddRange(shiftChange);
+                        //}
+                        listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected++;
                     }
                 }
                 else
                 {
                     if (listLichProposing != null)
                     {
-                        foreach (var item in listLichProposing)
+                        if (listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.Count == 0)
                         {
-                            if (idSelectedForDay == item.id)
-                            {
-                                item.listShiftSelectedAll.Remove(dataShiftSelectedForDay);
-                                item.shiftSelected--;
-                                break;
-                            }
+                            listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll = shiftChange.ToList();
                         }
+                        else
+                        {
+                            listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.Remove(dataShiftSelectedForDay);
+                        }
+                        listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected--;
                     }
                 }
                 listLichProposing = listLichProposing.ToList();
