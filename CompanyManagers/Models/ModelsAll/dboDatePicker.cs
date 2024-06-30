@@ -20,6 +20,7 @@ namespace CompanyManagers.Models.ModelsAll
 
         public int id { get; set; }
         public int DayInCalendar { get; set; }
+        public string dayString { get; set; }
 
         public int _shiftSelected;
         public int shiftSelected

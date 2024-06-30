@@ -73,7 +73,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 listProposingHome = dataProposing.data.data.ToList();
                                 foreach (var item in listProposingHome)
                                 {
-                                    if (item.type_dx_string != null)
+                                    if (item.type_dx_string == null)
                                     {
                                         item.type_dx_string = listCategoyProposingHome.Find(x => x.cate_dx == item.type_dx).name_cate_dx;
                                     }

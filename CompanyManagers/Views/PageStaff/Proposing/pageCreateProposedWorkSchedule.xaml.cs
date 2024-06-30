@@ -1,13 +1,17 @@
-﻿using CompanyManagers.Models.ModelsAll;
+﻿using CompanyManagers.Common.Popups;
+using CompanyManagers.Controllers;
+using CompanyManagers.Models.HomeFunction;
+using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Views.Home;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -27,6 +31,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(newName));
             }
+        }
+        public class ListBodyCalendarWork
+        {
+            public string date { get; set; }
+            public string shift_id { get; set; }
         }
         private int _typeCategoryProposing;
         public int typeCategoryProposing
@@ -104,6 +113,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
         int startDay;
+        PagePopupGrayColor pagePopupGrayColor { get; set; }
+
         Result_CategoryProposing dataCategoryProposing;
         ManagerHome managerHome { set; get; }
         public pageCreateProposedWorkSchedule(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing)
@@ -128,6 +139,73 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             SelectUserComfirm.PlaceHolder = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
         }
         
+        public async void CreateProposing()
+        {
+            try
+            {
+                List<string> listStringUserComfirm = new List<string>();
+                string listStringCalendarForDay = "";
+                List< ListBodyCalendarWork> lstCalendarWork = new List< ListBodyCalendarWork >();
+                foreach (var item in dataListUserComfrim)
+                {
+                    listStringUserComfirm.Add(item.idQLC.ToString());
+                }
+                string StringUserComfirm = string.Join(",", listStringUserComfirm);
+                long MonthApply = ConvertToEpochTime(StartDateOnLeave.SelectedDate.Value.ToString("dd/MM/yyyy"));
+                foreach (var item in listLichProposing)
+                {
+                    if (item.listShiftSelectedAll != null)
+                    {
+                        if (item.listShiftSelectedAll.Count > 0)
+                        {
+                            listStringCalendarForDay = string.Join(",", item.listShiftSelectedAll.Select(x => x.shift_id));
+                            lstCalendarWork.Add(new ListBodyCalendarWork() { date = DateTime.Parse(item.dayString).ToString("yyyy-MM-dd"), shift_id = listStringCalendarForDay });
+                        }
+                    }
+                }
+                var ObjectCalendarWork = new
+                {
+                    type = 1,
+                    data = lstCalendarWork
+                };
+                string JsonCalendarWork = JsonConvert.SerializeObject(ObjectCalendarWork);
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CreateProposeCalendarWork);
+                request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token);
+                var content = new MultipartFormDataContent();
+                content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
+                content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Custom.ToString()), "kieu_duyet");
+                content.Add(new StringContent(StringUserComfirm), "id_user_duyet");
+                content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
+                content.Add(new StringContent(tb_InputReasonCreateProposing.Text), "ly_do");
+                content.Add(new StringContent(MonthApply.ToString()), "thang_ap_dung");
+                content.Add(new StringContent(MonthApply.ToString()), "ngay_bat_dau");
+                content.Add(new StringContent(""), "ca_lam_viec");
+                content.Add(new StringContent(((typeConfirm)SelectCalendarWork.SelectedItemSelected).id_Custom.ToString()), "lich_lam_viec");
+                int numberFile = 0;
+                if (managerHome.lstInfoFileCreateProposing != null)
+                {
+                    foreach (var item in managerHome.lstInfoFileCreateProposing)
+                    {
+                        content.Add(new StreamContent(File.OpenRead(item.FullName)), $"fileKem[{numberFile}]", item.FullName);
+                        numberFile++;
+                    }
+                }
+                content.Add(new StringContent("[" + JsonCalendarWork + "]"), "ngay_lam_viec");
+                request.Content = content;
+                var response = await client.SendAsync(request);
+                var responsContent = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thành công", ""));
+                }
+            }
+            catch (Exception)
+            {
+                managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất thất bại, lỗi hệ thống", ""));
+            }
+        } 
+
         public void LoadDataCalendarWork(int monthSelected, int yearSelected, typeConfirm selectedStartToEnd, List<Item_ShiftAll> _listShift)
         {
             try
@@ -180,7 +258,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 }
                                 else
                                 {
-                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1,statusPast = 0, listShiftSelectedAll = _listShift };
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1,statusPast = 0, listShiftSelectedAll = _listShift , dayString  = $"{yearSelected}-{monthSelected}-{i}"};
                                     listLichProposing.Add(d);
                                 }
                             }
@@ -204,7 +282,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 }
                                 else
                                 {
-                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift };
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
                                     listLichProposing.Add(d);
                                 }
                             }
@@ -221,7 +299,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             }
                             else
                             {
-                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift };
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
                                 listLichProposing.Add(d);
                             }
                         }
@@ -238,7 +316,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         }
                         else
                         {
-                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift };
+                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
                             listLichProposing.Add(d);
                         }
                     }
@@ -256,83 +334,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
             }
         }
-        static List<int> GetAllPastDaysInMonth(int month, int year, DateTime selectedDate)
-        {
-            List<int> pastDays = new List<int>();
-
-            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
-            DateTime firstDayOfMonth = new DateTime(year, month, 1);
-            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-
-            // Kiểm tra nếu ngày được chọn không nằm trong tháng được chọn
-            if (selectedDate < firstDayOfMonth || selectedDate > lastDayOfMonth)
-            {
-                throw new ArgumentException("Ngày được chọn không nằm trong tháng được chọn.");
-            }
-
-            // Duyệt qua các ngày trong tháng
-            for (DateTime date = firstDayOfMonth; date < selectedDate; date = date.AddDays(1))
-            {
-                // Thêm số ngày vào danh sách
-                pastDays.Add(date.Day);
-            }
-
-            return pastDays;
-        }
-        static List<int> GetAllSaturdaysInMonth(int month, int year)
-        {
-            List<int> saturdays = new List<int>();
-            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
-            DateTime firstDayOfMonth = new DateTime(year, month, 1);
-            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-            // Duyệt qua các ngày trong tháng
-            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
-            {
-                // Kiểm tra xem ngày đó có phải là thứ Bảy không
-                if (date.DayOfWeek == DayOfWeek.Saturday)
-                {
-                    saturdays.Add(date.Day);
-                }
-            }
-            return saturdays;
-        }
-
-        static List<int> GetAllSundaysInMonth(int month, int year)
-        {
-            List<int> sundays = new List<int>();
-            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
-            DateTime firstDayOfMonth = new DateTime(year, month, 1);
-            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-            // Duyệt qua các ngày trong tháng
-            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
-            {
-                // Kiểm tra xem ngày đó có phải là Chủ Nhật không
-                if (date.DayOfWeek == DayOfWeek.Sunday)
-                {
-                    sundays.Add(date.Day);
-                }
-            }
-            return sundays;
-        }
-        static List<int> GetAllPastDaysInMonth(int month, int year)
-        {
-            List<int> pastDays = new List<int>();
-            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
-            DateTime firstDayOfMonth = new DateTime(year, month, 1);
-            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-            // Lấy ngày hiện tại
-            DateTime today = DateTime.Today;
-            // Duyệt qua các ngày trong tháng
-            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
-            {
-                // Kiểm tra xem ngày đó có trước ngày hiện tại không
-                if (date < today)
-                {
-                    pastDays.Add(date.Day);
-                }
-            }
-            return pastDays;
-        }
+        
         private void ValidateCreatePropose(string type)
         {
             if (dataListUserComfrim == null) { dataListUserComfrim = new List<ListUsersDuyet>(); }
@@ -667,6 +669,22 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         private void CloseBox(object sender, MouseButtonEventArgs e)
         {
              borSelectedShift.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClosePopupCreateProposing(object sender, MouseButtonEventArgs e)
+        {
+            pagePopupGrayColor = new PagePopupGrayColor(managerHome);
+            pagePopupGrayColor.Popup.NavigationService.Navigate(null);
+            managerHome.PagePopup.NavigationService.Navigate(null);
+        }
+
+        private void CreateProposing(object sender, MouseButtonEventArgs e)
+        {
+            ValidateCreatePropose("CreateProposing");
+            if (statusValidate == true)
+            {
+                CreateProposing();
+            }
         }
     }
 }

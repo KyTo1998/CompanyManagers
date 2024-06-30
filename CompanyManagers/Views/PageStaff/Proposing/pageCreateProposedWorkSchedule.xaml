@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
-             mc:Ignorable="d"  MinWidth="860" MaxWidth="1000">
+             mc:Ignorable="d"  MinWidth="500" MaxWidth="1000">
     <Grid>
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <Border MouseLeftButtonDown="CloseBox" CornerRadius="10" Background="{StaticResource colorTextMessage}" >
@@ -15,7 +15,33 @@
                             <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                         </Border.Effect>
                         <StackPanel Margin="10">
-                            <TextBlock Text="Đề xuất lịch làm việc" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" HorizontalAlignment="Center"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Path Cursor="Hand" MouseLeftButtonUp="ClosePopupCreateProposing" Grid.Column="0" Data="{StaticResource iconRightArrowz}" Width="25" Margin="0 2 5 0" Height="25" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform Angle="180"/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                    <Path.Style>
+                                        <Style TargetType="Path">
+                                            <Setter Property="Fill" Value="{StaticResource colorTheme}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=NameProposing, Path=IsMouseOver}" Value="true">
+                                                    <Setter Property="Fill" Value="{DynamicResource colorTheme}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                                <TextBlock Grid.Column="1" Text="Đề xuất lịch làm việc" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" HorizontalAlignment="Center"/>
+                            </Grid>
                             <StackPanel Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
                                     <Run Text="Tên đề xuất" Foreground="{StaticResource colorText1}"/>
@@ -582,7 +608,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
                                     </Border>
-                                    <Border Grid.Column="1" x:Name="btnCreateProposing" Margin="10 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10" Cursor="Hand">
+                                    <Border Grid.Column="1" x:Name="btnCreateProposing" MouseLeftButtonDown="CreateProposing" Margin="10 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10" Cursor="Hand">
                                         <Border.Style>
                                             <Style TargetType="Border">
                                                 <Setter Property="Background" Value="Transparent"/>

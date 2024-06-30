@@ -26,5 +26,6 @@ namespace CompanyManagers.Controllers
                 return text;
             }
         }
+
     }
 }

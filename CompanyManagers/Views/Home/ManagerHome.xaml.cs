@@ -15,6 +15,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -318,6 +319,92 @@ namespace CompanyManagers.Views.Home
                 System.Windows.MessageBox.Show("Vui lòng chọn đúng định dạng ảnh");
                 return null;
             }
+        }
+        public static long ConvertToEpochTime(string dateString)
+        {
+            // Define the format of the input date string
+            string format = "dd/MM/yyyy";
+
+            // Parse the input date string using the specified format
+            DateTime date = DateTime.ParseExact(dateString, format, CultureInfo.InvariantCulture);
+
+            // Calculate the number of seconds since Unix epoch (January 1, 1970)
+            TimeSpan timeSpan = date - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return (long)timeSpan.TotalSeconds;
+        }
+        public static List<int> GetAllPastDaysInMonth(int month, int year, DateTime selectedDate)
+        {
+            List<int> pastDays = new List<int>();
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            // Kiểm tra nếu ngày được chọn không nằm trong tháng được chọn
+            if (selectedDate < firstDayOfMonth || selectedDate > lastDayOfMonth)
+            {
+                throw new ArgumentException("Ngày được chọn không nằm trong tháng được chọn.");
+            }
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date < selectedDate; date = date.AddDays(1))
+            {
+                // Thêm số ngày vào danh sách
+                pastDays.Add(date.Day);
+            }
+            return pastDays;
+        }
+        public static List<int> GetAllSaturdaysInMonth(int month, int year)
+        {
+            List<int> saturdays = new List<int>();
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
+            {
+                // Kiểm tra xem ngày đó có phải là thứ Bảy không
+                if (date.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    saturdays.Add(date.Day);
+                }
+            }
+            return saturdays;
+        }
+
+        public static List<int> GetAllSundaysInMonth(int month, int year)
+        {
+            List<int> sundays = new List<int>();
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
+            {
+                // Kiểm tra xem ngày đó có phải là Chủ Nhật không
+                if (date.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    sundays.Add(date.Day);
+                }
+            }
+            return sundays;
+        }
+        public static List<int> GetAllPastDaysInMonth(int month, int year)
+        {
+            List<int> pastDays = new List<int>();
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            // Lấy ngày hiện tại
+            DateTime today = DateTime.Today;
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
+            {
+                // Kiểm tra xem ngày đó có trước ngày hiện tại không
+                if (date < today)
+                {
+                    pastDays.Add(date.Day);
+                }
+            }
+            return pastDays;
         }
 
         private List<InfoFile> _lstInfoFileCreateProposing;
