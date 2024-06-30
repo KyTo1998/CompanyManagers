@@ -186,27 +186,30 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
             }
         }
-        private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+       
         private void ClickShiftOnLeave(object sender, SelectionChangedEventArgs e)
         {
-            StaffShiftInDay dataShift = (StaffShiftInDay)ShiftOnLeave.SelectedItemSelected;
-            if (dataShift != null)
+            try
             {
-                JsonOnLeave OnLeave = new JsonOnLeave();
-                OnLeave.nameShif = dataShift.shift_name;
-                OnLeave.startDate = StartDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd");
-                OnLeave.endDate = EndDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd");
-                OnLeave.nghi_phep = new List<object>{ $"{StartDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd")}", $"{EndDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd")}", dataShift.shift_id }; 
-                if (listShiftSelect == null) listShiftSelect = new List<JsonOnLeave>();
-                listShiftSelect.Add(OnLeave);
-                listShiftSelect = listShiftSelect.ToList();
-                if (listShiftSelect.Count > 0)
+                StaffShiftInDay dataShift = (StaffShiftInDay)ShiftOnLeave.SelectedItemSelected;
+                if (dataShift != null)
                 {
-                    lsvListShifForDay.Visibility = Visibility.Visible;
-                } 
+                    JsonOnLeave OnLeave = new JsonOnLeave();
+                    OnLeave.nameShif = dataShift.shift_name;
+                    OnLeave.startDate = StartDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd");
+                    OnLeave.endDate = EndDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd");
+                    OnLeave.nghi_phep = new List<object> { $"{StartDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd")}", $"{EndDateOnLeave.SelectedDate.Value.ToString("yyyy-MM-dd")}", dataShift.shift_id };
+                    if (listShiftSelect == null) listShiftSelect = new List<JsonOnLeave>();
+                    listShiftSelect.Add(OnLeave);
+                    listShiftSelect = listShiftSelect.ToList();
+                    if (listShiftSelect.Count > 0)
+                    {
+                        lsvListShifForDay.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            catch (Exception)
+            {
             }
         }
         private void SelectYesPlan(object sender, RoutedEventArgs e)
@@ -223,15 +226,21 @@ namespace CompanyManagers.Views.PageStaff.Proposing
 
         private void DeleteShiftOnLeave(object sender, MouseButtonEventArgs e)
         {
-            JsonOnLeave dataShiftOnLeave = (JsonOnLeave)(sender as Border).DataContext;
-            if (dataShiftOnLeave != null)
+            try
             {
-                listShiftSelect.Remove(dataShiftOnLeave);
-                listShiftSelect = listShiftSelect.ToList();
-                if (listShiftSelect.Count == 0)
+                JsonOnLeave dataShiftOnLeave = (JsonOnLeave)(sender as Border).DataContext;
+                if (dataShiftOnLeave != null)
                 {
-                    lsvListShifForDay.Visibility = Visibility.Collapsed;
+                    listShiftSelect.Remove(dataShiftOnLeave);
+                    listShiftSelect = listShiftSelect.ToList();
+                    if (listShiftSelect.Count == 0)
+                    {
+                        lsvListShifForDay.Visibility = Visibility.Collapsed;
+                    }
                 }
+            }
+            catch (Exception)
+            {
             }
         }
         private void LoadNumRowShifForDay(object sender, DataGridRowEventArgs e)
@@ -247,82 +256,108 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             ShiftOnLeave.ItemsSourceSelected = managerHome.dataListStaffShiftInDay;
         }
+        private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
         #endregion
         private void SelectionChangeUserComfirm(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectUserComfirm.Text != null)
+            try
             {
-                ListUsersDuyet dataUserComfirm = new ListUsersDuyet();
-                dataUserComfirm = SelectUserComfirm.SelectedItem as ListUsersDuyet;
-                lsvUserComfirmSelected.Visibility = Visibility.Visible;
-                if (dataListUserComfrim == null)
+                if (SelectUserComfirm.Text != null)
                 {
-                    dataListUserComfrim = new List<ListUsersDuyet>();
-                }
-                if (!dataListUserComfrim.Contains(dataUserComfirm))
-                {
-                    dataListUserComfrim.Add(dataUserComfirm);
-                    if (dataListUserComfrim.Count > 1)
+                    ListUsersDuyet dataUserComfirm = new ListUsersDuyet();
+                    dataUserComfirm = SelectUserComfirm.SelectedItem as ListUsersDuyet;
+                    lsvUserComfirmSelected.Visibility = Visibility.Visible;
+                    if (dataListUserComfrim == null)
                     {
-                        btnDeleteUserConfirmAll.Visibility = Visibility.Visible;
+                        dataListUserComfrim = new List<ListUsersDuyet>();
                     }
+                    if (!dataListUserComfrim.Contains(dataUserComfirm))
+                    {
+                        dataListUserComfrim.Add(dataUserComfirm);
+                        if (dataListUserComfrim.Count > 1)
+                        {
+                            btnDeleteUserConfirmAll.Visibility = Visibility.Visible;
+                        }
+                    }
+                    dataListUserComfrim = dataListUserComfrim.ToList();
+                    SelectUserComfirm.PlaceHolder = null;
+                    SelectUserComfirm.Text = null;
+                    SelectUserComfirm.VerticalAlignment = VerticalAlignment.Center;
                 }
-                dataListUserComfrim = dataListUserComfrim.ToList();
-                SelectUserComfirm.PlaceHolder = null;
-                SelectUserComfirm.Text = null;
-                SelectUserComfirm.VerticalAlignment = VerticalAlignment.Center;
+            }
+            catch (Exception)
+            {
             }
         }
         private void DeleteUserConfirm(object sender, MouseButtonEventArgs e)
         {
-            ListUsersDuyet dataUserComfirm = (ListUsersDuyet)(sender as Border).DataContext;
-            if (dataUserComfirm != null)
+            try
             {
-                dataListUserComfrim.Remove(dataUserComfirm);
-                if (dataListUserComfrim.Count == 0)
+                ListUsersDuyet dataUserComfirm = (ListUsersDuyet)(sender as Border).DataContext;
+                if (dataUserComfirm != null)
                 {
-                    lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
-                    SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                    dataListUserComfrim.Remove(dataUserComfirm);
+                    if (dataListUserComfrim.Count == 0)
+                    {
+                        lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
+                        SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                    }
+                    if (dataListUserComfrim.Count == 1)
+                    {
+                        btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
+                    }
+                    dataListUserComfrim = dataListUserComfrim.ToList();
                 }
-                if (dataListUserComfrim.Count == 1)
-                {
-                    btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
-                }
-                dataListUserComfrim = dataListUserComfrim.ToList();
+            }
+            catch (Exception)
+            {
             }
         }
         private void DeleteUserConfirmAll(object sender, MouseButtonEventArgs e)
         {
-            if (dataListUserComfrim.Count > 0)
+            try
             {
-                dataListUserComfrim.Clear();
-                btnDeleteUserConfirmAll.Visibility= Visibility.Collapsed;
-                lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
-                SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
-                dataListUserComfrim = dataListUserComfrim.ToList();
+                if (dataListUserComfrim.Count > 0)
+                {
+                    dataListUserComfrim.Clear();
+                    btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
+                    lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
+                    SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                    dataListUserComfrim = dataListUserComfrim.ToList();
+                }
+            }
+            catch (Exception)
+            {
             }
         }
-        
-       
-        private void SelectionChangeUserFollow(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
-
-        
 
         private void ClosePopupCreateProposing(object sender, MouseButtonEventArgs e)
         {
-            pagePopupGrayColor = new PagePopupGrayColor(managerHome);
-            pagePopupGrayColor.Popup.NavigationService.Navigate(null);
-            managerHome.PagePopup.NavigationService.Navigate(null);
+            try
+            {
+                pagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                pagePopupGrayColor.Popup.NavigationService.Navigate(null);
+                managerHome.PagePopup.NavigationService.Navigate(null);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void ClickCancel(object sender, MouseButtonEventArgs e)
         {
-            pagePopupGrayColor = new PagePopupGrayColor(managerHome);
-            pagePopupGrayColor.Popup.NavigationService.Navigate(null);
-            managerHome.PagePopup.NavigationService.Navigate(null);
+            try
+            {
+                pagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                pagePopupGrayColor.Popup.NavigationService.Navigate(null);
+                managerHome.PagePopup.NavigationService.Navigate(null);
+            }
+            catch (Exception)
+            {
+            }
         }
         private void CheckValidateProposing()
         {
@@ -389,33 +424,48 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
 
-        private void ScollCreateProposing(object sender, MouseWheelEventArgs e)
-        {
-            scoll.ScrollToVerticalOffset(scoll.VerticalOffset - e.Delta);
-        }
-
         private void AddFileGimForProposing(object sender, MouseButtonEventArgs e)
         {
-            OpenFileDialog selectFile = new OpenFileDialog();
-            selectFile.Filter = "All files (*.*)|*.*";
-            selectFile.Multiselect = true;
-            if (selectFile.ShowDialog() == true)
+            try
             {
-               managerHome.selectionFile(selectFile.FileNames, lsvFileGim);
-               lsvFileGim.Visibility = Visibility.Visible;
-               TextHidenFileGim.Visibility = Visibility.Collapsed;
+                OpenFileDialog selectFile = new OpenFileDialog();
+                selectFile.Filter = "All files (*.*)|*.*";
+                selectFile.Multiselect = true;
+                if (selectFile.ShowDialog() == true)
+                {
+                    managerHome.selectionFile(selectFile.FileNames, lsvFileGim);
+                    lsvFileGim.Visibility = Visibility.Visible;
+                    TextHidenFileGim.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 
         private void DeleteFileGim(object sender, MouseButtonEventArgs e)
         {
-            InfoFile infoFile = (InfoFile)(sender as Border).DataContext;
-            if (infoFile != null)
+            try
             {
-                lsvFileGim.Items.Remove(infoFile);
-                lsvFileGim.Items.Refresh();
-                TextHidenFileGim.Visibility = Visibility.Visible;
+                InfoFile infoFile = (InfoFile)(sender as Border).DataContext;
+                if (infoFile != null)
+                {
+                    lsvFileGim.Items.Remove(infoFile);
+                    lsvFileGim.Items.Refresh();
+                    TextHidenFileGim.Visibility = Visibility.Visible;
+                }
             }
+            catch (Exception)
+            {
+            }
+        }
+        private void ScollCreateProposing(object sender, MouseWheelEventArgs e)
+        {
+            scoll.ScrollToVerticalOffset(scoll.VerticalOffset - e.Delta);
+        }
+        private void SelectionChangeUserFollow(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

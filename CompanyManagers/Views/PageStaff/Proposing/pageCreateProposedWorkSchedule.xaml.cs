@@ -112,7 +112,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 OnPropertyChanged("dateSelectedForDay");
             }
         }
-        int startDay;
+        int startDay; int idSelectedForDay;
+        List<Item_ShiftAll> shiftChange { get; set; }
+
+        List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
+
+        typeConfirm selectedStartToEnd = new typeConfirm();
         PagePopupGrayColor pagePopupGrayColor { get; set; }
 
         Result_CategoryProposing dataCategoryProposing;
@@ -204,8 +209,15 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất thất bại, lỗi hệ thống", ""));
             }
-        } 
-
+        }
+        private void CreateProposing(object sender, MouseButtonEventArgs e)
+        {
+            ValidateCreatePropose("CreateProposing");
+            if (statusValidate == true)
+            {
+                CreateProposing();
+            }
+        }
         public void LoadDataCalendarWork(int monthSelected, int yearSelected, typeConfirm selectedStartToEnd, List<Item_ShiftAll> _listShift)
         {
             try
@@ -337,173 +349,365 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         
         private void ValidateCreatePropose(string type)
         {
-            if (dataListUserComfrim == null) { dataListUserComfrim = new List<ListUsersDuyet>(); }
-            if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateOnLeave")
+            try
             {
-                statusValidate = false;
-                tb_Notication.Text = "Bạn chưa chọn lịch làm việc";
+                if (dataListUserComfrim == null) { dataListUserComfrim = new List<ListUsersDuyet>(); }
+                if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateOnLeave")
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = "Bạn chưa chọn lịch làm việc";
+                }
+                else if (tb_InputNameProposing.Text == "")
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = "Bạn chưa nhập tên đề xuất";
+                }
+                else if (tb_InputReasonCreateProposing.Text == "")
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = "Bạn chưa nhập lý do tạo đề xuất";
+                }
+                else if (SelectTypeComfirm.SelectedIndexSelected < 0)
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = "Bạn chưa chọn kiểu duyệt";
+                }
+                else if (dataListUserComfrim.Count == 0)
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = $"Bạn chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
+                }
+                else if (SelectUserFollow.SelectedIndex < 0)
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = "Bạn chưa chọn người theo dõi";
+                }
+                else
+                {
+                    statusValidate = true;
+                }
             }
-            else if (tb_InputNameProposing.Text == "")
-            {
-                statusValidate = false;
-                tb_Notication.Text = "Bạn chưa nhập tên đề xuất";
-            }
-            else if (tb_InputReasonCreateProposing.Text == "")
-            {
-                statusValidate = false;
-                tb_Notication.Text = "Bạn chưa nhập lý do tạo đề xuất";
-            }
-            else if (SelectTypeComfirm.SelectedIndexSelected < 0)
-            {
-                statusValidate = false;
-                tb_Notication.Text = "Bạn chưa chọn kiểu duyệt";
-            }
-            else if (dataListUserComfrim.Count == 0)
-            {
-                statusValidate = false;
-                tb_Notication.Text = $"Bạn chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
-            }
-            else if (SelectUserFollow.SelectedIndex < 0)
-            {
-                statusValidate = false;
-                tb_Notication.Text = "Bạn chưa chọn người theo dõi";
-            }
-            else
-            {
-                statusValidate = true;
-            }
+            catch (Exception)
+            {}
         }
-        private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
-        {
-           
-        }
-        typeConfirm selectedStartToEnd = new typeConfirm();
         private void ClickSelectCalendarWork(object sender, SelectionChangedEventArgs e)
         {
-            selectedStartToEnd = SelectCalendarWork.SelectedItemSelected as typeConfirm;
-            ValidateCreatePropose("ClickSelectCalendarWork");
-            if (statusValidate == true && StartDateOnLeave.SelectedDate != null)
+            try
             {
-                LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                selectedStartToEnd = SelectCalendarWork.SelectedItemSelected as typeConfirm;
+                ValidateCreatePropose("ClickSelectCalendarWork");
+                if (statusValidate == true && StartDateOnLeave.SelectedDate != null)
+                {
+                    LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                }
             }
+            catch (Exception)
+            {}
         }
         private void SelectionChangeUserComfirm(object sender, SelectionChangedEventArgs e)
         {
-            if (SelectUserComfirm.Text != null)
+            try
             {
-                ListUsersDuyet dataUserComfirm = new ListUsersDuyet();
-                dataUserComfirm = SelectUserComfirm.SelectedItem as ListUsersDuyet;
-                lsvUserComfirmSelected.Visibility = Visibility.Visible;
-                if (dataListUserComfrim == null)
+                if (SelectUserComfirm.Text != null)
                 {
-                    dataListUserComfrim = new List<ListUsersDuyet>();
-                }
-                if (!dataListUserComfrim.Contains(dataUserComfirm))
-                {
-                    dataListUserComfrim.Add(dataUserComfirm);
-                    if (dataListUserComfrim.Count > 1)
+                    ListUsersDuyet dataUserComfirm = new ListUsersDuyet();
+                    dataUserComfirm = SelectUserComfirm.SelectedItem as ListUsersDuyet;
+                    lsvUserComfirmSelected.Visibility = Visibility.Visible;
+                    if (dataListUserComfrim == null)
                     {
-                        btnDeleteUserConfirmAll.Visibility = Visibility.Visible;
+                        dataListUserComfrim = new List<ListUsersDuyet>();
                     }
+                    if (!dataListUserComfrim.Contains(dataUserComfirm))
+                    {
+                        dataListUserComfrim.Add(dataUserComfirm);
+                        if (dataListUserComfrim.Count > 1)
+                        {
+                            btnDeleteUserConfirmAll.Visibility = Visibility.Visible;
+                        }
+                    }
+                    dataListUserComfrim = dataListUserComfrim.ToList();
+                    SelectUserComfirm.PlaceHolder = null;
+                    SelectUserComfirm.Text = null;
+                    SelectUserComfirm.VerticalAlignment = VerticalAlignment.Center;
                 }
-                dataListUserComfrim = dataListUserComfrim.ToList();
-                SelectUserComfirm.PlaceHolder = null;
-                SelectUserComfirm.Text = null;
-                SelectUserComfirm.VerticalAlignment = VerticalAlignment.Center;
+            }
+            catch (Exception)
+            {
             }
         }
-        private void SelectionChangeUserFollow(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+       
         private void SelectedStartDateOnLeave(object sender, SelectionChangedEventArgs e)
         {
-            ValidateCreatePropose("SelectedStartDateOnLeave");
-            if (statusValidate == true)
+            try
             {
-                MonthCalendar.Text = StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy");
-                LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                ValidateCreatePropose("SelectedStartDateOnLeave");
+                if (statusValidate == true)
+                {
+                    MonthCalendar.Text = StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy");
+                    LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                }
+            }
+            catch (Exception)
+            {
             }
         }
       
         private void DeleteUserConfirmAll(object sender, MouseButtonEventArgs e)
         {
-            if (dataListUserComfrim.Count > 0)
+            try
             {
-                dataListUserComfrim.Clear();
-                btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
-                lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
-                SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
-                dataListUserComfrim = dataListUserComfrim.ToList();
-                if (dataListUserComfrim.Count == 0)
+                if (dataListUserComfrim.Count > 0)
                 {
-                    statusValidate = false;
-                    tb_Notication.Text = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
+                    dataListUserComfrim.Clear();
+                    btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
+                    lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
+                    SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                    dataListUserComfrim = dataListUserComfrim.ToList();
+                    if (dataListUserComfrim.Count == 0)
+                    {
+                        statusValidate = false;
+                        tb_Notication.Text = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
+                    }
                 }
+            }
+            catch (Exception)
+            {
             }
         }
 
         private void DeleteFileGim(object sender, MouseButtonEventArgs e)
         {
-            InfoFile infoFile = (InfoFile)(sender as Border).DataContext;
-            if (infoFile != null)
+            try
             {
-                lsvFileGim.Items.Remove(infoFile);
-                lsvFileGim.Items.Refresh();
-                TextHidenFileGim.Visibility = Visibility.Visible;
+                InfoFile infoFile = (InfoFile)(sender as Border).DataContext;
+                if (infoFile != null)
+                {
+                    lsvFileGim.Items.Remove(infoFile);
+                    lsvFileGim.Items.Refresh();
+                    TextHidenFileGim.Visibility = Visibility.Visible;
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 
         private void AddFileGimForProposing(object sender, MouseButtonEventArgs e)
         {
-            OpenFileDialog selectFile = new OpenFileDialog();
-            selectFile.Filter = "All files (*.*)|*.*";
-            selectFile.Multiselect = true;
-            if (selectFile.ShowDialog() == true)
+            try
             {
-               managerHome.selectionFile(selectFile.FileNames, lsvFileGim);
-               lsvFileGim.Visibility = Visibility.Visible;
-               TextHidenFileGim.Visibility = Visibility.Collapsed;
+                OpenFileDialog selectFile = new OpenFileDialog();
+                selectFile.Filter = "All files (*.*)|*.*";
+                selectFile.Multiselect = true;
+                if (selectFile.ShowDialog() == true)
+                {
+                    managerHome.selectionFile(selectFile.FileNames, lsvFileGim);
+                    lsvFileGim.Visibility = Visibility.Visible;
+                    TextHidenFileGim.Visibility = Visibility.Collapsed;
+                }
+            }
+            catch (Exception)
+            {
             }
         }
 
         private void DeleteUserConfirm(object sender, MouseButtonEventArgs e)
         {
-            ListUsersDuyet dataUserComfirm = (ListUsersDuyet)(sender as Border).DataContext;
-            if (dataUserComfirm != null)
+            try
             {
-                dataListUserComfrim.Remove(dataUserComfirm);
-                if (dataListUserComfrim.Count == 0)
+                ListUsersDuyet dataUserComfirm = (ListUsersDuyet)(sender as Border).DataContext;
+                if (dataUserComfirm != null)
                 {
-                    lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
-                    SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                    dataListUserComfrim.Remove(dataUserComfirm);
+                    if (dataListUserComfrim.Count == 0)
+                    {
+                        lsvUserComfirmSelected.Visibility = Visibility.Collapsed;
+                        SelectUserComfirm.PlaceHolder = "Chọn người duyệt";
+                    }
+                    if (dataListUserComfrim.Count == 1)
+                    {
+                        btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
+                    }
+                    if (dataListUserComfrim.Count == 0)
+                    {
+                        statusValidate = false;
+                        tb_Notication.Text = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
+                    }
+                    dataListUserComfrim = dataListUserComfrim.ToList();
                 }
-                if (dataListUserComfrim.Count == 1)
+            }
+            catch (Exception)
+            {
+            }
+        }
+        private void SelectShiftPlan(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Item_ShiftAll dataShiftSelected = (Item_ShiftAll)(sender as DockPanel).DataContext;
+                if (dataShiftSelected != null)
                 {
-                    btnDeleteUserConfirmAll.Visibility = Visibility.Collapsed;
+                    statutSelectDay = false;
+                    dataShiftSelected.isSeleced = dataShiftSelected.isSeleced == "True" ? "False" : "True";
+                    if (dataShiftSelected.isSeleced == "True")
+                    {
+                        listShift.Add(dataShiftSelected);
+                        LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                    }
+                    else
+                    {
+                        listShift.Remove(dataShiftSelected);
+                        LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                    }
                 }
-                if (dataListUserComfrim.Count == 0)
-                {
-                    statusValidate = false;
-                    tb_Notication.Text = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
-                }
-                dataListUserComfrim = dataListUserComfrim.ToList();
+            }
+            catch (Exception)
+            {
             }
         }
 
+        private void SelectShiftForDay(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                lichlamviec dataSelected = (lichlamviec)(sender as Border).DataContext;
+                statutSelectDay = true;
+                shiftChange = new List<Item_ShiftAll>();
+                if (dataSelected.listShiftSelectedAll.Count > 0)
+                {
+                    shiftChange.AddRange(dataSelected.listShiftSelectedAll);
+                }
+                if (dataSelected != null)
+                {
+                    dateSelectedForDay = $"{dataSelected.DayInCalendar}-{StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy")}";
+                    if (dataSelected.listShiftSelectedAll.Count > 0)
+                    {
+                        foreach (var item in listShiftAllSelected)
+                        {
+                            if (dataSelected.listShiftSelectedAll.Contains(item))
+                            {
+                                item.isSelecedForDay = "True";
+                            }
+                            else
+                            {
+                                item.isSelecedForDay = "False";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in listShiftAllSelected)
+                        {
+                            item.isSelecedForDay = "False";
+                        }
+                    }
+                    idSelectedForDay = dataSelected.id;
+                    foreach (var item in listLichProposing)
+                    {
+                        if (item.id == dataSelected.id && item.statusClick == 1)
+                        {
+                            item.statusClick = 2;
+                        }
+                        else
+                        {
+                            if (item.statusClick == 2)
+                            {
+                                item.statusClick = 1;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+        private void SelectedShiftForDayCheckbox(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Item_ShiftAll dataShiftSelectedForDay = (Item_ShiftAll)(sender as DockPanel).DataContext;
+                if (dataShiftSelectedForDay != null)
+                {
+                    dataShiftSelectedForDay.isSelecedForDay = dataShiftSelectedForDay.isSelecedForDay == "True" ? "False" : "True";
+                    if (dataShiftSelectedForDay.isSelecedForDay == "True")
+                    {
+                        if (listLichProposing != null)
+                        {
+                            shiftChange.Add(dataShiftSelectedForDay);
+                            foreach (var listLichForDay in listLichProposing)
+                            {
+                                if (listLichForDay.id == idSelectedForDay)
+                                {
+                                    listLichForDay.listShiftSelectedAll = shiftChange;
+                                }
+                            }
+                            listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected++;
+                        }
+                    }
+                    else
+                    {
+                        if (listLichProposing != null)
+                        {
+                            shiftChange.Remove(dataShiftSelectedForDay);
+                            foreach (var listLichForDay in listLichProposing)
+                            {
+                                if (listLichForDay.id == idSelectedForDay)
+                                {
+                                    listLichForDay.listShiftSelectedAll = shiftChange;
+                                }
+                            }
+                            listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected--;
+                        }
+                    }
+                    listLichProposing = listLichProposing.ToList();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+        private void CencalCalendar(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (listLichProposing != null)
+                {
+                    foreach (var item in listLichProposing)
+                    {
+                        if (item.listShiftSelectedAll != null)
+                        {
+                            item.listShiftSelectedAll.Clear();
+                            item.shiftSelected = 0;
+                        }
+                    }
+                }
+                statutSelectDay = false;
+                listLichProposing = listLichProposing.ToList();
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void ClosePopupCreateProposing(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                pagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                pagePopupGrayColor.Popup.NavigationService.Navigate(null);
+                managerHome.PagePopup.NavigationService.Navigate(null);
+            }
+            catch (Exception)
+            {
+            }
+        }
         private void ScollCreateProposing(object sender, MouseWheelEventArgs e)
         {
             if (statusScoll == false)
             {
                 scoll.ScrollToVerticalOffset(scoll.VerticalOffset - e.Delta);
             }
-        }
-
-       
-
-        private void Border_MouseEnter(object sender, MouseEventArgs e)
-        {
-
         }
 
         private void SelectedShiftHover(object sender, MouseEventArgs e)
@@ -527,164 +731,29 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 borSelectedShift.Visibility = Visibility.Collapsed;
             }
         }
-        List<Item_ShiftAll> listShift = new List<Item_ShiftAll>();
-        private void SelectShiftPlan(object sender, MouseButtonEventArgs e)
-        {
-            Item_ShiftAll dataShiftSelected = (Item_ShiftAll)(sender as DockPanel).DataContext;
-            if (dataShiftSelected != null)
-            {
-                statutSelectDay = false;
-                dataShiftSelected.isSeleced = dataShiftSelected.isSeleced == "True" ? "False" : "True";
-                if (dataShiftSelected.isSeleced == "True")
-                {
-                    listShift.Add(dataShiftSelected);
-                    LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
-                }
-                else
-                {
-                    listShift.Remove(dataShiftSelected);
-                    LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
-                }
-            }
-        }
-
-        int idSelectedForDay;
-        private void SelectShiftForDay(object sender, MouseButtonEventArgs e)
-        {
-            lichlamviec dataSelected = (lichlamviec)(sender as Border).DataContext;
-            statutSelectDay = true;
-            shiftChange = new List<Item_ShiftAll>();
-            if (dataSelected.listShiftSelectedAll.Count > 0)
-            {
-                shiftChange.AddRange(dataSelected.listShiftSelectedAll);
-            }
-            if (dataSelected != null)
-            {
-                dateSelectedForDay = $"{dataSelected.DayInCalendar}-{StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy")}";
-                if (dataSelected.listShiftSelectedAll.Count > 0)
-                {
-                    foreach (var item in listShiftAllSelected)
-                    {
-                        if (dataSelected.listShiftSelectedAll.Contains(item))
-                        {
-                            item.isSelecedForDay = "True";
-                        }
-                        else
-                        {
-                            item.isSelecedForDay = "False";
-                        }
-                    }
-                }
-                else
-                {
-                    foreach(var item in listShiftAllSelected)
-                    {
-                        item.isSelecedForDay = "False";
-                    }
-                }
-                idSelectedForDay = dataSelected.id;
-                foreach (var item in listLichProposing)
-                {
-                    if (item.id == dataSelected.id && item.statusClick == 1)
-                    {
-                        item.statusClick = 2;
-                    }
-                    else
-                    {
-                        if (item.statusClick == 2)
-                        {
-                            item.statusClick = 1;
-                        }
-                    }
-                }
-            }
-            
-        }
-        List<Item_ShiftAll> shiftChange { get ; set; }
-        private void SelectedShiftForDayCheckbox(object sender, MouseButtonEventArgs e)
-        {
-            Item_ShiftAll dataShiftSelectedForDay = (Item_ShiftAll)(sender as DockPanel).DataContext;
-            if (dataShiftSelectedForDay != null)
-            {
-                dataShiftSelectedForDay.isSelecedForDay = dataShiftSelectedForDay.isSelecedForDay == "True" ? "False" : "True";
-                if (dataShiftSelectedForDay.isSelecedForDay == "True")
-                {
-                    if (listLichProposing != null)
-                    {
-                        shiftChange.Add(dataShiftSelectedForDay);
-                        foreach (var listLichForDay in listLichProposing)
-                        {
-                            if (listLichForDay.id == idSelectedForDay)
-                            {
-                                listLichForDay.listShiftSelectedAll = shiftChange;
-                            }
-                        }
-                        listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected++;
-                    }
-                }
-                else
-                {
-                    if (listLichProposing != null)
-                    {
-                        shiftChange.Remove(dataShiftSelectedForDay);
-                        foreach (var listLichForDay in listLichProposing)
-                        {
-                            if (listLichForDay.id == idSelectedForDay)
-                            {
-                                listLichForDay.listShiftSelectedAll = shiftChange;
-                            }
-                        }
-                        listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected--;
-                    }
-                }
-                listLichProposing = listLichProposing.ToList();
-            }
-        }
-        private void SelectShiftPlan(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
+      
         private void CLickCloseNotication(object sender, MouseButtonEventArgs e)
         {
             statusValidate = true;
         }
 
-        private void CencalCalendar(object sender, MouseButtonEventArgs e)
-        {
-            if (listLichProposing != null)
-            {
-                foreach (var item in listLichProposing)
-                {
-                    if (item.listShiftSelectedAll != null)
-                    {
-                        item.listShiftSelectedAll.Clear();
-                        item.shiftSelected = 0;
-                    }
-                }
-            }
-            statutSelectDay = false;
-            listLichProposing = listLichProposing.ToList();
-        }
-
         private void CloseBox(object sender, MouseButtonEventArgs e)
         {
-             borSelectedShift.Visibility = Visibility.Collapsed;
+            borSelectedShift.Visibility = Visibility.Collapsed;
+        }
+        private void ClickSelectTypeComfirm(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
-        private void ClosePopupCreateProposing(object sender, MouseButtonEventArgs e)
+        private void SelectShiftPlan(object sender, RoutedEventArgs e)
         {
-            pagePopupGrayColor = new PagePopupGrayColor(managerHome);
-            pagePopupGrayColor.Popup.NavigationService.Navigate(null);
-            managerHome.PagePopup.NavigationService.Navigate(null);
-        }
 
-        private void CreateProposing(object sender, MouseButtonEventArgs e)
+        }
+        private void SelectionChangeUserFollow(object sender, SelectionChangedEventArgs e)
         {
-            ValidateCreatePropose("CreateProposing");
-            if (statusValidate == true)
-            {
-                CreateProposing();
-            }
+
         }
     }
 }
