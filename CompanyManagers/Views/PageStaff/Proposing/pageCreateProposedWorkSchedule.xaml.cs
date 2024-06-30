@@ -103,7 +103,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 OnPropertyChanged("dateSelectedForDay");
             }
         }
-        int startDay, selectedDay; string date;
+        int startDay;
         Result_CategoryProposing dataCategoryProposing;
         ManagerHome managerHome { set; get; }
         public pageCreateProposedWorkSchedule(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing)
@@ -158,6 +158,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 List<int> lstPastDays = GetAllPastDaysInMonth(monthSelected, yearSelected);
                 List<int> lstSaturdays = GetAllSaturdaysInMonth(monthSelected, yearSelected);
                 List<int> lstSundays = GetAllSundaysInMonth(monthSelected, yearSelected);
+                List<int> lstPastDaySeleced = GetAllPastDaysInMonth(monthSelected, yearSelected, StartDateOnLeave.SelectedDate.Value);
                 //Lấy ngày của tháng hiện tại
                 if (selectedStartToEnd != null)
                 {
@@ -165,17 +166,16 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     {
                         for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
                         {
-                            
                             if (lstSundays.Contains(i) || lstSaturdays.Contains(i))
                             {
-                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 0, listShiftSelectedAll = _listShift };
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 0 };
                                 listLichProposing.Add(d);
                             }
                             else
                             {
-                                if (lstPastDays.Contains(i))
+                                if (lstPastDays.Contains(i) || lstPastDaySeleced.Contains(i))
                                 {
-                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1, listShiftSelectedAll = _listShift };
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1};
                                     listLichProposing.Add(d);
                                 }
                                 else
@@ -188,20 +188,18 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     }
                     else if (selectedStartToEnd.id_Custom == 2)
                     {
-                        
                         for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
                         {
-                           
                             if (lstSundays.Contains(i))
                             {
-                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 0, listShiftSelectedAll = _listShift };
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 0};
                                 listLichProposing.Add(d);
                             }
                             else
                             {
-                                if (lstPastDays.Contains(i))
+                                if (lstPastDays.Contains(i) || lstPastDaySeleced.Contains(i))
                                 {
-                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1, listShiftSelectedAll = _listShift };
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1};
                                     listLichProposing.Add(d);
                                 }
                                 else
@@ -211,16 +209,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 }
                             }
                         }
-                    
                     }
                     else if (selectedStartToEnd.id_Custom == 3)
                     {
                         for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
                         {
-                            
-                            if (lstPastDays.Contains(i))
+                            if (lstPastDays.Contains(i) || lstPastDaySeleced.Contains(i))
                             {
-                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1, listShiftSelectedAll = _listShift };
+                                var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1};
                                 listLichProposing.Add(d);
                             }
                             else
@@ -235,10 +231,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
                     {
-                       
-                        if (lstPastDays.Contains(i))
+                        if (lstPastDays.Contains(i) || lstPastDaySeleced.Contains(i))
                         {
-                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1, listShiftSelectedAll = _listShift };
+                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 1};
                             listLichProposing.Add(d);
                         }
                         else
@@ -255,14 +250,35 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = 0, statusClick = 0 };
                     listLichProposing.Add(d);
                 }
-                date = StartDateOnLeave.SelectedDate + "";
                 listLichProposing = listLichProposing.ToList();
             }
             catch (System.Exception)
             {
             }
         }
+        static List<int> GetAllPastDaysInMonth(int month, int year, DateTime selectedDate)
+        {
+            List<int> pastDays = new List<int>();
 
+            // Tìm ngày đầu tiên và ngày cuối cùng của tháng
+            DateTime firstDayOfMonth = new DateTime(year, month, 1);
+            DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+            // Kiểm tra nếu ngày được chọn không nằm trong tháng được chọn
+            if (selectedDate < firstDayOfMonth || selectedDate > lastDayOfMonth)
+            {
+                throw new ArgumentException("Ngày được chọn không nằm trong tháng được chọn.");
+            }
+
+            // Duyệt qua các ngày trong tháng
+            for (DateTime date = firstDayOfMonth; date < selectedDate; date = date.AddDays(1))
+            {
+                // Thêm số ngày vào danh sách
+                pastDays.Add(date.Day);
+            }
+
+            return pastDays;
+        }
         static List<int> GetAllSaturdaysInMonth(int month, int year)
         {
             List<int> saturdays = new List<int>();
@@ -538,7 +554,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             shiftChange = new List<Item_ShiftAll>();
             if (dataSelected.listShiftSelectedAll.Count > 0)
             {
-                shiftChange = dataSelected.listShiftSelectedAll;
+                shiftChange.AddRange(dataSelected.listShiftSelectedAll);
             }
             if (dataSelected != null)
             {
@@ -582,7 +598,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             
         }
-        List<Item_ShiftAll> shiftChange = new List<Item_ShiftAll>();
+        List<Item_ShiftAll> shiftChange { get ; set; }
         private void SelectedShiftForDayCheckbox(object sender, MouseButtonEventArgs e)
         {
             Item_ShiftAll dataShiftSelectedForDay = (Item_ShiftAll)(sender as DockPanel).DataContext;
@@ -594,14 +610,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     if (listLichProposing != null)
                     {
                         shiftChange.Add(dataShiftSelectedForDay);
-                        //if (listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.Count == 0)
-                        //{
-                            listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll = shiftChange.ToList();
-                        //}
-                        //else
-                        //{
-                        //    listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.AddRange(shiftChange);
-                        //}
+                        foreach (var listLichForDay in listLichProposing)
+                        {
+                            if (listLichForDay.id == idSelectedForDay)
+                            {
+                                listLichForDay.listShiftSelectedAll = shiftChange;
+                            }
+                        }
                         listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected++;
                     }
                 }
@@ -609,13 +624,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     if (listLichProposing != null)
                     {
-                        if (listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.Count == 0)
+                        shiftChange.Remove(dataShiftSelectedForDay);
+                        foreach (var listLichForDay in listLichProposing)
                         {
-                            listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll = shiftChange.ToList();
-                        }
-                        else
-                        {
-                            listLichProposing.Find(x => x.id == idSelectedForDay).listShiftSelectedAll.Remove(dataShiftSelectedForDay);
+                            if (listLichForDay.id == idSelectedForDay)
+                            {
+                                listLichForDay.listShiftSelectedAll = shiftChange;
+                            }
                         }
                         listLichProposing.Find(x => x.id == idSelectedForDay).shiftSelected--;
                     }
@@ -630,6 +645,23 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         private void CLickCloseNotication(object sender, MouseButtonEventArgs e)
         {
             statusValidate = true;
+        }
+
+        private void CencalCalendar(object sender, MouseButtonEventArgs e)
+        {
+            if (listLichProposing != null)
+            {
+                foreach (var item in listLichProposing)
+                {
+                    if (item.listShiftSelectedAll != null)
+                    {
+                        item.listShiftSelectedAll.Clear();
+                        item.shiftSelected = 0;
+                    }
+                }
+            }
+            statutSelectDay = false;
+            listLichProposing = listLichProposing.ToList();
         }
 
         private void CloseBox(object sender, MouseButtonEventArgs e)

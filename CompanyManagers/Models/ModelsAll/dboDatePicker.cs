@@ -55,11 +55,6 @@ namespace CompanyManagers.Models.ModelsAll
                 OnPropertyChanged("statusPast");
             }
         }
-        private List<Item_ShiftAll> _listShiftSelectedAll;
-        public List<Item_ShiftAll> listShiftSelectedAll 
-        { 
-            get { return _listShiftSelectedAll; }
-            set { _listShiftSelectedAll = value; OnPropertyChanged("listShiftSelectedAll"); }
-        }
+        public List<Item_ShiftAll> listShiftSelectedAll {  get; set; } 
     }
 }

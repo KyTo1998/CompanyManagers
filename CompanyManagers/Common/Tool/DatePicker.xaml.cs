@@ -163,6 +163,13 @@ namespace CompanyManagers.Common.Tool
 
                 _Days.Add(d);
             }
+            int n = 42 - _Days.Count;
+            for (int i = 1; i <= n; i++)
+            {
+                var d = new itemz() { Day = i ,LastMonth = true};
+                _Days.Add(d);
+            }
+
             OnPropertyChanged("Days");
         }
         private void textBoxFormat()
@@ -325,7 +332,6 @@ namespace CompanyManagers.Common.Tool
 
         private void Previous(object sender, MouseButtonEventArgs e)
         {
-
             if (cboMonth.SelectedIndex - 1 >= 0) cboMonth.SelectedIndex--;
             else if (cboYear.SelectedIndex - 1 >= 0)
             {

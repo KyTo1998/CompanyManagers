@@ -5,7 +5,7 @@
         <GradientStop Color="#AA82C1" Offset="0.5"/>
         <GradientStop Color="#DD8CA2" Offset="1"/>
     </LinearGradientBrush>
-    <Brush x:Key="colorTextForTheme">#DD8CA2</Brush>
+    <Brush x:Key="colorTextForTheme">#7D79D9</Brush>
     <Brush x:Key="colorMoveMouseItem">#19DD8CA2</Brush>
     <Brush x:Key="colorTextMessage">#FFFFFF</Brush>
     <Brush x:Key="colorTextMessageLink">#FFFFFF</Brush>

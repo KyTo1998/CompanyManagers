@@ -298,18 +298,18 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" Background="Transparent" Cursor="Hand" MouseLeftButtonDown="Previous">
-                            <Path Data="{StaticResource iconLeftArrow}" Fill="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></Path>
+                            <Path Data="{StaticResource iconLeftArrow}" Stroke="{DynamicResource colorTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></Path>
                         </Border>
                         <Grid Grid.Column="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <ComboBox Grid.Column="0" BorderThickness="0" Name="cboMonth" Style="{DynamicResource cbSearch1}"  Height="30" ItemsSource="{Binding Months}"  BorderBrush="#666666" Background="#FFFFFF" SelectionChanged="cboMonth_SelectionChanged"/>
-                            <ComboBox Grid.Column="1" BorderThickness="0" Name="cboYear" Style="{DynamicResource cbSearch1}"   Height="30" ItemsSource="{Binding Years}"   BorderBrush="#666666" Background="#FFFFFF" Margin="5 0"  SelectionChanged="cboMonth_SelectionChanged"/>
+                            <ComboBox Grid.Column="0" BorderThickness="0" Name="cboMonth" Style="{DynamicResource cbSearch1}"  Height="30" ItemsSource="{Binding Months}"  BorderBrush="{DynamicResource colorTheme}" Background="Transparent" SelectionChanged="cboMonth_SelectionChanged"/>
+                            <ComboBox Grid.Column="1" BorderThickness="0" Name="cboYear" Style="{DynamicResource cbSearch1}"   Height="30" ItemsSource="{Binding Years}"   BorderBrush="{DynamicResource colorTheme}" Background="Transparent" Margin="5 0"  SelectionChanged="cboMonth_SelectionChanged"/>
                         </Grid>
                         <Border Grid.Column="2" Background="Transparent" Cursor="Hand" MouseLeftButtonDown="NextMonth">
-                            <Path Data="{StaticResource iconLeftArrow}" Fill="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Path Data="{StaticResource iconLeftArrow}" Stroke="{DynamicResource colorTheme}" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Path.LayoutTransform>
                                     <RotateTransform>
                                         <RotateTransform.Angle>180</RotateTransform.Angle>
@@ -318,7 +318,7 @@
                             </Path>
                         </Border>
                     </Grid>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" Margin="0 5 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
@@ -331,15 +331,15 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Text="CN" FontSize="14" Foreground="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Grid.Column="1" Text="T2" FontSize="14" Foreground="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Grid.Column="2" Text="T3" FontSize="14" Foreground="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Grid.Column="3" Text="T4" FontSize="14" Foreground="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Grid.Column="4" Text="T5" FontSize="14" Foreground="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Grid.Column="5" Text="T6" FontSize="14" Foreground="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                        <TextBlock Grid.Column="6" Text="T7" FontSize="14" Foreground="{DynamicResource #4C5BD4}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                    </Grid>
-                    <ListView x:Name="lv" Grid.Row="2" Margin="0 15 0 0"  Background="Transparent" ItemsSource="{Binding Days}" Loaded="lv_Loaded" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionChanged="lv_SelectionChanged">
+                        <TextBlock Text="CN" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="T2" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="2" Text="T3" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="3" Text="T4" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="4" Text="T5" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="5" Text="T6" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Grid.Column="6" Text="T7" FontSize="14" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    </Grid >
+                    <ListView x:Name="lv" Grid.Row="2" Margin="0 10 0 0"  Background="Transparent" ItemsSource="{Binding Days}" Loaded="lv_Loaded" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderThickness="0" SelectionChanged="lv_SelectionChanged">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Width" Value="{Binding DayItemWidth,RelativeSource={RelativeSource AncestorType=UserControl}}"></Setter>
@@ -355,7 +355,7 @@
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Today}" Value="true">
-                                                                <Setter Property="Background" Value="{DynamicResource #4C5BD4}"/>
+                                                                <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding Day}" Value="0">
                                                                 <Setter Property="Visibility" Value="Hidden"/>
@@ -366,7 +366,7 @@
                                                 <TextBlock Name="tblDate" Text="{Binding Day}" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
-                                                            <Setter Property="Foreground" Value="{DynamicResource #474747}"/>
+                                                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                             <Style.Triggers>
                                                                 <DataTrigger Binding="{Binding LastMonth}" Value="true">
                                                                     <Setter Property="Foreground" Value="{DynamicResource #CCCCCC}"/>
@@ -381,11 +381,11 @@
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsSelected" Value="True">
-                                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource #4C5BD4}"/>
+                                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource colorTheme}"/>
                                                     <Setter Property="Foreground" TargetName="tblDate" Value="{DynamicResource #FFFFFF}"/>
                                                 </Trigger>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource #4C5BD4}"/>
+                                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource colorTheme}"/>
                                                     <Setter Property="Foreground" TargetName="tblDate" Value="{DynamicResource #FFFFFF}"/>
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
@@ -401,11 +401,53 @@
                         </ListView.ItemsPanel>
                     </ListView>
                     <DockPanel Grid.Row="3" >
-                        <Border x:Name="btnXoaNgay" MouseLeftButtonDown="XoaNgay" Background="Transparent" Cursor="Hand">
-                            <TextBlock Foreground="#FF5B4D" FontSize="16" FontWeight="Regular" Text="Xóa"/>
+                        <Border x:Name="btnXoaNgay" BorderThickness="1" Width="80" Height="30" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10" MouseLeftButtonDown="XoaNgay" Cursor="Hand">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Regular" Text="Xóa">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="#FF5B4D"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=btnXoaNgay, Path=IsMouseOver}" Value="true">
+                                                <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Border>
-                        <Border x:Name="btnNgayHomNay" MouseLeftButtonDown="NgayHomNay" HorizontalAlignment="Right" Background="Transparent" Cursor="Hand">
-                            <TextBlock Foreground="#4C5BD4" FontSize="16" FontWeight="Regular" Text="Hôm nay"/>
+                        <Border x:Name="btnNgayHomNay" BorderThickness="1" Width="80" Height="30" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10" MouseLeftButtonDown="NgayHomNay" HorizontalAlignment="Right" Cursor="Hand">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Regular" Text="Hôm nay">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=btnNgayHomNay, Path=IsMouseOver}" Value="true">
+                                                <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Border>
                     </DockPanel>
                 </Grid>

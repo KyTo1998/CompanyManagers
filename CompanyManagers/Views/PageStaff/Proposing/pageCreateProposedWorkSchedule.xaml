@@ -309,249 +309,305 @@
                         <Border.Effect>
                             <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                         </Border.Effect>
-                        <StackPanel x:Name="stp_ShowCalendar" Margin="10 0 10 0">
-                            <TextBlock FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" HorizontalAlignment="Center">
+                        <StackPanel>
+                            <StackPanel x:Name="stp_ShowCalendar" Margin="10 0 10 0">
+                                <TextBlock FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" HorizontalAlignment="Center">
                             <Run Text="Tháng"/>
                             <Run x:Name="MonthCalendar"/>
-                            </TextBlock>
-                            <Border x:Name="HeaderCalendarWork" Background="{DynamicResource colorTheme}" Margin="0 20 0 20" CornerRadius="10 10 0 0">
-                                <Grid Margin="10">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="CN" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="1" Text="T2" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="2" Text="T3" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="T4" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="4" Text="T5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="5" Text="T6" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="6" Text="T7" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Grid>
-                            </Border>
-                            <Border CornerRadius="0 0 10 10" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource colorTheme}" Margin="0 -20 0 20">
-                                <ListView x:Name="lsvLoadCalendarPicker" ItemsSource="{Binding listLichProposing,RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel Width="{Binding ElementName=HeaderCalendarWork, Path=ActualWidth}"/>
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="ListViewItem">
-                                                        <Grid Width="64.286" Height="50" Margin="0 10 0 0">
-                                                            <Border Width="40" Height="40" MouseLeftButtonDown="SelectShiftForDay" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center"  CornerRadius="50">
-                                                                <Border.Style>
-                                                                    <Style TargetType="Border">
-                                                                        <Setter Property="BorderThickness" Value="0"/>
-                                                                        <Setter Property="Background" Value="Transparent"/>
-                                                                        <Setter Property="Cursor" Value="Hand"/>
-                                                                        <Style.Triggers>
-                                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                                <Setter Property="Background" Value="LightBlue"/>
-                                                                            </Trigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding statusClick}" Value="1"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="BorderThickness" Value="1"/>
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding statusClick}" Value="2"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding statusPast}" Value="1"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Cursor" Value="No"/>
-                                                                                <Setter Property="Background" Value="Transparent"/>
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding statusClick}" Value="0"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Cursor" Value="No"/>
-                                                                                <Setter Property="Background" Value="Transparent"/>
-                                                                            </MultiDataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Border.Style>
-                                                                <Grid>
-                                                                    <Path Width="30" Height="30" Stretch="Fill" Data="{StaticResource iconClose}" StrokeThickness="1.5" Stroke="{StaticResource colorRemoveRed}">
-                                                                        <Path.Style>
-                                                                            <Style TargetType="Path">
-                                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                                                <Style.Triggers>
-                                                                                    <MultiDataTrigger>
-                                                                                        <MultiDataTrigger.Conditions>
-                                                                                            <Condition Binding="{Binding statusClick}" Value="1"/>
-                                                                                            <Condition Binding="{Binding statusPast}" Value="1"/>
-                                                                                        </MultiDataTrigger.Conditions>
-                                                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                                                    </MultiDataTrigger>
-                                                                                </Style.Triggers>
-                                                                            </Style>
-                                                                        </Path.Style>
-                                                                    </Path>
-                                                                    <TextBlock Text="{Binding DayInCalendar}" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                                        <TextBlock.Style>
-                                                                            <Style TargetType="TextBlock">
-                                                                                <Setter Property="Foreground" Value="#ACACAC"/>
-                                                                                <Style.Triggers>
-                                                                                    <MultiDataTrigger>
-                                                                                        <MultiDataTrigger.Conditions>
-                                                                                            <Condition Binding="{Binding statusClick}" Value="1"/>
-                                                                                        </MultiDataTrigger.Conditions>
-                                                                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
-                                                                                    </MultiDataTrigger>
-                                                                                    <MultiDataTrigger>
-                                                                                        <MultiDataTrigger.Conditions>
-                                                                                            <Condition Binding="{Binding statusClick}" Value="2"/>
-                                                                                        </MultiDataTrigger.Conditions>
-                                                                                        <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
-                                                                                    </MultiDataTrigger>
-                                                                                </Style.Triggers>
-                                                                            </Style>
-                                                                        </TextBlock.Style>
-                                                                    </TextBlock>
-                                                                </Grid>
-                                                            </Border>
-                                                            <Border Width="25" Height="25" CornerRadius="25" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" Margin="20,-5,-10,30" RenderTransformOrigin="1.083,0.439">
-                                                                <Border.Style>
-                                                                    <Style TargetType="Border">
-                                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                                        <Setter Property="Background" Value="{DynamicResource colorTextForTheme}"/>
-                                                                        <Style.Triggers>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding statusClick}" Value="2"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Background" Value="{StaticResource ColorRed}"/>
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding shiftSelected}" Value="0"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding statusClick}" Value="0"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                                            </MultiDataTrigger>
-                                                                            <MultiDataTrigger>
-                                                                                <MultiDataTrigger.Conditions>
-                                                                                    <Condition Binding="{Binding statusPast}" Value="1"/>
-                                                                                </MultiDataTrigger.Conditions>
-                                                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                                            </MultiDataTrigger>
-                                                                        </Style.Triggers>
-                                                                    </Style>
-                                                                </Border.Style>
-                                                                <TextBlock Text="{Binding shiftSelected}" FontSize="14" FontWeight="Regular" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                            </Border>
-                                                        </Grid>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
+                                </TextBlock>
+                                <Border x:Name="HeaderCalendarWork" Background="{DynamicResource colorTheme}" Margin="0 20 0 20" CornerRadius="10 10 0 0">
+                                    <Grid Margin="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="CN" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="1" Text="T2" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="2" Text="T3" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="3" Text="T4" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="4" Text="T5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="5" Text="T6" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <TextBlock Grid.Column="6" Text="T7" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <Border CornerRadius="0 0 10 10" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource colorTheme}" Margin="0 -20 0 20">
+                                    <ListView x:Name="lsvLoadCalendarPicker" ItemsSource="{Binding listLichProposing,RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Width="{Binding ElementName=HeaderCalendarWork, Path=ActualWidth}"/>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListViewItem">
+                                                            <Grid Width="64.286" Height="50" Margin="0 10 0 0">
+                                                                <Border Width="40" Height="40" MouseLeftButtonDown="SelectShiftForDay" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center"  CornerRadius="50">
+                                                                    <Border.Style>
+                                                                        <Style TargetType="Border">
+                                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                                            <Setter Property="Background" Value="Transparent"/>
+                                                                            <Setter Property="Cursor" Value="Hand"/>
+                                                                            <Style.Triggers>
+                                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                                    <Setter Property="Background" Value="LightBlue"/>
+                                                                                </Trigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding statusClick}" Value="1"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                                                </MultiDataTrigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding statusClick}" Value="2"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                                                </MultiDataTrigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding statusPast}" Value="1"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Cursor" Value="No"/>
+                                                                                    <Setter Property="Background" Value="Transparent"/>
+                                                                                </MultiDataTrigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding statusClick}" Value="0"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Cursor" Value="No"/>
+                                                                                    <Setter Property="Background" Value="Transparent"/>
+                                                                                </MultiDataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Border.Style>
+                                                                    <Grid>
+                                                                        <Path Width="30" Height="30" Stretch="Fill" Data="{StaticResource iconClose}" StrokeThickness="1.5" Stroke="{StaticResource colorRemoveRed}">
+                                                                            <Path.Style>
+                                                                                <Style TargetType="Path">
+                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    <Style.Triggers>
+                                                                                        <MultiDataTrigger>
+                                                                                            <MultiDataTrigger.Conditions>
+                                                                                                <Condition Binding="{Binding statusClick}" Value="1"/>
+                                                                                                <Condition Binding="{Binding statusPast}" Value="1"/>
+                                                                                            </MultiDataTrigger.Conditions>
+                                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                                        </MultiDataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Path.Style>
+                                                                        </Path>
+                                                                        <TextBlock Text="{Binding DayInCalendar}" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                            <TextBlock.Style>
+                                                                                <Style TargetType="TextBlock">
+                                                                                    <Setter Property="Foreground" Value="#ACACAC"/>
+                                                                                    <Style.Triggers>
+                                                                                        <MultiDataTrigger>
+                                                                                            <MultiDataTrigger.Conditions>
+                                                                                                <Condition Binding="{Binding statusClick}" Value="1"/>
+                                                                                            </MultiDataTrigger.Conditions>
+                                                                                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                                        </MultiDataTrigger>
+                                                                                        <MultiDataTrigger>
+                                                                                            <MultiDataTrigger.Conditions>
+                                                                                                <Condition Binding="{Binding statusClick}" Value="2"/>
+                                                                                            </MultiDataTrigger.Conditions>
+                                                                                            <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                                                                        </MultiDataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </TextBlock.Style>
+                                                                        </TextBlock>
+                                                                    </Grid>
+                                                                </Border>
+                                                                <Border Width="25" Height="25" CornerRadius="25" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" Margin="20,-5,-10,30" RenderTransformOrigin="1.083,0.439">
+                                                                    <Border.Style>
+                                                                        <Style TargetType="Border">
+                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                            <Setter Property="Background" Value="{DynamicResource colorTextForTheme}"/>
+                                                                            <Style.Triggers>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding statusClick}" Value="2"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Background" Value="{StaticResource ColorRed}"/>
+                                                                                </MultiDataTrigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding shiftSelected}" Value="0"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                </MultiDataTrigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding statusClick}" Value="0"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                </MultiDataTrigger>
+                                                                                <MultiDataTrigger>
+                                                                                    <MultiDataTrigger.Conditions>
+                                                                                        <Condition Binding="{Binding statusPast}" Value="1"/>
+                                                                                    </MultiDataTrigger.Conditions>
+                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                </MultiDataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Border.Style>
+                                                                    <TextBlock Text="{Binding shiftSelected}" FontSize="14" FontWeight="Regular" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                </Border>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </ListView>
+                                </Border>
+                                <TextBlock FontSize="18" FontWeight="Regular" >
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding statutSelectDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
                                         </Style>
-                                    </ListView.ItemContainerStyle>
-                                </ListView>
-                            </Border>
-                            <TextBlock FontSize="18" FontWeight="Regular" >
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding statutSelectDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
+                                    </TextBlock.Style>
                                 <Run Text="Chọn ca làm việc ngày: " Foreground="{DynamicResource colorText1}"/>
                                 <Run Text="{Binding dateSelectedForDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource colorTextForTheme}"/>
                                 <Run Text="của bạn" Foreground="{DynamicResource colorText1}"/>
-                            </TextBlock>
-                            <Border x:Name="borSelectedShiftForDay" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5" Margin="0 15 0 20" MouseEnter="SelectedShiftHover" MouseLeave="SelectedShiftOutHover">
-                                <Border.Style>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding statutSelectDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
-                                <ScrollViewer x:Name="scrollSelectedShiftForDay" MaxHeight="200" Margin="10">
-                                    <ItemsControl  x:Name="lsvShiftForDay" BorderThickness="0" ItemsSource="{Binding listShiftAllSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActualWidth}" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <DockPanel Margin="0 0 0 10" Cursor="Hand" MouseLeftButtonDown="SelectedShiftForDayCheckbox" Background="Transparent">
-                                                    <CheckBox IsHitTestVisible="False"  VerticalAlignment="Center" x:Name="cbSelectedShiftForDay">
-                                                        <CheckBox.Style>
-                                                            <Style TargetType="CheckBox">
-                                                                <Setter Property="Template">
-                                                                    <Setter.Value>
-                                                                        <ControlTemplate TargetType="{x:Type CheckBox}">
-                                                                            <StackPanel Orientation="Horizontal">
-                                                                                <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
-                                                                                    <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
-                                                                                </Border>
-                                                                                <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
-                                                                            </StackPanel>
-                                                                            <ControlTemplate.Triggers>
-                                                                                <Trigger Property="IsChecked" Value="False">
-                                                                                    <Setter TargetName="checkboxPath" Property="Visibility" Value="Hidden"></Setter>
-                                                                                    <Setter TargetName="checkboxBorder" Property="Background" Value="Transparent"></Setter>
-                                                                                </Trigger>
-                                                                                <Trigger Property="IsChecked" Value="True">
-                                                                                    <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
-                                                                                    <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorTheme}"></Setter>
-                                                                                </Trigger>
-                                                                                <MultiTrigger>
-                                                                                    <MultiTrigger.Conditions>
-                                                                                        <Condition Property="IsMouseOver" Value="True"/>
-                                                                                        <Condition Property="IsChecked" Value="False"/>
-                                                                                    </MultiTrigger.Conditions>
-                                                                                </MultiTrigger>
-                                                                            </ControlTemplate.Triggers>
-                                                                        </ControlTemplate>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                                <Setter Property="IsChecked" Value="False"/>
-                                                                <Style.Triggers>
-                                                                    <DataTrigger Binding="{Binding isSelecedForDay}" Value="True">
-                                                                        <Setter Property="IsChecked" Value="True"/>
-                                                                    </DataTrigger>
-                                                                </Style.Triggers>
-                                                            </Style>
-                                                        </CheckBox.Style>
-                                                    </CheckBox>
-                                                    <TextBlock FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorText1}" Text="{Binding shift_name}" />
-                                                </DockPanel>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </ScrollViewer>
-                            </Border>
+                                </TextBlock>
+                                <Border x:Name="borSelectedShiftForDay" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5" Margin="0 15 0 20" MouseEnter="SelectedShiftHover" MouseLeave="SelectedShiftOutHover">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding statutSelectDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <ScrollViewer x:Name="scrollSelectedShiftForDay" MaxHeight="200" Margin="10">
+                                        <ItemsControl  x:Name="lsvShiftForDay" BorderThickness="0" ItemsSource="{Binding listShiftAllSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl, Mode=FindAncestor}, Path=ActualWidth}" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <DockPanel Margin="0 0 0 10" Cursor="Hand" MouseLeftButtonDown="SelectedShiftForDayCheckbox" Background="Transparent">
+                                                        <CheckBox IsHitTestVisible="False"  VerticalAlignment="Center" x:Name="cbSelectedShiftForDay">
+                                                            <CheckBox.Style>
+                                                                <Style TargetType="CheckBox">
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="{x:Type CheckBox}">
+                                                                                <StackPanel Orientation="Horizontal">
+                                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                                        <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
+                                                                                    </Border>
+                                                                                    <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
+                                                                                </StackPanel>
+                                                                                <ControlTemplate.Triggers>
+                                                                                    <Trigger Property="IsChecked" Value="False">
+                                                                                        <Setter TargetName="checkboxPath" Property="Visibility" Value="Hidden"></Setter>
+                                                                                        <Setter TargetName="checkboxBorder" Property="Background" Value="Transparent"></Setter>
+                                                                                    </Trigger>
+                                                                                    <Trigger Property="IsChecked" Value="True">
+                                                                                        <Setter TargetName="checkboxBorder" Property="BorderBrush" Value="Transparent"></Setter>
+                                                                                        <Setter TargetName="checkboxBorder" Property="Background" Value="{DynamicResource colorTheme}"></Setter>
+                                                                                    </Trigger>
+                                                                                    <MultiTrigger>
+                                                                                        <MultiTrigger.Conditions>
+                                                                                            <Condition Property="IsMouseOver" Value="True"/>
+                                                                                            <Condition Property="IsChecked" Value="False"/>
+                                                                                        </MultiTrigger.Conditions>
+                                                                                    </MultiTrigger>
+                                                                                </ControlTemplate.Triggers>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter Property="IsChecked" Value="False"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding isSelecedForDay}" Value="True">
+                                                                            <Setter Property="IsChecked" Value="True"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </CheckBox.Style>
+                                                        </CheckBox>
+                                                        <TextBlock FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorText1}" Text="{Binding shift_name}" />
+                                                    </DockPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
+                                </Border>
+                                <Grid Margin="0 0 0 20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" x:Name="btnCencalCalendar" MouseLeftButtonDown="CencalCalendar" Margin="0 0 10 0" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10" Cursor="Hand">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <TextBlock HorizontalAlignment="Center" Margin="5" VerticalAlignment="Center" FontSize="16" FontWeight="Regular" Text="Hủy lịch">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="#FF5B4D"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=btnCencalCalendar, Path=IsMouseOver}" Value="true">
+                                                            <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                    <Border Grid.Column="1" x:Name="btnCreateProposing" Margin="10 0 0 0" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10" Cursor="Hand">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Regular" Text="Tạo đề xuất">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=btnCreateProposing, Path=IsMouseOver}" Value="true">
+                                                            <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
                         </StackPanel>
                     </Border>
                 </WrapPanel>

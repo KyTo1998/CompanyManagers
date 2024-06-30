@@ -211,7 +211,7 @@
                     <RowDefinition Height="6*" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0">
-                    <TextBlock x:Name="tb_TitleFunction" Foreground="{DynamicResource colorTheme}" FontSize="26" FontWeight="Medium" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="tb_TitleFunction" Foreground="{DynamicResource colorTextForTheme}" FontSize="26" FontWeight="Medium" HorizontalAlignment="Center"/>
                 </Border>
                 <ListView Grid.Row="1" x:Name="lsvListChildFunction" ScrollViewer.CanContentScroll="False" Background="Transparent" ItemsSource="{Binding dataListChildFunction, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="10 0 10 10" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListView.ItemsPanel>
