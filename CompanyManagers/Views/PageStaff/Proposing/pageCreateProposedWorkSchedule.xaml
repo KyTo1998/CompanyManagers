@@ -255,7 +255,7 @@
                                 <Run Text="Thời gian bắt đầu" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
-                                <tool:DatePicker x:Name="StartDateOnLeave" SelectedDateChange="SelectedStartDateOnLeave" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                <tool:DatePicker x:Name="StartDateWorkSchedule" SelectedDateChange="SelectedStartDateWorkSchedule" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
                             </StackPanel>
                             <StackPanel Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">

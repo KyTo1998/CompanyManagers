@@ -158,7 +158,7 @@
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="3" Margin="10">
-                        <Grid>
+                        <Grid x:Name="OnLeave">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -169,7 +169,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <StackPanel x:Name="NghiPhep">
+                            <StackPanel>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*"/>
@@ -333,6 +333,67 @@
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid x:Name="RoseRevenue" Visibility="Visible">
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding typeCategoryProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="20">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2.3*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Chu kỳ" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                                        </TextBlock>
+                                        <tool:DatePicker x:Name="StartDateRoseRevenuePeriod" SelectedDateChange="SelectedStartDateRoseRevenuePeriod" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="10 0 10 0">
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Doanh thu theo thời điểm" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                                        </TextBlock>
+                                        <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                                            <DockPanel>
+                                                <Grid>
+                                                    <TextBox x:Name="tb_InputMonneyRoseRevenue" Height="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
+                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập lý do tạo đê xuất"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=tb_InputMonneyRoseRevenue, Path=Text}" Value="">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Grid>
+                                                
+                                            </DockPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" >
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Thời điểm" Foreground="{StaticResource colorText1}"/>
+                                        </TextBlock>
+                                        <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Grid>

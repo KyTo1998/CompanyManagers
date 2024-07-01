@@ -260,7 +260,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
 
         }
+        #endregion Hoa Hồng Doanh Thu
+        private void SelectedStartDateRoseRevenuePeriod(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+        #region 
         #endregion
+        #region Commons
         private void SelectionChangeUserComfirm(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -467,5 +474,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
 
         }
+        #endregion
     }
 }

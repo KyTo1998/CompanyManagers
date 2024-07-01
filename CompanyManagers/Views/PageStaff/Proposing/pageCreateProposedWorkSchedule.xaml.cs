@@ -156,7 +156,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     listStringUserComfirm.Add(item.idQLC.ToString());
                 }
                 string StringUserComfirm = string.Join(",", listStringUserComfirm);
-                long MonthApply = ConvertToEpochTime(StartDateOnLeave.SelectedDate.Value.ToString("dd/MM/yyyy"));
+                long MonthApply = ConvertToEpochTime(StartDateWorkSchedule.SelectedDate.Value.ToString("dd/MM/yyyy"));
                 foreach (var item in listLichProposing)
                 {
                     if (item.listShiftSelectedAll != null)
@@ -248,7 +248,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 List<int> lstPastDays = GetAllPastDaysInMonth(monthSelected, yearSelected);
                 List<int> lstSaturdays = GetAllSaturdaysInMonth(monthSelected, yearSelected);
                 List<int> lstSundays = GetAllSundaysInMonth(monthSelected, yearSelected);
-                List<int> lstPastDaySeleced = GetAllPastDaysInMonth(monthSelected, yearSelected, StartDateOnLeave.SelectedDate.Value);
+                List<int> lstPastDaySeleced = GetAllPastDaysInMonth(monthSelected, yearSelected, StartDateWorkSchedule.SelectedDate.Value);
                 //Lấy ngày của tháng hiện tại
                 if (selectedStartToEnd != null)
                 {
@@ -352,7 +352,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             try
             {
                 if (dataListUserComfrim == null) { dataListUserComfrim = new List<ListUsersDuyet>(); }
-                if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateOnLeave")
+                if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateWorkSchedule")
                 {
                     statusValidate = false;
                     tb_Notication.Text = "Bạn chưa chọn lịch làm việc";
@@ -396,9 +396,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 selectedStartToEnd = SelectCalendarWork.SelectedItemSelected as typeConfirm;
                 ValidateCreatePropose("ClickSelectCalendarWork");
-                if (statusValidate == true && StartDateOnLeave.SelectedDate != null)
+                if (statusValidate == true && StartDateWorkSchedule.SelectedDate != null)
                 {
-                    LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                    LoadDataCalendarWork(StartDateWorkSchedule.SelectedDate.Value.Month, StartDateWorkSchedule.SelectedDate.Value.Year, selectedStartToEnd, listShift);
                 }
             }
             catch (Exception)
@@ -436,15 +436,15 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
        
-        private void SelectedStartDateOnLeave(object sender, SelectionChangedEventArgs e)
+        private void SelectedStartDateWorkSchedule(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                ValidateCreatePropose("SelectedStartDateOnLeave");
+                ValidateCreatePropose("SelectedStartDateWorkSchedule");
                 if (statusValidate == true)
                 {
-                    MonthCalendar.Text = StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy");
-                    LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                    MonthCalendar.Text = StartDateWorkSchedule.SelectedDate.Value.ToString("MM-yyyy");
+                    LoadDataCalendarWork(StartDateWorkSchedule.SelectedDate.Value.Month, StartDateWorkSchedule.SelectedDate.Value.Year, selectedStartToEnd, listShift);
                 }
             }
             catch (Exception)
@@ -552,12 +552,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     if (dataShiftSelected.isSeleced == "True")
                     {
                         listShift.Add(dataShiftSelected);
-                        LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                        LoadDataCalendarWork(StartDateWorkSchedule.SelectedDate.Value.Month, StartDateWorkSchedule.SelectedDate.Value.Year, selectedStartToEnd, listShift);
                     }
                     else
                     {
                         listShift.Remove(dataShiftSelected);
-                        LoadDataCalendarWork(StartDateOnLeave.SelectedDate.Value.Month, StartDateOnLeave.SelectedDate.Value.Year, selectedStartToEnd, listShift);
+                        LoadDataCalendarWork(StartDateWorkSchedule.SelectedDate.Value.Month, StartDateWorkSchedule.SelectedDate.Value.Year, selectedStartToEnd, listShift);
                     }
                 }
             }
@@ -579,7 +579,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 }
                 if (dataSelected != null)
                 {
-                    dateSelectedForDay = $"{dataSelected.DayInCalendar}-{StartDateOnLeave.SelectedDate.Value.ToString("MM-yyyy")}";
+                    dateSelectedForDay = $"{dataSelected.DayInCalendar}-{StartDateWorkSchedule.SelectedDate.Value.ToString("MM-yyyy")}";
                     if (dataSelected.listShiftSelectedAll.Count > 0)
                     {
                         foreach (var item in listShiftAllSelected)

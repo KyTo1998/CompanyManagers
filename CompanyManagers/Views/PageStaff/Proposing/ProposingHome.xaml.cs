@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static CompanyManagers.Common.Tool.DatePicker;
 using static CompanyManagers.Views.Home.ManagerHome;
 
 
@@ -71,11 +72,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 tb_CountApprovedProposing.Text = dataProposing.data.dxduyet.ToString();
                                 tb_CountNecessaryProposing.Text = dataProposing.data.dxCanduyet.ToString();
                                 listProposingHome = dataProposing.data.data.ToList();
-                                foreach (var item in listProposingHome)
+                                foreach (var itemProposingHome in listProposingHome)
                                 {
-                                    if (item.type_dx_string == null)
+                                    foreach (var itemCategoyProposing in listCategoyProposingHome)
                                     {
-                                        item.type_dx_string = listCategoyProposingHome.Find(x => x.cate_dx == item.type_dx).name_cate_dx;
+                                        if (itemProposingHome.type_dx == itemCategoyProposing.cate_dx)
+                                        {
+                                            itemProposingHome.type_dx_string = itemCategoyProposing.name_cate_dx;
+                                        }
                                     }
                                 }
                             }
