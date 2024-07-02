@@ -132,15 +132,15 @@
                                 <Run Text="Họ và tên" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
                             <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
-                                <TextBlock x:Name="tb_UserNameCreate" Text="Tô Ngọc Ký" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="Wrap" Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <TextBlock x:Name="tb_UserNameCreate" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="Wrap" Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                             </Border>
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
                             <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Loại đề xuất" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
-                            <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
-                                <TextBlock x:Name="tb_CategoryProposingCreate" Text="Đơn xin nghỉ phép" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="Wrap" Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                            <Border MinHeight="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                                <TextBlock x:Name="tb_CategoryProposingCreate" Text="Đơn xin nghỉ phép" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="NoWrap" Margin="5 0 5 0" IsHitTestVisible="False" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -157,7 +157,7 @@
                             <tool:ComboboxSelected x:Name="SelectTypeComfirm" Cursor="Hand" BorderBrush="{DynamicResource colorTheme}" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
                         </StackPanel>
                     </Grid>
-                    <Grid Grid.Row="3" Margin="10">
+                    <Grid Grid.Row="3" Margin="10 10 10 15">
                         <Grid x:Name="OnLeave">
                             <Grid.Style>
                                 <Style TargetType="Grid">
@@ -347,29 +347,28 @@
                                 </Style>
                             </Grid.Style>
                             <StackPanel>
-                                <Grid>
+                                <Grid Margin="0 0 0 15">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2.3*"/>
-                                        <ColumnDefinition Width="1.5*"/>
-                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
+                                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                             <Run Text="Chu kỳ" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <tool:DatePicker x:Name="StartDateRoseRevenuePeriod" SelectedDateChange="SelectedStartDateRoseRevenuePeriod" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
                                     </StackPanel>
-                                    <StackPanel Grid.Column="1" Margin="10 0 10 0">
+                                    <StackPanel Grid.Column="0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                             <Run Text="Doanh thu theo thời điểm" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                             <DockPanel>
-                                                <Grid>
-                                                    <TextBox x:Name="tb_InputMonneyRoseRevenue" Height="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
-                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập lý do tạo đê xuất"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                                <Grid Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,28,0">
+                                                    <TextBox x:Name="tb_InputMonneyRoseRevenue" PreviewTextInput="CheckInputNumber" TextChanged="ConverToViVnMonney" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
+                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập doanh thu"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -382,18 +381,55 @@
                                                         </TextBlock.Style>
                                                     </TextBlock>
                                                 </Grid>
-                                                
+                                                <Border Width="40" BorderThickness="1 0 0 0" CornerRadius="5" HorizontalAlignment="Right" BorderBrush="{DynamicResource colorTheme}">
+                                                    <TextBlock Text="VNĐ"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
+                                                </Border>
                                             </DockPanel>
                                         </Border>
                                     </StackPanel>
-                                    <StackPanel Grid.Column="2" >
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0 0 5 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Thời điểm" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="Tổng doanh thu" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                                        <Border Cursor="No" Height="40" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                                            <DockPanel>
+                                                <Grid>
+                                                    <TextBox IsEnabled="False" x:Name="tb_SumRoseRevenue" Text="{Binding ElementName=tb_InputMonneyRoseRevenue,Path=Text, Mode=OneWay}" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorTextForTheme}"/>
+                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Tổng doanh thu"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding ElementName=tb_SumRoseRevenue, Path=Text}" Value="">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Grid>
+                                                <Border Width="40" BorderThickness="1 0 0 0" CornerRadius="5" HorizontalAlignment="Right" BorderBrush="{DynamicResource colorTheme}">
+                                                    <TextBlock Text="VNĐ" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
+                                                </Border>
+                                            </DockPanel>
                                         </Border>
                                     </StackPanel>
+                                    <StackPanel MinHeight="40" Grid.Column="1" Margin="5 0 0 0">
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Mức doanh thu" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                                        </TextBlock>
+                                        <tool:ComboboxSelected x:Name="SelectLeverRevenue" Cursor="Hand" BorderBrush="{DynamicResource colorTheme}" SelectionChangedSelected="ClickSelectLeverRevenue" Grid.Column="0" Height="40" DisplayMemberPathSelected="tl_name" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                                    </StackPanel>
                                 </Grid>
+
                             </StackPanel>
                         </Grid>
                     </Grid>
@@ -405,7 +441,7 @@
                             </TextBlock>
                             <Border CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                 <Grid>
-                                    <TextBox x:Name="tb_InputReasonCreateProposing" Height="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
+                                    <TextBox x:Name="tb_InputReasonCreateProposing" MinHeight="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
                                     <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập lý do tạo đê xuất"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
@@ -508,6 +544,16 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" x:Name="stp_FileGim">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding typeCategoryProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="20">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
                             <TextBlock FontSize="16" FontWeight="Medium">
                                 <Run Text="Tài liệu đính kèm" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
@@ -626,7 +672,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-        </Border>
+            </Border>
         </ScrollViewer>
     </Grid>
 </UserControl>

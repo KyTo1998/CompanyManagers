@@ -179,6 +179,7 @@
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
+    <Compile Include="Models\ModelRose\dboLevelRevenue.cs" />
     <Compile Include="Models\ModelsAll\dboDatePicker.cs" />
     <Compile Include="Models\ModelsAll\dboSettingComfirm.cs" />
     <Compile Include="Models\ModelsAll\dboSettingProposing.cs" />

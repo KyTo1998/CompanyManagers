@@ -2,6 +2,7 @@
 using CompanyManagers.Controllers;
 using CompanyManagers.Models.HomeFunction;
 using CompanyManagers.Models.Logins;
+using CompanyManagers.Models.ModelRose;
 using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Models.ModelsShift;
@@ -181,6 +182,40 @@ namespace CompanyManagers.Views.Home
             get { return numberPhone; }
             set { numberPhone = value; OnPropertyChanged("NumberPhone"); }
         }
+        public List<ListPrivateLevel> _lstDataPrivateLevels;
+        public List<ListPrivateLevel> lstDataPrivateLevels
+        {
+            get { return _lstDataPrivateLevels; }
+            set { _lstDataPrivateLevels = value; OnPropertyChanged("lstDataPrivateLevels"); }
+        }
+        private List<ListPrivateType> _listPrivateTypes;
+        public List<ListPrivateType> listPrivateTypes
+        {
+            get { return _listPrivateTypes; }
+            set { _listPrivateTypes = value; OnPropertyChanged("listPrivateTypes"); }
+        }
+        private List<ListPrivateTime> _listPrivateTimes;
+        public List<ListPrivateTime> listPrivateTimes
+        {
+            get { return _listPrivateTimes; }
+            set { _listPrivateTimes = value; OnPropertyChanged("listPrivateTimes"); }
+        }
+        private List<InfoFile> _lstInfoFileCreateProposing;
+        public List<InfoFile> lstInfoFileCreateProposing
+        {
+            get { return _lstInfoFileCreateProposing; }
+            set { _lstInfoFileCreateProposing = value; OnPropertyChanged("lstInfoFileCreateProposing"); }
+        }
+        
+        private List<RevenueList> _listLeverlRevernue;
+        public List<RevenueList> listLeverlRevernue
+        {
+            get { return _listLeverlRevernue; }
+            set { _listLeverlRevernue = value; OnPropertyChanged("listLeverlRevernue"); }
+        }
+        public SettingPropose dataSettingPro { get; set; }
+        public List<ListPrivateType> listPrivateType { get; set; }
+        public List<ListPrivateTime> listPrivateTime { get; set; }
         public int userNumberConfirm { get; set; }
         public PagePopupGrayColor PagePopupGrayColor { get; set; }
         LoginHome loginHome { get; set; }
@@ -220,6 +255,7 @@ namespace CompanyManagers.Views.Home
             }
             GetSettingComfirm();
             SettingApp();
+            GetListLevelRevernue();
         }
 
         private void SettingApp()
@@ -406,13 +442,6 @@ namespace CompanyManagers.Views.Home
             }
             return pastDays;
         }
-
-        private List<InfoFile> _lstInfoFileCreateProposing;
-        public List<InfoFile> lstInfoFileCreateProposing
-        {
-            get { return _lstInfoFileCreateProposing; }
-            set {  _lstInfoFileCreateProposing = value;OnPropertyChanged("lstInfoFileCreateProposing"); }
-        }
         public void selectionFile(string[] listFile, ListView nameListUi)
         {
             try
@@ -597,7 +626,7 @@ namespace CompanyManagers.Views.Home
             {
             }
         }
-        public SettingPropose dataSettingPro {  get; set; }
+        
         public void GetSettingPropose(int catePorpose)
         {
             try
@@ -649,26 +678,7 @@ namespace CompanyManagers.Views.Home
             {
             }
         }
-        public List<ListPrivateLevel> _lstDataPrivateLevels;
-        public List<ListPrivateLevel> lstDataPrivateLevels 
-        {
-            get { return _lstDataPrivateLevels; }
-            set {  _lstDataPrivateLevels = value; OnPropertyChanged("lstDataPrivateLevels"); }
-        }
-        private List<ListPrivateType> _listPrivateTypes;
-        public List<ListPrivateType> listPrivateTypes
-        {
-            get { return _listPrivateTypes; }
-            set { _listPrivateTypes = value; OnPropertyChanged("listPrivateTypes"); }
-        }
-        private List<ListPrivateTime> _listPrivateTimes;
-        public List<ListPrivateTime> listPrivateTimes
-        {
-            get { return _listPrivateTimes; }
-            set { _listPrivateTimes = value; OnPropertyChanged("listPrivateTimes"); }
-        }
-        public List<ListPrivateType> listPrivateType { get; set; }
-        public List<ListPrivateTime> listPrivateTime { get; set; }
+        
         public async void GetSettingComfirm()
         {
             try
@@ -693,6 +703,30 @@ namespace CompanyManagers.Views.Home
             {
             }
         }
+
+        public async void GetListLevelRevernue()
+        {
+            try
+            {
+                using (WebClient request = new WebClient())
+                {
+                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
+                    request.UploadValuesCompleted += (s, e) =>
+                    {
+                        Root_LevelRevenue dataListLeverlRevernue = JsonConvert.DeserializeObject<Root_LevelRevenue>(UnicodeEncoding.UTF8.GetString(e.Result));
+                        if (dataListLeverlRevernue.data != null)
+                        {
+                            listLeverlRevernue = dataListLeverlRevernue.data.danhthuList;
+                        }
+                    };
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Rose + UrlApi.Name_Api_ListLeverlRevernue, request.Headers);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        } 
+
         public void AddFunctionSytem()
         {
             try

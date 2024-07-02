@@ -24,6 +24,9 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using CompanyManagers.Views.Login;
 using CompanyManagers.Views.Logout;
+using System.Text.RegularExpressions;
+using System.Globalization;
+using CompanyManagers.Models.ModelRose;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -74,6 +77,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _typeCategoryProposing; }
             set { _typeCategoryProposing = value;OnPropertyChanged("typeCategoryProposing");}
         }
+
         ManagerHome managerHome { set; get; }
         int typePlan {  get; set; }
         bool statusValidate {  get; set; }
@@ -83,12 +87,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             InitializeComponent();
             managerHome = _managerHome;
             dataCategoryProposing = _dataCategoryProposing;
+            txbBackToBack.Text = _dataCategoryProposing.name_cate_dx;
             typeCategoryProposing = _dataCategoryProposing.cate_dx;
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
             tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
             SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();
+            SelectLeverRevenue.ItemsSourceSelected = _managerHome.listLeverlRevernue.ToList();
         }
         
         #region Nghỉ Phép
@@ -119,17 +125,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (ShiftOnLeave.SelectedIndexSelected < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
-                    tb_ValidateProposing.Text = "Chưa ca nghỉ";
-                    statusValidate = false;
-                }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (dataListUserComfrim.Count < managerHome.userNumberConfirm)
-                {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    tb_ValidateProposing.Text = $"Số người duyệt là {managerHome.userNumberConfirm}";
+                    tb_ValidateProposing.Text = "Chưa chọn ca nghỉ";
                     statusValidate = false;
                 }
                 else
@@ -155,7 +151,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     var request = new HttpRequestMessage(HttpMethod.Post,UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CreateProposingOnLeave);
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
                     var content = new MultipartFormDataContent();
-                    content.Add(new StringContent(""), "fileKem");
                     content.Add(new StringContent(jsonString), "noi_dung");
                     content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
                     content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Custom.ToString()), "kieu_duyet");
@@ -260,14 +255,116 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
 
         }
-        #endregion Hoa Hồng Doanh Thu
+        #endregion
+
+        #region Hoa hồng doanh thu
+        public async void CreateProposingRoseRevenue()
+        {
+            try
+            {
+                if (tb_InputMonneyRoseRevenue.Text == "")
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    tb_ValidateProposing.Text = "Chưa nhập doanh thu";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (SelectLeverRevenue.SelectedIndexSelected < 0)
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    tb_ValidateProposing.Text = "Chưa chọn mức doanh thu";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (statusValidate == true)
+                {
+                    List<string> listUserConfirm = new List<string>();
+                    foreach (var item in dataListUserComfrim)
+                    {
+                        listUserConfirm.Add(item.idQLC.ToString());
+                    }
+                    string userConfirm = String.Join(",", listUserConfirm);
+
+                    var client = new HttpClient();
+                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Rose + UrlApi.Name_Api_AddProposingRose);
+                    request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token);
+                    var content = new MultipartFormDataContent();
+                    content.Add(new StringContent(managerHome.UserCurrent.user_info.ep_name), "name_user");
+                    content.Add(new StringContent(StartDateRoseRevenuePeriod.SelectedDate.Value.ToString("yyyy-MM-dd")), "item_mdt_date");
+                    content.Add(new StringContent(StartDateRoseRevenuePeriod.SelectedDate.Value.ToString("yyyy-MM")), "chu_ky");
+                    content.Add(new StringContent(((RevenueList)SelectLeverRevenue.SelectedItemSelected).tl_id.ToString()), "name_dt");
+                    content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
+                    content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Custom.ToString()), "kieu_duyet");
+                    content.Add(new StringContent(tb_InputMonneyRoseRevenue.Text.Replace(".", "")), "dt_money");
+                    content.Add(new StringContent(tb_InputReasonCreateProposing.Text), "ly_do");
+                    content.Add(new StringContent(userConfirm), "id_user_duyet");
+                    content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
+                    request.Content = content;
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        dataListUserComfrim.Clear();
+                        managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất hoa hồng thành công", ""));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất hoa hồng thất bại, vui lòng thử lại sau ít phút", ""));
+            }
+        }
+        private void ConverToViVnMonney(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            textBox.TextChanged -= ConverToViVnMonney;
+            if (decimal.TryParse(textBox.Text.Replace(".", ""), out decimal result))
+            {
+                textBox.Text = FormatNumber(result);
+                textBox.SelectionStart = textBox.Text.Length;
+            }
+            textBox.TextChanged += ConverToViVnMonney;
+        }
+        private string FormatNumber(decimal value)
+        {
+            NumberFormatInfo nfi = new NumberFormatInfo
+            {
+                NumberGroupSeparator = ".",
+                NumberDecimalDigits = 0,
+                NumberDecimalSeparator = ","
+            };
+            return value.ToString("N", nfi);
+        }
+        private void CheckInputNumber(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !IsTextAllowed(e.Text);
+        }
         private void SelectedStartDateRoseRevenuePeriod(object sender, SelectionChangedEventArgs e)
         {
-            
+
         }
-        #region 
+        private void SelectedStartDateRoseRevenueAPointInTime(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void ClickSelectLeverRevenue(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
         #endregion
+
         #region Commons
+        private static bool IsTextAllowed(string text)
+        {
+            // Chỉ cho phép các ký tự số
+            Regex regex = new Regex("[^0-9]+"); // Chỉ các số
+            return !regex.IsMatch(text);
+        }
         private void SelectionChangeUserComfirm(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -394,10 +491,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_ValidateProposing.Text = "Chưa chọn người theo dõi";
                     statusValidate = false;
                 }
-                else if (dataListUserComfrim == null)
+                else if (dataListUserComfrim.Count == 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
-                    tb_ValidateProposing.Text = "Chưa chọn người xét duyệt";
+                    tb_ValidateProposing.Text = $"chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
                     statusValidate = false;
                 }
                 else
@@ -422,6 +519,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     {
                         case 1:
                             CreateProposingOnLeave();
+                            break; 
+                        case 20:
+                            CreateProposingRoseRevenue();
                             break;
                     }
                 }

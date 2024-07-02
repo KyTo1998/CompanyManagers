@@ -35,5 +35,10 @@ namespace CompanyManagers.Controllers
         public const string Name_Api_ListShiftAll = "qlc/shift/list";
         public const string Name_Api_ListShiftForDay = "vanthu/dexuat/empShiftInDay";
         #endregion
+        #region RoseRevenue
+        public const string Url_Api_Rose = "https://api.timviec365.vn/api/";
+        public const string Name_Api_ListLeverlRevernue = "vanthu/dexuat/showMucDoanhThu";
+        public const string Name_Api_AddProposingRose = "vanthu/dexuat/addDXHH";
+        #endregion
     }
 }
