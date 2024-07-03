@@ -253,7 +253,10 @@ namespace CompanyManagers.Views.Home
                 GetListComfirmAndFollow();
                 GetListComfirmAndFollow();
             }
-            GetSettingComfirm();
+            if (Properties.Settings.Default.Type365 != "1")
+            {
+                GetSettingComfirm();
+            }
             SettingApp();
             GetListLevelRevernue();
         }
