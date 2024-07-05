@@ -226,4 +226,11 @@
         </Setter>
         <Style.Triggers />
     </Style>
+
+    <ControlTemplate x:Key="ComboBoxTextBox1" TargetType="{x:Type TextBox}">
+        <Border
+        x:Name="PART_ContentHost"
+        Background="{TemplateBinding Background}"
+        Focusable="False" />
+    </ControlTemplate>
 </ResourceDictionary>

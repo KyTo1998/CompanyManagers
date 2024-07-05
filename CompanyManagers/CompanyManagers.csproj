@@ -175,7 +175,11 @@
     <Compile Include="Common\Tool\SearchBar.xaml.cs">
       <DependentUpon>SearchBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Tool\SelectTimeCombobox.xaml.cs">
+      <DependentUpon>SelectTimeCombobox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\Extention.cs" />
+    <Compile Include="Controllers\MathConvert.cs" />
     <Compile Include="Controllers\UrlApi.cs" />
     <Compile Include="Models\HomeFunction\dboListFunction.cs" />
     <Compile Include="Models\Logins\dboLogin.cs" />
@@ -239,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Common\Tool\SearchBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Tool\SelectTimeCombobox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

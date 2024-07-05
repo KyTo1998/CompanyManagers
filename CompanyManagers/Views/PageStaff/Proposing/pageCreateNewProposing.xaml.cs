@@ -10,20 +10,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using static CompanyManagers.Common.Tool.DatePicker;
 using static CompanyManagers.Views.Home.ManagerHome;
 using Microsoft.Win32;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
-using CompanyManagers.Views.Login;
-using CompanyManagers.Views.Logout;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using CompanyManagers.Models.ModelRose;
@@ -358,6 +351,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         }
         #endregion
 
+        #region Cộng công
+        private void SelectedStartDateComfirmCongCong(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        #endregion
         #region Commons
         private static bool IsTextAllowed(string text)
         {
