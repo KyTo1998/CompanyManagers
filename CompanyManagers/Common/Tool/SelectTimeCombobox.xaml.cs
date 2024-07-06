@@ -20,26 +20,60 @@ namespace CompanyManagers.Common.Tool
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        private List<string> _listHour;
+        public List<string> listHour 
+        {
+            get { return _listHour; }
+            set
+            {
+                _listHour = value;
+                OnPropertyChanged("listHour");
+            }
+        }
+        private List<string> _listMinute;
+        public List<string> listMinute
+        {
+            get { return _listMinute; }
+            set
+            {
+                _listMinute = value;
+                OnPropertyChanged("listMinute");
+            }
+        }
+
+        private List<string> _listCa;
+        public List<string> listCa 
+        {
+            get { return _listCa; }
+            set
+            {
+                _listCa = value;
+                OnPropertyChanged("listCa");
+            }
+        }
         public SelectTimeCombobox()
         {
             InitializeComponent();
             this.DataContext = this;
-
             listMinute = new List<string>();
             for (int i = 0; i < 60; i++)
             {
                 if (i < 10) listMinute.Add("0" + i.ToString());
                 else listMinute.Add(i.ToString());
-
             }
+            listHour = new List<string>();
+            for (int i = 1;i <= 12; i++)
+            {
+                if (i < 10)
+                { listHour.Add($"0{i}");}
+                else{listHour.Add(i.ToString());}
+            }
+            listHour = listHour.ToList();
+            listCa = new List<string>() {"AM","PM"};
+            listCa = listCa.ToList();
         }
         //
         Regex regex = new Regex("[^0-9]+");
-
-        public List<string> listHour { get; set; } = new List<string> { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", };
-        public List<string> listMinute { get; set; }
-        public List<string> listCa { get; set; } = new List<string> { "AM", "PM" };
-
         public Double CornerRadius
         {
             get { return (Double)GetValue(CornerRadiusProperty); }
@@ -312,9 +346,18 @@ namespace CompanyManagers.Common.Tool
         {
             btn.IsChecked = false;
         }
-        private void lvHour_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //private void lvHour_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    var z = (sender as ListView).SelectedItem as string;
+        //    if (!string.IsNullOrEmpty(z))
+        //    {
+        //        txtH.Text = z;
+        //        Minute = "";
+        //    }
+        //}
+        private void SelectedHour(object sender, MouseButtonEventArgs e)
         {
-            var z = (sender as ListView).SelectedItem as string;
+            string z = (string)(sender as Border).DataContext;
             if (!string.IsNullOrEmpty(z))
             {
                 txtH.Text = z;

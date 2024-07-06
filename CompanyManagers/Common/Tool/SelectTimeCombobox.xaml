@@ -97,20 +97,45 @@
                                                                 <ColumnDefinition/>
                                                                 <ColumnDefinition/>
                                                             </Grid.ColumnDefinitions>
-                                                            <ListView x:Name="lvHour" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listHour}" SelectedIndex="{Binding lvHourIndex}" SelectionChanged="lvHour_SelectionChanged" Loaded="lvHour_Loaded">
+                                                            <!--SelectionChanged="lvHour_SelectionChanged"-->
+                                                            <ListView Grid.Column="0" x:Name="lvHour" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listHour}" SelectedIndex="{Binding lvHourIndex}"  Loaded="lvHour_Loaded">
                                                                 <ListView.ItemContainerStyle>
                                                                     <Style TargetType="ListViewItem">
                                                                         <Setter Property="Template">
                                                                             <Setter.Value>
                                                                                 <ControlTemplate TargetType="ListViewItem">
+                                                                                    <Border x:Name="Hour" CornerRadius="5" Cursor="Hand" MouseLeftButtonDown="SelectedHour">
+                                                                                        <Border.Style>
+                                                                                            <Style TargetType="Border">
+                                                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                                                <Style.Triggers>
+                                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                                        <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                                                                    </Trigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </Border.Style>
+                                                                                        <TextBlock Text="{Binding}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontWeight="Regular">
+                                                                                            <TextBlock.Style>
+                                                                                                <Style TargetType="TextBlock">
+                                                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                                                    <Style.Triggers>
+                                                                                                        <DataTrigger Binding="{Binding ElementName=Hour, Path=IsMouseOver}" Value="true">
+                                                                                                            <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
+                                                                                                        </DataTrigger>
+                                                                                                    </Style.Triggers>
+                                                                                                </Style>
+                                                                                            </TextBlock.Style>
+                                                                                        </TextBlock>
+                                                                                    </Border>
                                                                                 </ControlTemplate>
                                                                             </Setter.Value>
                                                                         </Setter>
                                                                     </Style>
                                                                 </ListView.ItemContainerStyle>
                                                             </ListView>
-                                                            <ListView x:Name="lvMinute" FontSize="16" FontWeight="Regular" Grid.Column="1" ItemsSource="{Binding listMinute}" SelectedIndex="{Binding lvMinuteIndex}" Loaded="lvHour_Loaded" SelectionChanged="lvMinute_SelectionChanged"></ListView>
-                                                            <ListView x:Name="lvCa" FontSize="16" FontWeight="Regular" Grid.Column="2" ItemsSource="{Binding listCa}" SelectedIndex="{Binding lvCaIndex}" Loaded="lvHour_Loaded" SelectionChanged="lvCa_SelectionChanged"></ListView>
+                                                            <ListView Grid.Column="1" x:Name="lvMinute" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listMinute}" SelectedIndex="{Binding lvMinuteIndex}" Loaded="lvHour_Loaded" SelectionChanged="lvMinute_SelectionChanged"></ListView>
+                                                            <ListView Grid.Column="2" x:Name="lvCa" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listCa}" SelectedIndex="{Binding lvCaIndex}" Loaded="lvHour_Loaded" SelectionChanged="lvCa_SelectionChanged"></ListView>
                                                         </Grid>
                                                     </DockPanel>
                                                 </Border>
