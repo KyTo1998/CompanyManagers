@@ -354,8 +354,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         #region Cộng công
         private void SelectedStartDateComfirmCongCong(object sender, SelectionChangedEventArgs e)
         {
+            string timeTest = InputTimeShift.Time;
+        } 
+        private void ClickShiftWorkCongCong(object sender, SelectionChangedEventArgs e)
+        {
 
         }
+
         #endregion
         #region Commons
         private static bool IsTextAllowed(string text)

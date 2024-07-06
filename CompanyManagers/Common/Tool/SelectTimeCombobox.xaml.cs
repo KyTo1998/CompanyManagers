@@ -51,111 +51,7 @@ namespace CompanyManagers.Common.Tool
                 OnPropertyChanged("listCa");
             }
         }
-        public SelectTimeCombobox()
-        {
-            InitializeComponent();
-            this.DataContext = this;
-            listMinute = new List<string>();
-            for (int i = 0; i < 60; i++)
-            {
-                if (i < 10) listMinute.Add("0" + i.ToString());
-                else listMinute.Add(i.ToString());
-            }
-            listHour = new List<string>();
-            for (int i = 1;i <= 12; i++)
-            {
-                if (i < 10)
-                { listHour.Add($"0{i}");}
-                else{listHour.Add(i.ToString());}
-            }
-            listHour = listHour.ToList();
-            listCa = new List<string>() {"AM","PM"};
-            listCa = listCa.ToList();
-        }
-        //
-        Regex regex = new Regex("[^0-9]+");
-        public Double CornerRadius
-        {
-            get { return (Double)GetValue(CornerRadiusProperty); }
-            set { SetValue(CornerRadiusProperty, value); }
-        }
-        public static readonly DependencyProperty CornerRadiusProperty =
-            DependencyProperty.Register("CornerRadius", typeof(Double), typeof(SelectTimeCombobox));
 
-
-
-        public string Time
-        {
-            get
-            {
-                var h = txtH.Text;
-                var m = txtM.Text;
-                var c = txtC.Text;
-                if (!string.IsNullOrEmpty(h) && !string.IsNullOrEmpty(m) && !string.IsNullOrEmpty(c))
-                {
-                    if (c == "AM")
-                    {
-
-                    }
-                    else if (c == "PM")
-                    {
-                        int k;
-                        if (int.TryParse(h, out k)) h = (k + 12).ToString();
-                    }
-
-                    return string.Format("{0}:{1}:00", h, m);
-                }
-                else
-                {
-                    return null;
-                }
-
-
-            }
-            set
-            {
-                SetValue(TimeProperty, value);
-                var z = (string)GetValue(TimeProperty);
-                if (!string.IsNullOrEmpty(z) && z.Contains(":"))
-                {
-                    var list = z.Split(':').ToList();
-                    if (list.Count >= 3)
-                    {
-                        int m, h;
-                        if (int.TryParse(list[0], out h) && h > 0)
-                        {
-                            if (h <= 12)
-                            {
-                                lvCaIndex = listCa.FindIndex(i => i == "AM");
-                                CaLam = "AM";
-                                txtC.Text = CaLam;
-
-                                Hour = list[0];
-                                txtH.Text = Hour;
-                            }
-                            else
-                            {
-                                lvCaIndex = listCa.FindIndex(i => i == "PM");
-                                CaLam = "PM";
-                                txtC.Text = CaLam;
-
-                                h = h - 12;
-                                if (h < 10) Hour = "0" + h.ToString();
-                                else Hour = h.ToString();
-
-                                txtH.Text = Hour;
-                            }
-                        }
-                        if (int.TryParse(list[1], out m) && m >= 0)
-                        {
-                            lvMinuteIndex = listMinute.FindIndex(i => i == list[1]);
-                            Minute = list[1];
-                            txtM.Text = Minute;
-                        }
-                    }
-                }
-            }
-        }
         public static readonly DependencyProperty TimeProperty = DependencyProperty.Register("Time", typeof(string), typeof(SelectTimeCombobox));
 
         private string _Hour;
@@ -236,7 +132,108 @@ namespace CompanyManagers.Common.Tool
                 OnPropertyChanged();
             }
         }
-        //gio
+        Regex regex = new Regex("[^0-9]+");
+        public Double CornerRadius
+        {
+            get { return (Double)GetValue(CornerRadiusProperty); }
+            set { SetValue(CornerRadiusProperty, value); }
+        }
+        public static readonly DependencyProperty CornerRadiusProperty =
+            DependencyProperty.Register("CornerRadius", typeof(Double), typeof(SelectTimeCombobox));
+
+        public string Time
+        {
+            get
+            {
+                var h = txtH.Text;
+                var m = txtM.Text;
+                var c = txtC.Text;
+                if (!string.IsNullOrEmpty(h) && !string.IsNullOrEmpty(m) && !string.IsNullOrEmpty(c))
+                {
+                    if (c == "AM")
+                    {
+
+                    }
+                    else if (c == "PM")
+                    {
+                        int k;
+                        if (int.TryParse(h, out k)) h = (k + 12).ToString();
+                    }
+
+                    return string.Format("{0}:{1}:00", h, m);
+                }
+                else
+                {
+                    return null;
+                }
+
+
+            }
+            set
+            {
+                SetValue(TimeProperty, value);
+                var z = (string)GetValue(TimeProperty);
+                if (!string.IsNullOrEmpty(z) && z.Contains(":"))
+                {
+                    var list = z.Split(':').ToList();
+                    if (list.Count >= 3)
+                    {
+                        int m, h;
+                        if (int.TryParse(list[0], out h) && h > 0)
+                        {
+                            if (h <= 12)
+                            {
+                                lvCaIndex = listCa.FindIndex(i => i == "AM");
+                                CaLam = "AM";
+                                txtC.Text = CaLam;
+
+                                Hour = list[0];
+                                txtH.Text = Hour;
+                            }
+                            else
+                            {
+                                lvCaIndex = listCa.FindIndex(i => i == "PM");
+                                CaLam = "PM";
+                                txtC.Text = CaLam;
+
+                                h = h - 12;
+                                if (h < 10) Hour = "0" + h.ToString();
+                                else Hour = h.ToString();
+
+                                txtH.Text = Hour;
+                            }
+                        }
+                        if (int.TryParse(list[1], out m) && m >= 0)
+                        {
+                            lvMinuteIndex = listMinute.FindIndex(i => i == list[1]);
+                            Minute = list[1];
+                            txtM.Text = Minute;
+                        }
+                    }
+                }
+            }
+        }
+        public SelectTimeCombobox()
+        {
+            InitializeComponent();
+            this.DataContext = this;
+            listMinute = new List<string>();
+            for (int i = 0; i < 60; i++)
+            {
+                if (i < 10) listMinute.Add("0" + i.ToString());
+                else listMinute.Add(i.ToString());
+            }
+            listHour = new List<string>();
+            for (int i = 1;i <= 12; i++)
+            {
+                if (i < 10)
+                { listHour.Add($"0{i}");}
+                else{listHour.Add(i.ToString());}
+            }
+            listHour = listHour.ToList();
+            listCa = new List<string>() {"AM","PM"};
+            listCa = listCa.ToList();
+        }
         private void txtH_GotFocus(object sender, RoutedEventArgs e)
         {
             Hour = "";
@@ -346,24 +343,16 @@ namespace CompanyManagers.Common.Tool
         {
             btn.IsChecked = false;
         }
-        //private void lvHour_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    var z = (sender as ListView).SelectedItem as string;
-        //    if (!string.IsNullOrEmpty(z))
-        //    {
-        //        txtH.Text = z;
-        //        Minute = "";
-        //    }
-        //}
-        private void SelectedHour(object sender, MouseButtonEventArgs e)
+        private void lvHour_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string z = (string)(sender as Border).DataContext;
+            var z = (sender as ListView).SelectedItem as string;
             if (!string.IsNullOrEmpty(z))
             {
                 txtH.Text = z;
                 Minute = "";
             }
         }
+        
         private void lvHour_Loaded(object sender, RoutedEventArgs e)
         {
             (sender as ListView).ScrollIntoView((sender as ListView).SelectedItem);

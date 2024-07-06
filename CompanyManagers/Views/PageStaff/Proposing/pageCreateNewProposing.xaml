@@ -156,23 +156,6 @@
                             </TextBlock>
                             <tool:ComboboxSelected x:Name="SelectTypeComfirm" Cursor="Hand" BorderBrush="{DynamicResource colorTheme}" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
                         </StackPanel>
-                        <StackPanel x:Name="comonAll" Grid.Column="1" Margin="5,0,0,0">
-                            <StackPanel.Style>
-                                <Style TargetType="StackPanel">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding typeCategoryProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="17">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Style>
-                            <TextBlock FontSize="16" FontWeight="Medium">
-                                    <Run Text="Thời gian xác nhận công" Foreground="{StaticResource colorText1}"/>
-                                    <Run Text="*" Foreground="{StaticResource ColorRed}"/>
-                            </TextBlock>
-                            <tool:DatePicker x:Name="StartDateComfirmCongCong" SelectedDateChange="SelectedStartDateComfirmCongCong" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
-                        </StackPanel>
                     </Grid>
                     <Grid Grid.Row="3" Margin="10 15 10 15">
                         <Grid x:Name="OnLeave">
@@ -459,23 +442,47 @@
                                     </Style.Triggers>
                                 </Style>
                             </Grid.Style>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Margin="0 0 5 0">
-                                <TextBlock FontSize="16" FontWeight="Medium">
-                                    <Run Text="Xác nhận giờ vào ca" Foreground="{StaticResource colorText1}"/>
-                                    <Run Text="*" Foreground="{StaticResource ColorRed}"/>
-                                </TextBlock>
-                                <tool:SelectTimeCombobox x:Name="InputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Margin="5 0 0 0">
-                                <TextBlock FontSize="16" FontWeight="Medium">
-                                    <Run Text="Xác nhận giờ hết ca" Foreground="{StaticResource colorText1}"/>
-                                    <Run Text="*" Foreground="{StaticResource ColorRed}"/>
-                                </TextBlock>
-                                <tool:SelectTimeCombobox x:Name="OutputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel x:Name="comonAll" Grid.Column="0" Margin="0,0,5,0">
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Thời gian xác nhận công" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                                        </TextBlock>
+                                        <tool:DatePicker x:Name="StartDateComfirmCongCong" SelectedDateChange="SelectedStartDateComfirmCongCong" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="5 0 0 0">
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Ca làm việc" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                                        </TextBlock>
+                                        <tool:ComboboxSelected x:Name="ShiftWorkCongCong" SelectionChangedSelected="ClickShiftWorkCongCong" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="0 15 0 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0 0 5 0">
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Xác nhận giờ vào ca" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                                        </TextBlock>
+                                        <tool:SelectTimeCombobox x:Name="InputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="5 0 0 0">
+                                        <TextBlock FontSize="16" FontWeight="Medium">
+                                            <Run Text="Xác nhận giờ hết ca" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                                        </TextBlock>
+                                        <tool:SelectTimeCombobox x:Name="OutputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                    </StackPanel>
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Grid>

@@ -77,7 +77,7 @@
                                                             </TextBlock>
                                                         </Border>
                                                         <Border Grid.Column="1" Background="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=Background}" CornerRadius="{Binding CornerRadius}">
-                                                            <Path Data="{StaticResource iconSearch}" Fill="{TemplateBinding Foreground}" Margin="10 0" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"></Path>
+                                                            <Path Data="{StaticResource iconSearch}" Fill="{TemplateBinding Foreground}" Width="30" Height="30" Margin="10 0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center"></Path>
                                                         </Border>
                                                     </Grid>
                                                 </Border>
@@ -87,7 +87,7 @@
                                     <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Margin="15,3,54,3" VerticalAlignment="Center" HorizontalAlignment="Left" />
                                     <TextBox x:Name="PART_EditableTextBox" Style="{x:Null}" Template="{StaticResource ComboBoxTextBox1}" FontSize="16"  Foreground="{DynamicResource colorTextForTheme}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15,0,0,0" Visibility="Hidden" IsReadOnly="{TemplateBinding IsReadOnly}"></TextBox>
                                     <Popup Name="Popup" StaysOpen="False" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" MinHeight="60" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding RelativeSource={RelativeSource AncestorType=UserControl},Path=ActualWidth}" Width="{Binding PopupMaxWith}" AllowsTransparency="True" Focusable="False" PopupAnimation="Slide" Closed="Popup_Closed">
-                                        <Grid Name="DropDown" SnapsToDevicePixels="True">
+                                        <Grid Name="DropDown" SnapsToDevicePixels="True" HorizontalAlignment="Left">
                                             <Grid Margin="0 8">
                                                 <Border Background="{DynamicResource colorWriter}" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="10">
                                                     <DockPanel Margin="10">
@@ -97,14 +97,15 @@
                                                                 <ColumnDefinition/>
                                                                 <ColumnDefinition/>
                                                             </Grid.ColumnDefinitions>
-                                                            <!--SelectionChanged="lvHour_SelectionChanged"-->
-                                                            <ListView Grid.Column="0" x:Name="lvHour" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listHour}" SelectedIndex="{Binding lvHourIndex}"  Loaded="lvHour_Loaded">
+                                                            <!--SelectedIndex="{Binding lvHourIndex}"-->
+                                                            <!--Loaded="lvHour_Loaded"-->
+                                                            <ListView Grid.Column="0" x:Name="lvHour" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listHour}" SelectionChanged="lvHour_SelectionChanged">
                                                                 <ListView.ItemContainerStyle>
                                                                     <Style TargetType="ListViewItem">
                                                                         <Setter Property="Template">
                                                                             <Setter.Value>
                                                                                 <ControlTemplate TargetType="ListViewItem">
-                                                                                    <Border x:Name="Hour" CornerRadius="5" Cursor="Hand" MouseLeftButtonDown="SelectedHour">
+                                                                                    <Border x:Name="Hour" CornerRadius="5" Cursor="Hand">
                                                                                         <Border.Style>
                                                                                             <Style TargetType="Border">
                                                                                                 <Setter Property="Background" Value="Transparent"/>
@@ -115,7 +116,7 @@
                                                                                                 </Style.Triggers>
                                                                                             </Style>
                                                                                         </Border.Style>
-                                                                                        <TextBlock Text="{Binding}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontWeight="Regular">
+                                                                                        <TextBlock Text="{Binding}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15 10 15 10" FontWeight="Regular">
                                                                                             <TextBlock.Style>
                                                                                                 <Style TargetType="TextBlock">
                                                                                                     <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
@@ -134,8 +135,81 @@
                                                                     </Style>
                                                                 </ListView.ItemContainerStyle>
                                                             </ListView>
-                                                            <ListView Grid.Column="1" x:Name="lvMinute" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listMinute}" SelectedIndex="{Binding lvMinuteIndex}" Loaded="lvHour_Loaded" SelectionChanged="lvMinute_SelectionChanged"></ListView>
-                                                            <ListView Grid.Column="2" x:Name="lvCa" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listCa}" SelectedIndex="{Binding lvCaIndex}" Loaded="lvHour_Loaded" SelectionChanged="lvCa_SelectionChanged"></ListView>
+                                                            <!--SelectedIndex="{Binding lvMinuteIndex}"-->
+                                                            <!--Loaded="lvHour_Loaded"-->
+                                                            <ListView Grid.Column="1" x:Name="lvMinute" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listMinute}"  SelectionChanged="lvMinute_SelectionChanged">
+                                                                <ListView.ItemContainerStyle>
+                                                                    <Style TargetType="ListViewItem">
+                                                                        <Setter Property="Template">
+                                                                            <Setter.Value>
+                                                                                <ControlTemplate TargetType="ListViewItem">
+                                                                                    <Border x:Name="Hour" CornerRadius="5" Cursor="Hand">
+                                                                                        <Border.Style>
+                                                                                            <Style TargetType="Border">
+                                                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                                                <Style.Triggers>
+                                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                                        <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                                                                    </Trigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </Border.Style>
+                                                                                        <TextBlock Text="{Binding}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15 10 15 10" FontWeight="Regular">
+                                                                                            <TextBlock.Style>
+                                                                                                <Style TargetType="TextBlock">
+                                                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                                                    <Style.Triggers>
+                                                                                                        <DataTrigger Binding="{Binding ElementName=Hour, Path=IsMouseOver}" Value="true">
+                                                                                                            <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
+                                                                                                        </DataTrigger>
+                                                                                                    </Style.Triggers>
+                                                                                                </Style>
+                                                                                            </TextBlock.Style>
+                                                                                        </TextBlock>
+                                                                                    </Border>
+                                                                                </ControlTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Style>
+                                                                </ListView.ItemContainerStyle>
+                                                            </ListView>
+                                                            <!--SelectedIndex="{Binding lvCaIndex}" Loaded="lvHour_Loaded"-->
+                                                            <ListView Grid.Column="2" x:Name="lvCa" FontSize="16" FontWeight="Regular" ItemsSource="{Binding listCa}" SelectionChanged="lvCa_SelectionChanged">
+                                                                <ListView.ItemContainerStyle>
+                                                                    <Style TargetType="ListViewItem">
+                                                                        <Setter Property="Template">
+                                                                            <Setter.Value>
+                                                                                <ControlTemplate TargetType="ListViewItem">
+                                                                                    <Border x:Name="Hour" CornerRadius="5" Cursor="Hand">
+                                                                                        <Border.Style>
+                                                                                            <Style TargetType="Border">
+                                                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                                                <Style.Triggers>
+                                                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                                                        <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                                                                    </Trigger>
+                                                                                                </Style.Triggers>
+                                                                                            </Style>
+                                                                                        </Border.Style>
+                                                                                        <TextBlock Text="{Binding}" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15 10 15 10" FontWeight="Regular">
+                                                                                            <TextBlock.Style>
+                                                                                                <Style TargetType="TextBlock">
+                                                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                                                    <Style.Triggers>
+                                                                                                        <DataTrigger Binding="{Binding ElementName=Hour, Path=IsMouseOver}" Value="true">
+                                                                                                            <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
+                                                                                                        </DataTrigger>
+                                                                                                    </Style.Triggers>
+                                                                                                </Style>
+                                                                                            </TextBlock.Style>
+                                                                                        </TextBlock>
+                                                                                    </Border>
+                                                                                </ControlTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Style>
+                                                                </ListView.ItemContainerStyle>
+                                                            </ListView>
                                                         </Grid>
                                                     </DockPanel>
                                                 </Border>
@@ -255,7 +329,7 @@
                         <Setter.Value>
                             <ControlTemplate>
                                 <Border Background="Transparent" Cursor="Hand">
-                                    <Path Data="{StaticResource iconDongHo}" Stroke="{DynamicResource colorTextForTheme}" Margin="0 0 10 2" VerticalAlignment="Center"/>
+                                    <Path Data="{StaticResource iconDongHo}" Width="25" Height="22" Stretch="Fill" StrokeThickness="1.5" Stroke="{DynamicResource colorText1}" Margin="0 0 10 2" VerticalAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
