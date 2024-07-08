@@ -20,6 +20,7 @@ using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using CompanyManagers.Models.ModelRose;
+using System.Windows.Markup;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -70,10 +71,20 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _typeCategoryProposing; }
             set { _typeCategoryProposing = value;OnPropertyChanged("typeCategoryProposing");}
         }
-
+        private bool _statusValidate;
+        public bool statusValidate
+        {
+            get { return _statusValidate; }
+            set { _statusValidate = value; OnPropertyChanged("statusValidate"); }
+        }
+        private string _stringValidateKey;
+        public string stringValidateKey
+        {
+            get { return _stringValidateKey; }
+            set { _stringValidateKey = value; OnPropertyChanged("stringValidateKey"); }
+        }
         ManagerHome managerHome { set; get; }
         int typePlan {  get; set; }
-        bool statusValidate {  get; set; }
         Result_CategoryProposing dataCategoryProposing;
         public pageCreateNewProposing(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing)
         {
@@ -98,6 +109,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (cbSelectYesPlan.IsChecked == false && cbSelectNoPlan.IsChecked == false)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "TypePropose";
                     tb_ValidateProposing.Text = "Chưa chọn loại đề xuất";
                     statusValidate = false;
                 }
@@ -108,6 +120,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (StartDateOnLeave.SelectedDate == null || EndDateOnLeave.SelectedDate == null)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "StartOrEndDatePropose";
                     tb_ValidateProposing.Text = "Chưa chọn ngày bắt đầu hoặc kết thúc";
                     statusValidate = false;
                 }
@@ -118,6 +131,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (ShiftOnLeave.SelectedIndexSelected < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "ShiftOnLeave";
                     tb_ValidateProposing.Text = "Chưa chọn ca nghỉ";
                     statusValidate = false;
                 }
@@ -172,6 +186,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             catch (System.Exception)
             {
+                managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thất bại, vui lòng thử lại sau ít phút", ""));
             }
         }
        
@@ -258,6 +273,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (tb_InputMonneyRoseRevenue.Text == "")
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "MonneyRoseRevenue";
                     tb_ValidateProposing.Text = "Chưa nhập doanh thu";
                     statusValidate = false;
                 }
@@ -268,6 +284,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (SelectLeverRevenue.SelectedIndexSelected < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "LeverRevenue";
                     tb_ValidateProposing.Text = "Chưa chọn mức doanh thu";
                     statusValidate = false;
                 }
@@ -352,9 +369,109 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         #endregion
 
         #region Cộng công
+        public async void CreateProposingCongCong()
+        {
+            try
+            {
+                if (StartDateComfirmCongCong.SelectedDate == null)
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "DateComfirmCongCong";
+                    tb_ValidateProposing.Text = "Chưa chọn ngày xác nhận công";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (ShiftWorkCongCong.SelectedIndexSelected == -1)
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "ShiftWorkCongCong";
+                    tb_ValidateProposing.Text = "Chưa chọn ca xác nhận công";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (InputTimeShift.txtH.Text == "" || InputTimeShift.txtM.Text == "" || InputTimeShift.txtC.Text == "")
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "InputTimeShift";
+                    tb_ValidateProposing.Text = "Chưa nhập đầy đủ giờ vào ca";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (OutputTimeShift.txtH.Text == "" || OutputTimeShift.txtM.Text == "" || OutputTimeShift.txtC.Text == "")
+                {
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "OutputTimeShift";
+                    tb_ValidateProposing.Text = "Chưa nhập đầy đủ giờ hết ca";
+                    statusValidate = false;
+                }
+                else
+                {
+                    statusValidate = true;
+                }
+                if (statusValidate == true)
+                {
+                    long StartDateFormat = ConvertToEpochTime(StartDateComfirmCongCong.SelectedDate.Value.ToString("dd/MM/yyyy")) * 1000;
+                    List<string> listUserConfirm = new List<string>();
+                    foreach (var item in dataListUserComfrim)
+                    {
+                        listUserConfirm.Add(item.idQLC.ToString());
+                    }
+                    string userConfirm = String.Join(",", listUserConfirm);
+                    var InputTimeShiftSplit = InputTimeShift.Time.Split(':');
+                    var OutputTimeShiftSplit = OutputTimeShift.Time.Split(':');
+                    var client = new HttpClient();
+                    var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Rose + UrlApi.Name_Api_CreateProposeCongCong);
+                    request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token);
+                    var content = new MultipartFormDataContent();
+                    content.Add(new StringContent(managerHome.UserCurrent.user_info.ep_name), "name_user");
+                    content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
+                    content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Custom.ToString()), "kieu_duyet");
+                    content.Add(new StringContent(tb_InputReasonCreateProposing.Text), "ly_do");
+                    content.Add(new StringContent(userConfirm), "id_user_duyet");
+                    content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
+                    int numberFile = 0;
+                    if (managerHome.lstInfoFileCreateProposing != null)
+                    {
+                        foreach (var item in managerHome.lstInfoFileCreateProposing)
+                        {
+                            content.Add(new StreamContent(File.OpenRead(item.FullName)), $"fileKem[{numberFile}]", item.FullName);
+                            numberFile++;
+                        }
+                    }
+                    content.Add(new StringContent(StartDateFormat.ToString()), "time_xnc");
+                    content.Add(new StringContent(((StaffShiftInDay)ShiftWorkCongCong.SelectedItemSelected).shift_id.ToString()), "id_ca_xnc");
+                    content.Add(new StringContent(((StaffShiftInDay)ShiftWorkCongCong.SelectedItemSelected).shift_name.ToString()), "ca_xnc");
+                    content.Add(new StringContent($"{InputTimeShiftSplit[0].ToString()}:{InputTimeShiftSplit[1].ToString()}"), "time_vao_ca");
+                    content.Add(new StringContent($"{OutputTimeShiftSplit[0].ToString()}:{OutputTimeShiftSplit[1].ToString()}"), "time_het_ca");
+                    request.Content = content;
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        dataListUserComfrim.Clear();
+                        managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất cộng công thành công", ""));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất cộng công thất bại, vui lòng thử lại sau ít phút", ""));
+            }
+        }
         private void SelectedStartDateComfirmCongCong(object sender, SelectionChangedEventArgs e)
         {
-            string timeTest = InputTimeShift.Time;
+            ShiftWorkCongCong.IsEnabled = true;
+            managerHome.GetShiftForDay(StartDateComfirmCongCong.SelectedDate.Value.ToString("yyyy-MM-dd"), managerHome.UserCurrent.user_info.ep_id.ToString());
+            managerHome.dataListStaffShiftInDay.RemoveAt(0);
+            ShiftWorkCongCong.ItemsSourceSelected = managerHome.dataListStaffShiftInDay.ToList();
         } 
         private void ClickShiftWorkCongCong(object sender, SelectionChangedEventArgs e)
         {
@@ -474,30 +591,35 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (string.IsNullOrEmpty(tb_InputNameProposing.Text))
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "NamePropose";
                     tb_ValidateProposing.Text = "Tên đề xuất không được để trống";
                     statusValidate = false;
                 }
                 else if (SelectTypeComfirm.SelectedIndexSelected < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "TypeComfirmPropose";
                     tb_ValidateProposing.Text = "Chưa chọn kiểu duyệt";
                     statusValidate = false;
                 }
                 else if (string.IsNullOrEmpty(tb_InputReasonCreateProposing.Text))
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "ReasonPropose";
                     tb_ValidateProposing.Text = "Lý do không được để trống";
                     statusValidate = false;
                 }
                 else if (SelectUserFollow.SelectedIndex < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "UserFollowPropose";
                     tb_ValidateProposing.Text = "Chưa chọn người theo dõi";
                     statusValidate = false;
                 }
-                else if (dataListUserComfrim.Count == 0)
+                else if (dataListUserComfrim == null || dataListUserComfrim.Count == 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "UserComfrimPropose";
                     tb_ValidateProposing.Text = $"chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
                     statusValidate = false;
                 }
@@ -526,6 +648,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             break; 
                         case 20:
                             CreateProposingRoseRevenue();
+                            break;
+                        case 17:
+                            CreateProposingCongCong();
                             break;
                     }
                 }

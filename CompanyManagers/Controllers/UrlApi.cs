@@ -25,6 +25,7 @@ namespace CompanyManagers.Controllers
         public const string Name_Api_GetSettingComfirm = "vanthu/dexuat/settingConfirm";
         public const string Name_Api_ListComfrimFollow = "vanthu/dexuat/showadd";
         public const string Name_Api_CreateProposeCalendarWork = "vanthu/dexuat/De_Xuat_Lich_Lam_Viec";
+        public const string Name_Api_CreateProposeCongCong = "vanthu/dexuat/addDXC";
         #endregion
         #region Staff
         public const string Url_Api_Staff = "https://api.timviec365.vn/api/";

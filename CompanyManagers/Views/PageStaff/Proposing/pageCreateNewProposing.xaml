@@ -6,6 +6,16 @@
              xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" MinHeight="690" MinWidth="860" MaxWidth="1000" MaxHeight="800">
+    <UserControl.Resources>
+        <Storyboard x:Key="BlinkingEffect">
+            <ColorAnimation
+             Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+             From="Red" To="Yellow"
+             Duration="0:0:0.5"
+             AutoReverse="True"
+             RepeatBehavior="Forever" />
+        </Storyboard>
+    </UserControl.Resources>
     <Grid>
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <Border CornerRadius="10" Height="{Binding ElementName=detailProposing, Path=ActualHeight}" PreviewMouseWheel="ScollCreateProposing" BorderThickness="0.5" BorderBrush="LightBlue" Background="{StaticResource colorBackgroundItem1}">
@@ -109,7 +119,31 @@
                                 <Run Text="Tên đề xuất" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <Border MinHeight="40" CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                            <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="NamePropose">
+                                                <Setter Property="BorderThickness" Value="2"/>
+                                                <DataTrigger.EnterActions>
+                                                    <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
+                                                </DataTrigger.EnterActions>
+                                                <DataTrigger.ExitActions>
+                                                    <StopStoryboard BeginStoryboardName="BlinkingEffect" />
+                                                </DataTrigger.ExitActions>
+                                            </DataTrigger>
+                                            <!--<MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                    <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="NamePropose"/>
+                                                </MultiDataTrigger.Conditions>
+                                                
+                                            </MultiDataTrigger>-->
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <Grid>
                                     <TextBox x:Name="tb_InputNameProposing" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
                                     <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="Nhập tên đề xuất" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
@@ -431,7 +465,7 @@
                                 </Grid>
                             </StackPanel>
                         </Grid>
-                        <Grid x:Name="CongCong" Visibility="Visible">
+                        <Grid x:Name="CongCong">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -460,7 +494,7 @@
                                             <Run Text="Ca làm việc" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:ComboboxSelected x:Name="ShiftWorkCongCong" SelectionChangedSelected="ClickShiftWorkCongCong" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                                        <tool:ComboboxSelected x:Name="ShiftWorkCongCong" IsEnabled="False" SelectionChangedSelected="ClickShiftWorkCongCong" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Margin="0 15 0 0">

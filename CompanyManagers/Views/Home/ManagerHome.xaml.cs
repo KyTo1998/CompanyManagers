@@ -596,26 +596,35 @@ namespace CompanyManagers.Views.Home
             }
         }
 
-        public async void GetShiftForDay(string dateShift, string idStaff)
+        public void GetShiftForDay(string dateShift, string idStaff)
         {
             try
             {
-                var client = HttpClientSingleton.Instance;
-                var request = new HttpRequestMessage(HttpMethod.Post,UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftForDay);
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
-                var content = new MultipartFormDataContent();
-                content.Add(new StringContent(dateShift), "day");
+                var data = new object();
                 if (Properties.Settings.Default.Type365 == "1")
                 {
-                    content.Add(new StringContent(idStaff), "ep_id");
+                    data = new
+                    {
+                        day = dateShift,
+                        ep_id = idStaff,
+                    };
                 }
-                request.Content = content;
-                var response = await client.SendAsync(request);
-                if (response.EnsureSuccessStatusCode().IsSuccessStatusCode)
+                else
                 {
-                    var resContent = await response.Content.ReadAsStringAsync();
-                    Root_StaffShiftInDay dataStaffShiftInDay = JsonConvert.DeserializeObject<Root_StaffShiftInDay>(resContent);
-                    if (dataStaffShiftInDay.list != null)
+                    data = new
+                    {
+                        day = dateShift,
+                    };
+                }    
+                string jsonData = JsonConvert.SerializeObject(data);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftForDay, "POST", jsonData);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_StaffShiftInDay dataStaffShiftInDay = JsonConvert.DeserializeObject<Root_StaffShiftInDay>(Encoding.UTF8.GetString(bytesData));
+                    if (dataStaffShiftInDay != null)
                     {
                         StaffShiftInDay dataShift = new StaffShiftInDay();
                         dataShift.shift_name = "Cả ngày(tất cả các ca)";
