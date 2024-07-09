@@ -225,6 +225,7 @@ namespace CompanyManagers.Views.Home
         {
             InitializeComponent();
             this.DataContext = this;
+            backToBack = "Home";
             UserCurrent = userCurrent;
             loginHome = _loginHome;
             switch (userCurrent.type)
@@ -895,6 +896,7 @@ namespace CompanyManagers.Views.Home
                 {
                     ListFunction lstFunction = new ListFunction(this);
                     PageFunction.Content = lstFunction;
+                    backToBack = "Home";
                 }
                 else if(backToBack == "BackToProposingHome")
                 {
