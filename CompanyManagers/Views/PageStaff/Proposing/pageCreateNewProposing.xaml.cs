@@ -113,22 +113,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_ValidateProposing.Text = "Chưa chọn loại đề xuất";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (StartDateOnLeave.SelectedDate == null || EndDateOnLeave.SelectedDate == null)
+                else if (StartDateOnLeave.SelectedDate == null || EndDateOnLeave.SelectedDate == null)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     stringValidateKey = "StartOrEndDatePropose";
                     tb_ValidateProposing.Text = "Chưa chọn ngày bắt đầu hoặc kết thúc";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (ShiftOnLeave.SelectedIndexSelected < 0)
+                else if (ShiftOnLeave.SelectedIndexSelected < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     stringValidateKey = "ShiftOnLeave";
@@ -138,9 +130,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 else
                 {
                     statusValidate = true;
-                }
-                if (statusValidate)
-                {
                     var data = new lstJsonOnLeave();
                     foreach (var item in listShiftSelect)
                     {
@@ -208,6 +197,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     if (listShiftSelect.Count > 0)
                     {
                         lsvListShifForDay.Visibility = Visibility.Visible;
+                        stringValidateKey = "null";
                     }
                 }
             }
@@ -277,11 +267,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_ValidateProposing.Text = "Chưa nhập doanh thu";
                     statusValidate = false;
                 }
-                else
+                else if (StartDateRoseRevenuePeriod.SelectedDate == null)
                 {
-                    statusValidate = true;
+                    tb_ValidateProposing.Visibility = Visibility.Visible;
+                    stringValidateKey = "DateRoseRevenuePeriod";
+                    tb_ValidateProposing.Text = "Chưa chọn chu kỳ doanh thu";
+                    statusValidate = false;
                 }
-                if (SelectLeverRevenue.SelectedIndexSelected < 0)
+                else if (SelectLeverRevenue.SelectedIndexSelected < 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     stringValidateKey = "LeverRevenue";
@@ -289,10 +282,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     statusValidate = false;
                 }
                 else
-                {
-                    statusValidate = true;
-                }
-                if (statusValidate == true)
                 {
                     List<string> listUserConfirm = new List<string>();
                     foreach (var item in dataListUserComfrim)
@@ -380,33 +369,21 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_ValidateProposing.Text = "Chưa chọn ngày xác nhận công";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (ShiftWorkCongCong.SelectedIndexSelected == -1)
+                else if (ShiftWorkCongCong.SelectedIndexSelected == -1)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     stringValidateKey = "ShiftWorkCongCong";
                     tb_ValidateProposing.Text = "Chưa chọn ca xác nhận công";
                     statusValidate = false;
                 }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (InputTimeShift.txtH.Text == "" || InputTimeShift.txtM.Text == "" || InputTimeShift.txtC.Text == "")
+                else if (InputTimeShift.txtH.Text == "" || InputTimeShift.txtM.Text == "" || InputTimeShift.txtC.Text == "")
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     stringValidateKey = "InputTimeShift";
                     tb_ValidateProposing.Text = "Chưa nhập đầy đủ giờ vào ca";
                     statusValidate = false;
-                }
-                else
-                {
-                    statusValidate = true;
-                }
-                if (OutputTimeShift.txtH.Text == "" || OutputTimeShift.txtM.Text == "" || OutputTimeShift.txtC.Text == "")
+                } 
+                else if (OutputTimeShift.txtH.Text == "" || OutputTimeShift.txtM.Text == "" || OutputTimeShift.txtC.Text == "")
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     stringValidateKey = "OutputTimeShift";
@@ -414,10 +391,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     statusValidate = false;
                 }
                 else
-                {
-                    statusValidate = true;
-                }
-                if (statusValidate == true)
                 {
                     long StartDateFormat = ConvertToEpochTime(StartDateComfirmCongCong.SelectedDate.Value.ToString("dd/MM/yyyy")) * 1000;
                     List<string> listUserConfirm = new List<string>();
@@ -590,38 +563,49 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 if (string.IsNullOrEmpty(tb_InputNameProposing.Text))
                 {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    stringValidateKey = "NamePropose";
-                    tb_ValidateProposing.Text = "Tên đề xuất không được để trống";
-                    statusValidate = false;
+               
+                        tb_ValidateProposing.Visibility = Visibility.Visible;
+                        stringValidateKey = "NamePropose";
+                        tb_ValidateProposing.Text = "Tên đề xuất không được để trống";
+                        statusValidate = false;
+                   
+                    
                 }
                 else if (SelectTypeComfirm.SelectedIndexSelected < 0)
                 {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    stringValidateKey = "TypeComfirmPropose";
-                    tb_ValidateProposing.Text = "Chưa chọn kiểu duyệt";
-                    statusValidate = false;
+                   
+                        tb_ValidateProposing.Visibility = Visibility.Visible;
+                        stringValidateKey = "TypeComfirmPropose";
+                        tb_ValidateProposing.Text = "Chưa chọn kiểu duyệt";
+                        statusValidate = false;
+                   
+                    
                 }
                 else if (string.IsNullOrEmpty(tb_InputReasonCreateProposing.Text))
                 {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    stringValidateKey = "ReasonPropose";
-                    tb_ValidateProposing.Text = "Lý do không được để trống";
-                    statusValidate = false;
+                   
+                        tb_ValidateProposing.Visibility = Visibility.Visible;
+                        stringValidateKey = "ReasonPropose";
+                        tb_ValidateProposing.Text = "Lý do không được để trống";
+                        statusValidate = false;
+                   
                 }
                 else if (SelectUserFollow.SelectedIndex < 0)
                 {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    stringValidateKey = "UserFollowPropose";
-                    tb_ValidateProposing.Text = "Chưa chọn người theo dõi";
-                    statusValidate = false;
+                    
+                        tb_ValidateProposing.Visibility = Visibility.Visible;
+                        stringValidateKey = "UserFollowPropose";
+                        tb_ValidateProposing.Text = "Chưa chọn người theo dõi";
+                        statusValidate = false;
+                    
                 }
                 else if (dataListUserComfrim == null || dataListUserComfrim.Count == 0)
                 {
-                    tb_ValidateProposing.Visibility = Visibility.Visible;
-                    stringValidateKey = "UserComfrimPropose";
-                    tb_ValidateProposing.Text = $"chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
-                    statusValidate = false;
+                        tb_ValidateProposing.Visibility = Visibility.Visible;
+                        stringValidateKey = "UserComfrimPropose";
+                        tb_ValidateProposing.Text = $"chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
+                        statusValidate = false;
+                   
                 }
                 else
                 {

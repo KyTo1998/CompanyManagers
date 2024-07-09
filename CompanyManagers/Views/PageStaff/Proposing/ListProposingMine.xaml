@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <Storyboard x:Key="BlinkingEffect">
             <ColorAnimation
-                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                 From="Red" To="Yellow"
                 Duration="0:0:0.5"
                 AutoReverse="True"

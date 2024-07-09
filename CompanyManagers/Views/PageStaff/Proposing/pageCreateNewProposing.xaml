@@ -6,16 +6,6 @@
              xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" MinHeight="690" MinWidth="860" MaxWidth="1000" MaxHeight="800">
-    <UserControl.Resources>
-        <Storyboard x:Key="BlinkingEffect">
-            <ColorAnimation
-             Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
-             From="Red" To="Yellow"
-             Duration="0:0:0.5"
-             AutoReverse="True"
-             RepeatBehavior="Forever" />
-        </Storyboard>
-    </UserControl.Resources>
     <Grid>
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <Border CornerRadius="10" Height="{Binding ElementName=detailProposing, Path=ActualHeight}" PreviewMouseWheel="ScollCreateProposing" BorderThickness="0.5" BorderBrush="LightBlue" Background="{StaticResource colorBackgroundItem1}">
@@ -125,22 +115,14 @@
                                         <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
                                         <Setter Property="BorderThickness" Value="1"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="NamePropose">
-                                                <Setter Property="BorderThickness" Value="2"/>
-                                                <DataTrigger.EnterActions>
-                                                    <BeginStoryboard Storyboard="{StaticResource BlinkingEffect}"/>
-                                                </DataTrigger.EnterActions>
-                                                <DataTrigger.ExitActions>
-                                                    <StopStoryboard BeginStoryboardName="BlinkingEffect" />
-                                                </DataTrigger.ExitActions>
-                                            </DataTrigger>
-                                            <!--<MultiDataTrigger>
+                                            <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                     <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="NamePropose"/>
+                                                    <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                 </MultiDataTrigger.Conditions>
-                                                
-                                            </MultiDataTrigger>-->
+                                                <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                <Setter Property="BorderThickness" Value="1.3"/>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
@@ -188,7 +170,25 @@
                                 <Run Text="Kiểu kiểm duyệt" Foreground="{StaticResource colorText1}"/>
                                  <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <tool:ComboboxSelected x:Name="SelectTypeComfirm" Cursor="Hand" BorderBrush="{DynamicResource colorTheme}" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                            <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="TypeComfirmPropose"/>
+                                                    <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                <Setter Property="BorderThickness" Value="1.3"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <tool:ComboboxSelected x:Name="SelectTypeComfirm" BorderThickness="0" BorderBrush="Transparent" Cursor="Hand" SelectionChangedSelected="ClickSelectTypeComfirm" Grid.Column="0" Height="40" DisplayMemberPathSelected="name_Custom" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                            </Border>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="3" Margin="10 15 10 15">
@@ -218,7 +218,23 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="{x:Type CheckBox}">
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                                                <Setter Property="BorderThickness" Value="1"/>
+                                                                                <Style.Triggers>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="TypePropose"/>
+                                                                                            <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                                                        <Setter Property="BorderThickness" Value="1.3"/>
+                                                                                    </MultiDataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
                                                                         <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
                                                                     </Border>
                                                                     <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
@@ -258,7 +274,23 @@
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="{x:Type CheckBox}">
                                                                 <StackPanel Orientation="Horizontal">
-                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20" BorderBrush="{DynamicResource colorTheme}" BorderThickness="1" CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                    <Border x:Name="checkboxBorder" Width="20" Height="20"  CornerRadius="3" Background="Transparent" Margin="0"  VerticalAlignment="Center" Cursor="Hand">
+                                                                        <Border.Style>
+                                                                            <Style TargetType="Border">
+                                                                                <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                                                <Setter Property="BorderThickness" Value="1"/>
+                                                                                <Style.Triggers>
+                                                                                    <MultiDataTrigger>
+                                                                                        <MultiDataTrigger.Conditions>
+                                                                                            <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="TypePropose"/>
+                                                                                            <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                                        </MultiDataTrigger.Conditions>
+                                                                                        <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                                                        <Setter Property="BorderThickness" Value="1.3"/>
+                                                                                    </MultiDataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Border.Style>
                                                                         <Path x:Name="checkboxPath" Width="15" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="Uniform" Data="{StaticResource iconCheck}" Stroke="#FFFFFF" StrokeThickness="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"></Path>
                                                                     </Border>
                                                                     <ContentPresenter VerticalAlignment="Center" Margin="5 0 0 0"/>
@@ -302,21 +334,75 @@
                                         <Run Text="Ngày bắt đầu nghỉ" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:DatePicker x:Name="StartDateOnLeave" SelectedDateChange="SelectedStartDateOnLeave" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="StartOrEndDatePropose"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:DatePicker x:Name="StartDateOnLeave" SelectedDateChange="SelectedStartDateOnLeave" BorderThickness="0" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        </Border>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="10 0 10 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                         <Run Text="Ngày kết thúc nghỉ" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:DatePicker x:Name="EndDateOnLeave" SelectedDateChange="SelectedEndDateOnLeave" IsEnabled="False" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="StartOrEndDatePropose"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:DatePicker x:Name="EndDateOnLeave" SelectedDateChange="SelectedEndDateOnLeave" IsEnabled="False" BorderThickness="0" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        </Border>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="10 0 10 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                         <Run Text="Ca nghỉ" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:ComboboxSelected x:Name="ShiftOnLeave" SelectionChangedSelected="ClickShiftOnLeave" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="ShiftOnLeave"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:ComboboxSelected x:Name="ShiftOnLeave" SelectionChangedSelected="ClickShiftOnLeave" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                                        </Border>
                                     </StackPanel>
                                 </Grid>
                                 <DataGrid Name="lsvListShifForDay" Visibility="Collapsed" Style="{StaticResource DataGrid1}" LoadingRow="LoadNumRowShifForDay" ItemsSource="{Binding listShiftSelect, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 15 0 10" MinRowHeight="40" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -391,14 +477,48 @@
                                             <Run Text="Chu kỳ" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:DatePicker x:Name="StartDateRoseRevenuePeriod" SelectedDateChange="SelectedStartDateRoseRevenuePeriod" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="DateRoseRevenuePeriod"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:DatePicker x:Name="StartDateRoseRevenuePeriod" SelectedDateChange="SelectedStartDateRoseRevenuePeriod" BorderThickness="0" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        </Border>
                                     </StackPanel>
                                     <StackPanel Grid.Column="0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                             <Run Text="Doanh thu theo thời điểm" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                                        <Border Height="40" Cursor="Hand" CornerRadius="5">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="MonneyRoseRevenue"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
                                             <DockPanel>
                                                 <Grid Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,28,0">
                                                     <TextBox x:Name="tb_InputMonneyRoseRevenue" PreviewTextInput="CheckInputNumber" TextChanged="ConverToViVnMonney" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
@@ -432,7 +552,23 @@
                                             <Run Text="Tổng doanh thu" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <Border Cursor="No" Height="40" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                                        <Border Cursor="No" Height="40" CornerRadius="5">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="MonneyRoseRevenue"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
                                             <DockPanel>
                                                 <Grid>
                                                     <TextBox IsEnabled="False" x:Name="tb_SumRoseRevenue" Text="{Binding ElementName=tb_InputMonneyRoseRevenue,Path=Text, Mode=OneWay}" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorTextForTheme}"/>
@@ -460,7 +596,25 @@
                                             <Run Text="Mức doanh thu" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:ComboboxSelected x:Name="SelectLeverRevenue" Cursor="Hand" BorderBrush="{DynamicResource colorTheme}" SelectionChangedSelected="ClickSelectLeverRevenue" Grid.Column="0" Height="40" DisplayMemberPathSelected="tl_name" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                                        <Border Height="40" Cursor="Hand" CornerRadius="5">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="LeverRevenue"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:ComboboxSelected x:Name="SelectLeverRevenue" Cursor="Hand" SelectionChangedSelected="ClickSelectLeverRevenue" Grid.Column="0" Height="40" DisplayMemberPathSelected="tl_name" PlaceHolderSelected="Chọn kiểu duyệt" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"></tool:ComboboxSelected>
+                                        </Border>
                                     </StackPanel>
                                 </Grid>
                             </StackPanel>
@@ -487,14 +641,50 @@
                                             <Run Text="Thời gian xác nhận công" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:DatePicker x:Name="StartDateComfirmCongCong" SelectedDateChange="SelectedStartDateComfirmCongCong" BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="DateComfirmCongCong"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:DatePicker x:Name="StartDateComfirmCongCong" SelectedDateChange="SelectedStartDateComfirmCongCong" BorderThickness="0" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        </Border>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5 0 0 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                             <Run Text="Ca làm việc" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:ComboboxSelected x:Name="ShiftWorkCongCong" IsEnabled="False" SelectionChangedSelected="ClickShiftWorkCongCong" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="ShiftWorkCongCong"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:ComboboxSelected x:Name="ShiftWorkCongCong" IsEnabled="False" SelectionChangedSelected="ClickShiftWorkCongCong" BorderThickness="0" MinHeight="40" DisplayMemberPathSelected="shift_name" PlaceHolderSelected="Chọn ca làm việc" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                                        </Border>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Margin="0 15 0 0">
@@ -507,14 +697,50 @@
                                             <Run Text="Xác nhận giờ vào ca" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:SelectTimeCombobox x:Name="InputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="InputTimeShift"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:SelectTimeCombobox x:Name="InputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="0" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        </Border>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5 0 0 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
                                             <Run Text="Xác nhận giờ hết ca" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
-                                        <tool:SelectTimeCombobox x:Name="OutputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                    <Style.Triggers>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="OutputTimeShift"/>
+                                                                <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                            <Setter Property="BorderThickness" Value="1.3"/>
+                                                        </MultiDataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <tool:SelectTimeCombobox x:Name="OutputTimeShift" Foreground="{DynamicResource colorTextForTheme}" BorderThickness="0" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5"/>
+                                        </Border>
                                     </StackPanel>
                                 </Grid>
                             </StackPanel>
@@ -526,7 +752,23 @@
                                 <Run Text="Lý do" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <Border CornerRadius="5" Cursor="Hand" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
+                            <Border CornerRadius="5" Cursor="Hand">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="ReasonPropose"/>
+                                                    <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                <Setter Property="BorderThickness" Value="1.3"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <Grid>
                                     <TextBox x:Name="tb_InputReasonCreateProposing" MinHeight="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
                                     <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập lý do tạo đê xuất"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -555,7 +797,23 @@
                                 <Run Text="Người xét duyệt" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <Border BorderThickness="1" MinHeight="40" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5">
+                            <Border MinHeight="40" CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="UserComfrimPropose"/>
+                                                    <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                <Setter Property="BorderThickness" Value="1.3"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <Grid>
                                     <Border x:Name="btnDeleteUserConfirmAll" MouseLeftButtonDown="DeleteUserConfirmAll" Cursor="Hand" Visibility="Collapsed" CornerRadius="20" Width="15" Height="15" Margin="455,1,2,50" >
                                         <Border.Style>
@@ -622,7 +880,25 @@
                                 <Run Text="Người theo dõi" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
-                            <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="1" CornerRadius="5" BorderBrush="{DynamicResource colorTheme}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="Chọn người theo dõi" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
+                            <Border MinHeight="40" CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                        <Setter Property="BorderThickness" Value="1"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding stringValidateKey, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="UserFollowPropose"/>
+                                                    <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
+                                                <Setter Property="BorderThickness" Value="1.3"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="0" CornerRadius="5" BorderBrush="{DynamicResource colorTheme}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="Chọn người theo dõi" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
+                            </Border>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Row="6" Margin="10">

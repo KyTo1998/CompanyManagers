@@ -262,7 +262,7 @@
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="Background" Value="Transparent"></Setter>
-                            <Setter Property="Foreground" Value="{DynamicResource colorText1}"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"></Setter>
                             <Style.Triggers>
                                 <Trigger Property="IsFocused" Value="True">
                                     <Setter Property="Background" Value="{DynamicResource colorTextForTheme}"></Setter>
@@ -294,7 +294,7 @@
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="Background" Value="Transparent"></Setter>
-                            <Setter Property="Foreground" Value="{DynamicResource colorText1}"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"></Setter>
                             <Style.Triggers>
                                 <Trigger Property="IsFocused" Value="True">
                                     <Setter Property="Background" Value="{DynamicResource colorTheme}"></Setter>

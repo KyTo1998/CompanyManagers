@@ -90,6 +90,18 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             set { _statusValidate = value; OnPropertyChanged("statusValidate"); }
         }
 
+        private bool _statusShowButton;
+        public bool statusShowButton
+        {
+            get { return _statusShowButton; }
+            set { _statusShowButton = value; OnPropertyChanged("statusShowButton"); }
+        }
+        private string _stringValidateKey;
+        public string stringValidateKey
+        {
+            get { return _stringValidateKey; }
+            set { _stringValidateKey = value; OnPropertyChanged("stringValidateKey"); }
+        }
         private List<lichlamviec> _listLichProposing;
 
         public List<lichlamviec> listLichProposing
@@ -352,35 +364,41 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             try
             {
                 if (dataListUserComfrim == null) { dataListUserComfrim = new List<ListUsersDuyet>(); }
-                if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateWorkSchedule")
-                {
-                    statusValidate = false;
-                    tb_Notication.Text = "Bạn chưa chọn lịch làm việc";
-                }
-                else if (tb_InputNameProposing.Text == "")
+                if (tb_InputNameProposing.Text == "")
                 {
                     statusValidate = false;
                     tb_Notication.Text = "Bạn chưa nhập tên đề xuất";
-                }
-                else if (tb_InputReasonCreateProposing.Text == "")
-                {
-                    statusValidate = false;
-                    tb_Notication.Text = "Bạn chưa nhập lý do tạo đề xuất";
+                    stringValidateKey = "NameProposing";
                 }
                 else if (SelectTypeComfirm.SelectedIndexSelected < 0)
                 {
                     statusValidate = false;
                     tb_Notication.Text = "Bạn chưa chọn kiểu duyệt";
+                    stringValidateKey = "TypeComfirm";
                 }
                 else if (dataListUserComfrim.Count == 0)
                 {
                     statusValidate = false;
                     tb_Notication.Text = $"Bạn chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
+                    stringValidateKey = "UserComfrim";
+                }
+                else if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateWorkSchedule")
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = "Bạn chưa chọn lịch làm việc";
+                    stringValidateKey = "CalendarWork";
+                }
+                else if (tb_InputReasonCreateProposing.Text == "")
+                {
+                    statusValidate = false;
+                    tb_Notication.Text = "Bạn chưa nhập lý do tạo đề xuất";
+                    stringValidateKey = "Reason";
                 }
                 else if (SelectUserFollow.SelectedIndex < 0)
                 {
                     statusValidate = false;
                     tb_Notication.Text = "Bạn chưa chọn người theo dõi";
+                    stringValidateKey = "UserFollow";
                 }
                 else
                 {
@@ -443,6 +461,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 ValidateCreatePropose("SelectedStartDateWorkSchedule");
                 if (statusValidate == true)
                 {
+                    statusShowButton = true;
                     MonthCalendar.Text = StartDateWorkSchedule.SelectedDate.Value.ToString("MM-yyyy");
                     LoadDataCalendarWork(StartDateWorkSchedule.SelectedDate.Value.Month, StartDateWorkSchedule.SelectedDate.Value.Year, selectedStartToEnd, listShift);
                 }

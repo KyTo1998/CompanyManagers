@@ -270,7 +270,7 @@
                 </TextBlock.Style>
             </TextBlock>
         </Grid>
-        <Border Background="{Binding Background}" CornerRadius="{Binding CornerRadius}" Grid.Column="1" BorderThickness="0 0 1 0" BorderBrush="{StaticResource ColorGreen}" VerticalAlignment="Center" HorizontalAlignment="Right" Cursor="Hand">
+        <Border Background="{Binding Background}" CornerRadius="{Binding CornerRadius}" Grid.Column="1" BorderThickness="0" BorderBrush="{StaticResource ColorGreen}" VerticalAlignment="Center" HorizontalAlignment="Right" Cursor="Hand">
             <CheckBox Name="btn">
                 <CheckBox.Template>
                     <ControlTemplate>

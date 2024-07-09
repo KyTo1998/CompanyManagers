@@ -50,7 +50,7 @@
                                     <ToggleButton Name="ToggleButton" Grid.Column="2" Focusable="false" BorderThickness="{TemplateBinding BorderThickness}" Foreground="{TemplateBinding Foreground}"  BorderBrush="{TemplateBinding BorderBrush}" IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press" Click="ToggleButton_Click">
                                         <ToggleButton.Template>
                                             <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                <Border BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5">
+                                                <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition />
