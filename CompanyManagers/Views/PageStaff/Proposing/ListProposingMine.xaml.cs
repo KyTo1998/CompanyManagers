@@ -1,15 +1,20 @@
 ﻿using CompanyManagers.Controllers;
 using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsPageStaff;
+using CompanyManagers.Models.ModelsShift;
 using CompanyManagers.Views.Home;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -64,7 +69,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         List<string> typeWait = new List<string>() {"0","6","7","10","11" };
         ManagerHome managerHome { get; set; }
         BrushConverter br = new BrushConverter();
-        public ListProposingMine(ManagerHome _managerHome, List<Result_CategoryProposing> listCateProHome)
+        public ListProposingMine(ManagerHome _managerHome, List<Result_CategoryProposing> listCateProHome, string typeClickAtHomePropose)
         {
             InitializeComponent();
             managerHome = _managerHome;
@@ -73,9 +78,28 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             searchKeyCateProRespon.ItemsSource = listCateProHome;
             searchKeySend.ItemsSource = _managerHome.dataListStaffAll;
             ClickSend.Background = new SolidColorBrush(Colors.LightBlue);
-            typeClickProposing = 1;
-            typeClickFilterProposing = 1;
             GetProposingSendToAll();
+            if (typeClickAtHomePropose == "AllToHome")
+            {
+                typeClickProposing = 1;                                        
+                typeClickFilterProposing = 1;
+            }
+            else if (typeClickAtHomePropose == "WaitComfirmToHome")
+            {
+                typeClickProposing = 1;
+                LoadFilterWait();
+            }
+            else if(typeClickAtHomePropose == "NecessaryComfirmToHome")
+            {
+                typeClickProposing = 2;
+                typeClickFilterProposing = 2;
+                ClickRespon.Background = new SolidColorBrush(Colors.LightBlue);
+                ClickSend.Background = (Brush)br.ConvertFrom("#F8F8F8");
+                ClickFollow.Background = (Brush)br.ConvertFrom("#F8F8F8");
+                GetProposingSendToMe();
+                LoadFilterWait();
+            }
+            
         }
 
         public void LoadDataProposing(Root_ProposingSendAll dataProposing)
@@ -108,37 +132,55 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             statusError = 0;
             LoadingSpinner.Visibility = System.Windows.Visibility.Visible;
         }
-        public async void GetProposingSendToAll()
+        public void GetProposingSendToAll()
         {
             try
             {
                 StartApi();
-                using (WebClient request = new WebClient())
+                var data = new object();
+                if (searchKeySend.SelectedItem != null && ((Info_StaffAll)searchKeySend.SelectedItem).ep_id > 0)
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
-                    if (searchKeySend.SelectedItem != null && ((Info_StaffAll)searchKeySend.SelectedItem).ep_id > 0)
+                    data = new
                     {
-                        request.QueryString.Add("id_user_duyet", ((Info_StaffAll)searchKeySend.SelectedItem).ep_id.ToString());
-                    }
-                    if (dateTimeStartSend.SelectedDate != null || dateTimeStopSend.SelectedDate != null)
-                    {
-                        request.QueryString.Add("time_s", dateTimeStartSend.SelectedDate.Value.ToString("yyyy-MM-dd"));
-                        request.QueryString.Add("time_e", dateTimeStopSend.SelectedDate.Value.ToString("yyyy-MM-dd"));
-                    }
-                    request.QueryString.Add("pageSize", "1000");
-                    request.UploadValuesCompleted += (s, e) =>
-                    {
-                        try
-                        {
-                            Root_ProposingSendAll dataProposingSendAll = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(e.Result));
-                            LoadDataProposing(dataProposingSendAll);
-                        }
-                        catch (Exception)
-                        {
-                            LoadErroGetApi();
-                        }
+                        id_user_duyet = ((Info_StaffAll)searchKeySend.SelectedItem).ep_id.ToString()
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToAll, request.QueryString);
+                }
+                else if (dateTimeStartSend.SelectedDate != null || dateTimeStopSend.SelectedDate != null)
+                {
+                    data = new
+                    {
+                        time_s = dateTimeStartSend.SelectedDate.Value.ToString("yyyy-MM-dd"),
+                        time_e = dateTimeStopSend.SelectedDate.Value.ToString("yyyy-MM-dd")
+                    };
+                }
+                else if (searchKeySend.SelectedItem != null && ((Info_StaffAll)searchKeySend.SelectedItem).ep_id > 0 && dateTimeStartSend.SelectedDate != null || dateTimeStopSend.SelectedDate != null)
+                {
+                    data = new
+                    {
+                        id_user_duyet = ((Info_StaffAll)searchKeySend.SelectedItem).ep_id.ToString(),
+                        time_s = dateTimeStartSend.SelectedDate.Value.ToString("yyyy-MM-dd"),
+                        time_e = dateTimeStopSend.SelectedDate.Value.ToString("yyyy-MM-dd")
+                    };
+                }
+                string jsonData = JsonConvert.SerializeObject(data);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToAll, "POST", jsonData);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_ProposingSendAll dataProposingSendAll = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(bytesData));
+                    try
+                    {
+                        if (dataProposingSendAll != null)
+                        {
+                            LoadDataProposing(dataProposingSendAll);
+                        } 
+                    }
+                    catch (Exception)
+                    {
+                        LoadErroGetApi();
+                    }
                 }
             }
             catch (Exception)
@@ -146,13 +188,100 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 LoadErroGetApi();
             }
         }
-
-        public async void GetProposingSendToMe()
+        Thread threadSendToMe;
+        public void GetProposingSendToMe()
         {
             try
             {
-                StartApi();
-                using (WebClient request = new WebClient())
+                
+                    Dispatcher.Invoke(() =>
+                    {
+                        StartApi();
+                    });
+                    List<Dictionary<string, string>> data = new List<Dictionary<string, string>>();
+                    if (searchKeyRespon.SelectedItem != null && ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id > 0)
+                    {
+                        Dictionary<string, string> newItem = new Dictionary<string, string>
+                    {
+                        { "id_user", ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id.ToString() }
+                    };
+                        data.Add(newItem);
+                    }
+                    if (tb_SearchProposing.Text != "")
+                    {
+                        Dictionary<string, string> newItem = new Dictionary<string, string>
+                    {
+                        { "name_dx", tb_SearchProposing.Text }
+                    };
+                        data.Add(newItem);
+                    }
+                    if (searchKeyCateProRespon.SelectedItem != null && ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id > 0)
+                    {
+                        Dictionary<string, string> newItem = new Dictionary<string, string>
+                    {
+                        { "type_dx", ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id.ToString() }
+                    };
+                        data.Add(newItem);
+                    }
+                    if (dateTimeStartRespon.SelectedDate != null || dateTimeStartRespon.SelectedDate != null)
+                    {
+                        Dictionary<string, string> newItem = new Dictionary<string, string>
+                    {
+                        { "time_s", ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id.ToString() },
+                        { "time_e", ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id.ToString() }
+                    };
+                        data.Add(newItem);
+                    }
+                    Dictionary<string, string> newItemAll = new Dictionary<string, string>
+                    {
+                        { "pageSize", "1000" }
+                    };
+                    data.Add(newItemAll);
+                    string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+                    if (jsonData.StartsWith("["))
+                    {
+                        jsonData = jsonData.Substring(1);
+                    }
+                    if (jsonData.EndsWith("]"))
+                    {
+                        jsonData = jsonData.Substring(0, jsonData.Length - 1);
+                    }
+                    jsonData = jsonData.Replace("\r", "").Replace("\n", "").Replace(" ", "");
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    threadSendToMe = new Thread(() =>
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToMe, "POST", jsonData);
+                            byte[] bytesData = Encoding.Default.GetBytes(resData);
+                            try
+                            {
+                                Root_ProposingSendAll dataProposingSendToMe = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(bytesData));
+                                if (dataProposingSendToMe != null)
+                                {
+                                    LoadDataProposing(dataProposingSendToMe);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                Dispatcher.Invoke(() =>
+                                {
+                                    LoadErroGetApi();
+                                });
+
+                            }
+                        });
+                        threadSendToMe.Start();
+                    });
+                    
+                    
+                }
+                
+                
+                /*using (WebClient request = new WebClient())
                 {
                     request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     if (searchKeyRespon.SelectedItem != null && ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id > 0)
@@ -186,7 +315,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToMe, request.QueryString);
-                }
+                }*/
             }
             catch (Exception)
             {
@@ -194,29 +323,36 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
 
-        public async void GetProposingFollow(int type)
+        public void GetProposingFollow(int type)
         {
             try
             {
                 StartApi();
+                var data = new object();
+                data = new
+                {
+                    type = type.ToString(),
+                    pageSize = "1000"
+                };
+                string jsonData = JsonConvert.SerializeObject(data);
                 using (WebClient request = new WebClient())
                 {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
-                    request.QueryString.Add("type", type.ToString());
-                    request.QueryString.Add("pageSize", "1000");
-                    request.UploadValuesCompleted += (s, e) =>
+                    request.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    request.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = request.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingFollow, "POST", jsonData);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_ProposingSendAll dataProposingFollow = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(bytesData));
+                    try
                     {
-                        try
+                        if (dataProposingFollow != null)
                         {
-                            Root_ProposingSendAll dataProposingFollow = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(e.Result));
                             LoadDataProposing(dataProposingFollow);
                         }
-                        catch (Exception)
-                        {
-                            LoadErroGetApi();
-                        }
-                    };
-                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingFollow, request.QueryString);
+                    }
+                    catch (Exception)
+                    {
+                        LoadErroGetApi();
+                    }
                 }
             }
             catch (Exception)
@@ -316,21 +452,26 @@ namespace CompanyManagers.Views.PageStaff.Proposing
 
         private void FilterWait(object sender, MouseButtonEventArgs e)
         {
+            LoadFilterWait();
+        }
+
+        private void LoadFilterWait()
+        {
             typeClickFilterProposing = 2;
             if (typeClickProposing == 3)
             {
                 GetProposingFollow(typeClickFilterProposing);
             }
             List<ListProposingSendAll> listProposingSendAllSearch = new List<ListProposingSendAll>();
-                foreach (var item in listProposingSendAllLocal)
+            foreach (var item in listProposingSendAllLocal)
+            {
+                if (typeWait.Contains(item.type_duyet))
                 {
-                    if (typeWait.Contains(item.type_duyet))
-                    {
-                        listProposingSendAllSearch.Add(item);
-                    }
+                    listProposingSendAllSearch.Add(item);
                 }
-                ListProposingSendAll.UpdateOrder(listProposingSendAllSearch);
-                listProposingSendAll = listProposingSendAllSearch.ToList();
+            }
+            ListProposingSendAll.UpdateOrder(listProposingSendAllSearch);
+            listProposingSendAll = listProposingSendAllSearch.ToList();
         }
         private void FilterOverdue(object sender, MouseButtonEventArgs e)
         {

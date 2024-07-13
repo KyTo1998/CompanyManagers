@@ -39,7 +39,7 @@
                         <Path Data="{StaticResource iconLoadingTime}" RenderTransformOrigin=".5,.5" Margin="0 0 10 0" Height="25" Width="25" Stretch="Fill">
                             <Path.Style>
                                 <Style TargetType="Path">
-                                    <Setter Property="Fill" Value="{StaticResource colorTextForTheme}"/>
+                                    <Setter Property="Fill" Value="{DynamicResource colorTextForTheme}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=ViewCreateProposing, Path=IsMouseOver}" Value="true">
                                             <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
@@ -118,7 +118,7 @@
                     <TextBlock Text="Tổng số đề xuất" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
-            <Border Grid.Column="1" Cursor="Hand" Margin="10 0 10 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+            <Border Grid.Column="1" MouseLeftButtonDown="ProposeWaitComfirm" Cursor="Hand" Margin="10 0 10 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
@@ -127,13 +127,13 @@
                     <TextBlock Text="Đề xuất đang chờ duyệt" TextAlignment="Center" TextWrapping="Wrap" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
-            <Border Grid.Column="2" Cursor="Hand" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+            <Border Grid.Column="2" MouseLeftButtonDown="ProposeNecessaryComfirm" Cursor="Hand" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
-                    <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
+                    <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
             <Border Grid.Column="3" Cursor="Hand" Margin="10 0 0 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
@@ -141,8 +141,8 @@
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock x:Name="tb_CountApprovedProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
-                    <TextBlock Text="Đề xuất đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{StaticResource colorTextForTheme}"/>
+                    <TextBlock x:Name="tb_CountApprovedProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="Đề xuất đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
         </Grid>

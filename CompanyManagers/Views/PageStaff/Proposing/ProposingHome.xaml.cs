@@ -157,7 +157,33 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome);
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome,"AllToHome");
+                managerHome.PageFunction.Content = listProposingMine;
+                managerHome.backToBack = "BackToProposingHome";
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void ProposeWaitComfirm(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "WaitComfirmToHome");
+                managerHome.PageFunction.Content = listProposingMine;
+                managerHome.backToBack = "BackToProposingHome";
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void ProposeNecessaryComfirm(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "NecessaryComfirmToHome");
                 managerHome.PageFunction.Content = listProposingMine;
                 managerHome.backToBack = "BackToProposingHome";
             }

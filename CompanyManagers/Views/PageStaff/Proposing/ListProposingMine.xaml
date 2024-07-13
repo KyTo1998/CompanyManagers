@@ -713,7 +713,7 @@
                                             <Condition Binding="{Binding typeClickFilterProposing, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"></Condition>
                                             <Condition Binding="{Binding ElementName=CLickGivingUp, Path=IsEnabled}" Value="true"></Condition>
                                         </MultiDataTrigger.Conditions>
-                                        <Setter Property="Foreground" Value="{StaticResource colorTextForTheme}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                     </MultiDataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
@@ -721,7 +721,7 @@
                                             <Condition Binding="{Binding ElementName=CLickGivingUp, Path=IsEnabled}" Value="true"></Condition>
                                             <Condition Binding="{Binding ElementName=CLickGivingUp, Path=IsMouseOver}" Value="false"></Condition>
                                         </MultiDataTrigger.Conditions>
-                                        <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource colorText1}"/>
                                     </MultiDataTrigger>
                                 </Style.Triggers>
                             </Style>
