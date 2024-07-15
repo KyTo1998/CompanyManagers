@@ -253,69 +253,31 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
                     threadSendToMe = new Thread(() =>
                     {
-                        Dispatcher.Invoke(() =>
+                        var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToMe, "POST", jsonData);
+                        byte[] bytesData = Encoding.Default.GetBytes(resData);
+                        try
                         {
-                            var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToMe, "POST", jsonData);
-                            byte[] bytesData = Encoding.Default.GetBytes(resData);
-                            try
-                            {
-                                Root_ProposingSendAll dataProposingSendToMe = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(bytesData));
-                                if (dataProposingSendToMe != null)
-                                {
-                                    LoadDataProposing(dataProposingSendToMe);
-                                }
-                            }
-                            catch (Exception)
+                            Root_ProposingSendAll dataProposingSendToMe = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(bytesData));
+                            if (dataProposingSendToMe != null)
                             {
                                 Dispatcher.Invoke(() =>
                                 {
-                                    LoadErroGetApi();
+                                    LoadDataProposing(dataProposingSendToMe);
                                 });
-
                             }
-                        });
-                        threadSendToMe.Start();
-                    });
-                    
-                    
-                }
-                
-                
-                /*using (WebClient request = new WebClient())
-                {
-                    request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
-                    if (searchKeyRespon.SelectedItem != null && ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id > 0)
-                    {
-                        request.QueryString.Add("id_user", ((Info_StaffAll)searchKeyRespon.SelectedItem).ep_id.ToString());
-                    }
-                    if (tb_SearchProposing.Text != null || tb_SearchProposing.Text != "")
-                    {
-                        request.QueryString.Add("name_dx", tb_SearchProposing.Text);
-                    }
-                    if (searchKeyCateProRespon.SelectedItem != null && ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id > 0)
-                    {
-                        request.QueryString.Add("type_dx", ((Result_CategoryProposing)searchKeyCateProRespon.SelectedItem)._id.ToString());
-                    }
-                    if (dateTimeStartRespon.SelectedDate != null || dateTimeStartRespon.SelectedDate != null)
-                    {
-                        request.QueryString.Add("time_s", dateTimeStartRespon.SelectedDate.Value.ToString("yyyy-MM-dd"));
-                        request.QueryString.Add("time_e", dateTimeStopRespon.SelectedDate.Value.ToString("yyyy-MM-dd"));
-                    }
-                    request.QueryString.Add("pageSize", "1000");
-                    request.UploadValuesCompleted += (s, e) =>
-                    {
-                        try
-                        {
-                            Root_ProposingSendAll dataProposingSendToMe = JsonConvert.DeserializeObject<Root_ProposingSendAll>(UnicodeEncoding.UTF8.GetString(e.Result));
-                            LoadDataProposing(dataProposingSendToMe);
                         }
                         catch (Exception)
                         {
-                            LoadErroGetApi();
+                            Dispatcher.Invoke(() =>
+                            {
+                                LoadErroGetApi();
+                            });
+
                         }
-                    };
-                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ProposingSendToMe, request.QueryString);
-                }*/
+                    });
+                    threadSendToMe.Start();
+
+                }
             }
             catch (Exception)
             {
