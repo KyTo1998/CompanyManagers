@@ -191,5 +191,18 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
             }
         }
+
+        private void ProposeApprovedProposing(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "ProposeApprovedProposing");
+                managerHome.PageFunction.Content = listProposingMine;
+                managerHome.backToBack = "BackToProposingHome";
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

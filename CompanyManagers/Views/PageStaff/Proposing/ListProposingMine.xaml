@@ -406,9 +406,9 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" BorderThickness="0 0 1 0" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16" DisplayMemberPath="ep_name"/>
-                    <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
-                    <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
+                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16" DisplayMemberPath="ep_name"/>
+                    <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
+                    <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
                     <DockPanel Grid.Column="3" MouseLeftButtonUp="SearchProposingSendTo" Background="Transparent" Cursor="Hand">
                         <TextBlock Text="Tìm kiếm" Foreground="{DynamicResource colorTheme}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"/>
                     </DockPanel>
@@ -434,8 +434,8 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeyRespon" BorderThickness="0 0 1 0" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người gửi đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16"/>
-                    <tool:SearchBar x:Name="searchKeyCateProRespon" BorderThickness="0 0 1 0" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" FontSize="16" DisplayMemberPath="name_cate_dx"/>
+                    <tool:SearchBar x:Name="searchKeyRespon" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người gửi đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16"/>
+                    <tool:SearchBar x:Name="searchKeyCateProRespon" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" FontSize="16" DisplayMemberPath="name_cate_dx"/>
                     <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5">
                         <Grid>
                             <TextBox x:Name="tb_SearchProposing" Height="40" MinWidth="200" Margin="5 10 5 -5" TextChanged="SearchProposing" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
@@ -453,8 +453,8 @@
                             </TextBlock>
                         </Grid>
                     </Border>
-                    <tool:DatePicker x:Name="dateTimeStartRespon" Grid.Column="3" Cursor="Hand" SelectedDateChange="TimeSearchStartRespon"/>
-                    <tool:DatePicker x:Name="dateTimeStopRespon" Grid.Column="4" Cursor="Hand" SelectedDateChange="TimeSearchStopRespon"/>
+                    <tool:DatePicker x:Name="dateTimeStartRespon" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="3" Cursor="Hand" SelectedDateChange="TimeSearchStartRespon"/>
+                    <tool:DatePicker x:Name="dateTimeStopRespon" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="4" Cursor="Hand" SelectedDateChange="TimeSearchStopRespon"/>
                     <DockPanel Grid.Column="5" Cursor="Hand" MouseLeftButtonUp="SearchProposingSendToMe" Background="Transparent">
                         <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Medium"/>
                     </DockPanel>

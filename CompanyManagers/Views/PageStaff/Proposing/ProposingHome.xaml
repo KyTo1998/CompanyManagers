@@ -136,7 +136,7 @@
                     <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
-            <Border Grid.Column="3" Cursor="Hand" Margin="10 0 0 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+            <Border Grid.Column="3" MouseLeftButtonDown="ProposeApprovedProposing" Cursor="Hand" Margin="10 0 0 0"  CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
