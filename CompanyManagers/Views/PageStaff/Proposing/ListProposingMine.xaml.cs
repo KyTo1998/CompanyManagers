@@ -95,20 +95,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             else if(_typeClickAtHomePropose == "NecessaryComfirmToHome")
             {
                 typeClickProposing = 2;
-                GetProposingSendToMe();
-                ClickRespon.Background = new SolidColorBrush(Colors.LightBlue);
-                ClickSend.Background = (Brush)br.ConvertFrom("#F8F8F8");
-                ClickFollow.Background = (Brush)br.ConvertFrom("#F8F8F8");
+                LoadUiClickRespon();
             }
             else if(_typeClickAtHomePropose == "ProposeApprovedProposing")
             {
                 typeClickProposing = 2;
-                GetProposingSendToMe();
-                ClickRespon.Background = new SolidColorBrush(Colors.LightBlue);
-                ClickSend.Background = (Brush)br.ConvertFrom("#F8F8F8");
-                ClickFollow.Background = (Brush)br.ConvertFrom("#F8F8F8");
+                LoadUiClickRespon();
             }
-            
         }
 
         public void LoadDataProposing(Root_ProposingSendAll dataProposing)
@@ -396,12 +389,16 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             typeClickProposing = 2;
             typeClickFilterProposing = 1;
             typeClickAtHomePropose = "";
+            LoadUiClickRespon();
+        }
+        
+        private void LoadUiClickRespon()
+        {
             ClickRespon.Background = new SolidColorBrush(Colors.LightBlue);
             ClickSend.Background = (Brush)br.ConvertFrom("#F8F8F8");
             ClickFollow.Background = (Brush)br.ConvertFrom("#F8F8F8");
             GetProposingSendToMe();
         }
-        
 
         private void MouseClickFollow(object sender, MouseButtonEventArgs e)
         {

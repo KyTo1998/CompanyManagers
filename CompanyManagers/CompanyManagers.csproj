@@ -216,6 +216,9 @@
     <Compile Include="Views\PageStaff\Proposing\pageCreateProposedWorkSchedule.xaml.cs">
       <DependentUpon>pageCreateProposedWorkSchedule.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PageStaff\Proposing\pageViewDetailPropose.xaml.cs">
+      <DependentUpon>pageViewDetailPropose.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PageStaff\Proposing\ProposingHome.xaml.cs">
       <DependentUpon>ProposingHome.xaml</DependentUpon>
     </Compile>
@@ -323,6 +326,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PageStaff\Proposing\pageCreateProposedWorkSchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PageStaff\Proposing\pageViewDetailPropose.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
