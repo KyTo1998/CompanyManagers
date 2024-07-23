@@ -192,6 +192,7 @@
     <Compile Include="Models\ModelsAll\ListShiftInCompany.cs" />
     <Compile Include="Models\ModelsAll\ListUserComfirmAndFollow.cs" />
     <Compile Include="Models\ModelsPageStaff\dboCategoryProposing.cs" />
+    <Compile Include="Models\ModelsPageStaff\dboDetailPropose.cs" />
     <Compile Include="Models\ModelsPageStaff\dboProposingHome.cs" />
     <Compile Include="Models\ModelsPageStaff\dboProposingSendToAll.cs" />
     <Compile Include="Models\ModelsShift\StaffShiftInDay.cs" />

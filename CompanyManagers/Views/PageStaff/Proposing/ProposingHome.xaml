@@ -163,7 +163,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListViewItem">
-                                        <Border CornerRadius="10" Margin="5 10 10 10" Cursor="Hand" Background="{StaticResource colorBackgroundItem1}">
+                                        <Border CornerRadius="10" MouseLeftButtonDown="ShowHomeToDetailPropose" Margin="5 10 10 10" Cursor="Hand" Background="{StaticResource colorBackgroundItem1}">
                                             <Border.Effect>
                                                 <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                                             </Border.Effect>
