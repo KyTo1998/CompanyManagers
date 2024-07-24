@@ -1,13 +1,17 @@
-﻿using System;
+﻿using CompanyManagers.Controllers;
+using CompanyManagers.Models.ModelsShift;
+using CompanyManagers.Views.Home;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 
 namespace CompanyManagers.Models.ModelsPageStaff
 {
-    // Root_DetailPropose myDeserializedClass = JsonConvert.DeserializeObject<Root_DetailPropose>(myJsonResponse);
-
     public class BaoLuuTin
     {
         public int new_id { get; set; }
@@ -42,7 +46,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
             }
             get
             {
-                return DateTimeOffset.FromUnixTimeSeconds(thoi_gian_tao).ToLocalTime().ToString("dd-MM/yyyy HH:mm tt ");
+                return DateTimeOffset.FromUnixTimeMilliseconds(thoi_gian_tao).ToLocalTime().ToString("dd/MM/yyyy - HH:mm tt ");
             }
         }
         public int loai_de_xuat { get; set; }
@@ -89,8 +93,34 @@ namespace CompanyManagers.Models.ModelsPageStaff
     public class LichSuDuyet
     {
         public string ng_duyet { get; set; }
-        public int type_duyet { get; set; }
+        public string type_duyet { get; set; }
+        public string status_duyet
+        {
+            get
+            {
+                switch (type_duyet)
+                {
+                    case "1": return "đã tiếp nhận đề xuất";
+                    case "2": return "đã duyệt đề xuất";
+                    case "3": return "đã Từ chối đề xuất";
+                    default: return "";
+                }
+            }
+            set { type_duyet = value; }
+        }
         public DateTime time { get; set; }
+
+        public string time_string
+        {
+            get
+            {
+                var dateTimeOffsetUtc = new DateTimeOffset(time, TimeSpan.Zero);
+                var dateTimeOffsetVn = dateTimeOffsetUtc.ToOffset(TimeSpan.FromHours(7));
+                return dateTimeOffsetVn.ToString("dd-MM-yyyy HH:mm:ss");
+            }
+            set { }
+        }
+       
     }
 
     public class NguoiTheoDoi
@@ -113,7 +143,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public BaoLuuDiem bao_luu_diem { get; set; }
         public GhimTin ghim_tin { get; set; }
         public CongDiemNtd cong_diem_ntd { get; set; }
-        public NghiPhep nghi_phep { get; set; }
+        public NghiPhep_DetailPropose nghi_phep { get; set; }
         public DoiCa doi_ca { get; set; }
         public TamUng tam_ung { get; set; }
         public CapPhatTaiSan cap_phat_tai_san { get; set; }
@@ -136,5 +166,67 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public NghiPhepRaNgoai nghi_phep_ra_ngoai { get; set; }
         public NhapNgayNhanLuong nhap_ngay_nhan_luong { get; set; }
         public XinTaiTaiLieu xin_tai_tai_lieu { get; set; }
+    }
+    public class Nd
+    {
+        public int Order { get; set; }
+        public string bd_nghi { get; set; }
+        public string kt_nghi { get; set; }
+        public string ca_nghi { get; set; }
+
+        private string shiftName;
+        public string ca_nghi_string
+        {
+            get 
+            { 
+                if(ca_nghi == null)
+                {
+                    return "Nghỉ cả ngày(tất cả các ca)";
+                }
+                else
+                {
+                    UpdateShiftName(); return shiftName;
+                }
+            }
+            set { shiftName = value; }
+        }
+        public string _id { get; set; }
+
+        public void UpdateShiftName()
+        {
+            var data = new
+            {
+                day = bd_nghi
+            };
+            string jsonData = JsonConvert.SerializeObject(data);
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                var resData = webClient.UploadString(UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftForDay, "POST", jsonData);
+                byte[] bytesData = Encoding.Default.GetBytes(resData);
+                Root_StaffShiftInDay dataStaffShiftInDay = JsonConvert.DeserializeObject<Root_StaffShiftInDay>(Encoding.UTF8.GetString(bytesData));
+                if (dataStaffShiftInDay != null)
+                {
+                    shiftName = dataStaffShiftInDay.list.Find(x => x.shift_id == ca_nghi.ToString())?.shift_name;
+                }
+            }
+        }
+
+        public static void UpdateOrder(List<Nd> dataList)
+        {
+            for (int i = 0; i < dataList.Count; i++)
+            {
+                dataList[i].Order = i + 1;
+            }
+        }
+    }
+
+    public class NghiPhep_DetailPropose
+    {
+        public List<Nd> nd { get; set; }
+        public int? ng_ban_giao_CRM { get; set; }
+        public int? loai_np { get; set; }
+        public string ly_do { get; set; }
     }
 }

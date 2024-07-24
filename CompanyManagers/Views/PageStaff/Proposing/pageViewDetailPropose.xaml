@@ -4,21 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
-             mc:Ignorable="d">
+             mc:Ignorable="d" MinWidth="500" MaxWidth="950">
     <Grid>
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-            <Border MinWidth="500" MaxWidth="1000" CornerRadius="10" Background="{StaticResource colorTextMessage}" >
-                <WrapPanel PreviewMouseWheel="ScollCreateProposing" HorizontalAlignment="Center" >
-                    <Border Grid.Column="0" Height="{Binding ElementName=stp_InforPropose, Path=ActualHeight}" MinWidth="520" MaxWidth="580" x:Name="InforPropose" Margin="0 10 10 0" CornerRadius="10" Background="WhiteSmoke">
+            <Border CornerRadius="10" Background="{StaticResource colorTextMessage}">
+                <WrapPanel x:Name="wap_ShowDetailPropose" Margin="0 10 0 10" PreviewMouseWheel="ScollCreateProposing" HorizontalAlignment="Center">
+                    <Border Grid.Column="0" Height="{Binding ElementName=stp_InforPropose, Path=ActualHeight}" MinWidth="520" MaxWidth="580" VerticalAlignment="Top" x:Name="InforPropose" Margin="0 10 10 0" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="15" Background="WhiteSmoke">
                         <Border.Effect>
                             <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                         </Border.Effect>
                         <StackPanel>
                             <StackPanel x:Name="stp_InforPropose">
-                                <Border CornerRadius="5" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource colorTextForTheme}">
+                                <Border CornerRadius="15" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource colorTheme}" Background="{DynamicResource colorTheme}">
                                     <DockPanel>
-                                        <TextBlock Text="Chi tiết đề xuất" Margin="10 0 0 0" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center"/>
-                                        <Path Data="{StaticResource iconPrinter}" Margin="0 10 10 10" Height="30" Width="30" Stretch="Fill" Fill="{DynamicResource colorTheme}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Chi tiết đề xuất" Margin="10 0 0 0" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorWriter}" VerticalAlignment="Center"/>
+                                        <Path Data="{StaticResource iconPrinter}" Margin="0 10 10 10" Height="30" Width="30" Stretch="Fill" Fill="{DynamicResource colorWriter}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     </DockPanel>
                                 </Border>
                                 <Grid>
@@ -27,33 +27,104 @@
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" Margin="10">
-                                        <TextBlock x:Name="tb_NamePropose" Margin="0 5 0 5" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
+                                        <TextBlock x:Name="tb_NamePropose" Margin="0 5 0 5" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorText1}" TextWrapping="Wrap"/>
                                         <TextBlock Text="Thông tin đề xuất" Margin="0 5 0 5" FontSize="16" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
-                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular">
-                                            <Run Text="Nhóm đề xuất:" Foreground="{DynamicResource colorText1}"/>
-                                            <Run x:Name="tb_GroundPropose"  Foreground="{DynamicResource colorTextForTheme}"/>
-                                        </TextBlock>
-                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular">
-                                            <Run Text="Thời gian tạo:" Foreground="{DynamicResource colorText1}"/>
-                                            <Run x:Name="tb_TimeCreatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
-                                        </TextBlock>
-                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular">
-                                            <Run Text="Cập nhật:" Foreground="{DynamicResource colorText1}"/>
-                                            <Run x:Name="TimeUpdatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
-                                        </TextBlock>
+                                        <StackPanel x:Name="ShowInforPropose">
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Người tạo:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="tb_UserCreate"  Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Nhóm đề xuất:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="tb_GroundPropose"  Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Thời gian tạo:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="tb_TimeCreatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Cập nhật:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="TimeUpdatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel x:Name="OnLeavePropose">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding nhom_de_xuat}" Value="1">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Kiểu đề xuất:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="TypePropose" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                        </StackPanel>
                                         <TextBlock Text="Thông tin chung" Margin="0 5 0 5" FontSize="16" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
-                                        <TextBlock FontSize="16" FontWeight="Regular">
-                                            <Run Text="Họ và tên:" Foreground="{DynamicResource colorText1}"/>
-                                            <Run x:Name="NameUserCreatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
-                                        </TextBlock>
-                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" Visibility="Collapsed">
-                                            <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
-                                            <Run x:Name="tb_ReasonCreatePropse" Text="Thèm bia" Foreground="{DynamicResource colorTextForTheme}"/>
-                                        </TextBlock>
-                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular">
-                                            <Run Text="Người bàn giao CRM:" Foreground="{DynamicResource colorText1}"/>
-                                            <Run x:Name="tb_HandOverCRM" Text="Không có" Foreground="{DynamicResource colorTextForTheme}"/>
-                                        </TextBlock>
+                                        <StackPanel x:Name="ShowInforCommon">
+                                            <TextBlock FontSize="16" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Họ và tên:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="NameUserCreatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel x:Name="OnLeaveCommon">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding nhom_de_xuat}" Value="1">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <ListView x:Name="lsvCalendarOnLeave" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listCalendarOnLeave, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                                <ListView.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel></StackPanel>
+                                                    </ItemsPanelTemplate>
+                                                </ListView.ItemsPanel>
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="ListViewItem">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ListViewItem">
+                                                                    <StackPanel>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="Lịch nghỉ" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding Order}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="10 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="- Ngày bắt đầu nghỉ:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding bd_nghi}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="10 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="- Ngày kết thúc nghỉ:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding kt_nghi}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="10 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="- Ca nghỉ:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding ca_nghi_string}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
+                                                                    </StackPanel>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                            </ListView>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="tb_ReasonCreatePropse" Text="Thèm bia" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Người bàn giao CRM:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="tb_HandOverCRM" Text="Không có" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                        </StackPanel>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="10">
                                         <Border x:Name="StatusComfirm" Margin="0 10 0 10" Cursor="No" CornerRadius="5" BorderThickness="1" BorderBrush="{Binding ElementName=paIcon, Path=Fill}">
@@ -371,7 +442,7 @@
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
                                                                 <Condition Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
                                                             </MultiDataTrigger.Conditions>
-                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
                                                         </MultiDataTrigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
@@ -534,13 +605,13 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
-                    <Border x:Name="InforUserComfirm" Height="{Binding ElementName=stp_InforUserComfirm, Path=ActualHeight}" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}" VerticalAlignment="Top" MinWidth="320" MaxWidth="380" Margin="0 10 0 0" CornerRadius="10" Background="WhiteSmoke">
+                    <Border x:Name="InforUserComfirm" Height="{Binding ElementName=stp_InforUserComfirm, Path=ActualHeight}" BorderThickness="1" VerticalAlignment="Top" BorderBrush="{DynamicResource colorTheme}" MinWidth="320" MaxWidth="380" Margin="0 10 0 0" CornerRadius="15" Background="WhiteSmoke">
                         <Border.Effect>
                             <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                         </Border.Effect>
                         <StackPanel>
                             <StackPanel x:Name="stp_InforUserComfirm">
-                                <Border CornerRadius="10 10 0 0" Height="50" Background="{DynamicResource colorTheme}">
+                                <Border CornerRadius="15" Height="50" Background="{DynamicResource colorTheme}">
                                     <DockPanel Margin="10 5 10 5">
                                         <Path Height="25" Width="25" Stretch="Fill" Data="{StaticResource iconExclamation}" StrokeThickness="1.5" Stroke="{StaticResource colorWriter}"/>
                                         <TextBlock Text="Thông tin duyệt" Margin="10 0 0 0" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorWriter}" VerticalAlignment="Center"/>
@@ -554,53 +625,142 @@
                                     </DockPanel>
                                     <Rectangle Margin="0 10 0 10" Fill="{StaticResource ColorGray1}" Height="0.5"/>
                                     <TextBlock Text="Lãnh đạo duyệt" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="60"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Border Grid.Column="0" Height="40" Width="40" CornerRadius="50">
-                                            <Border.Background>
-                                                <ImageBrush ImageSource="\Resources/Image/AvatarUser.png"/>
-                                            </Border.Background>
-                                        </Border>
-                                        <Grid Grid.Column="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" Text="{Binding userName}" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="1" FontSize="16" FontWeight="Regular" Foreground="{StaticResource colorText1}" VerticalAlignment="Center">
-                                                <Run Text="ID:"/>
-                                                <Run Text="{Binding idQLC}"/>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Grid>
+                                    <ListView x:Name="lsvLeaderComfirm" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listLeaderComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListViewItem">
+                                                            <Grid Margin="0 0 0 10">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="60"/>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Border Grid.Column="0" Height="40" Width="40" CornerRadius="50">
+                                                                    <Border.Background>
+                                                                        <ImageBrush ImageSource="\Resources/Image/AvatarUser.png"/>
+                                                                    </Border.Background>
+                                                                </Border>
+                                                                <Grid Grid.Column="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition/>
+                                                                        <RowDefinition/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <TextBlock Grid.Row="0" Text="{Binding userName}" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                                                    <TextBlock Grid.Row="1" FontSize="16" FontWeight="Regular" Foreground="{StaticResource colorText1}" VerticalAlignment="Center">
+                                                                        <Run Text="ID:"/>
+                                                                        <Run Text="{Binding idQLC}"/>
+                                                                    </TextBlock>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </ListView>
                                     <Rectangle Margin="0 10 0 10" Fill="{StaticResource ColorGray1}" Height="0.5"/>
                                     <TextBlock Text="Người theo dõi" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
+                                    <ListView x:Name="lsvUserFollow" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listUserFollow, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListViewItem">
+                                                            <Grid Margin="0 0 0 10">
+                                                                <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="60"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Border Grid.Column="0" Height="40" Width="40" CornerRadius="50">
-                                            <Border.Background>
-                                                <ImageBrush ImageSource="\Resources/Image/AvatarUser.png"/>
-                                            </Border.Background>
-                                        </Border>
-                                        <Grid Grid.Column="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition/>
-                                                <RowDefinition/>
-                                            </Grid.RowDefinitions>
-                                            <TextBlock Grid.Row="0" Text="{Binding userName}" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
-                                            <TextBlock Grid.Row="1" FontSize="16" FontWeight="Regular" Foreground="{StaticResource colorText1}" VerticalAlignment="Center">
-                                                <Run Text="ID:"/>
-                                                <Run Text="{Binding idQLC}"/>
-                                            </TextBlock>
-                                        </Grid>
-                                    </Grid>
+                                                                <Border Grid.Column="0" Height="40" Width="40" CornerRadius="50">
+                                                                    <Border.Background>
+                                                                        <ImageBrush ImageSource="\Resources/Image/AvatarUser.png"/>
+                                                                    </Border.Background>
+                                                                </Border>
+                                                                <Grid Grid.Column="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition/>
+                                                                        <RowDefinition/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <TextBlock Grid.Row="0" Text="{Binding userName}" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
+                                                                    <TextBlock Grid.Row="1" FontSize="16" FontWeight="Regular" Foreground="{StaticResource colorText1}" VerticalAlignment="Center">
+                                                                        <Run Text="ID:"/>
+                                                                        <Run Text="{Binding idQLC}"/>
+                                                                    </TextBlock>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </ListView>
                                     <Rectangle Margin="0 10 0 10" Fill="{StaticResource ColorGray1}" Height="0.5"/>
+                                    <TextBlock Text="Trạng thái đề duyệt đề xuất" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
+                                    <Grid Margin="0 10 0 5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Path Grid.Column="0" Data="{StaticResource iconAddition}" Fill="{DynamicResource colorTextForTheme}" Width="25" Height="25" Stretch="Fill"></Path>
+                                        <TextBlock Grid.Column="1" FontSize="16" FontWeight="Regular" VerticalAlignment="Center" TextWrapping="Wrap">
+                                            <Run x:Name="tb_InforTimeCreatePropose" Text="23/07/2024 - 10:50 PM" Foreground="{DynamicResource colorText1}"/>
+                                            <Run x:Name="tb_UserCreatePropose" Text="Tô Ngọc Ký" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            <Run Text="vừa tạo đề xuất" Foreground="{DynamicResource colorText1}"/>
+                                        </TextBlock>
+                                    </Grid>
+                                    <ListView x:Name="lsvStatuComfirm" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listStatuComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="ListViewItem">
+                                                            <Grid Margin="0 0 0 10">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="50"/>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Path Grid.Column="0" Width="25" Height="25" Stretch="Fill">
+                                                                    <Path.Style>
+                                                                        <Style TargetType="Path">
+                                                                            <Setter Property="Data" Value="{StaticResource iconSafety}"/>
+                                                                            <Setter Property="Fill" Value="{DynamicResource colorTextForTheme}"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding type_duyet}" Value="3">
+                                                                                    <Setter Property="Data" Value="{StaticResource iconSad}"/>
+                                                                                    <Setter Property="Fill" Value="{DynamicResource colorRemoveRed}"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </Path.Style>
+                                                                </Path>
+                                                                <TextBlock Grid.Column="1" FontSize="16" FontWeight="Regular" TextWrapping="Wrap">
+                                                                    <Run Text="{Binding time_string}" Foreground="{DynamicResource colorText1}"/>
+                                                                    <Run Text="{Binding ng_duyet}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                    <Run Text="{Binding status_duyet}" Foreground="{DynamicResource colorText1}"/>
+                                                                </TextBlock>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </ListView>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

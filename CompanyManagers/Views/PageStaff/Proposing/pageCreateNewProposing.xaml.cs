@@ -452,6 +452,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         }
 
         #endregion
+
         #region Commons
         private static bool IsTextAllowed(string text)
         {
