@@ -1,4 +1,5 @@
 ﻿using CompanyManagers.Controllers;
+using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsShift;
 using CompanyManagers.Views.Home;
 using Newtonsoft.Json;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
@@ -226,6 +228,32 @@ namespace CompanyManagers.Models.ModelsPageStaff
     {
         public List<Nd> nd { get; set; }
         public int? ng_ban_giao_CRM { get; set; }
+
+        private string NameUserCRM;
+
+        public string ng_ban_giao_string_CRM 
+        {
+            get
+            {
+                GetShaftAll(); return NameUserCRM;
+            }
+            set { NameUserCRM = value; }
+        }
+        public void GetShaftAll()
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_Staff, "POST", "");
+                byte[] bytesData = Encoding.Default.GetBytes(resData);
+                Root_StaffAll dataStaffAll = JsonConvert.DeserializeObject<Root_StaffAll>(Encoding.UTF8.GetString(bytesData));
+                if (dataStaffAll != null)
+                {
+                    NameUserCRM = dataStaffAll.data.items.Find(x => x.ep_id == ng_ban_giao_CRM)?.ep_name;
+                }
+            }
+        }
         public int? loai_np { get; set; }
         public string ly_do { get; set; }
     }

@@ -759,7 +759,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListViewItem">
-                                        <Border Height="50" BorderThickness="0 0 0 1" Cursor="Hand" BorderBrush="{StaticResource ColorGreen}" CornerRadius="10">
+                                        <Border Height="50" MouseLeftButtonDown="ShowDetailPropose" BorderThickness="0 0 0 1" Cursor="Hand" BorderBrush="{StaticResource ColorGreen}" CornerRadius="10">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Background" Value="Transparent"/>

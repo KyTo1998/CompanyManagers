@@ -52,7 +52,7 @@
                                                 <Style TargetType="StackPanel">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding nhom_de_xuat}" Value="1">
+                                                        <DataTrigger Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -75,7 +75,7 @@
                                                 <Style TargetType="StackPanel">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding nhom_de_xuat}" Value="1">
+                                                        <DataTrigger Binding="{Binding nhom_de_xuat,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -122,7 +122,7 @@
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                 <Run Text="Người bàn giao CRM:" Foreground="{DynamicResource colorText1}"/>
-                                                <Run x:Name="tb_HandOverCRM" Text="Không có" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                <Run x:Name="tb_HandOverCRM" Text="{Binding userHandOverCRM, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
                                     </StackPanel>

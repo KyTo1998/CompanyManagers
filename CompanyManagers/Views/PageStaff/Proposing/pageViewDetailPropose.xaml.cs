@@ -76,27 +76,43 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _confirm_status; }
             set { _confirm_status = value; OnPropertyChanged("confirm_status"); }
         }
+
+        private string _userHandOverCRM;
+        public string userHandOverCRM
+        {
+            get { return _userHandOverCRM; }
+            set { _userHandOverCRM = value; OnPropertyChanged("userHandOverCRM"); }
+        }
         private Detail_Proposet detailPropose;
-        InforDx_Proposing dataPropose;
+        InforDx_Proposing dataProposeHome;
+        ListProposingSendAll dataProposeMine;
         ManagerHome managerHome;
-        public pageViewDetailPropose(ManagerHome _managerHome, Detail_Proposet _detailPropose, InforDx_Proposing _dataPropose)
+        public pageViewDetailPropose(ManagerHome _managerHome, Detail_Proposet _detailPropose, InforDx_Proposing _dataProposeHome, ListProposingSendAll _dataProposeMine)
         {
             InitializeComponent();
             managerHome = _managerHome;
             detailPropose = _detailPropose;
-            dataPropose = _dataPropose;
+            if (_dataProposeHome != null)
+            {
+                tb_GroundPropose.Text = _dataProposeHome.type_dx_string;
+                dataProposeHome = _dataProposeHome;
+            }
+            else
+            {
+                tb_GroundPropose.Text = _dataProposeMine.name_type_dx;
+                dataProposeMine = _dataProposeMine;
+            }
             listLeaderComfirm = _detailPropose.lanh_dao_duyet.ToList();
             listUserFollow = _detailPropose.nguoi_theo_doi.ToList();
             listStatuComfirm = _detailPropose.lich_su_duyet.ToList();
             Nd.UpdateOrder(_detailPropose.thong_tin_chung.nghi_phep.nd);
             listCalendarOnLeave = _detailPropose.thong_tin_chung.nghi_phep.nd.ToList();
             tb_ReasonCreatePropse.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
-            tb_HandOverCRM.Text = _detailPropose.thong_tin_chung.nghi_phep.ng_ban_giao_CRM.ToString();
+            userHandOverCRM = _detailPropose.thong_tin_chung.nghi_phep.ng_ban_giao_string_CRM;
             type_duyet = _detailPropose.type_duyet;
             nhom_de_xuat = _detailPropose.nhom_de_xuat;
             confirm_status = _detailPropose.confirm_status;
             tb_NamePropose.Text = _detailPropose.ten_de_xuat.ToString();
-            tb_GroundPropose.Text = _dataPropose.type_dx_string;
             tb_TimeCreatePropose.Text = _detailPropose.thoi_gian_tao_string;
             TimeUpdatePropose.Text = $"{_detailPropose.cap_nhat} Ngày trước";
             NameUserCreatePropose.Text = _detailPropose.nguoi_tao;

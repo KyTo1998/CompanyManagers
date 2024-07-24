@@ -206,40 +206,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
             }
         }
-        public void GetDetailPropose(string idPropose, InforDx_Proposing dataPropose)
-        {
-            try
-            {
-                var data = new
-                {
-                    _id = idPropose
-                };
-                string jsonData = JsonConvert.SerializeObject(data);
-                using (WebClient webClient = new WebClient())
-                {
-                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
-                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
-                    var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ShowDetailPropose, "POST", jsonData);
-                    byte[] bytesData = Encoding.Default.GetBytes(resData);
-                    Root_DetailPropose dataDetailPropose = JsonConvert.DeserializeObject<Root_DetailPropose>(Encoding.UTF8.GetString(bytesData));
-                    if (dataDetailPropose != null)
-                    {
-                        managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
-                        managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageViewDetailPropose(managerHome, dataDetailPropose.data.detailDeXuat[0], dataPropose));
-                        managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
+        
         private void ShowHomeToDetailPropose(object sender, MouseButtonEventArgs e)
         {
             InforDx_Proposing dataPropose = (InforDx_Proposing)(sender as Border).DataContext;
             if (dataPropose != null)
             {
-                GetDetailPropose(dataPropose._id.ToString(), dataPropose);
+                managerHome.GetDetailPropose(dataPropose._id.ToString(), dataPropose, null);
             }
         }
     }

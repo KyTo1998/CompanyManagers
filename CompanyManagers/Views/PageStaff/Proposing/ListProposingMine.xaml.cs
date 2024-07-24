@@ -518,6 +518,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             listProposingSendAll = listProposingSendAllSearch.ToList();
         }
 
-        
+        private void ShowDetailPropose(object sender, MouseButtonEventArgs e)
+        {
+            ListProposingSendAll dataPropose = (ListProposingSendAll)(sender as Border).DataContext;
+            if (dataPropose != null)
+            {
+                managerHome.GetDetailPropose(dataPropose._id.ToString(), null, dataPropose);
+            }
+        }
     }
 }

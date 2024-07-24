@@ -738,8 +738,36 @@ namespace CompanyManagers.Views.Home
             catch (Exception)
             {
             }
-        } 
+        }
 
+        public void GetDetailPropose(string idPropose, InforDx_Proposing dataProposeHome, ListProposingSendAll dataProposeMine)
+        {
+            try
+            {
+                var data = new
+                {
+                    _id = idPropose
+                };
+                string jsonData = JsonConvert.SerializeObject(data);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ShowDetailPropose, "POST", jsonData);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_DetailPropose dataDetailPropose = JsonConvert.DeserializeObject<Root_DetailPropose>(Encoding.UTF8.GetString(bytesData));
+                    if (dataDetailPropose != null)
+                    {
+                        PagePopupGrayColor = new PagePopupGrayColor(this);
+                        PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageViewDetailPropose(this, dataDetailPropose.data.detailDeXuat[0], dataProposeHome, dataProposeMine));
+                        PagePopup.NavigationService.Navigate(this.PagePopupGrayColor);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         public void AddFunctionSytem()
         {
             try

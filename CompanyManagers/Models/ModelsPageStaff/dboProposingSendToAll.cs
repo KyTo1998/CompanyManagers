@@ -1,6 +1,10 @@
-﻿using System;
+﻿using CompanyManagers.Controllers;
+using CompanyManagers.Models.ModelsAll;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -73,6 +77,45 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public int _id { get; set; }
         public string name_dx { get; set; }
         public int type_dx { get; set; }
+
+        private string nameCategotyPropose;
+        public string name_type_dx 
+        {
+            get
+            {
+                GetCategoryPropose(); return nameCategotyPropose;
+            }
+            set { nameCategotyPropose = value; }
+        }
+
+        public void GetCategoryPropose()
+        {
+            List<Result_CategoryProposing> listCategoyPropose = new List<Result_CategoryProposing>();
+            for (int i = 1; i < 4 ; i++)
+            {
+                var data = new
+                {
+                    page = i
+                };
+                string jsondata = JsonConvert.SerializeObject(data);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CategoryProposing, "POST", jsondata);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_CategoryProposing dataCategoryPropose = JsonConvert.DeserializeObject<Root_CategoryProposing>(Encoding.UTF8.GetString(bytesData));
+                    if (dataCategoryPropose != null)
+                    {
+                        foreach (var item in dataCategoryPropose.data.result)
+                        {
+                            listCategoyPropose.Add(item);
+                        }
+                    }
+                }
+            }
+            nameCategotyPropose = listCategoyPropose.Find(x => x.cate_dx == type_dx)?.name_cate_dx;
+        }
         public string name_user { get; set; }
         public int id_user { get; set; }
         public int com_id { get; set; }
