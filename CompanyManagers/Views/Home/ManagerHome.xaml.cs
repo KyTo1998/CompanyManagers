@@ -12,7 +12,6 @@ using CompanyManagers.Views.PageStaff.Proposing;
 using CompanyManagers.Views.Popoup.PopupAll;
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -26,7 +25,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace CompanyManagers.Views.Home
@@ -191,12 +189,6 @@ namespace CompanyManagers.Views.Home
         {
             get { return _LinkAvatar; }
             set { _LinkAvatar = value; OnPropertyChanged("LinkAvatar"); }
-        }
-        private bool _adimationNotication;
-        public bool adimationNotication
-        {
-            get { return _adimationNotication; }
-            set { _adimationNotication = value; OnPropertyChanged("adimationNotication"); }
         }
         public List<ListPrivateLevel> _lstDataPrivateLevels;
         public List<ListPrivateLevel> lstDataPrivateLevels
@@ -955,7 +947,6 @@ namespace CompanyManagers.Views.Home
                 PagePopupGrayColor = new PagePopupGrayColor(this);
                 PagePopupGrayColor.Popup1.NavigationService.Navigate(new ProfileUser(this, loginHome));
                 PagePopup.NavigationService.Navigate(PagePopupGrayColor);
-                adimationNotication = adimationNotication? false:true;
             }
             catch (Exception)
             {
