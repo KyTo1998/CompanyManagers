@@ -783,13 +783,16 @@ namespace CompanyManagers.Views.Home
             }
         }
 
-        public void GetDetailPropose(string idPropose, InforDx_Proposing dataProposeHome, ListProposingSendAll dataProposeMine)
+        public void GetDetailPropose(InforDx_Proposing dataProposeHome, ListProposingSendAll dataProposeMine)
         {
             try
             {
+                string id;
+                if (dataProposeHome != null){ id = dataProposeHome._id.ToString(); }
+                else{ id = dataProposeMine._id.ToString(); }
                 var data = new
                 {
-                    _id = idPropose
+                    _id = id,
                 };
                 string jsonData = JsonConvert.SerializeObject(data);
                 using (WebClient webClient = new WebClient())

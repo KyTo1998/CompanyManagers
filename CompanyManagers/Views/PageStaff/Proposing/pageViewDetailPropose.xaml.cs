@@ -1,11 +1,15 @@
 ﻿using CompanyManagers.Models.ModelRose;
+using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Views.Home;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static CompanyManagers.Views.Home.ManagerHome;
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -47,6 +51,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _listRoseRevenue; }
             set { _listRoseRevenue = value; OnPropertyChanged("listRoseRevenue"); }
         }
+        
+        private List<LichLamViec_DetailPropose> _listCalendaWork = new List<LichLamViec_DetailPropose>();
+        public List<LichLamViec_DetailPropose> listCalendaWork
+        {
+            get { return _listCalendaWork; }
+            set { _listCalendaWork = value; OnPropertyChanged("listCalendaWork"); }
+        }
 
         private List<Nd> _listCalendarOnLeave;
         public List<Nd> listCalendarOnLeave
@@ -81,11 +92,24 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _confirmOverdue; }
             set { _confirmOverdue = value; OnPropertyChanged("confirmOverdue"); }
         }
+        
+        private bool _viewCalendarWork;
+        public bool viewCalendarWork
+        {
+            get { return _viewCalendarWork; }
+            set { _viewCalendarWork = value; OnPropertyChanged("viewCalendarWork"); }
+        }
         private string _userHandOverCRM;
         public string userHandOverCRM
         {
             get { return _userHandOverCRM; }
             set { _userHandOverCRM = value; OnPropertyChanged("userHandOverCRM"); }
+        }
+        private int _deletePropose;
+        public int deletePropose
+        {
+            get { return _deletePropose; }
+            set { _deletePropose = value; OnPropertyChanged("deletePropose"); }
         }
         private Detail_Proposet detailPropose;
         InforDx_Proposing dataProposeHome;
@@ -113,12 +137,15 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             listCalendarOnLeave = _detailPropose.thong_tin_chung.nghi_phep.nd.ToList();
             listRoseRevenue.Add(_detailPropose.thong_tin_chung.hoa_hong);
             listRoseRevenue = listRoseRevenue.ToList();
+            listCalendaWork.Add(_detailPropose.thong_tin_chung.lich_lam_viec);
+            listCalendaWork = listCalendaWork.ToList();
             tb_ReasonCreatePropse.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
             userHandOverCRM = _detailPropose.thong_tin_chung.nghi_phep.ng_ban_giao_string_CRM;
             type_duyet = _detailPropose.type_duyet;
             nhom_de_xuat = _detailPropose.nhom_de_xuat;
             confirmOverdue = _detailPropose.qua_han_duyet;
             confirm_status = _detailPropose.confirm_status;
+            deletePropose = _detailPropose.del_type;
             tb_NamePropose.Text = _detailPropose.ten_de_xuat.ToString();
             tb_TimeCreatePropose.Text = _detailPropose.thoi_gian_tao_string;
             TimeUpdatePropose.Text = $"{_detailPropose.cap_nhat} Ngày trước";
@@ -127,11 +154,73 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             tb_UserCreatePropose.Text = _detailPropose.nguoi_tao;
             tb_UserCreate.Text = _detailPropose.nguoi_tao;
             tb_TypeComfirm.Text = _detailPropose.kieu_phe_duyet_format;
+            LoadDataCalendarWork(DateTime.Now.Month, DateTime.Now.Year);
         }
+        int startDay;
+        private List<lichlamviec> _listLichProposing;
+
+        public List<lichlamviec> listLichProposing
+        {
+            get { return _listLichProposing; }
+            set
+            {
+                _listLichProposing = value;
+                OnPropertyChanged("listLichProposing");
+            }
+        }
+        public void LoadDataCalendarWork(int monthSelected, int yearSelected)
+        {
+            try
+            {
+                startDay = (int)new DateTime(yearSelected, monthSelected, 1).DayOfWeek;
+                listLichProposing = new List<lichlamviec>();
+                // Lấy ngày dầu tiên trong tuần của tháng trước
+                for (int i = 0; i < startDay; i++)
+                {
+                    var x = DateTime.DaysInMonth(yearSelected, monthSelected - 1);
+                    listLichProposing.Add(
+                        new lichlamviec() { id = listLichProposing.Count, DayInCalendar = x - i, shiftSelected = 0, statusClick = 0 });
+                }
+                listLichProposing.Reverse();
+                
+                //Lấy ngày của tháng hiện tại
+                for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
+                {
+                   var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, /*shiftSelected = _listShift.Count,*/ statusClick = 1 };
+                   listLichProposing.Add(d);
+                }
+                //Lấy ngày đầu tiên trong tuần của tháng tiếp theo
+                int n = 42 - listLichProposing.Count;
+                for (int i = 1; i <= n; i++)
+                {
+                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = 0, statusClick = 0 };
+                    listLichProposing.Add(d);
+                }
+                listLichProposing = listLichProposing.ToList();
+            }
+            catch (System.Exception)
+            {
+            }
+        }
+
 
         private void ScollCreateProposing(object sender, MouseWheelEventArgs e)
         {
             scoll.ScrollToVerticalOffset(scoll.VerticalOffset - e.Delta);
+        }
+
+        private void ShowDetailCalendaWork(object sender, MouseButtonEventArgs e)
+        {
+            LichLamViec_DetailPropose dataCalendaWork = (LichLamViec_DetailPropose)(sender as Border).DataContext;
+            if (dataCalendaWork != null)
+            {
+                viewCalendarWork = true;
+            }
+        }
+
+        private void ClosePopup(object sender, MouseButtonEventArgs e)
+        {
+            viewCalendarWork = false;
         }
     }
 }

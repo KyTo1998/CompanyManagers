@@ -523,7 +523,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             ListProposingSendAll dataPropose = (ListProposingSendAll)(sender as Border).DataContext;
             if (dataPropose != null)
             {
-                managerHome.GetDetailPropose(dataPropose._id.ToString(), null, dataPropose);
+                managerHome.GetDetailPropose(null, dataPropose);
             }
         }
     }

@@ -209,10 +209,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         
         private void ShowHomeToDetailPropose(object sender, MouseButtonEventArgs e)
         {
-            InforDx_Proposing dataPropose = (InforDx_Proposing)(sender as Border).DataContext;
-            if (dataPropose != null)
+            InforDx_Proposing dataProposeHome = (InforDx_Proposing)(sender as Border).DataContext;
+            if (dataProposeHome != null)
             {
-                managerHome.GetDetailPropose(dataPropose._id.ToString(), dataPropose, null);
+                managerHome.GetDetailPropose(dataProposeHome, null);
             }
         }
     }

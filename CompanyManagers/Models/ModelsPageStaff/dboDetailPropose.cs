@@ -9,6 +9,7 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using CompanyManagers.Models.ModelRose;
+using System.Globalization;
 
 namespace CompanyManagers.Models.ModelsPageStaff
 {
@@ -199,7 +200,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public SuDungXeCong su_dung_xe_cong { get; set; }
         public SuaChuaCoSoVatChat sua_chua_co_so_vat_chat { get; set; }
         public XacNhanCong xac_nhan_cong { get; set; }
-        public LichLamViec lich_lam_viec { get; set; }
+        public LichLamViec_DetailPropose lich_lam_viec { get; set; }
         public HoaHong_DetailPropose hoa_hong { get; set; }
         public ThanhToan thanh_toan { get; set; }
         public ThuongPhat thuong_phat { get; set; }
@@ -308,18 +309,20 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public string chu_ky { get; set; }
         public string time_hh { get; set; }
         public string item_mdt_date { get; set; }
-
-        public long _dt_money;
-        public string dt_money { get; set; }
-
-        public string dt_money_Format
+        public long? dt_money { get; set; }
+        public string dt_money_formatted
         {
-            get { return dt_money != null ? dt_money : 0 + " VNĐ"; }
+            get 
+            {
+                var cultureInfo = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+                cultureInfo.NumberFormat.NumberGroupSeparator = ".";
+                return dt_money?.ToString("N0", cultureInfo); 
+            }
             set
             {
-                if (int.TryParse(value.Replace(",", ""), out int parsedLuongdc))
+                if (int.TryParse(value.Replace(",", ""), out int parsedLuong))
                 {
-                    _dt_money = parsedLuongdc;
+                    dt_money = parsedLuong;
                 }
             }
         }
@@ -346,9 +349,73 @@ namespace CompanyManagers.Models.ModelsPageStaff
                 Root_LevelRevenue dataListLeverlRevernue = JsonConvert.DeserializeObject<Root_LevelRevenue>(Encoding.UTF8.GetString(bytesData));
                 if (dataListLeverlRevernue != null)
                 {
-                    _lever_revernue = dataListLeverlRevernue.data.danhthuList.Find(x => x.tl_id.ToString() == name_dt).tl_name;
+                    foreach (var item in dataListLeverlRevernue.data.danhthuList)
+                    {
+                        if (item.tl_id.ToString() == name_dt)
+                        {
+                            _lever_revernue = item.tl_name;
+                        }
+                    }
                 }
             }
+        }
+    }
+    public class LichLamViec_DetailPropose
+    {
+        public string lich_lam_viec { get; set; }
+        public string lich_lam_viec_display
+        {
+            get
+            {
+                switch (lich_lam_viec)
+                {
+                    case "1": return "Thứ 2 - Thứ 6";
+                    case "2": return "Thứ 2 - Thứ 7";
+                    case "3": return "Thứ 2 - CN";
+                    default: return "";
+                }
+            }
+            set { lich_lam_viec = value; }
+        }
+        public string thang_ap_dung { get; set; }
+        public string thang_ap_dung_display 
+        {
+            get
+            {
+                if (thang_ap_dung != null)
+                {
+                    return UnixTimestampToDateTime(Int32.Parse(thang_ap_dung)).ToString("MM-yyyy");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set { thang_ap_dung = value; }
+        }
+        public string ngay_bat_dau { get; set; }
+        public string ngay_bat_dau_display 
+        {
+            get
+            {
+                if (ngay_bat_dau != null)
+                {
+                    return UnixTimestampToDateTime(Int32.Parse(ngay_bat_dau)).ToString("dd-MM-yyyy");
+                }
+                else
+                {
+                    return null ;
+                }
+            }
+            set { ngay_bat_dau = value; }
+        }
+        public string ca_la_viec { get; set; }
+        public string ngay_lam_viec { get; set; }
+        public string ly_do { get; set; }
+        public static DateTime UnixTimestampToDateTime(long unixTimestamp)
+        {
+            DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return epoch.AddSeconds(unixTimestamp);
         }
     }
 }

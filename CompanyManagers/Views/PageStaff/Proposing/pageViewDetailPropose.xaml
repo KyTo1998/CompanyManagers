@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              mc:Ignorable="d" MinWidth="500" MaxWidth="950">
-    <Grid>
+    <Grid> 
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <Border CornerRadius="10" Background="{StaticResource colorTextMessage}">
                 <WrapPanel x:Name="wap_ShowDetailPropose" Margin="0 10 0 10" PreviewMouseWheel="ScollCreateProposing" HorizontalAlignment="Center">
@@ -159,7 +159,7 @@
                                                                     </TextBlock>
                                                                     <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                                         <Run Text="Doanh thu:" Foreground="{DynamicResource colorText1}"/>
-                                                                        <Run Text="{Binding dt_money_Format}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        <Run Text="{Binding dt_money_formatted}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                     </TextBlock>
                                                                     <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                                         <Run Text="Mức hoa hồng:" Foreground="{DynamicResource colorText1}"/>
@@ -169,6 +169,59 @@
                                                                         <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding ly_do}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                     </TextBlock>
+                                                                    </StackPanel>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                            </ListView>
+                                        </StackPanel>
+                                        <StackPanel x:Name="CalendaWorkCommon">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding nhom_de_xuat,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="18">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <ListView x:Name="lsvCalendaWork" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listCalendaWork, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                                <ListView.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel></StackPanel>
+                                                    </ItemsPanelTemplate>
+                                                </ListView.ItemsPanel>
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="ListViewItem">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ListViewItem">
+                                                                    <StackPanel>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="Lịch làm việc tuần:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding lich_lam_viec_display}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="Tháng áp dụng:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding thang_ap_dung_display}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="Ngày bắt đầu làm việc:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding ngay_bat_dau_display}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
+                                                                        <DockPanel Margin="0 5 0 5">
+                                                                            <TextBlock FontSize="16" Text="Chi tiết lịch làm việc:" Foreground="{DynamicResource colorText1}" FontWeight="Regular" TextWrapping="Wrap"/>
+                                                                            <Border MouseLeftButtonDown="ShowDetailCalendaWork">
+                                                                                <Path Data="{StaticResource iconEyes}" Cursor="Hand" Margin="20 0 0 0" Height="17" Width="25" Stretch="Fill" HorizontalAlignment="Left" Fill="{DynamicResource colorTextForTheme}"/>
+                                                                            </Border>
+                                                                        </DockPanel>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                            <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{Binding ly_do}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                        </TextBlock>
                                                                     </StackPanel>
                                                                 </ControlTemplate>
                                                             </Setter.Value>
@@ -236,46 +289,21 @@
                                                 <TextBlock FontSize="16" FontWeight="Medium">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
-                                                            <Setter Property="Text" Value="Đã bị xóa"/>
+                                                            <Setter Property="Text" Value="Không cảm xúc"/>
                                                             <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                             <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Được chấp tuận"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
                                                                     </MultiDataTrigger.Conditions>
                                                                     <Setter Property="Text" Value="Đang chờ duyệt"/>
-                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
-                                                                </MultiDataTrigger>
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
-                                                                        <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
-                                                                        <Condition Binding="{Binding qua_han_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Text" Value="Đã được tiếp nhận"/>
-                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
-                                                                </MultiDataTrigger>
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Text" Value="Đã được tiếp nhận"/>
-                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
-                                                                </MultiDataTrigger>
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
-                                                                        <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
-                                                                        <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Text" Value="Chờ lãnh đạo còn lại"/>
-                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
-                                                                </MultiDataTrigger>
-                                                                <MultiDataTrigger>
-                                                                    <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="11"/>
-                                                                    </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Text" Value="Chờ công ty duyệt"/>
                                                                     <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
@@ -294,13 +322,75 @@
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
-                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
                                                                     </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Text" Value="Được chấp tuận"/>
+                                                                    <Setter Property="Text" Value="Đã được tiếp nhận"/>
                                                                     <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Chờ lãnh đạo còn lại"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="11"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Chờ công ty duyệt"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding deletePropose, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Đã bị xóa"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
+                                                                        <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3"/>
+                                                                        <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="6"/>
+                                                                        <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                        <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                        <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="11"/>
                                                                         <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                     </MultiDataTrigger.Conditions>
                                                                     <Setter Property="Text" Value="Quá hạn duyệt"/>
@@ -853,5 +943,103 @@
                 </WrapPanel>
             </Border>
         </ScrollViewer>
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding viewCalendarWork, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding viewCalendarWork, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Rectangle Fill="{StaticResource ColorGray1}" Opacity="0.5" MouseLeftButtonDown="ClosePopup" Cursor="Hand"/>
+            <Border x:Name="ShowCalendar" MinWidth="420" MaxWidth="730" MaxHeight="650" BorderBrush="Red" BorderThickness="1" Background="WhiteSmoke" CornerRadius="10">
+                <StackPanel>
+                    <Border x:Name="HeaderCalendarWork" Background="{DynamicResource colorTheme}" CornerRadius="10 10 0 0">
+                        <Grid Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="CN" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" Text="T2" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="T3" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="T4" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="T5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="5" Text="T6" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="6" Text="T7" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <Border CornerRadius="0 0 10 10" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource colorTheme}">
+                        <ListView x:Name="lsvLoadCalendarPicker" ItemsSource="{Binding listLichProposing,RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Width="{Binding ElementName=HeaderCalendarWork, Path=ActualWidth}"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Border Width="103" Height="100" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center" BorderThickness="1 1 0 1">
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding DayInCalendar}" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="TextBlock">
+                                                                    <Setter Property="Foreground" Value="#ACACAC"/>
+                                                                    <Style.Triggers>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding statusClick}" Value="1"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                        </MultiDataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                        <ListView x:Name="lsvShiftForDay" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listShiftForDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                                            <ListView.ItemsPanel>
+                                                                <ItemsPanelTemplate>
+                                                                    <StackPanel></StackPanel>
+                                                                </ItemsPanelTemplate>
+                                                            </ListView.ItemsPanel>
+                                                            <ListView.ItemContainerStyle>
+                                                                <Style TargetType="ListViewItem">
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="ListViewItem">
+                                                                                <Border Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}" BorderThickness="1" CornerRadius="10">
+                                                                                    <TextBlock Text="7tr Ca lương cty h 10tr" Foreground="{StaticResource colorWriter}" FontSize="10" FontWeight="Regular" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                                                </Border>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </ListView.ItemContainerStyle>
+                                                        </ListView>
+                                                    </StackPanel>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
