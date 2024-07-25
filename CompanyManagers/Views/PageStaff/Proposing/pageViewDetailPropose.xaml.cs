@@ -1,20 +1,11 @@
-﻿using CompanyManagers.Models.ModelsPageStaff;
+﻿using CompanyManagers.Models.ModelRose;
+using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Views.Home;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -48,6 +39,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             get { return _listStatuComfirm; }
             set { _listStatuComfirm = value; OnPropertyChanged("listStatuComfirm"); }
+        }
+
+        private List<HoaHong_DetailPropose> _listRoseRevenue = new List<HoaHong_DetailPropose>();
+        public List<HoaHong_DetailPropose> listRoseRevenue
+        {
+            get { return _listRoseRevenue; }
+            set { _listRoseRevenue = value; OnPropertyChanged("listRoseRevenue"); }
         }
 
         private List<Nd> _listCalendarOnLeave;
@@ -113,6 +111,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             listStatuComfirm = _detailPropose.lich_su_duyet.ToList();
             Nd.UpdateOrder(_detailPropose.thong_tin_chung.nghi_phep.nd);
             listCalendarOnLeave = _detailPropose.thong_tin_chung.nghi_phep.nd.ToList();
+            listRoseRevenue.Add(_detailPropose.thong_tin_chung.hoa_hong);
+            listRoseRevenue = listRoseRevenue.ToList();
             tb_ReasonCreatePropse.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
             userHandOverCRM = _detailPropose.thong_tin_chung.nghi_phep.ng_ban_giao_string_CRM;
             type_duyet = _detailPropose.type_duyet;
@@ -127,8 +127,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             tb_UserCreatePropose.Text = _detailPropose.nguoi_tao;
             tb_UserCreate.Text = _detailPropose.nguoi_tao;
             tb_TypeComfirm.Text = _detailPropose.kieu_phe_duyet_format;
-            
-            
         }
 
         private void ScollCreateProposing(object sender, MouseWheelEventArgs e)

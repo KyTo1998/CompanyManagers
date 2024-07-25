@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.IO;
 using System.Linq;
+using CompanyManagers.Models.ModelRose;
 
 namespace CompanyManagers.Models.ModelsPageStaff
 {
@@ -199,7 +200,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public SuaChuaCoSoVatChat sua_chua_co_so_vat_chat { get; set; }
         public XacNhanCong xac_nhan_cong { get; set; }
         public LichLamViec lich_lam_viec { get; set; }
-        public HoaHong hoa_hong { get; set; }
+        public HoaHong_DetailPropose hoa_hong { get; set; }
         public ThanhToan thanh_toan { get; set; }
         public ThuongPhat thuong_phat { get; set; }
         public DiMuonVeSom di_muon_ve_som { get; set; }
@@ -300,5 +301,54 @@ namespace CompanyManagers.Models.ModelsPageStaff
         }
         public int? loai_np { get; set; }
         public string ly_do { get; set; }
+    }
+
+    public class HoaHong_DetailPropose
+    {
+        public string chu_ky { get; set; }
+        public string time_hh { get; set; }
+        public string item_mdt_date { get; set; }
+
+        public long _dt_money;
+        public string dt_money { get; set; }
+
+        public string dt_money_Format
+        {
+            get { return dt_money != null ? dt_money : 0 + " VNĐ"; }
+            set
+            {
+                if (int.TryParse(value.Replace(",", ""), out int parsedLuongdc))
+                {
+                    _dt_money = parsedLuongdc;
+                }
+            }
+        }
+        public string name_dt { get; set; }
+
+        public string _lever_revernue;
+        public string lever_revernue 
+        {
+            get
+            {
+                GetListLevelRevernue(); return _lever_revernue;
+            }
+            set { _lever_revernue = value; }
+        }
+        public string ly_do { get; set; }
+        public void GetListLevelRevernue()
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                var resData = webClient.UploadString(UrlApi.Url_Api_Rose + UrlApi.Name_Api_ListLeverlRevernue, "POST", "");
+                byte[] bytesData = Encoding.Default.GetBytes(resData);
+                Root_LevelRevenue dataListLeverlRevernue = JsonConvert.DeserializeObject<Root_LevelRevenue>(Encoding.UTF8.GetString(bytesData));
+                if (dataListLeverlRevernue != null)
+                {
+                    _lever_revernue = dataListLeverlRevernue.data.danhthuList.Find(x => x.tl_id.ToString() == name_dt).tl_name;
+                }
+            }
+        }
     }
 }

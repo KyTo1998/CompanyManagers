@@ -63,6 +63,7 @@
                                                 <Run x:Name="TypePropose" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
+                                        <!--Thông tin chung-->
                                         <TextBlock Text="Thông tin chung" Margin="0 5 0 5" FontSize="16" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
                                         <StackPanel x:Name="ShowInforCommon">
                                             <TextBlock FontSize="16" FontWeight="Regular" TextWrapping="Wrap">
@@ -124,6 +125,57 @@
                                                 <Run Text="Người bàn giao CRM:" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="tb_HandOverCRM" Text="{Binding userHandOverCRM, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel x:Name="RoseRevenueCommon">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding nhom_de_xuat,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="20">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <ListView x:Name="lsvRoseRevenue" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listRoseRevenue, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                                <ListView.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel></StackPanel>
+                                                    </ItemsPanelTemplate>
+                                                </ListView.ItemsPanel>
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="ListViewItem">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ListViewItem">
+                                                                    <StackPanel>
+                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        <Run Text="Chu kỳ hoa hồng:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{Binding chu_ky}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                    </TextBlock>
+                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        <Run Text="Thời gian hoa hồng:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{Binding item_mdt_date}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                    </TextBlock>
+                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        <Run Text="Doanh thu:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{Binding dt_money_Format}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                    </TextBlock>
+                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        <Run Text="Mức hoa hồng:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{Binding lever_revernue}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                    </TextBlock>
+                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{Binding ly_do}" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                                    </TextBlock>
+                                                                    </StackPanel>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                            </ListView>
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="10">
@@ -265,9 +317,13 @@
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0">
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                            </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
+                                                        </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Border.Style>
