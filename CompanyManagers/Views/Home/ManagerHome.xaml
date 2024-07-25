@@ -7,17 +7,6 @@
         mc:Ignorable="d" Background="Transparent" AllowsTransparency="True"
         Title="Company Manager" MinHeight="790" MinWidth="860" 
         WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <Storyboard x:Key="ShakeAnimation">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleX)">
-                <SplineDoubleKeyFrame KeyTime="0:0:0.1" Value="-20"/>
-                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="20"/>
-                <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="-20"/>
-                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="20"/>
-                <SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-    </Window.Resources> 
     <Grid>
         <Border BorderThickness="1 0 1 1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10">
             <Grid>
@@ -69,28 +58,9 @@
                                     </DockPanel>
                                     <Grid Margin="10 0 0 0">
                                         <Path x:Name="ShakePath" Data="{StaticResource iconNotication}" Width="18" Height="18" Stretch="Fill">
-                                            <Path.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform/>
-                                                    <SkewTransform CenterX="0" CenterY="0"/>
-                                                    <RotateTransform/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </Path.RenderTransform>
                                             <Path.Style>
                                                 <Style TargetType="Path">
                                                     <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding adimationNotication}" Value="true">
-                                                            <Setter Property="Fill" Value="{StaticResource colorRemoveRed}"/>
-                                                            <DataTrigger.EnterActions>
-                                                                <BeginStoryboard Storyboard="{StaticResource ShakeAnimation}" />
-                                                            </DataTrigger.EnterActions>
-                                                            <DataTrigger.ExitActions>
-                                                                <StopStoryboard BeginStoryboardName="ShakeAnimation"/>
-                                                            </DataTrigger.ExitActions>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
                                                 </Style>
                                             </Path.Style>
                                         </Path>

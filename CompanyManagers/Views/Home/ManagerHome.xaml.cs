@@ -952,12 +952,10 @@ namespace CompanyManagers.Views.Home
         {
             try
             {
-                /*var shakeAnimation = (Storyboard)this.Resources["ShakeAnimation"];
-                shakeAnimation.Begin(ShakePath);*/
-                adimationNotication = true;
                 PagePopupGrayColor = new PagePopupGrayColor(this);
                 PagePopupGrayColor.Popup1.NavigationService.Navigate(new ProfileUser(this, loginHome));
                 PagePopup.NavigationService.Navigate(PagePopupGrayColor);
+                adimationNotication = adimationNotication? false:true;
             }
             catch (Exception)
             {
