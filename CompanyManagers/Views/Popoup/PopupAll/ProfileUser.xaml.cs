@@ -104,6 +104,12 @@ namespace CompanyManagers.Views.Popoup.PopupAll
                 }
             }
         }
+        private string _LinkAvatar;
+        public string LinkAvatar
+        {
+            get { return _LinkAvatar; }
+            set { _LinkAvatar = value; OnPropertyChanged("LinkAvatar"); }
+        }
         ManagerHome managerHome;
         LoginHome loginHome { get; set; }
         public ProfileUser(ManagerHome _managerHome, LoginHome _loginHome)
@@ -114,6 +120,7 @@ namespace CompanyManagers.Views.Popoup.PopupAll
             NumberPhoneUser.Text = _managerHome.NumberPhone;
             this.loginHome = loginHome;
             this.managerHome = _managerHome;
+            LinkAvatar = _managerHome.LinkAvatar;
         }
 
         private void ChangeThemeClick(object sender, MouseButtonEventArgs e)

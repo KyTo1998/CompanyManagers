@@ -77,6 +77,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             set { _confirm_status = value; OnPropertyChanged("confirm_status"); }
         }
 
+        private bool _confirmOverdue;
+        public bool confirmOverdue
+        {
+            get { return _confirmOverdue; }
+            set { _confirmOverdue = value; OnPropertyChanged("confirmOverdue"); }
+        }
         private string _userHandOverCRM;
         public string userHandOverCRM
         {
@@ -111,11 +117,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             userHandOverCRM = _detailPropose.thong_tin_chung.nghi_phep.ng_ban_giao_string_CRM;
             type_duyet = _detailPropose.type_duyet;
             nhom_de_xuat = _detailPropose.nhom_de_xuat;
+            confirmOverdue = _detailPropose.qua_han_duyet;
             confirm_status = _detailPropose.confirm_status;
             tb_NamePropose.Text = _detailPropose.ten_de_xuat.ToString();
             tb_TimeCreatePropose.Text = _detailPropose.thoi_gian_tao_string;
             TimeUpdatePropose.Text = $"{_detailPropose.cap_nhat} Ngày trước";
             NameUserCreatePropose.Text = _detailPropose.nguoi_tao;
+            tb_InforTimeCreatePropose.Text = _detailPropose.thoi_gian_tao_string;
+            tb_UserCreatePropose.Text = _detailPropose.nguoi_tao;
             tb_UserCreate.Text = _detailPropose.nguoi_tao;
             tb_TypeComfirm.Text = _detailPropose.kieu_phe_duyet_format;
             

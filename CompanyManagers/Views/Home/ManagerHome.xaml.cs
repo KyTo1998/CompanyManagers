@@ -8,12 +8,11 @@ using CompanyManagers.Models.ModelsPageStaff;
 using CompanyManagers.Models.ModelsShift;
 using CompanyManagers.Views.Functions.HomeFunction;
 using CompanyManagers.Views.Login;
-using CompanyManagers.Views.Logout;
 using CompanyManagers.Views.PageStaff.Proposing;
 using CompanyManagers.Views.Popoup.PopupAll;
 using Newtonsoft.Json;
-using RestSharp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -22,7 +21,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.PeerToPeer;
 using System.Text;
 using System.Threading;
 using System.Windows;
@@ -30,7 +28,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using static CompanyManagers.Views.PageStaff.Proposing.pageCreateNewProposing;
 
 namespace CompanyManagers.Views.Home
 {
@@ -120,6 +117,12 @@ namespace CompanyManagers.Views.Home
             get { return _UserCurrent; }
             set { _UserCurrent = value; OnPropertyChanged("UserCurrent");}
         }
+        private Data_InforStaff _UserCurrentInfor;
+        public Data_InforStaff UserCurrentInfor
+        {
+            get { return _UserCurrentInfor; }
+            set { _UserCurrentInfor = value; OnPropertyChanged("UserCurrentInfor");}
+        }
 
         private List<Info_StaffAll> _dataListStaffAll;
         public List<Info_StaffAll> dataListStaffAll
@@ -176,11 +179,24 @@ namespace CompanyManagers.Views.Home
             get { return userName; }
             set { userName = value; OnPropertyChanged("UserName"); }
         }
+
         private string numberPhone;
         public string NumberPhone
         {
             get { return numberPhone; }
             set { numberPhone = value; OnPropertyChanged("NumberPhone"); }
+        }
+        private string _LinkAvatar;
+        public string LinkAvatar
+        {
+            get { return _LinkAvatar; }
+            set { _LinkAvatar = value; OnPropertyChanged("LinkAvatar"); }
+        }
+        private bool _adimationNotication;
+        public bool adimationNotication
+        {
+            get { return _adimationNotication; }
+            set { _adimationNotication = value; OnPropertyChanged("adimationNotication"); }
         }
         public List<ListPrivateLevel> _lstDataPrivateLevels;
         public List<ListPrivateLevel> lstDataPrivateLevels
@@ -227,6 +243,9 @@ namespace CompanyManagers.Views.Home
             this.DataContext = this;
             backToBack = "Home";
             UserCurrent = userCurrent;
+            Properties.Settings.Default.IdCompany = userCurrent.user_info.com_id.ToString();
+            Properties.Settings.Default.IdUser = userCurrent.user_info.ep_id.ToString();
+            Properties.Settings.Default.Save();
             loginHome = _loginHome;
             switch (userCurrent.type)
             {
@@ -241,6 +260,7 @@ namespace CompanyManagers.Views.Home
                     NumberPhone = userCurrent.user_info.ep_phone;
                     tb_NameUser.Text = userCurrent.user_info.ep_name;
                     tb_IdUser.Text = userCurrent.user_info.ep_id.ToString();
+                    GetShaftAll(userCurrent.user_info.com_id.ToString(), userCurrent.user_info.ep_id.ToString());
                     break;
             }
             StartDynamicText();
@@ -262,6 +282,34 @@ namespace CompanyManagers.Views.Home
             GetListLevelRevernue();
         }
 
+        public void GetShaftAll(string _comID, string _idQLC)
+        {
+            var data = new
+            {
+                com_id = _comID,
+                idQLC = _idQLC
+            };
+            string jsondata = JsonConvert.SerializeObject(data);
+            using (WebClient webClient = new WebClient())
+            {
+                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_SearchInforStaff, "POST", jsondata);
+                byte[] bytesData = Encoding.Default.GetBytes(resData);
+                Root_InforStaff dataInforStaff = JsonConvert.DeserializeObject<Root_InforStaff>(Encoding.UTF8.GetString(bytesData));
+                if (dataInforStaff != null)
+                {
+                    UserCurrentInfor = dataInforStaff.data.data;
+                    string fileName = GetFileNameFromUrl(UserCurrentInfor.avatarUser);
+                    LinkAvatar = $"http://210.245.108.202:9002/avatarUser/{UserCurrentInfor._id}/{fileName}";
+                }
+            }
+        }
+        public static string GetFileNameFromUrl(string url)
+        {
+            Uri uri = new Uri(url);
+            return Path.GetFileName(uri.LocalPath);
+        }
         private void SettingApp()
         {
             if (Properties.Settings.Default.Theme.Equals(""))
@@ -530,8 +578,11 @@ namespace CompanyManagers.Views.Home
                 using (WebClient request = new WebClient())
                 {
                     request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
+                    request.QueryString.Add("curPage", "1");
+                    request.QueryString.Add("pageSize", "1000");
                     request.UploadValuesCompleted += (s, e) =>
                     {
+                        string jsonString = Encoding.UTF8.GetString(e.Result);
                         Root_StaffAll dataStaffAll = JsonConvert.DeserializeObject<Root_StaffAll>(UnicodeEncoding.UTF8.GetString(e.Result));
                         if (dataStaffAll.data.items != null)
                         {
@@ -543,7 +594,7 @@ namespace CompanyManagers.Views.Home
                            
                         }
                     };
-                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Staff + UrlApi.Name_Api_Staff, request.Headers);
+                    await request.UploadValuesTaskAsync(UrlApi.Url_Api_Staff + UrlApi.Name_Api_Staff, request.QueryString);
                 }
             }
             catch (Exception) { }
@@ -901,6 +952,9 @@ namespace CompanyManagers.Views.Home
         {
             try
             {
+                /*var shakeAnimation = (Storyboard)this.Resources["ShakeAnimation"];
+                shakeAnimation.Begin(ShakePath);*/
+                adimationNotication = true;
                 PagePopupGrayColor = new PagePopupGrayColor(this);
                 PagePopupGrayColor.Popup1.NavigationService.Navigate(new ProfileUser(this, loginHome));
                 PagePopup.NavigationService.Navigate(PagePopupGrayColor);

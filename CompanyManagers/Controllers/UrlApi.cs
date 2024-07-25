@@ -31,6 +31,7 @@ namespace CompanyManagers.Controllers
         #region Staff
         public const string Url_Api_Staff = "https://api.timviec365.vn/api/";
         public const string Name_Api_Staff = "qlc/managerUser/listAll";
+        public const string Name_Api_SearchInforStaff = "qlc/employee/info";
         #endregion
         #region Shift
         public const string Url_Api_Shift  = "https://api.timviec365.vn/api/";

@@ -1,16 +1,13 @@
 ﻿using CompanyManagers.Controllers;
 using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsShift;
-using CompanyManagers.Views.Home;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Markup;
+using System.IO;
+using System.Linq;
 
 namespace CompanyManagers.Models.ModelsPageStaff
 {
@@ -88,8 +85,48 @@ namespace CompanyManagers.Models.ModelsPageStaff
     public class LanhDaoDuyet
     {
         public string userName { get; set; }
-        public string avatarUser { get; set; }
+
+        private string LinkAvatarComfirm;
+
+        public string avatarUser 
+        {
+            get
+            {
+                GetShaftAll(); return LinkAvatarComfirm;
+            }
+            set { LinkAvatarComfirm = value; }
+        }
         public int idQLC { get; set; }
+        public void GetShaftAll()
+        {
+            if (idQLC.ToString() != Properties.Settings.Default.IdCompany && idQLC.ToString() == Properties.Settings.Default.IdUser)
+            {
+                var data = new
+                {
+                    com_id = Properties.Settings.Default.IdCompany,
+                    idQLC = idQLC.ToString()
+                };
+                string jsondata = JsonConvert.SerializeObject(data);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_SearchInforStaff, "POST", jsondata);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_InforStaff dataInforStaff = JsonConvert.DeserializeObject<Root_InforStaff>(Encoding.UTF8.GetString(bytesData));
+                    if (dataInforStaff != null)
+                    {
+                        string fileName = GetFileNameFromUrl(dataInforStaff.data.data.avatarUser);
+                        LinkAvatarComfirm = $"http://210.245.108.202:9002/avatarUser/{dataInforStaff.data.data._id}/{fileName}";
+                    }
+                }
+            }
+        }
+        public static string GetFileNameFromUrl(string url)
+        {
+            Uri uri = new Uri(url);
+            return Path.GetFileName(uri.LocalPath);
+        }
     }
 
     public class LichSuDuyet
@@ -105,6 +142,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
                     case "1": return "đã tiếp nhận đề xuất";
                     case "2": return "đã duyệt đề xuất";
                     case "3": return "đã Từ chối đề xuất";
+                    case "4": return "đã hủy duyệt đề xuất";
                     default: return "";
                 }
             }
@@ -210,7 +248,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
                 Root_StaffShiftInDay dataStaffShiftInDay = JsonConvert.DeserializeObject<Root_StaffShiftInDay>(Encoding.UTF8.GetString(bytesData));
                 if (dataStaffShiftInDay != null)
                 {
-                    shiftName = dataStaffShiftInDay.list.Find(x => x.shift_id == ca_nghi.ToString())?.shift_name;
+                    shiftName = dataStaffShiftInDay.list.Find(x => x.shift_id == ca_nghi || x.shift_id == (Int32.Parse(ca_nghi) + 1).ToString() || x.shift_id == (Int32.Parse(ca_nghi) - 1).ToString())?.shift_name;
                 }
             }
         }
@@ -230,7 +268,6 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public int? ng_ban_giao_CRM { get; set; }
 
         private string NameUserCRM;
-
         public string ng_ban_giao_string_CRM 
         {
             get
@@ -247,10 +284,17 @@ namespace CompanyManagers.Models.ModelsPageStaff
                 webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
                 var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_Staff, "POST", "");
                 byte[] bytesData = Encoding.Default.GetBytes(resData);
-                Root_StaffAll dataStaffAll = JsonConvert.DeserializeObject<Root_StaffAll>(Encoding.UTF8.GetString(bytesData));
-                if (dataStaffAll != null)
+                Root_StaffAll dataInforStaff = JsonConvert.DeserializeObject<Root_StaffAll>(Encoding.UTF8.GetString(bytesData));
+                if (dataInforStaff != null)
                 {
-                    NameUserCRM = dataStaffAll.data.items.Find(x => x.ep_id == ng_ban_giao_CRM)?.ep_name;
+                    if (ng_ban_giao_CRM != null && dataInforStaff.data.items.Any(x => x.ep_id == ng_ban_giao_CRM))
+                    {
+                        NameUserCRM = dataInforStaff.data.items.Find(x => x.ep_id == ng_ban_giao_CRM).ep_name;
+                    }
+                    else
+                    {
+                        NameUserCRM = "Không có";
+                    }
                 }
             }
         }

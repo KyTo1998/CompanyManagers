@@ -7,6 +7,17 @@
         mc:Ignorable="d" Background="Transparent" AllowsTransparency="True"
         Title="Company Manager" MinHeight="790" MinWidth="860" 
         WindowStyle="None" ResizeMode="CanResizeWithGrip" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Storyboard x:Key="ShakeAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(SkewTransform.AngleX)">
+                <SplineDoubleKeyFrame KeyTime="0:0:0.1" Value="-20"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.2" Value="20"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.3" Value="-20"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.4" Value="20"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources> 
     <Grid>
         <Border BorderThickness="1 0 1 1" BorderBrush="{DynamicResource colorTheme}" CornerRadius="10">
             <Grid>
@@ -21,7 +32,7 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="2*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" MouseLeftButtonDown="ShowOutPut" x:Name="logoInTitle" Cursor="Hand">
+                        <Grid Grid.Column="0" x:Name="logoInTitle" Cursor="Hand">
                             <Grid.Style>
                                 <Style TargetType="Grid">
                                     <Setter Property="Background" Value="Transparent"/>
@@ -36,11 +47,18 @@
                                 <ColumnDefinition Width="60"/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" BorderThickness="1" BorderBrush="#666" Width="50" Height="50"  CornerRadius="50">
-                                <Border.Background>
-                                    <ImageBrush x:Name="Avatar" ImageSource="\Resources/Image/AvatarUser.png" />
-                                </Border.Background>
-                            </Border>
+                            <Grid Grid.Column="0" MouseLeftButtonDown="ShowOutPut">
+                                <Border BorderThickness="1" BorderBrush="#666" Width="50" Height="50"  CornerRadius="50">
+                                    <Border.Background>
+                                        <ImageBrush x:Name="Avatar" ImageSource="\Resources/Image/AvatarUser.png" />
+                                    </Border.Background>
+                                </Border>
+                                <Border BorderThickness="1" BorderBrush="#666" Width="50" Height="50"  CornerRadius="50">
+                                    <Border.Background>
+                                        <ImageBrush x:Name="AvatarLink" ImageSource="{Binding Path=LinkAvatar, RelativeSource={RelativeSource AncestorType=Window}}" />
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                 <TextBlock VerticalAlignment="Top" x:Name="tb_NameUser" Text="Company Manager"  Foreground="{StaticResource colorWriter}" Padding="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" LineHeight="1"/>
                                 <WrapPanel>
@@ -49,6 +67,34 @@
                                         <Path Width="16" Height="16" Data="{DynamicResource iconDongHo}" RenderTransformOrigin="0.206,0.992" Stretch="Fill" Stroke="#FFFFFF" StrokeThickness="1.5" />
                                         <TextBlock Name="dynamicTextBlock" Grid.Column="0" Margin="5 0 0 0" VerticalAlignment="Center" FontSize="15" FontWeight="Medium" Foreground="#FFFFFF" />
                                     </DockPanel>
+                                    <Grid Margin="10 0 0 0">
+                                        <Path x:Name="ShakePath" Data="{StaticResource iconNotication}" Width="18" Height="18" Stretch="Fill">
+                                            <Path.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform CenterX="0" CenterY="0"/>
+                                                    <RotateTransform/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </Path.RenderTransform>
+                                            <Path.Style>
+                                                <Style TargetType="Path">
+                                                    <Setter Property="Fill" Value="{StaticResource colorWriter}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding adimationNotication}" Value="true">
+                                                            <Setter Property="Fill" Value="{StaticResource colorRemoveRed}"/>
+                                                            <DataTrigger.EnterActions>
+                                                                <BeginStoryboard Storyboard="{StaticResource ShakeAnimation}" />
+                                                            </DataTrigger.EnterActions>
+                                                            <DataTrigger.ExitActions>
+                                                                <StopStoryboard BeginStoryboardName="ShakeAnimation"/>
+                                                            </DataTrigger.ExitActions>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Path.Style>
+                                        </Path>
+                                    </Grid>
                                 </WrapPanel>
                             </StackPanel>
                         </Grid>

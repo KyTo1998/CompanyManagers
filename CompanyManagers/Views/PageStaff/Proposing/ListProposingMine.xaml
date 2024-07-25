@@ -325,7 +325,7 @@
                         <Path Stretch="Fill" Height="20" Width="16">
                             <Path.Style>
                                 <Style TargetType="Path">
-                                    <Setter Property="Data" Value="{StaticResource iconProposingYes}"/>
+                                    <Setter Property="Data" Value="{StaticResource iconEyes}"/>
                                     <Setter Property="Fill" Value="{StaticResource colorText1}"/>
                                     <Style.Triggers>
                                         <MultiDataTrigger>
@@ -410,7 +410,7 @@
                     <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
                     <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
                     <DockPanel Grid.Column="3" MouseLeftButtonUp="SearchProposingSendTo" Background="Transparent" Cursor="Hand">
-                        <TextBlock Text="Tìm kiếm" Foreground="{DynamicResource colorTheme}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"/>
+                        <TextBlock Text="Tìm kiếm" Foreground="{DynamicResource colorTextForTheme}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>
@@ -456,7 +456,7 @@
                     <tool:DatePicker x:Name="dateTimeStartRespon" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="3" Cursor="Hand" SelectedDateChange="TimeSearchStartRespon"/>
                     <tool:DatePicker x:Name="dateTimeStopRespon" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="4" Cursor="Hand" SelectedDateChange="TimeSearchStopRespon"/>
                     <DockPanel Grid.Column="5" Cursor="Hand" MouseLeftButtonUp="SearchProposingSendToMe" Background="Transparent">
-                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource ColorGreen}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Medium"/>
+                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource colorTextForTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>

@@ -22,30 +22,22 @@
                         </Style>
                     </Border.Resources>
                     <Grid>
-                        <TextBlock TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" FontWeight="Medium">
-                            <TextBlock.Resources>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="1">
-                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                            <Setter Property="Foreground" Value="#FF0097E8"></Setter>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="2">
-                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                            <Setter Property="Foreground" Value="#FFF78400"></Setter>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="3">
-                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                            <Setter Property="Foreground" Value="#FF005F33"></Setter>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding UserCurrent.AvatarUser}" Value="4">
-                                            <Setter Property="Text" Value="{Binding Path = UserCurrent.UserName[0]}"></Setter>
-                                            <Setter Property="Foreground" Value="#FFFF0029"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Resources>
-                        </TextBlock>
+                        <Border Margin="69,69,0,0" Background="#FFE0E0E0" CornerRadius="20" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left">
+                            <Path Data="{StaticResource iconCamera}" Margin="0" Stretch="Fill" Fill="#747474" Width="20" Height="16"></Path>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border CornerRadius="50" VerticalAlignment="Top" RenderTransformOrigin="5.623,1.097" Height="100" HorizontalAlignment="Center" Width="100" Margin="0,51,0,0">
+                    <Border.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <ImageBrush ImageSource="{Binding Path=LinkAvatar, RelativeSource={RelativeSource AncestorType=UserControl}}" Stretch="UniformToFill"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Border.Resources>
+                    <Grid>
                         <Border Margin="69,69,0,0" Background="#FFE0E0E0" CornerRadius="20" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left">
                             <Path Data="{StaticResource iconCamera}" Margin="0" Stretch="Fill" Fill="#747474" Width="20" Height="16"></Path>
                         </Border>

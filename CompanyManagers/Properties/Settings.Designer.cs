@@ -184,6 +184,34 @@ namespace CompanyManagers.Properties
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IdCompany
+        {
+            get
+            {
+                return ((string)(this["IdCompany"]));
+            }
+            set
+            {
+                this["IdCompany"] = value;
+            }
+        }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IdUser
+        {
+            get
+            {
+                return ((string)(this["IdUser"]));
+            }
+            set
+            {
+                this["IdUser"] = value;
+            }
+        }
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string Theme
         {
             get
