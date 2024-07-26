@@ -326,63 +326,74 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             viewCalendarWork = false;
         }
-        InforDx_Proposing dataProposeHomeNext { get; set; }
-        ListProposingSendAll dataProposeMineNext { get; set; }
+        InforDx_Proposing dataProposeHomeNext;
+        ListProposingSendAll dataProposeMineNext;
         private void NextDetailProposeToLeft(object sender, MouseButtonEventArgs e)
         {
-            if (dataProposeHome != null)
+            try
             {
-                if (dataProposeHomeNext == null)
+                if (dataProposeHome != null)
                 {
-                    dataProposeHomeNext = dataProposeHome;
+                    if (dataProposeHomeNext == null)
+                    {
+                        dataProposeHomeNext = dataProposeHome;
+                    }
+                    if (listProposingHome.IndexOf(dataProposeHomeNext) - 1 >= 0)
+                    {
+                        dataProposeHomeNext = listProposingHome[listProposingHome.IndexOf(dataProposeHomeNext) - 1];
+                        managerHome.GetDetailPropose(dataProposeHomeNext, null, listProposingHome, listProposingSendAll);
+                    }
                 }
-                if (listProposingHome.IndexOf(dataProposeHomeNext) - 1 >= 0)
+                else
                 {
-                    dataProposeHomeNext = listProposingHome[listProposingHome.IndexOf(dataProposeHomeNext) - 1];
-                    managerHome.GetDetailPropose(dataProposeHomeNext, null, listProposingHome, listProposingSendAll);
+                    if (dataProposeMineNext == null)
+                    {
+                        dataProposeMineNext = dataProposeMine;
+                    }
+                    if (listProposingSendAll.IndexOf(dataProposeMineNext) - 1 >= 0)
+                    {
+                        dataProposeMineNext = listProposingSendAll[listProposingSendAll.IndexOf(dataProposeMineNext) - 1];
+                        managerHome.GetDetailPropose(null, dataProposeMineNext, listProposingHome, listProposingSendAll);
+                    }
                 }
             }
-            else
+            catch (Exception)
             {
-                if (dataProposeMineNext == null)
-                {
-                    dataProposeMineNext = dataProposeMine;
-                }
-                if (listProposingHome.IndexOf(dataProposeHomeNext) - 1 >= 0)
-                {
-                    dataProposeMineNext = listProposingSendAll[listProposingSendAll.IndexOf(dataProposeMineNext) - 1];
-                    managerHome.GetDetailPropose(null, dataProposeMineNext, listProposingHome, listProposingSendAll);
-                }
             }
         }
 
         private void NextDetailProposeToRight(object sender, MouseButtonEventArgs e)
         {
-            if (dataProposeHome != null)
+            try
             {
-                if (dataProposeHomeNext == null)
+                if (dataProposeHome != null)
                 {
-                    dataProposeHomeNext = dataProposeHome;
+                    if (dataProposeHomeNext == null)
+                    {
+                        dataProposeHomeNext = dataProposeHome;
+                    }
+                    if (listProposingHome.IndexOf(dataProposeHomeNext) + 1 <= listProposingHome.Count - 1)
+                    {
+                        dataProposeHomeNext = listProposingHome[listProposingHome.IndexOf(dataProposeHomeNext) + 1];
+                        managerHome.GetDetailPropose(dataProposeHomeNext, null, listProposingHome, listProposingSendAll);
+                    }
                 }
-                if (listProposingHome.IndexOf(dataProposeHomeNext) + 1 <= listProposingHome.Count -1)
+                else
                 {
-                    dataProposeHomeNext = listProposingHome[listProposingHome.IndexOf(dataProposeHomeNext) + 1];
-                    managerHome.GetDetailPropose(dataProposeHomeNext, null, listProposingHome, listProposingSendAll);
+                    if (dataProposeMineNext == null)
+                    {
+                        dataProposeMineNext = dataProposeMine;
+                    }
+                    if (listProposingSendAll.IndexOf(dataProposeMineNext) + 1 <= listProposingSendAll.Count - 1)
+                    {
+                        dataProposeMineNext = listProposingSendAll[listProposingSendAll.IndexOf(dataProposeMineNext) + 1];
+                        managerHome.GetDetailPropose(null, dataProposeMineNext, listProposingHome, listProposingSendAll);
+                    }
                 }
-
             }
-            else
+            catch (Exception)
             {
-                if (dataProposeMineNext == null)
-                {
-                    dataProposeMineNext = dataProposeMine;
-                }
-                if (listProposingHome.IndexOf(dataProposeHomeNext) + 1 <= listProposingSendAll.Count - 1)
-                {
-                    dataProposeMineNext = listProposingSendAll[listProposingSendAll.IndexOf(dataProposeMineNext) + 1];
-                    managerHome.GetDetailPropose(null, dataProposeMineNext, listProposingHome, listProposingSendAll);
-                }
-            }    
+            }   
         }
     }
 }
