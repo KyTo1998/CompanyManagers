@@ -163,22 +163,26 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             
         }
-
         public class Root_ngaylamviec
         {
             public int type { get; set; }
             public List<list_ngay_lam_viec> data { get; set; }
         }
+        private List<InforDx_Proposing> listProposingHome;
+        private List<ListProposingSendAll> listProposingSendAll;
         private Detail_Proposet detailPropose;
         InforDx_Proposing dataProposeHome;
         ListProposingSendAll dataProposeMine;
         ManagerHome managerHome;
         int startDay;
-        public pageViewDetailPropose(ManagerHome _managerHome, Detail_Proposet _detailPropose, InforDx_Proposing _dataProposeHome, ListProposingSendAll _dataProposeMine)
+
+        public pageViewDetailPropose(ManagerHome _managerHome, Detail_Proposet _detailPropose, InforDx_Proposing _dataProposeHome, ListProposingSendAll _dataProposeMine, List<InforDx_Proposing> _listProposingHome, List<ListProposingSendAll> _listProposingSendAll)
         {
             InitializeComponent();
             managerHome = _managerHome;
             detailPropose = _detailPropose;
+            listProposingHome = _listProposingHome;
+            listProposingSendAll = _listProposingSendAll;
             if (_dataProposeHome != null)
             {
                 tb_GroundPropose.Text = _dataProposeHome.type_dx_string;
@@ -276,14 +280,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     {
                         if (itemForDay.datetime.Day == i)
                         {
-                            var d1 = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, list_shift_name_picker = itemForDay.list_shift_name ,/*shiftSelected = _listShift.Count,*/ statusClick = 1 };
+                            var d1 = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, list_shift_name_picker = itemForDay.list_shift_name , statusClick = 1 };
                             listLichProposing.Add(d1);
                             sttAdd = i;
                         }
                     }
                     if (sttAdd != i)
                     {
-                        var d2 = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i,/*shiftSelected = _listShift.Count,*/ statusClick = 1 };
+                        var d2 = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, statusClick = 1 };
                         listLichProposing.Add(d2);
                     }
                 }
@@ -321,6 +325,64 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         private void ClosePopup(object sender, MouseButtonEventArgs e)
         {
             viewCalendarWork = false;
+        }
+        InforDx_Proposing dataProposeHomeNext { get; set; }
+        ListProposingSendAll dataProposeMineNext { get; set; }
+        private void NextDetailProposeToLeft(object sender, MouseButtonEventArgs e)
+        {
+            if (dataProposeHome != null)
+            {
+                if (dataProposeHomeNext == null)
+                {
+                    dataProposeHomeNext = dataProposeHome;
+                }
+                if (listProposingHome.IndexOf(dataProposeHomeNext) - 1 >= 0)
+                {
+                    dataProposeHomeNext = listProposingHome[listProposingHome.IndexOf(dataProposeHomeNext) - 1];
+                    managerHome.GetDetailPropose(dataProposeHomeNext, null, listProposingHome, listProposingSendAll);
+                }
+            }
+            else
+            {
+                if (dataProposeMineNext == null)
+                {
+                    dataProposeMineNext = dataProposeMine;
+                }
+                if (listProposingHome.IndexOf(dataProposeHomeNext) - 1 >= 0)
+                {
+                    dataProposeMineNext = listProposingSendAll[listProposingSendAll.IndexOf(dataProposeMineNext) - 1];
+                    managerHome.GetDetailPropose(null, dataProposeMineNext, listProposingHome, listProposingSendAll);
+                }
+            }
+        }
+
+        private void NextDetailProposeToRight(object sender, MouseButtonEventArgs e)
+        {
+            if (dataProposeHome != null)
+            {
+                if (dataProposeHomeNext == null)
+                {
+                    dataProposeHomeNext = dataProposeHome;
+                }
+                if (listProposingHome.IndexOf(dataProposeHomeNext) + 1 <= listProposingHome.Count -1)
+                {
+                    dataProposeHomeNext = listProposingHome[listProposingHome.IndexOf(dataProposeHomeNext) + 1];
+                    managerHome.GetDetailPropose(dataProposeHomeNext, null, listProposingHome, listProposingSendAll);
+                }
+
+            }
+            else
+            {
+                if (dataProposeMineNext == null)
+                {
+                    dataProposeMineNext = dataProposeMine;
+                }
+                if (listProposingHome.IndexOf(dataProposeHomeNext) + 1 <= listProposingSendAll.Count - 1)
+                {
+                    dataProposeMineNext = listProposingSendAll[listProposingSendAll.IndexOf(dataProposeMineNext) + 1];
+                    managerHome.GetDetailPropose(null, dataProposeMineNext, listProposingHome, listProposingSendAll);
+                }
+            }    
         }
     }
 }

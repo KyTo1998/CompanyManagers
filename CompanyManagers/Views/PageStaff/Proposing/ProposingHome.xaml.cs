@@ -156,7 +156,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome,"AllToHome");
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome,"AllToHome", listProposingHome);
                 managerHome.PageFunction.Content = listProposingMine;
                 managerHome.backToBack = "BackToProposingHome";
             }
@@ -169,7 +169,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "WaitComfirmToHome");
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "WaitComfirmToHome", listProposingHome);
                 managerHome.PageFunction.Content = listProposingMine;
                 managerHome.backToBack = "BackToProposingHome";
             }
@@ -182,7 +182,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "NecessaryComfirmToHome");
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "NecessaryComfirmToHome", listProposingHome);
                 managerHome.PageFunction.Content = listProposingMine;
                 managerHome.backToBack = "BackToProposingHome";
             }
@@ -195,7 +195,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "ProposeApprovedProposing");
+                ListProposingMine listProposingMine = new ListProposingMine(managerHome, listCategoyProposingHome, "ProposeApprovedProposing", listProposingHome);
                 managerHome.PageFunction.Content = listProposingMine;
                 managerHome.backToBack = "BackToProposingHome";
             }
@@ -209,7 +209,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             InforDx_Proposing dataProposeHome = (InforDx_Proposing)(sender as Border).DataContext;
             if (dataProposeHome != null)
             {
-                managerHome.GetDetailPropose(dataProposeHome, null);
+                managerHome.GetDetailPropose(dataProposeHome, null, listProposingHome, null);
             }
         }
     }

@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
-             mc:Ignorable="d" MinWidth="500" MaxWidth="950">
-    <Grid> 
+             mc:Ignorable="d" MinWidth="500" MaxWidth="970">
+    <Grid>
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <Border CornerRadius="10" Background="{StaticResource colorTextMessage}">
                 <WrapPanel x:Name="wap_ShowDetailPropose" Margin="0 10 0 10" PreviewMouseWheel="ScollCreateProposing" HorizontalAlignment="Center">
@@ -1013,7 +1013,7 @@
                                                                 </Style>
                                                             </TextBlock.Style>
                                                         </TextBlock>
-                                                        <ListView x:Name="lsvShiftForDay" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding list_shift_name_picker}" Margin="0 5 0 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                                        <ListView x:Name="lsvShiftForDay" ScrollViewer.CanContentScroll="false" VerticalAlignment="Center" Background="transparent" ItemsSource="{Binding list_shift_name_picker}" Margin="0 5 0 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
                                                             <ListView.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <StackPanel></StackPanel>
@@ -1045,5 +1045,16 @@
                 </StackPanel>
             </Border>
         </Grid>
+        <Path Data="{StaticResource iconRightArrowz}" MouseLeftButtonDown="NextDetailProposeToLeft" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{DynamicResource colorTextForTheme}" Width="25"  Height="25" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+        <Path Data="{StaticResource iconRightArrowz}" MouseLeftButtonDown="NextDetailProposeToRight" Cursor="Hand" HorizontalAlignment="Right" VerticalAlignment="Center" Fill="{DynamicResource colorTextForTheme}" Width="25" Height="25"  Stretch="Fill" RenderTransformOrigin="0.5,0.5"/>
     </Grid>
 </UserControl>

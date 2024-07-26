@@ -783,7 +783,7 @@ namespace CompanyManagers.Views.Home
             }
         }
 
-        public void GetDetailPropose(InforDx_Proposing dataProposeHome, ListProposingSendAll dataProposeMine)
+        public void GetDetailPropose(InforDx_Proposing dataProposeHome, ListProposingSendAll dataProposeMine, List<InforDx_Proposing> _listProposingHome, List<ListProposingSendAll> _listProposingSendAll)
         {
             try
             {
@@ -805,7 +805,7 @@ namespace CompanyManagers.Views.Home
                     if (dataDetailPropose != null)
                     {
                         PagePopupGrayColor = new PagePopupGrayColor(this);
-                        PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageViewDetailPropose(this, dataDetailPropose.data.detailDeXuat[0], dataProposeHome, dataProposeMine));
+                        PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageViewDetailPropose(this, dataDetailPropose.data.detailDeXuat[0], dataProposeHome, dataProposeMine, _listProposingHome, _listProposingSendAll));
                         PagePopup.NavigationService.Navigate(this.PagePopupGrayColor);
                     }
                 }

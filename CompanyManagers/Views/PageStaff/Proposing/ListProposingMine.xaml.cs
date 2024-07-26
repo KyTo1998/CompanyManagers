@@ -67,10 +67,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         ManagerHome managerHome { get; set; }
         BrushConverter br = new BrushConverter();
         string typeClickAtHomePropose;
-        public ListProposingMine(ManagerHome _managerHome, List<Result_CategoryProposing> listCateProHome, string _typeClickAtHomePropose)
+        private List<InforDx_Proposing> listProposingHome;
+        public ListProposingMine(ManagerHome _managerHome, List<Result_CategoryProposing> listCateProHome, string _typeClickAtHomePropose, List<InforDx_Proposing> _listProposingHome)
         {
             InitializeComponent();
             managerHome = _managerHome;
+            listProposingHome = _listProposingHome;
             typeClickAtHomePropose = _typeClickAtHomePropose;
             listCategoyProposingHome = listCateProHome;
             searchKeyRespon.ItemsSource = _managerHome.dataListStaffAll;
@@ -519,7 +521,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             ListProposingSendAll dataPropose = (ListProposingSendAll)(sender as Border).DataContext;
             if (dataPropose != null)
             {
-                managerHome.GetDetailPropose(null, dataPropose);
+                managerHome.GetDetailPropose(null, dataPropose, listProposingHome, listProposingSendAll);
             }
         }
     }
