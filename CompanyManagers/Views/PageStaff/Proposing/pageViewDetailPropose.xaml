@@ -230,6 +230,38 @@
                                                 </ListView.ItemContainerStyle>
                                             </ListView>
                                         </StackPanel>
+                                        <StackPanel x:Name="CongCong">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding nhom_de_xuat,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="17">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Thời gian xác nhận công:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="TimeComfirmCC" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Ca xác nhận công:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="ShiftNameCC" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Thời gian vào ca:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="TimeInShiftCC" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Thời gian hết ca:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="TimeOutShiftCC" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                            <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run x:Name="ResuelCC" Foreground="{DynamicResource colorTextForTheme}"/>
+                                            </TextBlock>
+                                        </StackPanel>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="10">
                                         <Border x:Name="StatusComfirm" Margin="0 10 0 10" Cursor="No" CornerRadius="5" BorderThickness="1" BorderBrush="{Binding ElementName=paIcon, Path=Fill}">

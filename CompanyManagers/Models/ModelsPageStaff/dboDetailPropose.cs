@@ -199,7 +199,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public SuDungPhongHop su_dung_phong_hop { get; set; }
         public SuDungXeCong su_dung_xe_cong { get; set; }
         public SuaChuaCoSoVatChat sua_chua_co_so_vat_chat { get; set; }
-        public XacNhanCong xac_nhan_cong { get; set; }
+        public XacNhanCong_DetailPropose xac_nhan_cong { get; set; }
         public LichLamViec_DetailPropose lich_lam_viec { get; set; }
         public HoaHong_DetailPropose hoa_hong { get; set; }
         public ThanhToan thanh_toan { get; set; }
@@ -316,7 +316,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
             {
                 var cultureInfo = (CultureInfo)CultureInfo.InvariantCulture.Clone();
                 cultureInfo.NumberFormat.NumberGroupSeparator = ".";
-                return dt_money?.ToString("N0", cultureInfo); 
+                return dt_money?.ToString("N0", cultureInfo) + " VNĐ"; 
             }
             set
             {
@@ -419,5 +419,29 @@ namespace CompanyManagers.Models.ModelsPageStaff
             DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddSeconds(unixTimestamp);
         }
+    }
+    public class XacNhanCong_DetailPropose
+    {
+        public string time_xnc { get; set; }
+        public string time_xnc_display 
+        {
+            get
+            {
+                if (time_xnc != null)
+                {
+                    DateTime utcDateTime = DateTime.Parse(time_xnc, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                    TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+                    DateTime vietnamDateTime = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, vietnamTimeZone);
+                    return vietnamDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+                return null;
+            }
+            set { }
+        }
+        public string time_vao_ca { get; set; }
+        public string time_het_ca { get; set; }
+        public string ca_xnc { get; set; }
+        public int? id_ca_xnc { get; set; }
+        public string ly_do { get; set; }
     }
 }

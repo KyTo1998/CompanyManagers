@@ -115,6 +115,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             set { _deletePropose = value; OnPropertyChanged("deletePropose"); }
         }
 
+        private int _NumberProposeInList = 0;
+        public int NumberProposeInList
+        {
+            get { return _NumberProposeInList; }
+            set { _NumberProposeInList = value; OnPropertyChanged("NumberProposeInList"); }
+        }
         private List<lichlamviec> _listLichProposing;
         public List<lichlamviec> listLichProposing
         {
@@ -161,7 +167,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 get { return _list_shift_name; }
                 set { _list_shift_name = value; } 
             }
-            
         }
         public class Root_ngaylamviec
         {
@@ -183,6 +188,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             detailPropose = _detailPropose;
             listProposingHome = _listProposingHome;
             listProposingSendAll = _listProposingSendAll;
+            
             if (_dataProposeHome != null)
             {
                 tb_GroundPropose.Text = _dataProposeHome.type_dx_string;
@@ -228,6 +234,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 string jsonString = _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Substring(1, _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Length - 2);
                 Root_ngaylamviec dataNgayLamViec = JsonConvert.DeserializeObject<Root_ngaylamviec>(jsonString);
                 GetListShiftAll(dataNgayLamViec.data);
+            }
+            if (_detailPropose.nhom_de_xuat == 17)
+            {
+                TimeComfirmCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.time_xnc_display;
+                ShiftNameCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.ca_xnc;
+                TimeInShiftCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.time_vao_ca;
+                TimeOutShiftCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.time_het_ca;
+                ResuelCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.ly_do;
             }
         }
         public async void GetListShiftAll(List<list_ngay_lam_viec> _list_ngay_lam_viec)
@@ -352,6 +366,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     }
                     if (listProposingSendAll.IndexOf(dataProposeMineNext) - 1 >= 0)
                     {
+                        NumberProposeInList--;
                         dataProposeMineNext = listProposingSendAll[listProposingSendAll.IndexOf(dataProposeMineNext) - 1];
                         managerHome.GetDetailPropose(null, dataProposeMineNext, listProposingHome, listProposingSendAll);
                     }
