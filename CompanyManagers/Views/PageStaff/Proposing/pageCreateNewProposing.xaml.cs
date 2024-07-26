@@ -20,7 +20,6 @@ using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using CompanyManagers.Models.ModelRose;
-using System.Windows.Markup;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing

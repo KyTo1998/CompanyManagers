@@ -1,13 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CompanyManagers.Models.ModelsShift
 {
-   // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class StaffShiftInDay
     {
         public string _id { get; set; }

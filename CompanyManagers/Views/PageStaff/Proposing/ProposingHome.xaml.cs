@@ -1,7 +1,5 @@
-﻿using CompanyManagers.Common.Popups;
-using CompanyManagers.Controllers;
+﻿using CompanyManagers.Controllers;
 using CompanyManagers.Models.ModelsPageStaff;
-using CompanyManagers.Models.ModelsShift;
 using CompanyManagers.Views.Home;
 using Newtonsoft.Json;
 using System;
@@ -14,7 +12,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
-using static CompanyManagers.Common.Tool.DatePicker;
 using static CompanyManagers.Views.Home.ManagerHome;
 
 

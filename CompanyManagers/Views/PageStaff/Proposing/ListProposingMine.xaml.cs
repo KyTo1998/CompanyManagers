@@ -1,21 +1,17 @@
 ﻿using CompanyManagers.Controllers;
 using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsPageStaff;
-using CompanyManagers.Models.ModelsShift;
 using CompanyManagers.Views.Home;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing.Printing;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
