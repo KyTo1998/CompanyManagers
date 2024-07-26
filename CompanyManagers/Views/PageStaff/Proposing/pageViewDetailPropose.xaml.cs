@@ -1,15 +1,23 @@
-﻿using CompanyManagers.Models.ModelRose;
+﻿using CompanyManagers.Controllers;
+using CompanyManagers.Models.ModelRose;
 using CompanyManagers.Models.ModelsAll;
 using CompanyManagers.Models.ModelsPageStaff;
+using CompanyManagers.Models.ModelsShift;
 using CompanyManagers.Views.Home;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static CompanyManagers.Views.Home.ManagerHome;
+using System.Globalization;
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -111,10 +119,66 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _deletePropose; }
             set { _deletePropose = value; OnPropertyChanged("deletePropose"); }
         }
+
+        private List<lichlamviec> _listLichProposing;
+        public List<lichlamviec> listLichProposing
+        {
+            get { return _listLichProposing; }
+            set
+            {
+                _listLichProposing = value;
+                OnPropertyChanged("listLichProposing");
+            }
+        }
+        private List<list_ngay_lam_viec> _listShiftForDay = new List<list_ngay_lam_viec>();
+        public List<list_ngay_lam_viec> listShiftForDay
+        {
+            get { return _listShiftForDay; }
+            set
+            {
+                _listShiftForDay = value;
+                OnPropertyChanged("listShiftForDay");
+            }
+        }
+        public class list_ngay_lam_viec
+        {
+            public string date { get; set; }
+            public DateTime datetime 
+            {
+                get { return DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture); }
+                set { } 
+            }
+
+            public string shift_id { get; set; }
+            public List<string> list_shift_id 
+            {
+                get 
+                {
+                    string[] stringArray = shift_id.Split(',');
+                    List<string> stringList = new List<string>(stringArray);
+                    return stringList;
+                }
+                set { }
+            } 
+            private List<string> _list_shift_name = new List<string>();
+            public List<string> list_shift_name 
+            {
+                get { return _list_shift_name; }
+                set { _list_shift_name = value; } 
+            }
+            
+        }
+
+        public class Root_ngaylamviec
+        {
+            public int type { get; set; }
+            public List<list_ngay_lam_viec> data { get; set; }
+        }
         private Detail_Proposet detailPropose;
         InforDx_Proposing dataProposeHome;
         ListProposingSendAll dataProposeMine;
         ManagerHome managerHome;
+        int startDay;
         public pageViewDetailPropose(ManagerHome _managerHome, Detail_Proposet _detailPropose, InforDx_Proposing _dataProposeHome, ListProposingSendAll _dataProposeMine)
         {
             InitializeComponent();
@@ -133,14 +197,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             listLeaderComfirm = _detailPropose.lanh_dao_duyet.ToList();
             listUserFollow = _detailPropose.nguoi_theo_doi.ToList();
             listStatuComfirm = _detailPropose.lich_su_duyet.ToList();
-            Nd.UpdateOrder(_detailPropose.thong_tin_chung.nghi_phep.nd);
-            listCalendarOnLeave = _detailPropose.thong_tin_chung.nghi_phep.nd.ToList();
-            listRoseRevenue.Add(_detailPropose.thong_tin_chung.hoa_hong);
-            listRoseRevenue = listRoseRevenue.ToList();
-            listCalendaWork.Add(_detailPropose.thong_tin_chung.lich_lam_viec);
-            listCalendaWork = listCalendaWork.ToList();
-            tb_ReasonCreatePropse.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
-            userHandOverCRM = _detailPropose.thong_tin_chung.nghi_phep.ng_ban_giao_string_CRM;
             type_duyet = _detailPropose.type_duyet;
             nhom_de_xuat = _detailPropose.nhom_de_xuat;
             confirmOverdue = _detailPropose.qua_han_duyet;
@@ -154,21 +210,56 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             tb_UserCreatePropose.Text = _detailPropose.nguoi_tao;
             tb_UserCreate.Text = _detailPropose.nguoi_tao;
             tb_TypeComfirm.Text = _detailPropose.kieu_phe_duyet_format;
-            LoadDataCalendarWork(DateTime.Now.Month, DateTime.Now.Year);
-        }
-        int startDay;
-        private List<lichlamviec> _listLichProposing;
-
-        public List<lichlamviec> listLichProposing
-        {
-            get { return _listLichProposing; }
-            set
+            if (_detailPropose.nhom_de_xuat == 20)
             {
-                _listLichProposing = value;
-                OnPropertyChanged("listLichProposing");
+                listRoseRevenue.Add(_detailPropose.thong_tin_chung.hoa_hong);
+                listRoseRevenue = listRoseRevenue.ToList();
+            }
+            if (_detailPropose.nhom_de_xuat == 1)
+            {
+                Nd.UpdateOrder(_detailPropose.thong_tin_chung.nghi_phep.nd);
+                listCalendarOnLeave = _detailPropose.thong_tin_chung.nghi_phep.nd.ToList();
+                tb_ReasonCreatePropse.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
+                userHandOverCRM = _detailPropose.thong_tin_chung.nghi_phep.ng_ban_giao_string_CRM;
+            }
+            if (_detailPropose.nhom_de_xuat == 18)
+            {
+                listCalendaWork.Add(_detailPropose.thong_tin_chung.lich_lam_viec);
+                listCalendaWork = listCalendaWork.ToList();
+                string jsonString = _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Substring(1, _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Length - 2);
+                Root_ngaylamviec dataNgayLamViec = JsonConvert.DeserializeObject<Root_ngaylamviec>(jsonString);
+                GetListShiftAll(dataNgayLamViec.data);
             }
         }
-        public void LoadDataCalendarWork(int monthSelected, int yearSelected)
+        public async void GetListShiftAll(List<list_ngay_lam_viec> _list_ngay_lam_viec)
+        {
+            var client = HttpClientSingleton.Instance;
+            var request = new HttpRequestMessage(HttpMethod.Get, UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftAll);
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
+            var response = await client.SendAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                var returl = await response.Content.ReadAsStringAsync();
+                Root_ShiftAll dataShiftAll = JsonConvert.DeserializeObject<Root_ShiftAll>(returl);
+                if (dataShiftAll != null)
+                {
+                    foreach (var itemDayWork in _list_ngay_lam_viec)
+                    {
+                        foreach (var itemDayAll in dataShiftAll.data.items)
+                        {
+                            if (itemDayWork.list_shift_id.Contains(itemDayAll.shift_id.ToString()))
+                            {
+                                itemDayWork.list_shift_name.Add(itemDayAll.shift_name);
+                            }
+                        }
+                    }
+                    listShiftForDay = _list_ngay_lam_viec.ToList();
+                }
+                LoadDataCalendarWork(_list_ngay_lam_viec.Find(x => x.datetime != null).datetime.Month, _list_ngay_lam_viec.Find(x => x.datetime != null).datetime.Year, listShiftForDay);
+            }
+        }
+        int sttAdd;
+        public void LoadDataCalendarWork(int monthSelected, int yearSelected, List<list_ngay_lam_viec> _listShiftForDay)
         {
             try
             {
@@ -182,13 +273,26 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         new lichlamviec() { id = listLichProposing.Count, DayInCalendar = x - i, shiftSelected = 0, statusClick = 0 });
                 }
                 listLichProposing.Reverse();
-                
+
                 //Lấy ngày của tháng hiện tại
                 for (int i = 1; i <= DateTime.DaysInMonth(yearSelected, monthSelected); i++)
                 {
-                   var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, /*shiftSelected = _listShift.Count,*/ statusClick = 1 };
-                   listLichProposing.Add(d);
+                    foreach (var itemForDay in _listShiftForDay)
+                    {
+                        if (itemForDay.datetime.Day == i)
+                        {
+                            var d1 = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, list_shift_name_picker = itemForDay.list_shift_name ,/*shiftSelected = _listShift.Count,*/ statusClick = 1 };
+                            listLichProposing.Add(d1);
+                            sttAdd = i;
+                        }
+                    }
+                    if (sttAdd != i)
+                    {
+                        var d2 = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i,/*shiftSelected = _listShift.Count,*/ statusClick = 1 };
+                        listLichProposing.Add(d2);
+                    }
                 }
+
                 //Lấy ngày đầu tiên trong tuần của tháng tiếp theo
                 int n = 42 - listLichProposing.Count;
                 for (int i = 1; i <= n; i++)
@@ -215,6 +319,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             if (dataCalendaWork != null)
             {
                 viewCalendarWork = true;
+                tb_MonthCalendarWork.Text = detailPropose.thong_tin_chung.lich_lam_viec.thang_ap_dung_display;
             }
         }
 

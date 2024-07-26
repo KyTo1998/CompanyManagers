@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using CompanyManagers.Models.ModelRose;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace CompanyManagers.Models.ModelsPageStaff
 {
@@ -410,7 +411,9 @@ namespace CompanyManagers.Models.ModelsPageStaff
             set { ngay_bat_dau = value; }
         }
         public string ca_la_viec { get; set; }
+
         public string ngay_lam_viec { get; set; }
+     
         public string ly_do { get; set; }
         public static DateTime UnixTimestampToDateTime(long unixTimestamp)
         {

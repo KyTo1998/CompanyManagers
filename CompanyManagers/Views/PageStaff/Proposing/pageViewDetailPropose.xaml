@@ -958,8 +958,12 @@
                 </Style>
             </Grid.Style>
             <Rectangle Fill="{StaticResource ColorGray1}" Opacity="0.5" MouseLeftButtonDown="ClosePopup" Cursor="Hand"/>
-            <Border x:Name="ShowCalendar" MinWidth="420" MaxWidth="730" MaxHeight="650" BorderBrush="Red" BorderThickness="1" Background="WhiteSmoke" CornerRadius="10">
+            <Border x:Name="ShowCalendar" MinWidth="420" MaxWidth="730" MaxHeight="690" BorderBrush="{DynamicResource colorTextForTheme}" BorderThickness="1" Background="WhiteSmoke" CornerRadius="10">
                 <StackPanel>
+                    <TextBlock FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10 0 10" Foreground="{DynamicResource colorTextForTheme}" FontWeight="Medium">
+                        <Run Text="Lịch làm việc tháng:"/>
+                        <Run x:Name="tb_MonthCalendarWork"/>
+                    </TextBlock>
                     <Border x:Name="HeaderCalendarWork" Background="{DynamicResource colorTheme}" CornerRadius="10 10 0 0">
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
@@ -992,9 +996,9 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ListViewItem">
-                                                <Border Width="103" Height="100" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center" BorderThickness="1 1 0 1">
+                                                <Border Width="103" Height="100" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center" BorderThickness="1 1 0 0">
                                                     <StackPanel>
-                                                        <TextBlock Text="{Binding DayInCalendar}" FontSize="16" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding DayInCalendar}" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                             <TextBlock.Style>
                                                                 <Style TargetType="TextBlock">
                                                                     <Setter Property="Foreground" Value="#ACACAC"/>
@@ -1009,7 +1013,7 @@
                                                                 </Style>
                                                             </TextBlock.Style>
                                                         </TextBlock>
-                                                        <ListView x:Name="lsvShiftForDay" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listShiftForDay, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                                        <ListView x:Name="lsvShiftForDay" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding list_shift_name_picker}" Margin="0 5 0 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
                                                             <ListView.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <StackPanel></StackPanel>
@@ -1020,8 +1024,8 @@
                                                                     <Setter Property="Template">
                                                                         <Setter.Value>
                                                                             <ControlTemplate TargetType="ListViewItem">
-                                                                                <Border Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}" BorderThickness="1" CornerRadius="10">
-                                                                                    <TextBlock Text="7tr Ca lương cty h 10tr" Foreground="{StaticResource colorWriter}" FontSize="10" FontWeight="Regular" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2" TextWrapping="Wrap" TextAlignment="Center"/>
+                                                                                <Border Margin="2" Cursor="ScrollAll" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}" BorderThickness="0" CornerRadius="10">
+                                                                                    <TextBlock Text="{Binding}" Foreground="{StaticResource colorWriter}" FontSize="10" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2" TextWrapping="Wrap" TextAlignment="Center"/>
                                                                                 </Border>
                                                                             </ControlTemplate>
                                                                         </Setter.Value>
