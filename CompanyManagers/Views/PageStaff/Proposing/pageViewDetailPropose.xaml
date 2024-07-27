@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
+             xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              mc:Ignorable="d" MinWidth="500" MaxWidth="970">
-    <Grid>
+    <Grid Margin="10">
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <Border CornerRadius="10" Background="{StaticResource colorTextMessage}">
                 <WrapPanel x:Name="wap_ShowDetailPropose" Margin="0 10 0 10" PreviewMouseWheel="ScollCreateProposing" HorizontalAlignment="Center">
@@ -149,26 +150,26 @@
                                                             <Setter.Value>
                                                                 <ControlTemplate TargetType="ListViewItem">
                                                                     <StackPanel>
-                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                                         <Run Text="Chu kỳ hoa hồng:" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding chu_ky}" Foreground="{DynamicResource colorTextForTheme}"/>
-                                                                    </TextBlock>
-                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                                         <Run Text="Thời gian hoa hồng:" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding item_mdt_date}" Foreground="{DynamicResource colorTextForTheme}"/>
-                                                                    </TextBlock>
-                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                                         <Run Text="Doanh thu:" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding dt_money_formatted}" Foreground="{DynamicResource colorTextForTheme}"/>
-                                                                    </TextBlock>
-                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                                         <Run Text="Mức hoa hồng:" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding lever_revernue}" Foreground="{DynamicResource colorTextForTheme}"/>
-                                                                    </TextBlock>
-                                                                    <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                                                        </TextBlock>
+                                                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                                         <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding ly_do}" Foreground="{DynamicResource colorTextForTheme}"/>
-                                                                    </TextBlock>
+                                                                        </TextBlock>
                                                                     </StackPanel>
                                                                 </ControlTemplate>
                                                             </Setter.Value>
@@ -262,6 +263,20 @@
                                                 <Run x:Name="ResuelCC" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
+                                        <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                            <Run Text="Lý do từ trối:" Foreground="{DynamicResource colorText1}"/>
+                                            <Run x:Name="tb_RefuseComfirm" Text="Không có" Foreground="{DynamicResource colorRemoveRed}"/>
+                                        </TextBlock>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="10">
                                         <Border x:Name="StatusComfirm" Margin="0 10 0 10" Cursor="No" CornerRadius="5" BorderThickness="1" BorderBrush="{Binding ElementName=paIcon, Path=Fill}">
@@ -288,6 +303,13 @@
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Data" Value="{StaticResource iconExclamation}"/>
+                                                                    <Setter Property="Fill" Value="{DynamicResource colorTextForTheme}"/>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
                                                                     </MultiDataTrigger.Conditions>
                                                                     <Setter Property="Data" Value="{StaticResource iconDone}"/>
@@ -306,7 +328,14 @@
                                                                     </MultiDataTrigger.Conditions>
                                                                     <Setter Property="Data" Value="{StaticResource iconSad}"/>
                                                                     <Setter Property="Fill" Value="{DynamicResource colorRemoveRed}"/>
-                                                                </MultiDataTrigger> 
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="Data" Value="{StaticResource iconFaceKiss}"/>
+                                                                    <Setter Property="Fill" Value="{DynamicResource colorTextForTheme}"/>
+                                                                </MultiDataTrigger>
                                                                 <MultiDataTrigger>
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding qua_han_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
@@ -318,7 +347,7 @@
                                                         </Style>
                                                     </Path.Style>
                                                 </Path>
-                                                <TextBlock FontSize="16" FontWeight="Medium">
+                                                <TextBlock FontSize="16" FontWeight="Medium" TextWrapping="Wrap" TextAlignment="Center">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="Text" Value="Không cảm xúc"/>
@@ -363,7 +392,7 @@
                                                                     <MultiDataTrigger.Conditions>
                                                                         <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
                                                                     </MultiDataTrigger.Conditions>
-                                                                    <Setter Property="Text" Value="Chờ lãnh đạo còn lại"/>
+                                                                    <Setter Property="Text" Value="Chờ lãnh đạo còn lại duyệt"/>
                                                                     <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                 </MultiDataTrigger>
                                                                 <MultiDataTrigger>
@@ -434,7 +463,7 @@
                                                 </TextBlock>
                                             </DockPanel>
                                         </Border>
-                                        <Border x:Name="ReceivePropose" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTextForTheme}">
+                                        <Border x:Name="ReceivePropose" MouseLeftButtonDown="ClickReceivePropose" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTextForTheme}">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -442,7 +471,8 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
-                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
@@ -468,7 +498,7 @@
                                                 </TextBlock>
                                             </DockPanel>
                                         </Border>
-                                        <Border x:Name="ComfirmNext" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}">
+                                        <Border x:Name="ComfirmNext" MouseLeftButtonDown="SelectUserComfirmNext" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -476,16 +506,20 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                 <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
+
                                                     </Style.Triggers>
                                                 </Style>
                                             </Border.Style>
@@ -498,7 +532,7 @@
                                                 </TextBlock.Style>
                                             </TextBlock>
                                         </Border>
-                                        <Border x:Name="ForcedToDo" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}">
+                                        <Border x:Name="ForcedToDo" MouseLeftButtonDown="ClickForcedToDo" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -507,6 +541,9 @@
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
                                                                 <Condition Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
@@ -514,6 +551,19 @@
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
                                                                 <Condition Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                <Condition Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
@@ -529,7 +579,7 @@
                                                 </TextBlock.Style>
                                             </TextBlock>
                                         </Border>
-                                        <Border x:Name="AcceptComfirm" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}">
+                                        <Border x:Name="AcceptComfirm" MouseLeftButtonDown="ClickAcceptComfirm" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -537,6 +587,8 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
@@ -569,7 +621,7 @@
                                                 </TextBlock>
                                             </DockPanel>
                                         </Border>
-                                        <Border x:Name="RefuseComfirm" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorRemoveRed}" BorderBrush="{DynamicResource colorTextForTheme}">
+                                        <Border x:Name="RefuseComfirm" MouseLeftButtonDown="ShowInputRefuse" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorRemoveRed}" BorderBrush="{DynamicResource colorTextForTheme}">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -577,18 +629,29 @@
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
-                                                                <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -612,7 +675,7 @@
                                                 </TextBlock>
                                             </DockPanel>
                                         </Border>
-                                        <Border x:Name="AbortComfirm" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorRemoveRed}" BorderBrush="{DynamicResource colorTextForTheme}">
+                                        <Border x:Name="AbortComfirm" MouseLeftButtonDown="ClickAbortComfirm" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorRemoveRed}" BorderBrush="{DynamicResource colorTextForTheme}">
                                             <Border.Style>
                                                 <Style TargetType="Border">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -621,6 +684,7 @@
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
                                                                 <Condition Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
+                                                                <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Collapsed"/>
                                                         </MultiDataTrigger>
@@ -667,6 +731,13 @@
                                                         </MultiDataTrigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </MultiDataTrigger>
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="11"/>
                                                                 <Condition Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
                                                             </MultiDataTrigger.Conditions>
@@ -711,7 +782,6 @@
                                                             <MultiDataTrigger.Conditions>
                                                                 <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
                                                                 <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
-                                                                <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </MultiDataTrigger>
@@ -753,6 +823,12 @@
                                                                 <Condition Binding="{Binding confirmOverdue,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </MultiDataTrigger>   
+                                                        <MultiDataTrigger>
+                                                            <MultiDataTrigger.Conditions>
+                                                                <Condition Binding="{Binding RoseUserComfirm,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                            </MultiDataTrigger.Conditions>
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
                                                         </MultiDataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -776,7 +852,7 @@
                                                 </TextBlock>
                                             </DockPanel>
                                         </Border>
-                                        <Border x:Name="DeletePropose" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorRemoveRed}" BorderBrush="{Binding ElementName=DeletePropose, Path=Background}">
+                                        <Border x:Name="DeletePropose" MouseLeftButtonDown="ClickDeletePropose" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorRemoveRed}" BorderBrush="{Binding ElementName=DeletePropose, Path=Background}">
                                             <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5">
                                                 <Path Width="15" Height="15" Stretch="Fill" Margin="0 0 10 0">
                                                     <Path.Style>
@@ -1073,6 +1149,100 @@
                                 </Style>
                             </ListView.ItemContainerStyle>
                         </ListView>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding viewInputRefuseComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding viewInputRefuseComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Rectangle Fill="{StaticResource ColorGray1}" Opacity="0.5" MouseLeftButtonDown="ClosePopup" Cursor="Hand"/>
+            <Border Background="WhiteSmoke" CornerRadius="10" Width="400" Height="{Binding ElementName=stpInput, Path=ActualHeight}" VerticalAlignment="Top" Margin="0 100 0 0">
+                <StackPanel x:Name="stpInput">
+                    <Border CornerRadius="10 10 0 0" Background="{DynamicResource colorTheme}" Width="400" Height="50">
+                        <DockPanel>
+                            <TextBlock Text="Lý do từ trối" FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Path Data="{StaticResource iconClose}" MouseLeftButtonDown="ClosePopup" Cursor="Hand" Width="15" Height="15" Margin="0 0 10 0" Stretch="Fill" StrokeThickness="2.5" Stroke="{StaticResource colorWriter}" HorizontalAlignment="Right"/>
+                        </DockPanel>
+                    </Border>
+                    <StackPanel Margin="10 10 10 20">
+                        <TextBlock FontSize="16" FontWeight="Medium" Margin="0 0 0 5">
+                            <Run Text="Lý do" Foreground="{StaticResource colorText1}"/>
+                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                        </TextBlock>
+                        <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="{DynamicResource colorTheme}"/>
+                                    <Setter Property="BorderThickness" Value="1"/>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <TextBox x:Name="tb_InputRefuseComfirm" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
+                                <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="Nhập lý do từ trối đề xuất" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=tb_InputRefuseComfirm, Path=Text}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                    <Border Background="{DynamicResource colorTheme}" MouseLeftButtonDown="ClickRefuseComfirm" Cursor="Hand" CornerRadius="10" Margin="10 0 10 20">
+                        <TextBlock Text="Xác nhận" Margin="5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding viewForwardefuseComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding viewForwardefuseComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Rectangle Fill="{StaticResource ColorGray1}" Opacity="0.5" MouseLeftButtonDown="ClosePopup" Cursor="Hand"/>
+            <Border Background="WhiteSmoke" CornerRadius="10" Width="400" Height="{Binding ElementName=stpInputNext, Path=ActualHeight}" VerticalAlignment="Top" Margin="0 100 0 0">
+                <StackPanel x:Name="stpInputNext">
+                    <Border CornerRadius="10 10 0 0" Background="{DynamicResource colorTheme}" Width="400" Height="50">
+                        <DockPanel>
+                            <TextBlock Text="Người duyệt chuyển tiếp" FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Path Data="{StaticResource iconClose}" MouseLeftButtonDown="ClosePopup" Cursor="Hand" Width="15" Height="15" Margin="0 0 10 0" Stretch="Fill" StrokeThickness="2.5" Stroke="{StaticResource colorWriter}" HorizontalAlignment="Right"/>
+                        </DockPanel>
+                    </Border>
+                    <StackPanel Margin="10 10 10 20">
+                        <TextBlock FontSize="16" FontWeight="Medium" Margin="0 0 0 5">
+                            <Run Text="Lý do" Foreground="{StaticResource colorText1}"/>
+                            <Run Text="*" Foreground="{StaticResource ColorRed}"/>
+                        </TextBlock>
+                        <tool:ComboboxSelected x:Name="SelectUserNext" CornerRadiusSelected="5" BorderThickness="1" BorderBrush="{DynamicResource colorTextForTheme}" Cursor="Hand" SelectionChangedSelected="ClickSelectUserNext" Grid.Column="0" Height="40" DisplayMemberPathSelected="userName" PlaceHolderSelected="Chọn người duyệt chuyển tiếp" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
+                    </StackPanel>
+                    <Border Background="{DynamicResource colorTheme}" MouseLeftButtonDown="ClickComfirmNext" Cursor="Hand" CornerRadius="10" Margin="10 0 10 20">
+                        <TextBlock Text="Xác nhận" Margin="5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </StackPanel>
             </Border>

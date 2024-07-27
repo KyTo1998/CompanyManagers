@@ -276,25 +276,34 @@ namespace CompanyManagers.Views.Home
 
         public void GetShaftAll(string _comID, string _idQLC)
         {
-            var data = new
+            try
             {
-                com_id = _comID,
-                idQLC = _idQLC
-            };
-            string jsondata = JsonConvert.SerializeObject(data);
-            using (WebClient webClient = new WebClient())
-            {
-                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
-                webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
-                var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_SearchInforStaff, "POST", jsondata);
-                byte[] bytesData = Encoding.Default.GetBytes(resData);
-                Root_InforStaff dataInforStaff = JsonConvert.DeserializeObject<Root_InforStaff>(Encoding.UTF8.GetString(bytesData));
-                if (dataInforStaff != null)
+                var data = new
                 {
-                    UserCurrentInfor = dataInforStaff.data.data;
-                    string fileName = GetFileNameFromUrl(UserCurrentInfor.avatarUser);
-                    LinkAvatar = $"http://210.245.108.202:9002/avatarUser/{UserCurrentInfor._id}/{fileName}";
+                    com_id = _comID,
+                    idQLC = _idQLC
+                };
+                string jsondata = JsonConvert.SerializeObject(data);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_SearchInforStaff, "POST", jsondata);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_InforStaff dataInforStaff = JsonConvert.DeserializeObject<Root_InforStaff>(Encoding.UTF8.GetString(bytesData));
+                    if (dataInforStaff != null)
+                    {
+                        UserCurrentInfor = dataInforStaff.data.data;
+                        if (UserCurrentInfor.avatarUser != "")
+                        {
+                            string fileName = GetFileNameFromUrl(UserCurrentInfor.avatarUser);
+                            LinkAvatar = $"http://210.245.108.202:9002/avatarUser/{UserCurrentInfor._id}/{fileName}";
+                        }
+                    }
                 }
+            }
+            catch (Exception)
+            {
             }
         }
         public static string GetFileNameFromUrl(string url)
@@ -812,6 +821,121 @@ namespace CompanyManagers.Views.Home
             }
             catch (Exception)
             {
+            }
+        }
+
+        public void DeletePropose(string _idPropose, int _typePropose)
+        {
+            try
+            {
+                var data = new
+                {
+                    id = _idPropose,
+                    type = _typePropose
+                };
+                string jsondata = JsonConvert.SerializeObject(data);
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_DeletePropose, "POST", jsondata);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_ResponAPI dataRespon = JsonConvert.DeserializeObject<Root_ResponAPI>(Encoding.UTF8.GetString(bytesData));
+                    if (dataRespon.data.result)
+                    {
+                        PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", dataRespon.data.message, ""));
+                    }
+                    else
+                    {
+                        PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", dataRespon.data.message, ""));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Lỗi hệ thống, xin vui lòng thao tác lại", ""));
+            }
+        }
+
+        public void RefuseComfirm(string _idPropose, string _refuseReason, int _typePropose, int _idUser)
+        {
+            try
+            {
+                string jsondata;
+                if (_idUser != 0)
+                {
+                    var data = new
+                    {
+                        _id = _idPropose,
+                        refuse_reason = _refuseReason,
+                        type = _typePropose,
+                        id_uct = _idUser
+                    };
+                    jsondata = JsonConvert.SerializeObject(data);
+                }
+                else if (_refuseReason != null) 
+                {
+                    var data = new
+                    {
+                        _id = _idPropose,
+                        refuse_reason = _refuseReason,
+                        type = _typePropose
+                    };
+                    jsondata = JsonConvert.SerializeObject(data);
+                }
+                else
+                {
+                    var data = new
+                    {
+                        _id = _idPropose,
+                        type = _typePropose
+                    };
+                    jsondata = JsonConvert.SerializeObject(data);
+                }
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_RefuseComfirm, "POST", jsondata);
+                    if (resData != null)
+                    {
+                        switch (_typePropose)
+                        {
+                            case 0:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Xóa đề xuất thành công", ""));
+                                break;
+                            case 1:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Chấp thuận đề xuất thành công", ""));
+                                break;
+                            case 2:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Từ trối đề xuất thành công", ""));
+                                break;
+                            case 3:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Buộc đi làm thành công", ""));
+                                break;
+                            case 4:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Chuyển tiếp đề xuất thành công", ""));
+                                break;
+                            case 5:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Hủy duyệt đề xuất thành công", ""));
+                                break;
+                            case 6:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Đã tiếp nhận đề xuất", ""));
+                                break;
+                            default:
+                                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Error. Vui lòng load lại đề xuất", ""));
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", ",Yêu cầu chưa được thực hiện, vui lòng thao tác lại", ""));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Lỗi hệ thống, thử lại sau ít phút", ""));
             }
         }
         public void AddFunctionSytem()

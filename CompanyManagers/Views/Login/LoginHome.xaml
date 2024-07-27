@@ -13,15 +13,13 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" x:Name="TitleLoginHome"  Height="40" Background="{StaticResource colorMoveMouseItem}" MouseLeftButtonDown="Grid_MouseDown">
                 <Path VerticalAlignment="Center" Data="{StaticResource iconManager}" Stretch="Uniform" Height="22"  Margin="10,0,0,0" HorizontalAlignment="Left" Width="25" Fill="{DynamicResource colorTheme}"/>
-
-
                 <TextBlock VerticalAlignment="Center" Text="Company Managers" Margin="38,0,0,10" Foreground="{DynamicResource colorTextForTheme}" Padding="0" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" LineHeight="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                <TextBlock VerticalAlignment="Center" Text="Timviec365" HorizontalAlignment="Left" Margin="38,14,0,0" FontSize="10" Foreground="{DynamicResource colorTextForTheme}"/>
+                <TextBlock VerticalAlignment="Center" Text="DesignByKyTo" HorizontalAlignment="Left" Margin="38,14,0,0" FontSize="10" Foreground="{DynamicResource colorTextForTheme}"/>
                 <Grid x:Name="Minimimize" Cursor="Hand"  Margin="0,14,94,0" HorizontalAlignment="Right" Width="15" Height="15" VerticalAlignment="Top" MouseLeftButtonDown="Minimimize_MouseLeftButtonDown" Background="Transparent" >
-                    <Line Cursor="Hand" X1="0" Y1="7" X2="15" Y2="7"  StrokeThickness="1.2" Stroke="Black" Fill="#00A52323" />
+                    <Line Cursor="Hand" X1="0" Y1="7" X2="15" Y2="7"  StrokeThickness="1.2" Stroke="{DynamicResource colorTextForTheme}" Fill="#00A52323" />
                 </Grid>
-                <Path  x:Name="Maximimize" Data="{StaticResource maximinze}" Cursor="Hand" Fill="#02FFFFFF" Margin="0,13,55,0" Stretch="Fill" Stroke="#CCCCCC" Width="15" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" StrokeThickness="1" MouseLeftButtonDown="Maximimize_MouseLeftButtonDown" ></Path>
-                <Grid x:Name="CloseWindow" Cursor="Hand" Width="15" Height="15" Margin="0,13,16,0" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="CloseWindow_MouseLeftButtonDown" Background="White">
+                <Path  x:Name="Maximimize" Data="{StaticResource maximinze}" Cursor="Hand" Fill="#02FFFFFF" Margin="0,13,55,0" Stretch="Fill" Stroke="{DynamicResource colorTextForTheme}" Width="15" Height="15" HorizontalAlignment="Right" VerticalAlignment="Top" StrokeThickness="1" MouseLeftButtonDown="Maximimize_MouseLeftButtonDown" ></Path>
+                <Grid x:Name="CloseWindow" Cursor="Hand" Width="15" Height="15" Margin="0,13,16,0" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonDown="CloseWindow_MouseLeftButtonDown" Background="Transparent">
                     <Grid.Style>
                         <Style TargetType="Grid">
                             <Setter Property="Background" Value="Transparent"/>
@@ -35,7 +33,7 @@
                     <Path Data="{StaticResource iconClose}" StrokeThickness="1.2" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="Fill" Height="15" Margin="0" Width="15">
                         <Path.Style>
                             <Style TargetType="Path">
-                                <Setter Property="Stroke" Value="Black"/>
+                                <Setter Property="Stroke" Value="{DynamicResource colorTextForTheme}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=CloseWindow, Path=IsMouseOver}" Value="true">
                                         <Setter Property="Stroke" Value="{StaticResource colorRemoveRed}"/>
@@ -47,12 +45,16 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
-                <Border >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="31*"/>
+                    <ColumnDefinition Width="193*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.ColumnSpan="2" >
                     <Border.Background>
                         <ImageBrush ImageSource="\Resources/Image/BgLogin.png"/>
                     </Border.Background>
                 </Border>
-                <StackPanel x:Name="stpSelectLogin" VerticalAlignment="Center" Margin="0 0 0 50" Visibility="Visible">
+                <StackPanel x:Name="stpSelectLogin" VerticalAlignment="Top" Margin="0,194,0,0" Visibility="Visible" Grid.ColumnSpan="2">
                     <Border x:Name="btnCompany" Margin="0 0 0 10" Cursor="Hand" HorizontalAlignment="Center" BorderThickness="1" CornerRadius="15"  Width="315" Height="60" BorderBrush="#FF4C5BD4"  MouseLeftButtonDown="openPagelogin" Visibility="Visible">
                         <Border.Style>
                             <Style TargetType="Border" >
@@ -164,7 +166,7 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-                <Grid x:Name="grFormLogin" Visibility="Collapsed" VerticalAlignment="Top" Margin="0 20 0 0">
+                <Grid x:Name="grFormLogin" Visibility="Collapsed" VerticalAlignment="Top" Margin="0 20 0 0" Grid.ColumnSpan="2">
                     <StackPanel x:Name="spPhone">
                         <Border VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Grid>

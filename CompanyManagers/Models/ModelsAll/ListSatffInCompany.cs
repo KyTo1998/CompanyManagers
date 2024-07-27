@@ -20,15 +20,15 @@ namespace CompanyManagers.Models.ModelsAll
         public string ep_image { get; set; }
         public int role_id { get; set; }
         public int allow_update_face { get; set; }
-        public int ep_education { get; set; }
-        public int ep_exp { get; set; }
+        public int? ep_education { get; set; }
+        public int? ep_exp { get; set; }
         public string ep_address { get; set; }
-        public int ep_gender { get; set; }
-        public int ep_married { get; set; }
+        public int? ep_gender { get; set; }
+        public int? ep_married { get; set; }
         public double? ep_birth_day { get; set; }
         public int? group_id { get; set; }
         public string start_working_time { get; set; }
-        public int position_id { get; set; }
+        public int? position_id { get; set; }
         public int com_id { get; set; }
         public int dep_id { get; set; }
     }

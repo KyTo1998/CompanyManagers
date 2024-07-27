@@ -13,6 +13,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using static CompanyManagers.Views.Home.ManagerHome;
 using System.Globalization;
+using System.Net;
+using System.Text;
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -102,6 +104,20 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _viewCalendarWork; }
             set { _viewCalendarWork = value; OnPropertyChanged("viewCalendarWork"); }
         }
+
+        private bool _viewInputRefuseComfirm;
+        public bool viewInputRefuseComfirm
+        {
+            get { return _viewInputRefuseComfirm; }
+            set { _viewInputRefuseComfirm = value; OnPropertyChanged("viewInputRefuseComfirm"); }
+        } 
+        
+        private bool _viewForwardefuseComfirm;
+        public bool viewForwardefuseComfirm
+        {
+            get { return _viewForwardefuseComfirm; }
+            set { _viewForwardefuseComfirm = value; OnPropertyChanged("viewForwardefuseComfirm"); }
+        }
         private string _userHandOverCRM;
         public string userHandOverCRM
         {
@@ -120,6 +136,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             get { return _NumberProposeInList; }
             set { _NumberProposeInList = value; OnPropertyChanged("NumberProposeInList"); }
+        }
+
+        private bool _RoseUserComfirm;
+        public bool RoseUserComfirm
+        {
+            get { return _RoseUserComfirm; }
+            set { _RoseUserComfirm = value; OnPropertyChanged("RoseUserComfirm"); }
         }
         private List<lichlamviec> _listLichProposing;
         public List<lichlamviec> listLichProposing
@@ -188,7 +211,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             detailPropose = _detailPropose;
             listProposingHome = _listProposingHome;
             listProposingSendAll = _listProposingSendAll;
-            
+            if (_detailPropose.nguoi_tao != _managerHome.UserName)
+            {
+                RoseUserComfirm = true;
+            }
             if (_dataProposeHome != null)
             {
                 tb_GroundPropose.Text = _dataProposeHome.type_dx_string;
@@ -200,6 +226,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 dataProposeMine = _dataProposeMine;
             }
             listLeaderComfirm = _detailPropose.lanh_dao_duyet.ToList();
+            SelectUserNext.ItemsSourceSelected = listLeaderComfirm;
             listUserFollow = _detailPropose.nguoi_theo_doi.ToList();
             listStatuComfirm = _detailPropose.lich_su_duyet.ToList();
             type_duyet = _detailPropose.type_duyet;
@@ -215,6 +242,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             tb_UserCreatePropose.Text = _detailPropose.nguoi_tao;
             tb_UserCreate.Text = _detailPropose.nguoi_tao;
             tb_TypeComfirm.Text = _detailPropose.kieu_phe_duyet_format;
+            tb_RefuseComfirm.Text = _detailPropose.ly_do_tu_choi;
             if (_detailPropose.nhom_de_xuat == 20)
             {
                 listRoseRevenue.Add(_detailPropose.thong_tin_chung.hoa_hong);
@@ -338,7 +366,18 @@ namespace CompanyManagers.Views.PageStaff.Proposing
 
         private void ClosePopup(object sender, MouseButtonEventArgs e)
         {
-            viewCalendarWork = false;
+            if (viewCalendarWork)
+            {
+                viewCalendarWork = false;
+            }
+            if (viewInputRefuseComfirm)
+            {
+                viewInputRefuseComfirm = false;
+            }
+            if (viewForwardefuseComfirm)
+            {
+                viewForwardefuseComfirm = false;
+            }
         }
         InforDx_Proposing dataProposeHomeNext;
         ListProposingSendAll dataProposeMineNext;
@@ -409,6 +448,61 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             catch (Exception)
             {
             }   
+        }
+        private void ClickSelectUserNext(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void ClickDeletePropose(object sender, MouseButtonEventArgs e)
+        {
+            //type = 0 xóa đề xuất
+            managerHome.DeletePropose(detailPropose.id_de_xuat, 0);
+        }
+
+        private void ShowInputRefuse(object sender, MouseButtonEventArgs e)
+        {
+            viewInputRefuseComfirm = true;
+        }
+
+        private void ClickRefuseComfirm(object sender, MouseButtonEventArgs e)
+        {
+            //type = 2 từ trối đề xuất+
+            managerHome.RefuseComfirm(detailPropose.id_de_xuat, tb_InputRefuseComfirm.Text, 2, 0);
+        }
+
+        private void ClickReceivePropose(object sender, MouseButtonEventArgs e)
+        {
+            // type = 6 tiếp nhận đề xuất
+            managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 6, 0);
+        }
+
+        private void ClickAcceptComfirm(object sender, MouseButtonEventArgs e)
+        {
+            // type = 1 chấp thuận đề xuất
+            managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 1, 0);
+        }
+
+        private void ClickAbortComfirm(object sender, MouseButtonEventArgs e)
+        {
+            // type = 5 Hủy duyệt đề xuất
+            managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 5, 0);
+        }
+
+        private void SelectUserComfirmNext(object sender, MouseButtonEventArgs e)
+        {
+            viewForwardefuseComfirm = true;
+        }
+
+        private void ClickComfirmNext(object sender, MouseButtonEventArgs e)
+        {
+            // type = 4 duyệt chuyển tiếp đề xuất
+            managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 4, ((LanhDaoDuyet)SelectUserNext.SelectedItemSelected).idQLC);
+        }
+
+        private void ClickForcedToDo(object sender, MouseButtonEventArgs e)
+        {
+            // type = 3 buộc đi làm cho đề xuát nghỉ phép
+            managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 3, 0);
         }
     }
 }

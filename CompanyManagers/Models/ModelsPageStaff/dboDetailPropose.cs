@@ -101,28 +101,37 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public int idQLC { get; set; }
         public void GetShaftAll()
         {
-            if (idQLC.ToString() != Properties.Settings.Default.IdCompany && idQLC.ToString() == Properties.Settings.Default.IdUser)
+            try
             {
-                var data = new
+                if (idQLC.ToString() != Properties.Settings.Default.IdCompany && idQLC.ToString() == Properties.Settings.Default.IdUser)
                 {
-                    com_id = Properties.Settings.Default.IdCompany,
-                    idQLC = idQLC.ToString()
-                };
-                string jsondata = JsonConvert.SerializeObject(data);
-                using (WebClient webClient = new WebClient())
-                {
-                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
-                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
-                    var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_SearchInforStaff, "POST", jsondata);
-                    byte[] bytesData = Encoding.Default.GetBytes(resData);
-                    Root_InforStaff dataInforStaff = JsonConvert.DeserializeObject<Root_InforStaff>(Encoding.UTF8.GetString(bytesData));
-                    if (dataInforStaff != null)
+                    var data = new
                     {
-                        string fileName = GetFileNameFromUrl(dataInforStaff.data.data.avatarUser);
-                        LinkAvatarComfirm = $"http://210.245.108.202:9002/avatarUser/{dataInforStaff.data.data._id}/{fileName}";
+                        com_id = Properties.Settings.Default.IdCompany,
+                        idQLC = idQLC.ToString()
+                    };
+                    string jsondata = JsonConvert.SerializeObject(data);
+                    using (WebClient webClient = new WebClient())
+                    {
+                        webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                        webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                        var resData = webClient.UploadString(UrlApi.Url_Api_Staff + UrlApi.Name_Api_SearchInforStaff, "POST", jsondata);
+                        byte[] bytesData = Encoding.Default.GetBytes(resData);
+                        Root_InforStaff dataInforStaff = JsonConvert.DeserializeObject<Root_InforStaff>(Encoding.UTF8.GetString(bytesData));
+                        if (dataInforStaff != null)
+                        {
+                            if (dataInforStaff.data.data.avatarUser != "")
+                            {
+                                string fileName = GetFileNameFromUrl(dataInforStaff.data.data.avatarUser);
+                                LinkAvatarComfirm = $"http://210.245.108.202:9002/avatarUser/{dataInforStaff.data.data._id}/{fileName}";
+                            } 
+                        }
                     }
                 }
             }
+            catch (Exception)
+            {
+            } 
         }
         public static string GetFileNameFromUrl(string url)
         {

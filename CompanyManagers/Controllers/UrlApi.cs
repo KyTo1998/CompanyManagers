@@ -22,6 +22,8 @@ namespace CompanyManagers.Controllers
         public const string Name_Api_CreateProposeCalendarWork = "vanthu/dexuat/De_Xuat_Lich_Lam_Viec";
         public const string Name_Api_CreateProposeCongCong = "vanthu/dexuat/addDXC";
         public const string Name_Api_ShowDetailPropose = "vanthu/catedx/showCTDX";
+        public const string Name_Api_DeletePropose = "vanthu/deletedx/delete_dx";
+        public const string Name_Api_RefuseComfirm = "vanthu/editdx/edit_active";
         #endregion
         #region Staff
         public const string Url_Api_Staff = "https://api.timviec365.vn/api/";
