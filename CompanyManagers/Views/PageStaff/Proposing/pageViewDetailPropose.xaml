@@ -72,7 +72,7 @@
                                                 <Run x:Name="NameUserCreatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
-                                        <StackPanel x:Name="OnLeaveCommon">
+                                        <StackPanel x:Name="OnLeaveCommon" Visibility="Visible">
                                             <StackPanel.Style>
                                                 <Style TargetType="StackPanel">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -126,6 +126,54 @@
                                                 <Run Text="Người bàn giao CRM:" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="tb_HandOverCRM" Text="{Binding userHandOverCRM, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
+                                            <WrapPanel>
+                                                <TextBlock FontSize="16" Text="Tệp đính kèm:" Foreground="{DynamicResource colorText1}" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap"/>
+                                                <Grid x:Name="FileAndImage">
+                                                    <Border x:Name="bor_ImageInTextbox" Margin="0 0 5 0" Width="20" Height="20" CornerRadius="10">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                <Setter Property="BorderThickness" Value="0.5"/>
+                                                                <Setter Property="BorderBrush" Value="#FFF"/>
+                                                                <Setter Property="TextBlock.Visibility" Value="Visible"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding filePathImage}" Value="">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding filePathImage}" Value="{x:Null}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <Border.Background>
+                                                            <ImageBrush ImageSource="{Binding filePathImage}"/>
+                                                        </Border.Background>
+                                                    </Border>
+                                                    <Border CornerRadius="10" MaxHeight="40">
+                                                        <Border.Style>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                <Setter Property="BorderThickness" Value="1"/>
+                                                                <Setter Property="BorderBrush" Value="#AAA"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding fileName}" Value="">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding fileName}" Value="{x:Null}">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        <Setter Property="BorderThickness" Value="0"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <TextBlock Text="{Binding fileName}" Margin="5 0 5 0" Foreground="#474747" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
+                                                    </Border>
+                                                </Grid>
+                                            </WrapPanel>
                                         </StackPanel>
                                         <StackPanel x:Name="RoseRevenueCommon">
                                             <StackPanel.Style>
