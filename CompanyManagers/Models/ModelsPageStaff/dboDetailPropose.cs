@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using CompanyManagers.Models.ModelRose;
 using System.Globalization;
+using System.Security.Policy;
 
 namespace CompanyManagers.Models.ModelsPageStaff
 {
@@ -71,7 +72,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
         }
         public List<LanhDaoDuyet> lanh_dao_duyet { get; set; }
         public List<NguoiTheoDoi> nguoi_theo_doi { get; set; }
-        public List<object> file_kem { get; set; }
+        public List<FileKem_DetailPropose> file_kem { get; set; }
         public int type_duyet { get; set; }
         public long thoi_gian_duyet { get; set; }
         public long thoi_gian_tiep_nhan { get; set; }
@@ -84,6 +85,47 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public string ly_do_tu_choi { get; set; }
         public bool edited { get; set; }
     }
+
+    public class FileKem_DetailPropose
+    {
+        public string file { get; set; }
+        public string file_name 
+        {
+            get {  return GetFileNameFromUrl(file); }
+            set { } 
+        }
+        public string tail_file
+        {
+            get {  return GetFileExtensionFromUrl(file); }
+            set { } 
+        }
+        public static string GetFileNameFromUrl(string url)
+        {
+            Uri uri = new Uri(url);
+            return Path.GetFileName(uri.LocalPath);
+        }
+        public string type_file 
+        {
+            get 
+            {
+                if (tail_file == ".png" || tail_file == ".PNG" || tail_file == ".jpg" || tail_file == ".JPG" || tail_file == ".jpeg" || tail_file == ".JPEG" || tail_file == ".GIF" || tail_file == ".gif")
+                {
+                    return type_file = "img";
+                }
+                else
+                {
+                    return type_file = "file";
+                }
+            }
+            set { }
+        }
+        public static string GetFileExtensionFromUrl(string url)
+        {
+            Uri uri = new Uri(url);
+            return Path.GetExtension(uri.LocalPath);
+        }
+    }
+
     public class LanhDaoDuyet
     {
         public string userName { get; set; }

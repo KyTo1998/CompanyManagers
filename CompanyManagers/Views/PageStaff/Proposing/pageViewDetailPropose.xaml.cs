@@ -62,6 +62,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             get { return _listCalendaWork; }
             set { _listCalendaWork = value; OnPropertyChanged("listCalendaWork"); }
+        } 
+        
+        private List<FileKem_DetailPropose> _listFileAndImg = new List<FileKem_DetailPropose>();
+        public List<FileKem_DetailPropose> listFileAndImg
+        {
+            get { return _listFileAndImg; }
+            set { _listFileAndImg = value; OnPropertyChanged("listFileAndImg"); }
         }
 
         private List<Nd> _listCalendarOnLeave;
@@ -225,6 +232,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 tb_GroundPropose.Text = _dataProposeMine.name_type_dx;
                 dataProposeMine = _dataProposeMine;
             }
+            listFileAndImg = _detailPropose.file_kem.ToList();
             listLeaderComfirm = _detailPropose.lanh_dao_duyet.ToList();
             SelectUserNext.ItemsSourceSelected = listLeaderComfirm;
             listUserFollow = _detailPropose.nguoi_theo_doi.ToList();
