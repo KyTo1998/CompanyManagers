@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CompanyManagers.Views.PageStaff.Proposing"
              xmlns:tool="clr-namespace:CompanyManagers.Common.Tool"
              mc:Ignorable="d" MinWidth="500" MaxWidth="970">
-    <Grid Margin="10">
+    <Grid Margin="10" x:Name="ShowDetailPropose">
         <ScrollViewer x:Name="scoll" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <Border CornerRadius="10" Background="{StaticResource colorTextMessage}">
                 <WrapPanel x:Name="wap_ShowDetailPropose" Margin="0 10 0 10" PreviewMouseWheel="ScollCreateProposing" HorizontalAlignment="Center">
@@ -121,7 +121,7 @@
                                             </ListView>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                 <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
-                                                <Run x:Name="tb_ReasonCreatePropse" Text="Thèm bia" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                <Run x:Name="tb_ReasonCreatePropse" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
                                                 <Run Text="Người bàn giao CRM:" Foreground="{DynamicResource colorText1}"/>
@@ -875,9 +875,19 @@
                                             </Border>
                                         </StackPanel>
                                     </Grid>
-                                    <WrapPanel Margin="0 -10 0 10">
+                                    <WrapPanel Margin="10 -10 10 10">
+                                        <WrapPanel.Style>
+                                            <Style TargetType="WrapPanel">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </WrapPanel.Style>
                                         <TextBlock FontSize="16" Text="Tệp đính kèm: " Foreground="{DynamicResource colorText1}" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap"/>
-                                        <ListView x:Name="lsvFileAndImg" ScrollViewer.CanContentScroll="false" Background="transparent" Margin="0 5 0 5" ItemsSource="{Binding listFileAndImg, RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                        <ListView x:Name="lsvFileAndImg" ScrollViewer.CanContentScroll="false" Background="transparent" Margin="0 5 0 5" HorizontalAlignment="Center" ItemsSource="{Binding listFileAndImg, RelativeSource={RelativeSource AncestorType=UserControl}}" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel></WrapPanel>
@@ -888,23 +898,23 @@
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ListViewItem">
-                                                                <Grid x:Name="FileAndImage" Margin="0 0 10 0" VerticalAlignment="Center" Cursor="Hand">
+                                                                <Grid x:Name="FileAndImage" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="DowloadFile">
                                                                     <Grid.Triggers>
-                                                                        <EventTrigger RoutedEvent="MouseEnter">
+                                                                        <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <DoubleAnimation
                                                                                         Storyboard.TargetProperty="LayoutTransform.ScaleX"
-                                                                                        To="30"
-                                                                                        Duration="0:0:20"/>
+                                                                                        To="26"
+                                                                                        Duration="0:0:2"/>
                                                                                     <DoubleAnimation
                                                                                         Storyboard.TargetProperty="LayoutTransform.ScaleY"
-                                                                                        To="30"
-                                                                                        Duration="0:0:20" />
+                                                                                        To="26"
+                                                                                        Duration="0:0:2" />
                                                                                 </Storyboard>
                                                                             </BeginStoryboard>
                                                                         </EventTrigger>
-                                                                        <EventTrigger RoutedEvent="MouseLeave">
+                                                                        <EventTrigger RoutedEvent="PreviewMouseWheel">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <DoubleAnimation
@@ -922,7 +932,7 @@
                                                                     <Grid.LayoutTransform>
                                                                         <ScaleTransform ScaleX="1" ScaleY="1" />
                                                                     </Grid.LayoutTransform>
-                                                                    <Border x:Name="bor_ImageInTextbox" Margin="0 0 5 0" Width="20" Height="20" CornerRadius="5">
+                                                                    <Border x:Name="bor_ImageInTextbox" Width="20" Height="20" CornerRadius="2">
                                                                         <Border.Style>
                                                                             <Style TargetType="Border">
                                                                                 <Setter Property="Background" Value="Transparent"/>
@@ -941,7 +951,7 @@
                                                                             <ImageBrush ImageSource="{Binding file}"/>
                                                                         </Border.Background>
                                                                     </Border>
-                                                                    <Border CornerRadius="5" MaxHeight="20">
+                                                                    <Border CornerRadius="2" MaxHeight="20">
                                                                         <Border.Style>
                                                                             <Style TargetType="Border">
                                                                                 <Setter Property="Background" Value="{DynamicResource colorTheme}"/>

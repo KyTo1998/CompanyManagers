@@ -15,6 +15,8 @@ using static CompanyManagers.Views.Home.ManagerHome;
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Windows.Media.Animation;
+using System.Diagnostics;
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -273,6 +275,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
             if (_detailPropose.nhom_de_xuat == 17)
             {
+                tb_ReasonCreatePropse.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.ly_do;
                 TimeComfirmCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.time_xnc_display;
                 ShiftNameCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.ca_xnc;
                 TimeInShiftCC.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.time_vao_ca;
@@ -476,24 +479,28 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             //type = 2 từ trối đề xuất+
             managerHome.RefuseComfirm(detailPropose.id_de_xuat, tb_InputRefuseComfirm.Text, 2, 0);
+            managerHome.GetDetailPropose(dataProposeHome, dataProposeMine, listProposingHome, listProposingSendAll);
         }
 
         private void ClickReceivePropose(object sender, MouseButtonEventArgs e)
         {
             // type = 6 tiếp nhận đề xuất
             managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 6, 0);
+            managerHome.GetDetailPropose(dataProposeHome, dataProposeMine, listProposingHome, listProposingSendAll);
         }
 
         private void ClickAcceptComfirm(object sender, MouseButtonEventArgs e)
         {
             // type = 1 chấp thuận đề xuất
             managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 1, 0);
+            managerHome.GetDetailPropose(dataProposeHome, dataProposeMine, listProposingHome, listProposingSendAll);
         }
 
         private void ClickAbortComfirm(object sender, MouseButtonEventArgs e)
         {
             // type = 5 Hủy duyệt đề xuất
             managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 5, 0);
+            managerHome.GetDetailPropose(dataProposeHome, dataProposeMine, listProposingHome, listProposingSendAll);
         }
 
         private void SelectUserComfirmNext(object sender, MouseButtonEventArgs e)
@@ -505,12 +512,40 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             // type = 4 duyệt chuyển tiếp đề xuất
             managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 4, ((LanhDaoDuyet)SelectUserNext.SelectedItemSelected).idQLC);
+            managerHome.GetDetailPropose(dataProposeHome, dataProposeMine, listProposingHome, listProposingSendAll);
         }
 
         private void ClickForcedToDo(object sender, MouseButtonEventArgs e)
         {
             // type = 3 buộc đi làm cho đề xuát nghỉ phép
             managerHome.RefuseComfirm(detailPropose.id_de_xuat, null, 3, 0);
+            managerHome.GetDetailPropose(dataProposeHome, dataProposeMine, listProposingHome, listProposingSendAll);
+        }
+
+        private void ShowFileImage(object sender, MouseButtonEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            if (grid != null)
+            {
+                grid.BeginAnimation(Grid.WidthProperty, new DoubleAnimation(200, TimeSpan.FromSeconds(1)));
+                grid.BeginAnimation(Grid.HeightProperty, new DoubleAnimation(200, TimeSpan.FromSeconds(1)));
+            }
+        }
+
+        private void DowloadFile(object sender, MouseButtonEventArgs e)
+        {
+            FileKem_DetailPropose dataFile = (FileKem_DetailPropose)(sender as Grid).DataContext;
+            if (dataFile != null)
+            {
+                if (dataFile.type_file == "file")
+                {
+                    Process process = new Process();
+                    process.StartInfo.FileName = dataFile.file;
+                    process.StartInfo.Arguments = "";
+                    process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    process.Start();
+                }
+            }
         }
     }
 }

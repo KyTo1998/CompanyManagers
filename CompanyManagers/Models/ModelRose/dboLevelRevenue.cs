@@ -12,7 +12,7 @@ namespace CompanyManagers.Models.ModelRose
         public int tl_id_rose { get; set; }
         public string tl_name { get; set; }
         public int tl_money_min { get; set; }
-        public int tl_money_max { get; set; }
+        public long tl_money_max { get; set; }
         public RevenuePhanTram tl_phan_tram { get; set; }
         public int tl_chiphi { get; set; }
         public int tl_hoahong { get; set; }
