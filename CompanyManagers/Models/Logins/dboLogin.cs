@@ -49,7 +49,7 @@ namespace CompanyManagers.Models.Logins
         public object ep_image { get; set; }
         public int create_time { get; set; }
         public int update_time { get; set; }
-        public int start_working_time { get; set; }
+        public long start_working_time { get; set; }
         public int position_id { get; set; }
         public int group_id { get; set; }
         public object ep_description { get; set; }
