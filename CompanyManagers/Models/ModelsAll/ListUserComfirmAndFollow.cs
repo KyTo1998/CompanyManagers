@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CompanyManagers.Models.ModelsPageStaff;
+using System.Collections.Generic;
 
 namespace CompanyManagers.Models.ModelsAll
 {
@@ -6,7 +7,7 @@ namespace CompanyManagers.Models.ModelsAll
     {
         public bool result { get; set; }
         public string message { get; set; }
-        public List<ListUsersDuyet> listUsersDuyet { get; set; }
+        public List<LanhDaoDuyet> listUsersDuyet { get; set; }
         public List<ListUsersTheoDoi> listUsersTheoDoi { get; set; }
     }
 

@@ -85,7 +85,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         ManagerHome managerHome { set; get; }
         int typePlan {  get; set; }
         Result_CategoryProposing dataCategoryProposing;
-        public pageCreateNewProposing(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing)
+        Detail_Proposet detailPropose;
+        public pageCreateNewProposing(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing, Detail_Proposet _detailPropose, string _categoryProposeName)
         {
             InitializeComponent();
             managerHome = _managerHome;

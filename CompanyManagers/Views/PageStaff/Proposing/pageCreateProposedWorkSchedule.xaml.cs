@@ -63,8 +63,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _listShiftAllSelected; }
             set { _listShiftAllSelected = value; OnPropertyChanged("listShiftAllSelected"); }
         }
-        private List<ListUsersDuyet> _dataListUserComfrim;
-        public List<ListUsersDuyet> dataListUserComfrim
+        private List<LanhDaoDuyet> _dataListUserComfrim;
+        public List<LanhDaoDuyet> dataListUserComfrim
         {
             get { return _dataListUserComfrim; }
             set { _dataListUserComfrim = value; OnPropertyChanged("dataListUserComfrim"); }
@@ -133,27 +133,52 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         PagePopupGrayColor pagePopupGrayColor { get; set; }
 
         Result_CategoryProposing dataCategoryProposing;
+
+        Detail_Proposet detailPropose;
+
         ManagerHome managerHome { set; get; }
-        public pageCreateProposedWorkSchedule(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing)
+        public pageCreateProposedWorkSchedule(ManagerHome _managerHome, Result_CategoryProposing _dataCategoryProposing, Detail_Proposet _detailPropose)
         {
             InitializeComponent();
             managerHome = _managerHome;
             dataCategoryProposing = _dataCategoryProposing;
-            typeCategoryProposing = _dataCategoryProposing.cate_dx;
-            tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
-            tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
-            SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();
+            detailPropose = _detailPropose;
             lstCalendarWork.Add(new typeConfirm() { id_Custom = 1, name_Custom = "Thứ 2 - Thứ 6" });
-            lstCalendarWork.Add(new typeConfirm() {id_Custom = 2, name_Custom = "Thứ 2 - Thứ 7" });
-            lstCalendarWork.Add(new typeConfirm() {id_Custom = 3, name_Custom = "Thứ 2 - CN" });
+            lstCalendarWork.Add(new typeConfirm() { id_Custom = 2, name_Custom = "Thứ 2 - Thứ 7" });
+            lstCalendarWork.Add(new typeConfirm() { id_Custom = 3, name_Custom = "Thứ 2 - CN" });
             SelectCalendarWork.ItemsSourceSelected = lstCalendarWork.ToList();
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
             listShiftAll = _managerHome.dataListShiftAll.ToList();
             listShiftAllSelected = _managerHome.dataListShiftAll.ToList();
-            tb_InputNameProposing.Text = $"Lịch làm việc cá nhân của {managerHome.UserName}";
-            tb_InputReasonCreateProposing.Text = "Tạo lịch làm việc theo tuần";
-            SelectUserComfirm.PlaceHolder = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
+            if (_dataCategoryProposing != null)
+            {
+                typeCategoryProposing = _dataCategoryProposing.cate_dx;
+                tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
+                tb_InputNameProposing.Text = $"Lịch làm việc cá nhân của {managerHome.UserName}";
+                tb_InputReasonCreateProposing.Text = "Tạo lịch làm việc theo tuần";
+                SelectUserComfirm.PlaceHolder = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
+                SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();
+            }
+            if (_detailPropose != null)
+            {
+                typeCategoryProposing = _detailPropose.nhom_de_xuat;
+                tb_CategoryProposingCreate.Text = "Đề xuất lịch làm việc";
+                tb_InputNameProposing.Text = _detailPropose.ten_de_xuat;
+                tb_InputReasonCreateProposing.Text = _detailPropose.thong_tin_chung.lich_lam_viec.ly_do;
+                SelectTypeComfirm.SelectedIndexSelected = int.Parse(_detailPropose.kieu_phe_duyet);
+                SelectCalendarWork.SelectedIndexSelected = int.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.lich_lam_viec) - 1;
+                if (dataListUserComfrim == null)
+                {
+                    dataListUserComfrim = new List<LanhDaoDuyet>();
+                }
+                dataListUserComfrim = _detailPropose.lanh_dao_duyet;
+                SelectUserFollow.SelectedItem = _detailPropose.nguoi_theo_doi[0];
+
+            }
+            tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
+            
+            
         }
         
         public async void CreateProposing()
@@ -363,7 +388,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                if (dataListUserComfrim == null) { dataListUserComfrim = new List<ListUsersDuyet>(); }
+                if (dataListUserComfrim == null) { dataListUserComfrim = new List<LanhDaoDuyet>(); }
                 if (tb_InputNameProposing.Text == "")
                 {
                     statusValidate = false;
@@ -428,12 +453,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 if (SelectUserComfirm.Text != null)
                 {
-                    ListUsersDuyet dataUserComfirm = new ListUsersDuyet();
-                    dataUserComfirm = SelectUserComfirm.SelectedItem as ListUsersDuyet;
+                    LanhDaoDuyet dataUserComfirm = new LanhDaoDuyet();
+                    dataUserComfirm = SelectUserComfirm.SelectedItem as LanhDaoDuyet;
                     lsvUserComfirmSelected.Visibility = Visibility.Visible;
                     if (dataListUserComfrim == null)
                     {
-                        dataListUserComfrim = new List<ListUsersDuyet>();
+                        dataListUserComfrim = new List<LanhDaoDuyet>();
                     }
                     if (!dataListUserComfrim.Contains(dataUserComfirm))
                     {
@@ -534,7 +559,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListUsersDuyet dataUserComfirm = (ListUsersDuyet)(sender as Border).DataContext;
+                LanhDaoDuyet dataUserComfirm = (LanhDaoDuyet)(sender as Border).DataContext;
                 if (dataUserComfirm != null)
                 {
                     dataListUserComfrim.Remove(dataUserComfirm);

@@ -17,6 +17,7 @@ using System.Net;
 using System.Text;
 using System.Windows.Media.Animation;
 using System.Diagnostics;
+using CompanyManagers.Common.Popups;
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -544,6 +545,35 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     process.StartInfo.Arguments = "";
                     process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
                     process.Start();
+                }
+            }
+        }
+
+        private void ClickEditPropose(object sender, MouseButtonEventArgs e)
+        {
+            if (detailPropose != null)
+            {
+                managerHome.GetSettingPropose(int.Parse(detailPropose.id_de_xuat));
+                string categoryProposeName;
+                if (dataProposeHome != null)
+                {
+                    categoryProposeName = dataProposeHome.type_dx_string;
+                }
+                else
+                {
+                    categoryProposeName = dataProposeMine.name_type_dx;
+                }
+                if (int.Parse(detailPropose.id_de_xuat) == 18)
+                {
+                    managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                    managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateProposedWorkSchedule(managerHome, null, detailPropose));
+                    managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
+                }
+                else
+                {
+                    managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
+                    managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateNewProposing(managerHome, null, detailPropose, categoryProposeName));
+                    managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
                 }
             }
         }

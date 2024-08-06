@@ -136,8 +136,8 @@ namespace CompanyManagers.Views.Home
             set { _dataListShiftAll = value; OnPropertyChanged("dataListShiftAll"); }
         }
 
-        private List<ListUsersDuyet> _dataListUserComfrim;
-        public List<ListUsersDuyet> dataListUserComfrim
+        private List<LanhDaoDuyet> _dataListUserComfrim;
+        public List<LanhDaoDuyet> dataListUserComfrim
         {
             get { return _dataListUserComfrim; }
             set { _dataListUserComfrim = value; OnPropertyChanged("dataListUserComfrim"); }
@@ -633,13 +633,21 @@ namespace CompanyManagers.Views.Home
                     request.Headers.Add("authorization", "Bearer " + Properties.Settings.Default.Token);
                     request.UploadValuesCompleted += (s, e) =>
                     {
-                        Root_ComfrimAndFollow dataComfrimAndFollow = JsonConvert.DeserializeObject<Root_ComfrimAndFollow>(UnicodeEncoding.UTF8.GetString(e.Result));
-                        if(dataComfrimAndFollow.data != null)
+                        try
                         {
-                            dataListUserComfrim = dataComfrimAndFollow.data.listUsersDuyet.ToList();
-                            dataListUserFollow = dataComfrimAndFollow.data.listUsersTheoDoi.ToList();
+                            Root_ComfrimAndFollow dataComfrimAndFollow = JsonConvert.DeserializeObject<Root_ComfrimAndFollow>(UnicodeEncoding.UTF8.GetString(e.Result));
+                            if (dataComfrimAndFollow.data != null)
+                            {
+                                dataListUserComfrim = dataComfrimAndFollow.data.listUsersDuyet.ToList();
+                                dataListUserFollow = dataComfrimAndFollow.data.listUsersTheoDoi.ToList();
 
+                            }
                         }
+                        catch (Exception)
+                        {
+                            GetListComfirmAndFollow();
+                        }
+                        
                     };
                     await request.UploadValuesTaskAsync(UrlApi.Url_Api_Proposing + UrlApi.Name_Api_ListComfrimFollow, request.Headers);
                 }

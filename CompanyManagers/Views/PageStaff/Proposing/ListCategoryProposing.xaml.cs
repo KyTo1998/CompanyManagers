@@ -98,13 +98,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     if (dataCategoryProposing.cate_dx == 18)
                     {
                         managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
-                        managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateProposedWorkSchedule(managerHome, dataCategoryProposing));
+                        managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateProposedWorkSchedule(managerHome, dataCategoryProposing,null));
                         managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
                     }
                     else
                     {
                         managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
-                        managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateNewProposing(managerHome, dataCategoryProposing));
+                        managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateNewProposing(managerHome, dataCategoryProposing,null,null));
                         managerHome.PagePopup.NavigationService.Navigate(managerHome.PagePopupGrayColor);
                     }
                 }

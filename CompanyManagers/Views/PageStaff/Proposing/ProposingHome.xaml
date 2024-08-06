@@ -163,21 +163,23 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListViewItem">
-                                        <Border CornerRadius="10" MouseLeftButtonDown="ShowHomeToDetailPropose" Margin="5 10 10 10" Cursor="Hand" Background="{StaticResource colorBackgroundItem1}">
+                                        <Border CornerRadius="20 20 5 5" MouseLeftButtonDown="ShowHomeToDetailPropose" MaxWidth="256" Margin="5 25 10 10" Cursor="Hand" Background="{StaticResource colorBackgroundItem1}">
                                             <Border.Effect>
                                                 <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                                             </Border.Effect>
-                                            <Grid Margin="5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="50"/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <Border Grid.Column="0" Height="30" Width="30" VerticalAlignment="Center">
+                                            <Grid>
+                                                <Border Margin="0 -20 0 0" Background="{StaticResource colorBackgroundItem1}" BorderThickness="1" CornerRadius="30" Grid.Column="0" Height="50" Width="50" VerticalAlignment="Top">
+                                                    <Border.Effect>
+                                                        <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
+                                                    </Border.Effect>
                                                     <Path Stretch="Fill">
                                                         <Path.Style>
                                                             <Style TargetType="Path">
                                                                 <Setter Property="Data" Value="{StaticResource iconProposingNo}"/>
                                                                 <Setter Property="Fill" Value="{StaticResource colorText1}"/>
+                                                                <Setter Property="Width" Value="30"/>
+                                                                <Setter Property="Height" Value="30"/>
+                                                                <Setter Property="Stretch" Value="Fill"/>
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding Type_duyet}" Value="5">
                                                                         <Setter Property="Data" Value="{StaticResource iconProposingYes}"/>
@@ -188,17 +190,49 @@
                                                         </Path.Style>
                                                     </Path>
                                                 </Border>
-                                                <StackPanel Grid.Column="1">
-                                                    <TextBlock Text="{Binding name_dx}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorText1}"/>
-                                                    <TextBlock Margin="0 5 0 5" Text="{Binding type_dx_string}" FontSize="15" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="2*"/>
-                                                            <ColumnDefinition Width="1*"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <TextBlock Grid.Column="0" Text="{Binding type_duyet}" FontSize="12" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
-                                                        <TextBlock Grid.Column="1" Text="{Binding time_create}" Margin="0 0 10 0" HorizontalAlignment="Right" FontSize="12" FontWeight="Regular" Foreground="{StaticResource GlyphBrush}"/>
-                                                    </Grid>
+                                                <StackPanel Margin="5 30 5 5" Width="256">
+                                                    <StackPanel Grid.Column="1">
+                                                        <TextBlock Margin="0 5 0 0" Text="Người tạo" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}" HorizontalAlignment="Center"/>
+                                                        <TextBlock Margin="0 0 0 5" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorTextForTheme}" HorizontalAlignment="Center">
+                                                            <Run Text="("/>
+                                                            <Run Text="{Binding name_user}"/>
+                                                            <Run Text=")"/>
+                                                        </TextBlock>
+
+                                                        <TextBlock Margin="0 5 0 0" Text="Tên đề xuất" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}" HorizontalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding name_dx}" Margin="0 0 0 5" MaxWidth="246" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorTextForTheme}" HorizontalAlignment="Center"/>
+
+                                                        <TextBlock Margin="0 5 0 0" Text="Loại đề xuất" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorText1}" HorizontalAlignment="Center"/>
+                                                        <TextBlock Margin="0 0 0 5" Text="{Binding type_dx_string}" FontSize="15" FontWeight="Regular" Foreground="{StaticResource colorTextForTheme}" HorizontalAlignment="Center"/>
+                                                        <Grid Margin="0 5 0 0">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="1*"/>
+                                                                <ColumnDefinition Width="1.5*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Grid.Column="0">
+                                                                <TextBlock Text="Trạng thái" HorizontalAlignment="Center" FontSize="12" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
+                                                                <TextBlock Text="{Binding type_duyet}" HorizontalAlignment="Center" FontSize="12" FontWeight="Medium">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="TextBlock">
+                                                                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger Binding="{Binding Type_duyet}" Value="3">
+                                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding Type_duyet}" Value="6">
+                                                                                    <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                            <StackPanel Grid.Column="1">
+                                                                <TextBlock Text="Thời gian tạo" HorizontalAlignment="Center" FontSize="12" FontWeight="Regular" Foreground="{StaticResource colorText1}"/>
+                                                                <TextBlock Text="{Binding time_create}" HorizontalAlignment="Center" FontSize="12" FontWeight="Regular" Foreground="{StaticResource colorTextForTheme}"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </StackPanel>
                                                 </StackPanel>
                                             </Grid>
                                         </Border>
