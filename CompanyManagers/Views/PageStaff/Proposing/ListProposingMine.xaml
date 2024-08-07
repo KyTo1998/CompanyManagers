@@ -461,7 +461,7 @@
                 </Grid>
             </Border>
         </Grid>
-        <Border Grid.Row="2" CornerRadius="15 15 0 0" BorderThickness="1 1 1 0" BorderBrush="{DynamicResource colorTheme}" Background="LightBlue">
+        <Border Grid.Row="2" CornerRadius="15" BorderThickness="1 1 1 0" BorderBrush="{DynamicResource colorTheme}" Background="LightBlue">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
