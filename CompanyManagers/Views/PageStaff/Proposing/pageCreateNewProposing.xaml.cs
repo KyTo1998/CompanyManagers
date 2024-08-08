@@ -57,8 +57,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             set { _listShiftSelect = value; OnPropertyChanged("listShiftSelect"); }
         }
 
-        private List<ListUsersDuyet> _dataListUserComfrim;
-        public List<ListUsersDuyet> dataListUserComfrim
+        private List<LanhDaoDuyet> _dataListUserComfrim;
+        public List<LanhDaoDuyet> dataListUserComfrim
         {
             get { return _dataListUserComfrim; }
             set { _dataListUserComfrim = value; OnPropertyChanged("dataListUserComfrim"); }
@@ -466,12 +466,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             {
                 if (SelectUserComfirm.Text != null)
                 {
-                    ListUsersDuyet dataUserComfirm = new ListUsersDuyet();
-                    dataUserComfirm = SelectUserComfirm.SelectedItem as ListUsersDuyet;
+                    LanhDaoDuyet dataUserComfirm = new LanhDaoDuyet();
+                    dataUserComfirm = SelectUserComfirm.SelectedItem as LanhDaoDuyet;
                     lsvUserComfirmSelected.Visibility = Visibility.Visible;
                     if (dataListUserComfrim == null)
                     {
-                        dataListUserComfrim = new List<ListUsersDuyet>();
+                        dataListUserComfrim = new List<LanhDaoDuyet>();
                     }
                     if (!dataListUserComfrim.Contains(dataUserComfirm))
                     {
@@ -495,7 +495,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
-                ListUsersDuyet dataUserComfirm = (ListUsersDuyet)(sender as Border).DataContext;
+                LanhDaoDuyet dataUserComfirm = (LanhDaoDuyet)(sender as Border).DataContext;
                 if (dataUserComfirm != null)
                 {
                     dataListUserComfrim.Remove(dataUserComfirm);
