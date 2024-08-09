@@ -231,6 +231,9 @@
     <Compile Include="Views\Popoup\PopupAll\ProfileUser.xaml.cs">
       <DependentUpon>ProfileUser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Register\RegisterAccount.xaml.cs">
+      <DependentUpon>RegisterAccount.xaml</DependentUpon>
+    </Compile>
     <Page Include="Common\Popups\PagePopupGrayColor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -344,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Popoup\PopupAll\ProfileUser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Register\RegisterAccount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

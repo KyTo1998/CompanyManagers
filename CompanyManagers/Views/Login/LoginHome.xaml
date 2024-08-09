@@ -214,6 +214,7 @@
                                                     <DataTrigger Binding="{Binding Pass, RelativeSource={RelativeSource AncestorType=Window}}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"></Setter>
                                                     </DataTrigger>
+                                                   
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
@@ -270,7 +271,7 @@
                         </Border>
                         <Grid Margin="0 40 0 0">
                             <TextBlock  Text="Bạn chưa có tài khoản? " TextAlignment="Center" Margin="104,0,0,0" FontSize="16" Foreground="#FF626060"  Height="22" VerticalAlignment="Top" Width="166" HorizontalAlignment="Left"/>
-                            <TextBlock  Cursor="Hand" Text="Đăng Ký"  Margin="275,0,84,0" Foreground="#FF4C5BD4" FontWeight="Bold" RenderTransformOrigin="0.869,0.486" FontSize="16" Height="25" VerticalAlignment="Top" MouseLeftButtonDown="RegisterClick"/>
+                            <TextBlock  Cursor="Hand" Text="Đăng Ký" Margin="275,0,84,0" Foreground="#FF4C5BD4" FontWeight="Bold" RenderTransformOrigin="0.869,0.486" FontSize="16" Height="25" VerticalAlignment="Top" MouseLeftButtonDown="RegisterClick"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

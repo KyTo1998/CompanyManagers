@@ -1,6 +1,7 @@
 ﻿using CompanyManagers.Controllers;
 using CompanyManagers.Models.Logins;
 using CompanyManagers.Views.Home;
+using CompanyManagers.Views.Register;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -44,6 +45,7 @@ namespace CompanyManagers.Views.Login
             }
         }
         ManagerHome ManagerHome { get; set; }
+        RegisterAccount RegisterAcc { get; set; }
         public LoginHome()
         {
             InitializeComponent();
@@ -130,11 +132,14 @@ namespace CompanyManagers.Views.Login
         {
             lbWrongPassword.Visibility = Visibility.Collapsed;
             Pass = txtPasswordHide.Password;
+           
         }
         private void txtPasswordShow_TextChanged(object sender, TextChangedEventArgs e)
         {
             lbWrongPassword.Visibility = Visibility.Collapsed;
-            Pass = txtPasswordHide.Password;
+            
+                Pass = txtPasswordShow.Text;
+            
         }
         private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -264,7 +269,15 @@ namespace CompanyManagers.Views.Login
                 if (txtEmail.Text.Length != 0 && (regex.IsMatch(txtEmail.Text) || regexPhone.IsMatch(txtEmail.Text) || regexPhone1.IsMatch(txtEmail.Text)))
                 {
                     btLogin.Cursor = Cursors.Hand;
-                    LoginStart(TypeLogin, txtEmail.Text, txtPasswordHide.Password);
+                    if (txtPasswordHide.Visibility == Visibility.Visible)
+                    {
+                        LoginStart(TypeLogin, txtEmail.Text, Pass);
+                    }
+                    else
+                    {
+                        LoginStart(TypeLogin, txtEmail.Text, Pass);
+                    }
+                    
                 }
                 else if ((pass.Length == 0))
                 {
@@ -310,7 +323,7 @@ namespace CompanyManagers.Views.Login
                 showPassword.Visibility = Visibility.Collapsed;
                 txtPasswordHide.Visibility = Visibility.Visible;
                 txtPasswordShow.Visibility = Visibility.Collapsed;
-                txtPasswordHide.Password = Pass;
+                txtPasswordShow.Text = txtPasswordHide.Password = Pass;
                 txtPasswordHide.Focus();
             }
             else
@@ -319,7 +332,7 @@ namespace CompanyManagers.Views.Login
                 showPassword.Visibility = Visibility.Visible;
                 txtPasswordHide.Visibility = Visibility.Collapsed;
                 txtPasswordShow.Visibility = Visibility.Visible;
-                txtPasswordShow.Text = Pass;
+                txtPasswordHide.Password = txtPasswordShow.Text = Pass;
                 txtPasswordShow.Focus();
                 txtPasswordShow.CaretIndex = txtPasswordShow.Text.Length;
             }
@@ -365,7 +378,22 @@ namespace CompanyManagers.Views.Login
 
         private void RegisterClick(object sender, MouseButtonEventArgs e)
         {
-
+            this.Hide();
+            RegisterAcc = new RegisterAccount(this, 0);
+            try
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() =>
+                {
+                    var workingArea = System.Windows.SystemParameters.WorkArea;
+                    RegisterAcc.Width = workingArea.Right - 300;
+                    RegisterAcc.Height = workingArea.Bottom - 100;
+                    RegisterAcc.Show();
+                }));
+            }
+            catch
+            {
+                RegisterAcc.Show();
+            }
         }
         #endregion
     }

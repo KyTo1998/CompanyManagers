@@ -15,16 +15,16 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.2*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" x:Name="tb_TitelTime" VerticalAlignment="Center" FontWeight="Medium" FontSize="20" Foreground="{DynamicResource colorTextForTheme}"/>
-            <Grid Grid.Column="1" VerticalAlignment="Center">
+            <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" x:Name="ViewCreateProposing" MouseLeftButtonUp="ShowListCategoryProposing" Cursor="Hand" Margin="0 0 5 0" BorderThickness="1" BorderBrush="{StaticResource colorTextForTheme}" CornerRadius="10">
+                <Border Grid.Column="0" x:Name="ViewCreateProposing" MinWidth="200" MouseLeftButtonUp="ShowListCategoryProposing" Cursor="Hand" Margin="0 0 5 0" BorderThickness="1" BorderBrush="{StaticResource colorTextForTheme}" CornerRadius="10">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="{DynamicResource colorBackgroundItem1}"/>
@@ -35,7 +35,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <DockPanel HorizontalAlignment="Center" Margin="5">
+                    <DockPanel x:Name="crPro" HorizontalAlignment="Center" Margin="5">
                         <Path Data="{StaticResource iconLoadingTime}" RenderTransformOrigin=".5,.5" Margin="0 0 10 0" Height="25" Width="25" Stretch="Fill">
                             <Path.Style>
                                 <Style TargetType="Path">
@@ -76,7 +76,7 @@
                         </TextBlock>
                     </DockPanel>
                 </Border>
-                <Border Grid.Column="1" x:Name="ViewProposingItMe" MouseLeftButtonUp="ShowProposingIsMe" Cursor="Hand" Margin="5 0 0 0" BorderThickness="1" BorderBrush="{StaticResource colorTextForTheme}" CornerRadius="10">
+                <Border Grid.Column="1" x:Name="ViewProposingItMe" MinWidth="200" MouseLeftButtonUp="ShowProposingIsMe" Cursor="Hand" Margin="5 0 0 0" BorderThickness="1" BorderBrush="{StaticResource colorTextForTheme}" CornerRadius="10">
                     <Border.Style>
                         <Style TargetType="Border">
                             <Setter Property="Background" Value="{StaticResource colorBackgroundItem1}"/>
@@ -109,40 +109,40 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Cursor="Hand" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+            <Border Grid.Column="0" Cursor="No" CornerRadius="50" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="tb_CountSumProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                     <TextBlock Text="Tổng số đề xuất" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
-            <Border Grid.Column="1" MouseLeftButtonDown="ProposeWaitComfirm" Cursor="Hand" Margin="10 0 10 0" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+            <Border Grid.Column="1" MouseLeftButtonDown="ProposeWaitComfirm" CornerRadius="50" Cursor="Hand" Margin="10 0 10 0" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="tb_CountWaitProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
-                    <TextBlock Text="Đề xuất đang chờ duyệt" TextAlignment="Center" TextWrapping="Wrap" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="Đang chờ duyệt" TextAlignment="Center" TextWrapping="Wrap" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
-            <Border Grid.Column="2" MouseLeftButtonDown="ProposeNecessaryComfirm" Cursor="Hand" CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+            <Border Grid.Column="2" MouseLeftButtonDown="ProposeNecessaryComfirm" Cursor="Hand" CornerRadius="50" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
-                    <TextBlock Text="Đề xuất cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="Cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
-            <Border Grid.Column="3" MouseLeftButtonDown="ProposeApprovedProposing" Cursor="Hand" Margin="10 0 0 0"  CornerRadius="10" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
+            <Border Grid.Column="3" MouseLeftButtonDown="ProposeApprovedProposing" Cursor="Hand" Margin="10 0 0 0"  CornerRadius="50" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">
                 <Border.Effect>
                     <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.4"></DropShadowEffect>
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="tb_CountApprovedProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
-                    <TextBlock Text="Đề xuất đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="Đã duyệt" Margin="0 5 0 0" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
         </Grid>
@@ -151,7 +151,10 @@
                 <tool:PopupLoading></tool:PopupLoading>
             </Grid>
             <StackPanel>
-                <TextBlock VerticalAlignment="Center" Text="Đề xuất gần đây" FontWeight="Medium" FontSize="20" Foreground="{DynamicResource colorTextForTheme}"/>
+                <DockPanel>
+                    <TextBlock VerticalAlignment="Center" Text="Đề xuất gần đây" FontWeight="Medium" FontSize="20" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <Rectangle Stroke="{DynamicResource colorTheme}" Height="1" VerticalAlignment="Bottom" Margin="0 0 0 2"/>
+                </DockPanel>
                 <ListView x:Name="lsvProposingNow" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listProposingHome, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
                     <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -163,9 +166,9 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListViewItem">
-                                        <Border CornerRadius="20 20 5 5" MouseLeftButtonDown="ShowHomeToDetailPropose" MaxWidth="256" Margin="5 25 10 10" Cursor="Hand" Background="{StaticResource colorBackgroundItem1}">
+                                        <Border CornerRadius="40 40 5 5" MouseLeftButtonDown="ShowHomeToDetailPropose" MaxWidth="256" Margin="5 25 10 10" Cursor="Hand" BorderThickness="1" BorderBrush="{DynamicResource colorTextForTheme}" Background="{StaticResource colorBackgroundItem1}">
                                             <Border.Effect>
-                                                <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.3"></DropShadowEffect>
+                                                <DropShadowEffect ShadowDepth="0"  BlurRadius="10" Opacity="0.5"></DropShadowEffect>
                                             </Border.Effect>
                                             <Grid>
                                                 <Border Margin="0 -20 0 0" Background="{StaticResource colorBackgroundItem1}" BorderThickness="1" CornerRadius="30" Grid.Column="0" Height="50" Width="50" VerticalAlignment="Top">

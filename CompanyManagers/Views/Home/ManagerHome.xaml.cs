@@ -1034,7 +1034,8 @@ namespace CompanyManagers.Views.Home
                         dataChildFunction = new List<DataChildFunction> 
                         {  
                             new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Chấm công"},
-                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Lương hiện tại"}
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Lương hiện tại"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Bảng xuất công cá nhân"}
                         }  
                     });
                     dataFunctionHome.Add(new DataFunction() 
@@ -1045,9 +1046,9 @@ namespace CompanyManagers.Views.Home
                         colorFunction2 = "#C1403A",
                         dataChildFunction = new List<DataChildFunction> 
                         {  
-                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Xem bảng công"},
-                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Xem bảng lương"},
-                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Xem lịch làm việc"}
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Bảng công"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Bảng lương"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Lịch làm việc"}
                         }
                     }); 
                 }
