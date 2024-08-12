@@ -114,7 +114,7 @@
                                                         <Condition Binding="{Binding statusValidate, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="BorderBrush" Value="{DynamicResource colorRemoveRed}"/>
-                                                    <Setter Property="BorderThickness" Value="1.3"/>
+                                                    <Setter Property="BorderThickness" Value="1"/>
                                                 </MultiDataTrigger>
                                             </Style.Triggers>
                                         </Style>

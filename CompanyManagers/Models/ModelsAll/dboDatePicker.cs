@@ -12,8 +12,23 @@ namespace CompanyManagers.Models.ModelsAll
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        public int id { get; set; }
+        public string date { get; set; }
+        public string shift_id { get; set; }
+        public int id 
+        {
+            get 
+            {
+                if (shift_id != null)
+                {
+                    return int.Parse(shift_id);
+                }
+                else
+                {
+                    return id;
+                }
+            }
+            set { } 
+        }
         public int DayInCalendar { get; set; }
         public string dayString { get; set; }
 

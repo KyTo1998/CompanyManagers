@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using static CompanyManagers.Views.Home.ManagerHome;
+using static CompanyManagers.Views.PageStaff.Proposing.pageViewDetailPropose;
 
 namespace CompanyManagers.Views.PageStaff.Proposing
 {
@@ -124,6 +125,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 OnPropertyChanged("dateSelectedForDay");
             }
         }
+
         int startDay; int idSelectedForDay;
         List<Item_ShiftAll> shiftChange { get; set; }
 
@@ -151,6 +153,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
             listShiftAll = _managerHome.dataListShiftAll.ToList();
             listShiftAllSelected = _managerHome.dataListShiftAll.ToList();
+            SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();
+            tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
             if (_dataCategoryProposing != null)
             {
                 typeCategoryProposing = _dataCategoryProposing.cate_dx;
@@ -158,7 +162,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 tb_InputNameProposing.Text = $"Lịch làm việc cá nhân của {managerHome.UserName}";
                 tb_InputReasonCreateProposing.Text = "Tạo lịch làm việc theo tuần";
                 SelectUserComfirm.PlaceHolder = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
-                SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();
             }
             if (_detailPropose != null)
             {
@@ -166,17 +169,28 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 tb_CategoryProposingCreate.Text = "Đề xuất lịch làm việc";
                 tb_InputNameProposing.Text = _detailPropose.ten_de_xuat;
                 tb_InputReasonCreateProposing.Text = _detailPropose.thong_tin_chung.lich_lam_viec.ly_do;
-                SelectTypeComfirm.SelectedIndexSelected = int.Parse(_detailPropose.kieu_phe_duyet);
-                SelectCalendarWork.SelectedIndexSelected = int.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.lich_lam_viec) - 1;
-                if (dataListUserComfrim == null)
+                SelectTypeComfirm.SelectedItemSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet));
+                SelectTypeComfirm.TextSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet)).name_Custom;
+                SelectCalendarWork.SelectedItemSelected = lstCalendarWork.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.lich_lam_viec));
+                selectedStartToEnd.id_Custom = int.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.lich_lam_viec);
+                SelectCalendarWork.TextSelected = lstCalendarWork.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.lich_lam_viec)).name_Custom;
+                if (dataListUserComfrim == null){dataListUserComfrim = new List<LanhDaoDuyet>();}
+                lsvUserComfirmSelected.Visibility = Visibility.Visible;
+                dataListUserComfrim = _detailPropose.lanh_dao_duyet.ToList();
+                foreach (var item in _managerHome.dataListUserFollow)
                 {
-                    dataListUserComfrim = new List<LanhDaoDuyet>();
+                    if (item.idQLC == _detailPropose.nguoi_theo_doi[0].idQLC)
+                    {
+                        SelectUserFollow.SelectedItem = item;
+                        SelectUserFollow.Text = item.userName;
+                    }
                 }
-                dataListUserComfrim = _detailPropose.lanh_dao_duyet;
-                SelectUserFollow.SelectedItem = _detailPropose.nguoi_theo_doi[0];
-
+                StartDateWorkSchedule.SelectedDate = DateTime.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.ngay_bat_dau_display);
+                string jsonString = _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Substring(1, _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Length - 2);
+                Root_ngaylamviec dataNgayLamViec = JsonConvert.DeserializeObject<Root_ngaylamviec>(jsonString);
+                //List<Root_EditCalendar> myDeserializedClass = JsonConvert.DeserializeObject<List<Root_EditCalendar>>(_detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec);
             }
-            tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
+            
             
             
         }
@@ -307,8 +321,17 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 }
                                 else
                                 {
-                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1,statusPast = 0, listShiftSelectedAll = _listShift , dayString  = $"{yearSelected}-{monthSelected}-{i}"};
-                                    listLichProposing.Add(d);
+                                    if (detailPropose != null)
+                                    {
+                                        
+                                        var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
+                                        listLichProposing.Add(d);
+                                    }
+                                    else
+                                    {
+                                        var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
+                                        listLichProposing.Add(d);
+                                    }
                                 }
                             }
                         }
@@ -395,7 +418,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_Notication.Text = "Bạn chưa nhập tên đề xuất";
                     stringValidateKey = "NameProposing";
                 }
-                else if (SelectTypeComfirm.SelectedIndexSelected < 0)
+                else if (SelectTypeComfirm.SelectedIndexSelected <= -1 || SelectTypeComfirm.TextSelected == "")
                 {
                     statusValidate = false;
                     tb_Notication.Text = "Bạn chưa chọn kiểu duyệt";
@@ -407,7 +430,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_Notication.Text = $"Bạn chưa chọn người duyệt, số người duyệt là {managerHome.userNumberConfirm}";
                     stringValidateKey = "UserComfrim";
                 }
-                else if (SelectCalendarWork.SelectedIndexSelected < 0 && type == "SelectedStartDateWorkSchedule")
+                else if (SelectCalendarWork.SelectedIndexSelected <= -1 && type == "SelectedStartDateWorkSchedule")
                 {
                     statusValidate = false;
                     tb_Notication.Text = "Bạn chưa chọn lịch làm việc";

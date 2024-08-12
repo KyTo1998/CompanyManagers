@@ -553,7 +553,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             if (detailPropose != null)
             {
-                managerHome.GetSettingPropose(int.Parse(detailPropose.id_de_xuat));
+                managerHome.GetSettingPropose(detailPropose.nhom_de_xuat);
                 string categoryProposeName;
                 if (dataProposeHome != null)
                 {
@@ -563,7 +563,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     categoryProposeName = dataProposeMine.name_type_dx;
                 }
-                if (int.Parse(detailPropose.id_de_xuat) == 18)
+                if (detailPropose.nhom_de_xuat == 18)
                 {
                     managerHome.PagePopupGrayColor = new PagePopupGrayColor(managerHome);
                     managerHome.PagePopupGrayColor.Popup1.NavigationService.Navigate(new pageCreateProposedWorkSchedule(managerHome, null, detailPropose));
