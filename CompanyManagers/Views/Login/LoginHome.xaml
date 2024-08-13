@@ -55,7 +55,7 @@
                     </Border.Background>
                 </Border>
                 <StackPanel x:Name="stpSelectLogin" VerticalAlignment="Top" Margin="0,194,0,0" Visibility="Visible" Grid.ColumnSpan="2">
-                    <Border x:Name="btnCompany" Margin="0 0 0 10" Cursor="Hand" HorizontalAlignment="Center" BorderThickness="1" CornerRadius="15"  Width="315" Height="60" BorderBrush="#FF4C5BD4"  MouseLeftButtonDown="openPagelogin" Visibility="Visible">
+                    <Border x:Name="btnCompany" Margin="0 0 0 10" Cursor="Hand" HorizontalAlignment="Center" BorderThickness="1" CornerRadius="15"  Width="315" Height="60" BorderBrush="{DynamicResource colorTextForTheme}"  MouseLeftButtonDown="openPagelogin" Visibility="Visible">
                         <Border.Style>
                             <Style TargetType="Border" >
                                 <Setter Property="Background" Value="#00000000"/>
@@ -110,7 +110,7 @@
                             </Path>
                         </Grid>
                     </Border>
-                    <Border x:Name="btnEmployee" Margin="0 10 0 0" Cursor="Hand" BorderThickness="1" CornerRadius="15" VerticalAlignment="Center"  Width="315" Height="60" BorderBrush="#FF4C5BD4" MouseLeftButtonDown="openPagelogin" Visibility="Visible">
+                    <Border x:Name="btnEmployee" Margin="0 10 0 0" Cursor="Hand" BorderThickness="1" CornerRadius="15" VerticalAlignment="Center"  Width="315" Height="60" BorderBrush="{DynamicResource colorTextForTheme}" MouseLeftButtonDown="openPagelogin" Visibility="Visible">
                         <Border.Style>
                             <Style TargetType="Border" >
                                 <Setter Property="Background" Value="#00000000"/>
@@ -176,7 +176,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Path Grid.Column="0" Margin="-100 0 0 0" Data="{StaticResource iconReturn}" Cursor="Hand" Stretch="Fill" Stroke="#FF4C5BD4" StrokeThickness="3" Height="25" Width="13" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="#00F9F9F9" MouseLeftButtonDown="returnSelectLogin"/>
                                 <StackPanel Grid.Column="1" Margin="-20 0 0 0">
-                                    <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{StaticResource iconManager}" Fill="{StaticResource colorBlue}"/>
+                                    <Path VerticalAlignment="Center" HorizontalAlignment="Center" Data="{StaticResource iconManager}" Fill="{DynamicResource colorTextForTheme}"/>
                                     <TextBlock x:Name="tb_TitelLogin"  Foreground="{DynamicResource colorTextForTheme}" FontSize="18" FontWeight="SemiBold"/>
                                 </StackPanel>
                             </Grid>
@@ -235,7 +235,7 @@
                         <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
                             <Grid Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,0,0,0" MouseLeftButtonDown="ChangeRememberPassword">
                                 <Canvas x:Name="checkBoxTrue" Visibility="Hidden" Cursor="Hand" Width="20" Height="20"  HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Rectangle Width="20" Height="20" RadiusX="4" RadiusY="4" Fill="#FF4C5BD4"/>
+                                    <Rectangle Width="20" Height="20" RadiusX="4" RadiusY="4" Fill="{DynamicResource colorTextForTheme}"/>
                                     <Path StrokeThickness="3" Stroke="#ffffff" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Data="M5.22217 10.989L8.26565 14.1001L15.2222 6.1001"/>
                                 </Canvas>
                                 <Canvas x:Name="checkBoxFalse" Visibility="Visible"  Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White">
@@ -245,10 +245,10 @@
                             </Grid>
                             <TextBlock x:Name="forgetPassword" Text="Quên mật khẩu ?" Cursor="Hand" FontSize="16" Height="22" Width="124" Margin="85,0,40,0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#00000000" MouseLeftButtonDown="forgetPassword_MouseLeftButtonDown"></TextBlock>
                         </StackPanel>
-                        <Border x:Name="btLogin" Margin="0,25,0,0" BorderThickness="1" BorderBrush="{StaticResource ColorBlue}" CornerRadius="15" Cursor="Hand" Width="370" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2" MouseLeftButtonDown="LoginClick">
+                        <Border x:Name="btLogin" Margin="0,25,0,0" BorderThickness="1" BorderBrush="{StaticResource colorTextForTheme}" CornerRadius="15" Cursor="Hand" Width="370" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2" MouseLeftButtonDown="LoginClick">
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="{StaticResource ColorBlue}"/>
+                                    <Setter Property="Background" Value="{StaticResource colorTheme}"/>
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Background" Value="{StaticResource colorMoveMouseItem}"/>
@@ -262,7 +262,7 @@
                                         <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=btLogin, Path=IsMouseOver}" Value="true">
-                                                <Setter Property="Foreground" Value="{StaticResource ColorBlue}"/>
+                                                <Setter Property="Foreground" Value="{StaticResource colorTextForTheme}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -271,7 +271,7 @@
                         </Border>
                         <Grid Margin="0 40 0 0">
                             <TextBlock  Text="Bạn chưa có tài khoản? " TextAlignment="Center" Margin="104,0,0,0" FontSize="16" Foreground="#FF626060"  Height="22" VerticalAlignment="Top" Width="166" HorizontalAlignment="Left"/>
-                            <TextBlock  Cursor="Hand" Text="Đăng Ký" Margin="275,0,84,0" Foreground="#FF4C5BD4" FontWeight="Bold" RenderTransformOrigin="0.869,0.486" FontSize="16" Height="25" VerticalAlignment="Top" MouseLeftButtonDown="RegisterClick"/>
+                            <TextBlock  Cursor="Hand" Text="Đăng Ký" Margin="275,0,84,0" Foreground="{DynamicResource colorTextForTheme}" FontWeight="Bold" RenderTransformOrigin="0.869,0.486" FontSize="16" Height="25" VerticalAlignment="Top" MouseLeftButtonDown="RegisterClick"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

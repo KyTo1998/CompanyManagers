@@ -126,6 +126,16 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             }
         }
 
+        private List<list_ngay_lam_viec> _listShiftForDay = new List<list_ngay_lam_viec>();
+        public List<list_ngay_lam_viec> listShiftForDay
+        {
+            get { return _listShiftForDay; }
+            set
+            {
+                _listShiftForDay = value;
+                OnPropertyChanged("listShiftForDay");
+            }
+        }
         int startDay; int idSelectedForDay;
         List<Item_ShiftAll> shiftChange { get; set; }
 
@@ -185,10 +195,30 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         SelectUserFollow.Text = item.userName;
                     }
                 }
-                StartDateWorkSchedule.SelectedDate = DateTime.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.ngay_bat_dau_display);
-                string jsonString = _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Substring(1, _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Length - 2);
-                Root_ngaylamviec dataNgayLamViec = JsonConvert.DeserializeObject<Root_ngaylamviec>(jsonString);
-                //List<Root_EditCalendar> myDeserializedClass = JsonConvert.DeserializeObject<List<Root_EditCalendar>>(_detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec);
+                try
+                {
+                    StartDateWorkSchedule.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.lich_lam_viec.ngay_bat_dau_display, "dd-MM-yyyy", null);
+                    string jsonString = _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Substring(1, _detailPropose.thong_tin_chung.lich_lam_viec.ngay_lam_viec.Length - 2);
+                    Root_ngaylamviec dataNgayLamViec = JsonConvert.DeserializeObject<Root_ngaylamviec>(jsonString);
+                    if (dataNgayLamViec.data != null)
+                    {
+                        listShiftForDay = dataNgayLamViec.data.ToList();
+                        foreach (var item in _managerHome.dataListShiftAll)
+                        {
+                            foreach (var item2 in listShiftForDay)
+                            {
+                                if (item2.list_shift_id.Contains(item.shift_id.ToString()))
+                                {
+                                    listShift.Add(item);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                }
+                
             }
             
             
@@ -323,9 +353,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 {
                                     if (detailPropose != null)
                                     {
-                                        
-                                        var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
-                                        listLichProposing.Add(d);
+                                        if (listShiftForDay.Any(e => e.numberDate == i))
+                                        {
+                                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
+                                            listLichProposing.Add(d);
+                                        }
                                     }
                                     else
                                     {

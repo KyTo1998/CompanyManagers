@@ -182,7 +182,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 get { return DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture); }
                 set { } 
             }
-
+            public int numberDate 
+            {
+                get
+                {
+                    return datetime.Day;
+                }
+                set { }
+            }
             public string shift_id { get; set; }
             public List<string> list_shift_id 
             {
