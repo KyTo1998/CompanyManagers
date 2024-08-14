@@ -44,7 +44,7 @@
                             </Grid>
                             <StackPanel Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                    <Run Text="Tên đề xuất" Foreground="{StaticResource colorText1}"/>
+                                    <Run Text="{DynamicResource HomeProposeTextNamePropose}" Foreground="{StaticResource colorText1}"/>
                                     <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -66,7 +66,7 @@
                                     </Border.Style>
                                     <Grid>
                                         <TextBox x:Name="tb_InputNameProposing" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
-                                        <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="Nhập tên đề xuất" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                                        <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="{DynamicResource HomeProposeTextNamePropose}" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -83,7 +83,7 @@
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Họ và tên" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextNameUser}" Foreground="{StaticResource colorText1}"/>
                                 </TextBlock>
                                 <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                     <TextBlock x:Name="tb_UserNameCreate" Text="Tô Ngọc Ký" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="Wrap" Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
@@ -91,7 +91,7 @@
                             </StackPanel>
                             <StackPanel Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Loại đề xuất" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource HomeProposeTextCategoryPropose}" Foreground="{StaticResource colorText1}"/>
                                 </TextBlock>
                                 <Border Height="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                     <TextBlock x:Name="tb_CategoryProposingCreate" Text="Đơn xin nghỉ phép" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="Wrap" Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
@@ -99,7 +99,7 @@
                             </StackPanel>
                             <StackPanel MinHeight="40" Grid.Column="0" x:Name="stp_TypeComfirm">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Kiểu kiểm duyệt" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextTypeComfirm}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -124,7 +124,7 @@
                             </StackPanel>
                             <StackPanel Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Người xét duyệt" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextUserComfirm}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border MinHeight="40" Cursor="Hand" CornerRadius="5">
@@ -207,7 +207,7 @@
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Người theo dõi" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextUserFollow}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border MinHeight="40" Cursor="Hand" CornerRadius="5">
@@ -227,12 +227,12 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="0" CornerRadius="5" BorderBrush="{DynamicResource colorTheme}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="Chọn người theo dõi" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
+                                    <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="0" CornerRadius="5" BorderBrush="{DynamicResource colorTheme}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="{DynamicResource CreateNewProposeTextUserFollow}" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
                                 </Border>
                             </StackPanel>
                             <StackPanel Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Lý do" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextReason}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border CornerRadius="5" Cursor="Hand">
@@ -254,7 +254,7 @@
                                     </Border.Style>
                                     <Grid>
                                         <TextBox x:Name="tb_InputReasonCreateProposing" Height="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
-                                        <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập lý do tạo đê xuất"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                        <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource CreateNewProposeTextReason}"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -271,7 +271,7 @@
                             </StackPanel>
                             <StackPanel MinHeight="40">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Chọn lịch làm việc" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextSelectCalendar}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border MinHeight="40" Cursor="Hand" CornerRadius="5">
@@ -296,7 +296,7 @@
                             </StackPanel>
                             <StackPanel x:Name="stp_FileGim" Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Tài liệu đính kèm" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextDocumentGim}" Foreground="{StaticResource colorText1}"/>
                                 </TextBlock>
                                 <Border BorderThickness="1" Cursor="Hand" Background="Transparent" BorderBrush="{DynamicResource colorTheme}" MinHeight="40" CornerRadius="5">
                                     <Grid>
@@ -305,7 +305,7 @@
                                             <ColumnDefinition Width="50"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="0">
-                                            <TextBlock x:Name="TextHidenFileGim" FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Thêm tài liệu đính kèm"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                            <TextBlock x:Name="TextHidenFileGim" FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource CreateNewProposeTextDocumentGim}"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                             <ListView x:Name="lsvFileGim" HorizontalAlignment="Left" Background="Transparent" Visibility="Collapsed" Margin="5 5 -10 5" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                                 <ListView.ItemsPanel>
                                                     <ItemsPanelTemplate>
@@ -354,7 +354,7 @@
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Thời gian bắt đầu" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextVacationStartDate}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border MinHeight="40" Cursor="Hand" CornerRadius="5">
@@ -379,7 +379,7 @@
                             </StackPanel>
                             <StackPanel Margin="0 15 0 15">
                                 <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Ca làm việc" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextShiftWork}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                 </TextBlock>
                                 <Border Height="40" MouseLeftButtonUp="ShowBoxSelectShift" Cursor="Hand" Background="Transparent" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
@@ -749,7 +749,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Regular" Text="Tạo đề xuất">
+                                        <TextBlock x:Name="btnPropose" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Regular" Text="Tạo đề xuất">
                                             <TextBlock.Style>
                                                 <Style TargetType="TextBlock">
                                                     <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>

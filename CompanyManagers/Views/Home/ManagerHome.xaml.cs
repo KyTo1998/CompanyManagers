@@ -583,16 +583,22 @@ namespace CompanyManagers.Views.Home
                     request.QueryString.Add("pageSize", "1000");
                     request.UploadValuesCompleted += (s, e) =>
                     {
-                        string jsonString = Encoding.UTF8.GetString(e.Result);
-                        Root_StaffAll dataStaffAll = JsonConvert.DeserializeObject<Root_StaffAll>(UnicodeEncoding.UTF8.GetString(e.Result));
-                        if (dataStaffAll.data.items != null)
+                        try
                         {
-                            dataListStaffAll = dataStaffAll.data.items;
-                            Info_StaffAll dataStaff = new Info_StaffAll();
-                            dataStaff.ep_id = -1;
-                            dataStaff.ep_name = "Tất cả";
-                            dataListStaffAll.Insert(0, dataStaff);
-                           
+                            string jsonString = Encoding.UTF8.GetString(e.Result);
+                            Root_StaffAll dataStaffAll = JsonConvert.DeserializeObject<Root_StaffAll>(UnicodeEncoding.UTF8.GetString(e.Result));
+                            if (dataStaffAll.data.items != null)
+                            {
+                                dataListStaffAll = dataStaffAll.data.items;
+                                Info_StaffAll dataStaff = new Info_StaffAll();
+                                dataStaff.ep_id = -1;
+                                dataStaff.ep_name = "Tất cả";
+                                dataListStaffAll.Insert(0, dataStaff);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            GetListStaffAll();
                         }
                     };
                     await request.UploadValuesTaskAsync(UrlApi.Url_Api_Staff + UrlApi.Name_Api_Staff, request.QueryString);
@@ -1008,7 +1014,8 @@ namespace CompanyManagers.Views.Home
                         colorFunction1 = "#FF5B4D", colorFunction2 = "#C1403A", 
                         dataChildFunction = new List<DataChildFunction> 
                         {  
-                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Cài đặt đề xuất"}
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Cài đặt đề xuất"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Danh sách đề xuất"}
                         } 
                     });
                 }   

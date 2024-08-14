@@ -13,7 +13,7 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" x:Name="TitleLoginHome"  Height="40" Background="{StaticResource colorMoveMouseItem}" MouseLeftButtonDown="Grid_MouseDown">
                 <Path VerticalAlignment="Center" Data="{StaticResource iconManager}" Stretch="Uniform" Height="22"  Margin="10,0,0,0" HorizontalAlignment="Left" Width="25" Fill="{DynamicResource colorTheme}"/>
-                <TextBlock VerticalAlignment="Center" Text="Company Managers" Margin="38,0,0,10" Foreground="{DynamicResource colorTextForTheme}" Padding="0" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" LineHeight="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                <TextBlock VerticalAlignment="Center" Text="{DynamicResource LoginTextTitelCompany}" Margin="38,0,0,10" Foreground="{DynamicResource colorTextForTheme}" Padding="0" FontWeight="Bold" FontSize="15" HorizontalAlignment="Left" LineHeight="1" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
                 <TextBlock VerticalAlignment="Center" Text="DesignByKyTo" HorizontalAlignment="Left" Margin="38,14,0,0" FontSize="10" Foreground="{DynamicResource colorTextForTheme}"/>
                 <Grid x:Name="Minimimize" Cursor="Hand"  Margin="0,14,94,0" HorizontalAlignment="Right" Width="15" Height="15" VerticalAlignment="Top" MouseLeftButtonDown="Minimimize_MouseLeftButtonDown" Background="Transparent" >
                     <Line Cursor="Hand" X1="0" Y1="7" X2="15" Y2="7"  StrokeThickness="1.2" Stroke="{DynamicResource colorTextForTheme}" Fill="#00A52323" />
@@ -84,7 +84,7 @@
                                     </Style>
                                 </Path.Style>
                             </Path>
-                            <TextBlock Grid.Column="1" Text="CÔNG TY" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Grid.Column="1" Text="{DynamicResource LoginTextCompany}" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
@@ -139,7 +139,7 @@
                                     </Style>
                                 </Path.Style>
                             </Path>
-                            <TextBlock Grid.Column="1" Text="NHÂN VIÊN" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Grid.Column="1" Text="{DynamicResource LoginTextEmployee}" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
@@ -186,7 +186,7 @@
                                 <Path Data="{StaticResource Email}" StrokeThickness="0.5" Width="23" Height="17" Stroke="#FF666666" Fill="#FF666666" Margin="14,0,0,0"></Path>
                                 <Grid Height="39" Margin="14,0,0,0" Width="267">
                                     <TextBox  x:Name="txtEmail" VerticalAlignment="Center" HorizontalAlignment="Left" BorderThickness="0" FontSize="16" Width="267" Background="{x:Null}"  TextChanged="txtEmail_TextChanged"/>
-                                    <TextBlock IsHitTestVisible="False" Text="Nhập Email hoặc số điện thoại" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="267"  FontSize="16" Foreground="#FF666666">
+                                    <TextBlock IsHitTestVisible="False" Text="{DynamicResource LoginTextHidenUserAccount}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="267"  FontSize="16" Foreground="#FF666666">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -206,7 +206,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Path Data="{StaticResource password}" StrokeThickness="0" Width="22" Height="24" Stroke="#FF666666" Fill="#FF666666" Margin="14,0,0,0"></Path>
                                 <Grid Height="39" Margin="14,0,0,0" Width="267" >
-                                    <TextBlock x:Name="lbPassword" Text="Mật khẩu" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="267" Height="39" Background="{x:Null}" FontSize="16" Padding="0,6,0,0" Foreground="#FF666666">
+                                    <TextBlock x:Name="lbPassword" Text="{DynamicResource LoginTextHidenUserPassword}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="267" Height="39" Background="{x:Null}" FontSize="16" Padding="0,6,0,0" Foreground="#FF666666">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Collapsed"></Setter>
@@ -241,9 +241,9 @@
                                 <Canvas x:Name="checkBoxFalse" Visibility="Visible"  Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White">
                                     <Rectangle Width="20" Height="20" RadiusX="4" RadiusY="4" Stroke="#FF666666"/>
                                 </Canvas>
-                                <TextBlock Text="Ghi nhớ tài khoản" FontSize="16"  Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                <TextBlock Text="{DynamicResource LoginTextRememberAccount}" FontSize="16"  Margin="30,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                             </Grid>
-                            <TextBlock x:Name="forgetPassword" Text="Quên mật khẩu ?" Cursor="Hand" FontSize="16" Height="22" Width="124" Margin="85,0,40,0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#00000000" MouseLeftButtonDown="forgetPassword_MouseLeftButtonDown"></TextBlock>
+                            <TextBlock x:Name="forgetPassword" Text="{DynamicResource LoginTextForgotPassword}" Cursor="Hand" FontSize="16" Height="22" Width="124" Margin="85,0,40,0" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#00000000" MouseLeftButtonDown="forgetPassword_MouseLeftButtonDown"></TextBlock>
                         </StackPanel>
                         <Border x:Name="btLogin" Margin="0,25,0,0" BorderThickness="1" BorderBrush="{StaticResource colorTextForTheme}" CornerRadius="15" Cursor="Hand" Width="370" HorizontalAlignment="Center" Height="42" VerticalAlignment="Top" Grid.ColumnSpan="2" MouseLeftButtonDown="LoginClick">
                             <Border.Style>
@@ -256,7 +256,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="Đăng nhập" TextAlignment="Center" Padding="8,8,0,0" FontSize="18" FontWeight="Bold">
+                            <TextBlock Text="{DynamicResource LoginTextButtonLogin}" TextAlignment="Center" Padding="8,8,0,0" FontSize="18" FontWeight="Bold">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
@@ -270,8 +270,8 @@
                             </TextBlock>
                         </Border>
                         <Grid Margin="0 40 0 0">
-                            <TextBlock  Text="Bạn chưa có tài khoản? " TextAlignment="Center" Margin="104,0,0,0" FontSize="16" Foreground="#FF626060"  Height="22" VerticalAlignment="Top" Width="166" HorizontalAlignment="Left"/>
-                            <TextBlock  Cursor="Hand" Text="Đăng Ký" Margin="275,0,84,0" Foreground="{DynamicResource colorTextForTheme}" FontWeight="Bold" RenderTransformOrigin="0.869,0.486" FontSize="16" Height="25" VerticalAlignment="Top" MouseLeftButtonDown="RegisterClick"/>
+                            <TextBlock  Text="{DynamicResource LoginTextQuestionAccount}" TextAlignment="Center" Margin="104,0,0,0" FontSize="16" Foreground="#FF626060"  Height="22" VerticalAlignment="Top" Width="166" HorizontalAlignment="Left"/>
+                            <TextBlock  Cursor="Hand" Text="{DynamicResource LoginTextButtonRegister}" Margin="275,0,84,0" Foreground="{DynamicResource colorTextForTheme}" FontWeight="Bold" RenderTransformOrigin="0.869,0.486" FontSize="16" Height="25" VerticalAlignment="Top" MouseLeftButtonDown="RegisterClick"/>
                         </Grid>
                     </StackPanel>
                 </Grid>

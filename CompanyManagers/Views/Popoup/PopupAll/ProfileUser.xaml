@@ -9,7 +9,7 @@
         <StackPanel x:Name="scoll" Margin="0 0 0 10">
             <Grid>
                 <Border Height="80" Background="{DynamicResource colorTheme}" VerticalAlignment="Top" CornerRadius="10,10,0,0">
-                    <TextBlock Grid.Column="0" Text="Hồ sơ nhân viên" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 20 0 0" FontSize="20" FontWeight="Medium" Foreground="{StaticResource colorWriter}"/>
+                    <TextBlock Grid.Column="0" Text="{DynamicResource ProfileUserText}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 20 0 0" FontSize="20" FontWeight="Medium" Foreground="{StaticResource colorWriter}"/>
                 </Border>
                 <Border x:Name="Profile_btn_addImg" CornerRadius="50" VerticalAlignment="Top" RenderTransformOrigin="5.623,1.097" Height="100" HorizontalAlignment="Center" Width="100" Margin="0,51,0,0">
                     <Border.Resources>
@@ -67,18 +67,18 @@
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
                 <StackPanel Orientation="Horizontal" Height="60">
                     <Path Data="{StaticResource iconPhone}"  Width="22" StrokeThickness="0.7" Margin="28,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorGray1}" Stroke="{DynamicResource ColorGray1}" />
-                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Text="SĐT"/>
+                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Text="{DynamicResource ProfileUserTextNumberPhone}"/>
                     <TextBlock x:Name="NumberPhoneUser" Text="{Binding UserCurrent.Email}" Margin="0" TextAlignment="Right" FontWeight="Medium" FontSize="18" Foreground="{DynamicResource colorTextForTheme}" Padding="0,19,24,0" Width="413"/>
                 </StackPanel>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
                 <StackPanel Cursor="Hand" Orientation="Horizontal" Height="60" Background="#00000000">
                     <Path Data="{StaticResource password}"  Width="22" StrokeThickness="2" Margin="28,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorGray1}" />
-                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="Đổi mật khẩu"/>
+                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="{DynamicResource ProfileUserTextChangePassword}"/>
                 </StackPanel>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
                 <StackPanel x:Name="LogOut" MouseLeftButtonUp="ShowPopupLogout" Cursor="Hand" Orientation="Horizontal" Height="60" Background="#00000000">
                     <Path Data="{StaticResource iconLogout}"  Width="22" StrokeThickness="2" Margin="28,0,0,0" Stretch="Uniform" Stroke="{DynamicResource ColorGray1}" />
-                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="Đăng xuất"/>
+                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="{DynamicResource LogoutTextButtonLogout}"/>
                 </StackPanel>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
             </StackPanel>

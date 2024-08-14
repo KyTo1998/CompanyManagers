@@ -132,7 +132,7 @@
                                     </Style>
                                 </Path.Style>
                             </Path>
-                            <TextBlock x:Name="txbBackToBack" VerticalAlignment="Center" FontSize="16" Text="Quay lại">
+                            <TextBlock x:Name="txbBackToBack" VerticalAlignment="Center" FontSize="16" Text="{DynamicResource HomeTextBackToBack}">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{StaticResource colorText1}"/>

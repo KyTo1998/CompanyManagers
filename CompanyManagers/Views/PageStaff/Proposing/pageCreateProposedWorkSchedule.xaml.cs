@@ -202,14 +202,24 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     Root_ngaylamviec dataNgayLamViec = JsonConvert.DeserializeObject<Root_ngaylamviec>(jsonString);
                     if (dataNgayLamViec.data != null)
                     {
+                        btnPropose.Text = "Chỉnh sửa đề xuất";
+                        statusShowButton = true;
                         listShiftForDay = dataNgayLamViec.data.ToList();
-                        foreach (var item in _managerHome.dataListShiftAll)
+                        selectedStartToEnd = new typeConfirm();
+                        selectedStartToEnd.id_Custom = int.Parse(_detailPropose.thong_tin_chung.lich_lam_viec.lich_lam_viec);
+                        selectedStartToEnd.name_Custom = _detailPropose.thong_tin_chung.lich_lam_viec.lich_lam_viec_display;
+                        foreach (var shiftForDay in listShiftForDay)
                         {
-                            foreach (var item2 in listShiftForDay)
+                            listShift = new List<Item_ShiftAll>();
+                            foreach (var shiftOne in shiftForDay.list_shift_id)
                             {
-                                if (item2.list_shift_id.Contains(item.shift_id.ToString()))
+                                foreach(var shiftAll in _managerHome.dataListShiftAll)
                                 {
-                                    listShift.Add(item);
+                                    if (shiftOne == shiftAll.shift_id.ToString())
+                                    {
+                                        listShift.Add(shiftAll);
+                                        LoadDataCalendarWork(shiftForDay.datetime.Month, shiftForDay.datetime.Year, selectedStartToEnd, listShift);
+                                    }
                                 }
                             }
                         }
@@ -218,14 +228,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 catch (Exception)
                 {
                 }
-                
-            }
-            
-            
-            
+            } 
         }
         
-        public async void CreateProposing()
+        public async void CreateAndEditProposing()
         {
             try
             {
@@ -256,9 +262,21 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 };
                 string JsonCalendarWork = JsonConvert.SerializeObject(ObjectCalendarWork);
                 var client = new HttpClient();
-                var request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CreateProposeCalendarWork);
+                HttpRequestMessage request = new HttpRequestMessage();
+                if (btnPropose.Text == "Chỉnh sửa đề xuất")
+                {
+                    request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Proposing + UrlApi.Name_Api_EditProposeCalendarWork);
+                }
+                else
+                {
+                    request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CreateProposeCalendarWork);
+                }
                 request.Headers.Add("Authorization", "Bearer " + Properties.Settings.Default.Token);
                 var content = new MultipartFormDataContent();
+                if (btnPropose.Text == "Chỉnh sửa đề xuất")
+                {
+                    content.Add(new StringContent(detailPropose.id_de_xuat), "id_dx");
+                }
                 content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
                 content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Custom.ToString()), "kieu_duyet");
                 content.Add(new StringContent(StringUserComfirm), "id_user_duyet");
@@ -283,20 +301,35 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 var responsContent = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-                    managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thành công", ""));
+                    if (btnPropose.Text == "Chỉnh sửa đề xuất")
+                    {
+                        managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Chỉnh sửa lịch làm việc thành công", ""));
+                    }
+                    else
+                    {
+                        managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo lịch làm việc thành công", ""));
+                    }
                 }
             }
             catch (Exception)
             {
-                managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất thất bại, lỗi hệ thống", ""));
+                if (btnPropose.Text == "Chỉnh sửa đề xuất")
+                {
+                    managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Chỉnh sửa lịch làm việc thất bại, lỗi hệ thống", ""));
+                }
+                else
+                {
+                    managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo lịch làm việc thất bại, lỗi hệ thống", ""));
+                }
             }
         }
+
         private void CreateProposing(object sender, MouseButtonEventArgs e)
         {
             ValidateCreatePropose("CreateProposing");
             if (statusValidate == true)
             {
-                CreateProposing();
+                CreateAndEditProposing();
             }
         }
         public void LoadDataCalendarWork(int monthSelected, int yearSelected, typeConfirm selectedStartToEnd, List<Item_ShiftAll> _listShift)
@@ -351,19 +384,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                 }
                                 else
                                 {
-                                    if (detailPropose != null)
-                                    {
-                                        if (listShiftForDay.Any(e => e.numberDate == i))
-                                        {
-                                            var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
-                                            listLichProposing.Add(d);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
-                                        listLichProposing.Add(d);
-                                    }
+                                    var d = new lichlamviec() { id = listLichProposing.Count, DayInCalendar = i, shiftSelected = _listShift.Count, statusClick = 1, statusPast = 0, listShiftSelectedAll = _listShift, dayString = $"{yearSelected}-{monthSelected}-{i}" };
+                                    listLichProposing.Add(d);
                                 }
                             }
                         }
@@ -444,6 +466,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             try
             {
                 if (dataListUserComfrim == null) { dataListUserComfrim = new List<LanhDaoDuyet>(); }
+                if (btnPropose.Text == "Chỉnh sửa đề xuất")
+                {
+                    SelectTypeComfirm.SelectedIndexSelected = int.Parse(detailPropose.kieu_phe_duyet);
+                    SelectUserFollow.SelectedIndex = detailPropose.nguoi_theo_doi.Count -1;
+                }
                 if (tb_InputNameProposing.Text == "")
                 {
                     statusValidate = false;
@@ -474,7 +501,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_Notication.Text = "Bạn chưa nhập lý do tạo đề xuất";
                     stringValidateKey = "Reason";
                 }
-                else if (SelectUserFollow.SelectedIndex < 0)
+                else if (SelectUserFollow.SelectedIndex <= -1)
                 {
                     statusValidate = false;
                     tb_Notication.Text = "Bạn chưa chọn người theo dõi";

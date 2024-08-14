@@ -124,7 +124,7 @@
                             </Path.Style>
                         </Path>
                     </Border>
-                    <TextBlock Grid.Column="1" Text="Tôi gửi đi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
+                    <TextBlock Grid.Column="1" Text="{DynamicResource ProposeMineTextISender}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
@@ -239,7 +239,7 @@
                             </Path.Style>
                         </Path>
                     </Border>
-                    <TextBlock Grid.Column="1" Text="Gửi đến tôi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
+                    <TextBlock Grid.Column="1" Text="{DynamicResource ProposeMineTextSendToMe}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
@@ -354,7 +354,7 @@
                             </Path.Style>
                         </Path>
                     </Border>
-                    <TextBlock Grid.Column="1" Text="Đang theo dõi" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
+                    <TextBlock Grid.Column="1" Text="{DynamicResource ProposeMineTextFollower}" VerticalAlignment="Center" TextWrapping="Wrap" FontSize="20" FontWeight="Medium">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
@@ -406,11 +406,11 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="200"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" PlaceHolder="Chọn người nhận đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16" DisplayMemberPath="ep_name"/>
+                    <tool:SearchBar x:Name="searchKeySend" Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" PlaceHolder="{DynamicResource ProposeMineTextHidenSelectRecipient}"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16" DisplayMemberPath="ep_name"/>
                     <tool:DatePicker x:Name="dateTimeStartSend" Grid.Column="1" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" SelectedDateChange="TimeSearchStartSend"/>
                     <tool:DatePicker x:Name="dateTimeStopSend" Grid.Column="2" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Cursor="Hand" SelectedDateChange="TimeSearchStopSend"/>
                     <DockPanel Grid.Column="3" MouseLeftButtonUp="SearchProposingSendTo" Background="Transparent" Cursor="Hand">
-                        <TextBlock Text="Tìm kiếm" Foreground="{DynamicResource colorTextForTheme}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"/>
+                        <TextBlock Text="{DynamicResource HomeTextSearch}" Foreground="{DynamicResource colorTextForTheme}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>
@@ -434,12 +434,12 @@
                         <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <tool:SearchBar x:Name="searchKeyRespon" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="Người gửi đề xuất"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16"/>
-                    <tool:SearchBar x:Name="searchKeyCateProRespon" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="1" Cursor="Hand" PlaceHolder="Loại đề xuất"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" FontSize="16" DisplayMemberPath="name_cate_dx"/>
+                    <tool:SearchBar x:Name="searchKeyRespon" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" ItemsSource="{Binding managerHome.dataListStaffAll}" DisplayMemberPath="ep_name" Grid.Column="0" Cursor="Hand" PlaceHolder="{DynamicResource ProposeMineTextHidenSender}"  CornerRadius="5" SelectionChanged="Send_SelectionChange" FontSize="16"/>
+                    <tool:SearchBar x:Name="searchKeyCateProRespon" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="1" Cursor="Hand" PlaceHolder="{DynamicResource HomeProposeTextCategoryPropose}"  CornerRadius="5" SelectionChanged="SendCatePro_SelectionChange" FontSize="16" DisplayMemberPath="name_cate_dx"/>
                     <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" CornerRadius="5">
                         <Grid>
                             <TextBox x:Name="tb_SearchProposing" Height="40" MinWidth="200" Margin="5 10 5 -5" TextChanged="SearchProposing" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
-                            <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Tìm tên đề xuất"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                            <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource ProposeMineTextHidenSearchName}"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -456,7 +456,7 @@
                     <tool:DatePicker x:Name="dateTimeStartRespon" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="3" Cursor="Hand" SelectedDateChange="TimeSearchStartRespon"/>
                     <tool:DatePicker x:Name="dateTimeStopRespon" CornerRadius="5" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource colorTheme}" Grid.Column="4" Cursor="Hand" SelectedDateChange="TimeSearchStopRespon"/>
                     <DockPanel Grid.Column="5" Cursor="Hand" MouseLeftButtonUp="SearchProposingSendToMe" Background="Transparent">
-                        <TextBlock Text="Tìm kiếm" Foreground="{StaticResource colorTextForTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Medium"/>
+                        <TextBlock Text="{DynamicResource HomeTextSearch}" Foreground="{StaticResource colorTextForTheme}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Medium"/>
                     </DockPanel>
                 </Grid>
             </Border>
@@ -498,7 +498,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock Text="Tất cả" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                    <TextBlock Text="{DynamicResource ProposeMineTextFilterAll}" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
@@ -546,7 +546,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock Text="Đang chờ duyệt" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                    <TextBlock Text="{DynamicResource ProposeMineTextFilterWait}" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
@@ -649,7 +649,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock Text="Đã phê duyệt" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                    <TextBlock Text="{DynamicResource ProposeMineTextFilterApproved}" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>
@@ -697,7 +697,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock Text="Đã từ trối" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
+                    <TextBlock Text="{DynamicResource ProposeMineTextFilterGivingUp}" HorizontalAlignment="Center" FontWeight="Medium" FontSize="16">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorText1}"/>

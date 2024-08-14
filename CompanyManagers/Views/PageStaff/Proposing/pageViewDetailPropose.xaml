@@ -18,7 +18,7 @@
                             <StackPanel x:Name="stp_InforPropose">
                                 <Border CornerRadius="15" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource colorTheme}" Background="{DynamicResource colorTheme}">
                                     <DockPanel>
-                                        <TextBlock Text="Chi tiết đề xuất" Margin="10 0 0 0" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorWriter}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{DynamicResource DetailProposeText}" Margin="10 0 0 0" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorWriter}" VerticalAlignment="Center"/>
                                         <Path Data="{StaticResource iconPrinter}" Margin="0 10 10 10" Height="30" Width="30" Stretch="Fill" Fill="{DynamicResource colorWriter}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     </DockPanel>
                                 </Border>
@@ -30,22 +30,22 @@
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" Margin="10">
                                         <TextBlock x:Name="tb_NamePropose" Margin="0 5 0 5" FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorText1}" TextWrapping="Wrap"/>
-                                        <TextBlock Text="Thông tin đề xuất" Margin="0 5 0 5" FontSize="16" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
+                                        <TextBlock Text="{DynamicResource DetailProposeTextInforPropose}" Margin="0 5 0 5" FontSize="16" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
                                         <StackPanel x:Name="ShowInforPropose">
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Người tạo:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTextUserCreate}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="tb_UserCreate"  Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Nhóm đề xuất:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTextGroundPropose}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="tb_GroundPropose"  Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Thời gian tạo:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTextTimeCreate}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="tb_TimeCreatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Cập nhật:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTextUpdate}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="TimeUpdatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -61,15 +61,15 @@
                                                 </Style>
                                             </StackPanel.Style>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Kiểu đề xuất:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTypePropose}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="TypePropose" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
                                         <!--Thông tin chung-->
-                                        <TextBlock Text="Thông tin chung" Margin="0 5 0 5" FontSize="16" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
+                                            <TextBlock Text="{DynamicResource DetailProposeInforAll}" Margin="0 5 0 5" FontSize="16" FontWeight="Medium" Foreground="{DynamicResource colorText1}"/>
                                         <StackPanel x:Name="ShowInforCommon">
                                             <TextBlock FontSize="16" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Họ và tên:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource CreateNewProposeTextNameUser}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="NameUserCreatePropose" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -97,19 +97,19 @@
                                                                 <ControlTemplate TargetType="ListViewItem">
                                                                     <StackPanel>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="Lịch nghỉ" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource DetailProposeCalendarOnLeave}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding Order}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="10 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="- Ngày bắt đầu nghỉ:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource DetailProposeTextVacationStartDate}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding bd_nghi}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="10 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="- Ngày kết thúc nghỉ:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource DetailProposeTextVacationEndDate}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding kt_nghi}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="10 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="- Ca nghỉ:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource DetailProposeTextShiftDate}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding ca_nghi_string}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                     </StackPanel>
@@ -120,11 +120,11 @@
                                                 </ListView.ItemContainerStyle>
                                             </ListView>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource CreateNewProposeTextReason}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="tb_ReasonCreatePropse" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Người bàn giao CRM:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTextUserHandOverCRM}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="tb_HandOverCRM" Text="{Binding userHandOverCRM, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -152,7 +152,7 @@
                                                                 <ControlTemplate TargetType="ListViewItem">
                                                                     <StackPanel>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                        <Run Text="Chu kỳ hoa hồng:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{DynamicResource DetailProposeTextCycleRose}" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding chu_ky}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
@@ -164,11 +164,11 @@
                                                                         <Run Text="{Binding dt_money_formatted}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                        <Run Text="Mức hoa hồng:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{DynamicResource DetailProposeLeverRose}" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding lever_revernue}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                        <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                                        <Run Text="{DynamicResource CreateNewProposeTextReason}" Foreground="{DynamicResource colorText1}"/>
                                                                         <Run Text="{Binding ly_do}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                     </StackPanel>
@@ -203,25 +203,25 @@
                                                                 <ControlTemplate TargetType="ListViewItem">
                                                                     <StackPanel>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="Lịch làm việc tuần:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource DetailProposeCalendarWeek}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding lich_lam_viec_display}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="Tháng áp dụng:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource DetailProposeMonthApply}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding thang_ap_dung_display}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="Ngày bắt đầu làm việc:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource DetailProposeDayStart}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding ngay_bat_dau_display}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                         <DockPanel Margin="0 5 0 5">
-                                                                            <TextBlock FontSize="16" Text="Chi tiết lịch làm việc:" Foreground="{DynamicResource colorText1}" FontWeight="Regular" TextWrapping="Wrap"/>
+                                                                            <TextBlock FontSize="16" Text="{DynamicResource DetailProposeDetailCalendarWork}" Foreground="{DynamicResource colorText1}" FontWeight="Regular" TextWrapping="Wrap"/>
                                                                             <Border MouseLeftButtonDown="ShowDetailCalendaWork">
                                                                                 <Path Data="{StaticResource iconEyes}" Cursor="Hand" Margin="20 0 0 0" Height="17" Width="25" Stretch="Fill" HorizontalAlignment="Left" Fill="{DynamicResource colorTextForTheme}"/>
                                                                             </Border>
                                                                         </DockPanel>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                                            <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                                            <Run Text="{DynamicResource CreateNewProposeTextReason}" Foreground="{DynamicResource colorText1}"/>
                                                                             <Run Text="{Binding ly_do}" Foreground="{DynamicResource colorTextForTheme}"/>
                                                                         </TextBlock>
                                                                     </StackPanel>
@@ -244,23 +244,23 @@
                                                 </Style>
                                             </StackPanel.Style>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Thời gian xác nhận công:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTimeComfirm}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="TimeComfirmCC" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Ca xác nhận công:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeShiftComfirm}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="ShiftNameCC" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Thời gian vào ca:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTextInputTimeShift}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="TimeInShiftCC" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Thời gian hết ca:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource DetailProposeTextOutTimeShift}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="TimeOutShiftCC" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                             <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
-                                                <Run Text="Lý do:" Foreground="{DynamicResource colorText1}"/>
+                                                <Run Text="{DynamicResource CreateNewProposeTextReason}" Foreground="{DynamicResource colorText1}"/>
                                                 <Run x:Name="ResuelCC" Foreground="{DynamicResource colorTextForTheme}"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -275,7 +275,7 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </TextBlock.Style>
-                                            <Run Text="Lý do từ trối:" Foreground="{DynamicResource colorText1}"/>
+                                            <Run Text="{DynamicResource DetailProposeTextReasonRefuse}" Foreground="{DynamicResource colorText1}"/>
                                             <Run x:Name="tb_RefuseComfirm" Text="Không có" Foreground="{DynamicResource colorRemoveRed}"/>
                                         </TextBlock>
                                     </StackPanel>
@@ -358,42 +358,42 @@
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Được chấp tuận"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextApproved}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Đang chờ duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitingForApproval}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Bị từ trối"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextRefuse}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="6"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Buộc đi làm"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextForcedWork}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Đã được tiếp nhận"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextBeenReceived}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Chờ lãnh đạo còn lại duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitLeaderComfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -401,14 +401,14 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="11"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Chờ công ty duyệt"/>
+                                                                        <Setter Property="Text" Value="DetailProposeTextWaitCompanyComfirm"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding deletePropose, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="2"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Đã bị xóa"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextDeleted}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -416,7 +416,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextOverdueConfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -424,7 +424,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="3"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextOverdueConfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -432,7 +432,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="6"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextOverdueConfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -440,7 +440,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextOverdueConfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -448,7 +448,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextOverdueConfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -456,7 +456,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="11"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="Quá hạn duyệt"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextOverdueConfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorRemoveRed}"/>
                                                                     </MultiDataTrigger>
                                                                 </Style.Triggers>
@@ -493,7 +493,7 @@
                                                     <TextBlock FontSize="16" FontWeight="Medium">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
-                                                                <Setter Property="Text" Value="Tiếp nhận"/>
+                                                                <Setter Property="Text" Value="{DynamicResource DetailProposeTextReceived}"/>
                                                                 <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                             </Style>
                                                         </TextBlock.Style>
@@ -528,7 +528,7 @@
                                                 <TextBlock FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" Margin="5">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
-                                                            <Setter Property="Text" Value="Duyệt chuyển tiếp"/>
+                                                            <Setter Property="Text" Value="{DynamicResource DetailProposeTextComfirmNext}"/>
                                                             <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                         </Style>
                                                     </TextBlock.Style>
@@ -575,7 +575,7 @@
                                                 <TextBlock FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Medium" Margin="5">
                                                     <TextBlock.Style>
                                                         <Style TargetType="TextBlock">
-                                                            <Setter Property="Text" Value="Buộc đi làm"/>
+                                                            <Setter Property="Text" Value="{DynamicResource DetailProposeTextForcedToDo}"/>
                                                             <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                         </Style>
                                                     </TextBlock.Style>
@@ -616,7 +616,7 @@
                                                     <TextBlock FontSize="16" FontWeight="Medium">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
-                                                                <Setter Property="Text" Value="Chấp thuận"/>
+                                                                <Setter Property="Text" Value="{DynamicResource DetailProposeTextAcceptComfirm}"/>
                                                                 <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                             </Style>
                                                         </TextBlock.Style>
@@ -670,7 +670,7 @@
                                                     <TextBlock FontSize="16" FontWeight="Medium">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
-                                                                <Setter Property="Text" Value="Từ trối"/>
+                                                                <Setter Property="Text" Value="{DynamicResource DetailProposeTextRefuseComfirm}"/>
                                                                 <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                             </Style>
                                                         </TextBlock.Style>
@@ -802,7 +802,7 @@
                                                     <TextBlock FontSize="16" FontWeight="Medium">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
-                                                                <Setter Property="Text" Value="Hủy bỏ"/>
+                                                                <Setter Property="Text" Value="{DynamicResource DetailProposeTextAbortComfirm}"/>
                                                                 <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                             </Style>
                                                         </TextBlock.Style>
@@ -847,7 +847,7 @@
                                                     <TextBlock FontSize="16" FontWeight="Medium">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
-                                                                <Setter Property="Text" Value="Chỉnh sửa"/>
+                                                                <Setter Property="Text" Value="{DynamicResource DetailProposeTextEditPropose}"/>
                                                                 <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                             </Style>
                                                         </TextBlock.Style>
@@ -867,7 +867,7 @@
                                                     <TextBlock FontSize="16" FontWeight="Medium">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
-                                                                <Setter Property="Text" Value="Xóa đề xuất"/>
+                                                                <Setter Property="Text" Value="{DynamicResource DetailProposeTextDeletePropose}"/>
                                                                 <Setter Property="Foreground" Value="{DynamicResource colorWriter}"/>
                                                             </Style>
                                                         </TextBlock.Style>
@@ -990,17 +990,17 @@
                                 <Border CornerRadius="15" Height="50" Background="{DynamicResource colorTheme}">
                                     <DockPanel Margin="10 5 10 5">
                                         <Path Height="25" Width="25" Stretch="Fill" Data="{StaticResource iconExclamation}" StrokeThickness="1.5" Stroke="{StaticResource colorWriter}"/>
-                                        <TextBlock Text="Thông tin duyệt" Margin="10 0 0 0" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorWriter}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{DynamicResource DetailProposeTextInforConfirm}" Margin="10 0 0 0" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorWriter}" VerticalAlignment="Center"/>
                                     </DockPanel>
                                 </Border>
                                 <StackPanel Margin="10">
-                                    <TextBlock Text="Kiểu phê duyệt" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{DynamicResource CreateNewProposeTextTypeComfirm}" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
                                     <DockPanel>
                                         <Path Height="20" Width="20" Stretch="Fill" Data="{StaticResource iconDone}" Fill="{StaticResource colorTextForTheme}"/>
                                         <TextBlock x:Name="tb_TypeComfirm"  Margin="10 0 0 0" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorTextForTheme}" VerticalAlignment="Center"/>
                                     </DockPanel>
                                     <Rectangle Margin="0 10 0 10" Fill="{StaticResource ColorGray1}" Height="0.5"/>
-                                    <TextBlock Text="Lãnh đạo duyệt" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{DynamicResource DetailProposeTextLeaderComfirm}" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
                                     <ListView x:Name="lsvLeaderComfirm" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listLeaderComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
                                         <ListView.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -1048,7 +1048,7 @@
                                         </ListView.ItemContainerStyle>
                                     </ListView>
                                     <Rectangle Margin="0 10 0 10" Fill="{StaticResource ColorGray1}" Height="0.5"/>
-                                    <TextBlock Text="Người theo dõi" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{DynamicResource CreateNewProposeTextUserFollow}" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
                                     <ListView x:Name="lsvUserFollow" ScrollViewer.CanContentScroll="false" Background="transparent" ItemsSource="{Binding listUserFollow, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0 10 -4 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
                                         <ListView.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -1089,7 +1089,7 @@
                                         </ListView.ItemContainerStyle>
                                     </ListView>
                                     <Rectangle Margin="0 10 0 10" Fill="{StaticResource ColorGray1}" Height="0.5"/>
-                                    <TextBlock Text="Trạng thái đề duyệt đề xuất" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{DynamicResource DetailProposeTextStatusComfirm}" FontSize="18" FontWeight="Medium" Foreground="{StaticResource colorText1}" VerticalAlignment="Center"/>
                                     <Grid Margin="0 10 0 5">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="50"/>
@@ -1173,7 +1173,7 @@
             <Border x:Name="ShowCalendar" MinWidth="420" MaxWidth="730" MaxHeight="690" BorderBrush="{DynamicResource colorTextForTheme}" BorderThickness="1" Background="WhiteSmoke" CornerRadius="10">
                 <StackPanel>
                     <TextBlock FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10 0 10" Foreground="{DynamicResource colorTextForTheme}" FontWeight="Medium">
-                        <Run Text="Lịch làm việc tháng:"/>
+                        <Run Text="{DynamicResource DetailProposeTextMonthWork}"/>
                         <Run x:Name="tb_MonthCalendarWork"/>
                     </TextBlock>
                     <Border x:Name="HeaderCalendarWork" Background="{DynamicResource colorTheme}" CornerRadius="10 10 0 0">
@@ -1208,7 +1208,7 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="ListViewItem">
-                                                <Border Width="103" Height="100" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center" BorderThickness="1 1 0 0">
+                                                <Border Width="103" Height="100" BorderBrush="{DynamicResource colorTheme}" HorizontalAlignment="Center" BorderThickness="1 1 0 0" >
                                                     <StackPanel>
                                                         <TextBlock Text="{Binding DayInCalendar}" FontSize="14" FontWeight="Medium" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                             <TextBlock.Style>
@@ -1225,7 +1225,7 @@
                                                                 </Style>
                                                             </TextBlock.Style>
                                                         </TextBlock>
-                                                        <ListView x:Name="lsvShiftForDay" ScrollViewer.CanContentScroll="false" VerticalAlignment="Center" Background="transparent" ItemsSource="{Binding list_shift_name_picker}" Margin="0 5 0 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled">
+                                                        <ListView x:Name="lsvShiftForDay" ScrollViewer.CanContentScroll="false" Height="75" VerticalAlignment="Center" Background="transparent" ItemsSource="{Binding list_shift_name_picker}" Margin="0 5 0 0" BorderThickness="0" FontSize="16" ScrollViewer.HorizontalScrollBarVisibility="disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                                             <ListView.ItemsPanel>
                                                                 <ItemsPanelTemplate>
                                                                     <StackPanel></StackPanel>
@@ -1276,13 +1276,13 @@
                 <StackPanel x:Name="stpInput">
                     <Border CornerRadius="10 10 0 0" Background="{DynamicResource colorTheme}" Width="400" Height="50">
                         <DockPanel>
-                            <TextBlock Text="Lý do từ trối" FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource DetailProposeTextReasonRefuse}" FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <Path Data="{StaticResource iconClose}" MouseLeftButtonDown="ClosePopup" Cursor="Hand" Width="15" Height="15" Margin="0 0 10 0" Stretch="Fill" StrokeThickness="2.5" Stroke="{StaticResource colorWriter}" HorizontalAlignment="Right"/>
                         </DockPanel>
                     </Border>
                     <StackPanel Margin="10 10 10 20">
                         <TextBlock FontSize="16" FontWeight="Medium" Margin="0 0 0 5">
-                            <Run Text="Lý do" Foreground="{StaticResource colorText1}"/>
+                            <Run Text="{DynamicResource CreateNewProposeTextReason}" Foreground="{StaticResource colorText1}"/>
                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                         </TextBlock>
                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -1294,7 +1294,7 @@
                             </Border.Style>
                             <Grid>
                                 <TextBox x:Name="tb_InputRefuseComfirm" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
-                                <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="Nhập lý do từ trối đề xuất" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                                <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="{DynamicResource CreateNewProposeTextReason}" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -1310,7 +1310,7 @@
                         </Border>
                     </StackPanel>
                     <Border Background="{DynamicResource colorTheme}" MouseLeftButtonDown="ClickRefuseComfirm" Cursor="Hand" CornerRadius="10" Margin="10 0 10 20">
-                        <TextBlock Text="Xác nhận" Margin="5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{DynamicResource DetailProposeTextComfirm}" Margin="5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </StackPanel>
             </Border>
@@ -1334,7 +1334,7 @@
                 <StackPanel x:Name="stpInputNext">
                     <Border CornerRadius="10 10 0 0" Background="{DynamicResource colorTheme}" Width="400" Height="50">
                         <DockPanel>
-                            <TextBlock Text="Người duyệt chuyển tiếp" FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource DetailProposeTextUserComfirmNext}" FontSize="16" Margin="10 0 0 0" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <Path Data="{StaticResource iconClose}" MouseLeftButtonDown="ClosePopup" Cursor="Hand" Width="15" Height="15" Margin="0 0 10 0" Stretch="Fill" StrokeThickness="2.5" Stroke="{StaticResource colorWriter}" HorizontalAlignment="Right"/>
                         </DockPanel>
                     </Border>
@@ -1346,7 +1346,7 @@
                         <tool:ComboboxSelected x:Name="SelectUserNext" CornerRadiusSelected="5" BorderThickness="1" BorderBrush="{DynamicResource colorTextForTheme}" Cursor="Hand" SelectionChangedSelected="ClickSelectUserNext" Grid.Column="0" Height="40" DisplayMemberPathSelected="userName" PlaceHolderSelected="Chọn người duyệt chuyển tiếp" PlaceHolderForgroundSelected="#ACACAC" FontSize="16"/>
                     </StackPanel>
                     <Border Background="{DynamicResource colorTheme}" MouseLeftButtonDown="ClickComfirmNext" Cursor="Hand" CornerRadius="10" Margin="10 0 10 20">
-                        <TextBlock Text="Xác nhận" Margin="5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Text="{DynamicResource DetailProposeShiftComfirm}" Margin="5" FontSize="16" FontWeight="Medium" Foreground="{StaticResource colorWriter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </StackPanel>
             </Border>

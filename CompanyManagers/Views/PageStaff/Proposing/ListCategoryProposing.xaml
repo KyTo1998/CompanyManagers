@@ -16,7 +16,7 @@
                 <DockPanel Margin="5 0 5 0">
                     <Grid>
                         <TextBox x:Name="tb_SearchProposing" Height="40" MinWidth="200" Margin="5 10 5 -5" TextChanged="SearchProposing" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
-                        <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Tìm theo tên đề xuất ..."  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
+                        <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource CategoryProposeTextSearch}"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom" >
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -135,7 +135,7 @@
                                                     <Border Height="15" Width="15" Margin="0 3 5 0" BorderThickness="1.5" CornerRadius="15" BorderBrush="{DynamicResource colorTheme}">
                                                         <TextBlock Text="+" FontWeight="Medium" FontSize="16" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-7,0,0"/>
                                                     </Border>
-                                                    <TextBlock Text="Tạo đề xuất" FontWeight="Medium" FontSize="16" Foreground="{DynamicResource colorTextForTheme}"/>
+                                                    <TextBlock Text="{DynamicResource HomeProposeTextCreate}" FontWeight="Medium" FontSize="16" Foreground="{DynamicResource colorTextForTheme}"/>
                                                 </DockPanel>
                                             </Border>
                                         </StackPanel>

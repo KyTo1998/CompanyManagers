@@ -58,7 +58,7 @@
                                             </Style>
                                         </Path.Style>
                                     </Path>
-                                    <TextBlock x:Name="txbBackToBack" VerticalAlignment="Center" FontSize="16" FontWeight="Medium" Text="Đề xuất xin nghỉ phép">
+                                    <TextBlock x:Name="txbBackToBack" VerticalAlignment="Center" FontSize="16" FontWeight="Medium">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
@@ -106,7 +106,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Tên đề xuất" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource HomeProposeTextNamePropose}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
                             <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -128,7 +128,7 @@
                                 </Border.Style>
                                 <Grid>
                                     <TextBox x:Name="tb_InputNameProposing" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
-                                    <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="Nhập tên đề xuất" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                                    <TextBlock FontSize="16" Foreground="#ACACAC" Margin="10 0 0 0" Text="{DynamicResource ProposeMineTextHidenSearchName}" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Center" >
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -153,7 +153,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="2" >
                             <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Loại đề xuất" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource HomeProposeTextCategoryPropose}" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
                             <Border MinHeight="40" Cursor="Hand" CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                 <TextBlock x:Name="tb_CategoryProposingCreate" Text="Đơn xin nghỉ phép" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource colorText1}" TextWrapping="NoWrap" Margin="5 0 5 0" IsHitTestVisible="False" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
@@ -262,7 +262,7 @@
                                             </CheckBox.Style>
                                         </CheckBox>
                                         <TextBlock FontSize="16" FontWeight="Regular" VerticalAlignment="Center" Margin="10 0 0 0">
-                                        <Run Text="Đề xuất có kế hoạch" Foreground="{DynamicResource colorText1}"/>
+                                        <Run Text="{DynamicResource CreateNewProposeTextProposalHavePlan}" Foreground="{DynamicResource colorText1}"/>
                                         <Run Text="*" Foreground="{DynamicResource colorRemoveRed}"/>
                                         </TextBlock>
                                     </DockPanel>
@@ -318,7 +318,7 @@
                                             </CheckBox.Style>
                                         </CheckBox>
                                         <TextBlock FontSize="16" FontWeight="Regular" VerticalAlignment="Center" Margin="10 0 0 0">
-                                        <Run Text="Đề xuất đột xuất" Foreground="{DynamicResource colorText1}"/>
+                                        <Run Text="{DynamicResource CreateNewProposeTextProposalSudden}" Foreground="{DynamicResource colorText1}"/>
                                         <Run Text="*" Foreground="{DynamicResource colorRemoveRed}"/>
                                         </TextBlock>
                                     </DockPanel>
@@ -331,7 +331,7 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                        <Run Text="Ngày bắt đầu nghỉ" Foreground="{StaticResource colorText1}"/>
+                                        <Run Text="{DynamicResource CreateNewProposeTextVacationStartDate}" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -356,7 +356,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="10 0 10 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                        <Run Text="Ngày kết thúc nghỉ" Foreground="{StaticResource colorText1}"/>
+                                        <Run Text="{DynamicResource CreateNewProposeTextVacationEndDate}" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -381,7 +381,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Margin="10 0 10 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                        <Run Text="Ca nghỉ" Foreground="{StaticResource colorText1}"/>
+                                        <Run Text="{DynamicResource CreateNewProposeTextShiftDate}" Foreground="{StaticResource colorText1}"/>
                                         <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -421,28 +421,28 @@
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Header="Ca nghỉ" Width="2*">
+                                        <DataGridTemplateColumn Header="{DynamicResource CreateNewProposeTextShiftDate}" Width="2*">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding nameShif}" FontSize="16" FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource colorText1}" TextWrapping="Wrap"></TextBlock>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Width="2*" Header="Ngày bắt đầu nghỉ">
+                                        <DataGridTemplateColumn Width="2*" Header="{DynamicResource CreateNewProposeTextVacationStartDate}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding startDate}" FontSize="16" FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource colorText1}" TextWrapping="Wrap"></TextBlock>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Width="2*" Header="Ngày kết thúc nghỉ">
+                                        <DataGridTemplateColumn Width="2*" Header="{DynamicResource CreateNewProposeTextVacationEndDate}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <TextBlock Text="{Binding endDate}" FontSize="16" FontWeight="Regular" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource colorText1}" TextWrapping="Wrap"></TextBlock>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Width="0.5*" Header="Xóa">
+                                        <DataGridTemplateColumn Width="0.5*" Header="{DynamicResource CreateNewProposeTextDelete}">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
                                                     <Border MouseLeftButtonUp="DeleteShiftOnLeave" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" Background="Transparent">
@@ -474,7 +474,7 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="1" Margin="10,0,0,0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Chu kỳ" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextCycle}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -499,7 +499,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Doanh thu theo thời điểm" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextRevenueByTime}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border Height="40" Cursor="Hand" CornerRadius="5">
@@ -522,7 +522,7 @@
                                             <DockPanel>
                                                 <Grid Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,28,0">
                                                     <TextBox x:Name="tb_InputMonneyRoseRevenue" PreviewTextInput="CheckInputNumber" TextChanged="ConverToViVnMonney" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200" BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorText1}"/>
-                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập doanh thu"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource CreateNewProposeTextRevenueByTime}"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -549,7 +549,7 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" Margin="0 0 5 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Tổng doanh thu" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextSumRevenue}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border Cursor="No" Height="40" CornerRadius="5">
@@ -572,7 +572,7 @@
                                             <DockPanel>
                                                 <Grid>
                                                     <TextBox IsEnabled="False" x:Name="tb_SumRoseRevenue" Text="{Binding ElementName=tb_InputMonneyRoseRevenue,Path=Text, Mode=OneWay}" Margin="10 0 0 0" TextWrapping="Wrap" MinWidth="200"   BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="{StaticResource colorTextForTheme}"/>
-                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Tổng doanh thu"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource CreateNewProposeTextSumRevenue}"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -593,7 +593,7 @@
                                     </StackPanel>
                                     <StackPanel MinHeight="40" Grid.Column="1" Margin="5 0 0 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Mức doanh thu" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextLeverRevenue}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border Height="40" Cursor="Hand" CornerRadius="5">
@@ -638,7 +638,7 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel x:Name="comonAll" Grid.Column="0" Margin="0,0,5,0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Thời gian xác nhận công" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextTimeConfirm}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -663,7 +663,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5 0 0 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Ca làm việc" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextShiftWork}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -694,7 +694,7 @@
                                     </Grid.ColumnDefinitions>
                                     <StackPanel Grid.Column="0" Margin="0 0 5 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Xác nhận giờ vào ca" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextInputTimeShift}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -719,7 +719,7 @@
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Margin="5 0 0 0">
                                         <TextBlock FontSize="16" FontWeight="Medium">
-                                            <Run Text="Xác nhận giờ hết ca" Foreground="{StaticResource colorText1}"/>
+                                            <Run Text="{DynamicResource CreateNewProposeTextOutputTimeShift}" Foreground="{StaticResource colorText1}"/>
                                             <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                                         </TextBlock>
                                         <Border MinHeight="40" CornerRadius="5" Cursor="Hand">
@@ -749,7 +749,7 @@
                     <Grid Grid.Row="4" Margin="10">
                         <StackPanel>
                             <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Lý do" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextReason}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
                             <Border CornerRadius="5" Cursor="Hand">
@@ -771,7 +771,7 @@
                                 </Border.Style>
                                 <Grid>
                                     <TextBox x:Name="tb_InputReasonCreateProposing" MinHeight="100" MinWidth="200" Margin="10 10 5 -5"  BorderThickness="0" FontSize="16" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap" Foreground="{StaticResource colorText1}"/>
-                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Nhập lý do tạo đê xuất"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                                    <TextBlock FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource CreateNewProposeTextReason}"  Margin="10 10 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Top" >
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -794,7 +794,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="0 0 5 0">
                             <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Người xét duyệt" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextUserComfirm}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
                             <Border MinHeight="40" CornerRadius="5">
@@ -870,14 +870,14 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                         </ListView>
-                                        <tool:SearchBar x:Name="SelectUserComfirm" DisplayMemberPath="userName" Margin="0 5 0 0" Cursor="Hand" BorderThickness="0" CornerRadius="5"  SelectionChanged="SelectionChangeUserComfirm" PlaceHolder="Chọn người duyệt" PlaceHolderForground="#ACACAC" FontSize="16"/>
+                                        <tool:SearchBar x:Name="SelectUserComfirm" DisplayMemberPath="userName" Margin="0 5 0 0" Cursor="Hand" BorderThickness="0" CornerRadius="5"  SelectionChanged="SelectionChangeUserComfirm" PlaceHolder="{DynamicResource CreateNewProposeTextUserComfirm}" PlaceHolderForground="#ACACAC" FontSize="16"/>
                                     </StackPanel>
                                 </Grid>
                             </Border>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="5 0 0 0">
                             <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Người theo dõi" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextUserFollow}" Foreground="{StaticResource colorText1}"/>
                                 <Run Text="*" Foreground="{StaticResource ColorRed}"/>
                             </TextBlock>
                             <Border MinHeight="40" CornerRadius="5">
@@ -897,7 +897,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
-                                <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="0" CornerRadius="5" BorderBrush="{DynamicResource colorTheme}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="Chọn người theo dõi" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
+                                <tool:SearchBar x:Name="SelectUserFollow" DisplayMemberPath="userName" Cursor="Hand" BorderThickness="0" CornerRadius="5" BorderBrush="{DynamicResource colorTheme}" Height="40" SelectionChanged="SelectionChangeUserFollow" PlaceHolder="{DynamicResource CreateNewProposeTextUserFollow}" PlaceHolderForground="#ACACAC" FontSize="16"></tool:SearchBar>
                             </Border>
                         </StackPanel>
                     </Grid>
@@ -918,7 +918,7 @@
                                 </Style>
                             </StackPanel.Style>
                             <TextBlock FontSize="16" FontWeight="Medium">
-                                <Run Text="Tài liệu đính kèm" Foreground="{StaticResource colorText1}"/>
+                                <Run Text="{DynamicResource CreateNewProposeTextDocumentGim}" Foreground="{StaticResource colorText1}"/>
                             </TextBlock>
                             <Border BorderThickness="1" Cursor="Hand" Background="Transparent" BorderBrush="{DynamicResource colorTheme}" MinHeight="40" CornerRadius="5">
                                 <Grid>
@@ -927,7 +927,7 @@
                                         <ColumnDefinition Width="50"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
-                                        <TextBlock x:Name="TextHidenFileGim" FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="Thêm tài liệu đính kèm"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                        <TextBlock x:Name="TextHidenFileGim" FontSize="15" Foreground="#ACACAC" TextWrapping="Wrap" Text="{DynamicResource CreateNewProposeTextDocumentGim}"  Margin="5 0 5 10" IsHitTestVisible="False" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                         <ListView x:Name="lsvFileGim" HorizontalAlignment="Left" Background="Transparent" Visibility="Collapsed" Margin="5 5 -10 5" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                             <ListView.ItemsPanel>
                                                 <ItemsPanelTemplate>
@@ -994,7 +994,7 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <TextBlock Text="Hủy bỏ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
+                                    <TextBlock Text="{DynamicResource LogoutTextButtonCancel}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
@@ -1018,7 +1018,7 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <TextBlock Text="Tạo đề xuất" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
+                                    <TextBlock Text="{DynamicResource HomeProposeTextCreate}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>

@@ -1,0 +1,124 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--Text Form Login-->
+    <system:String x:Key="LoginTextTitelCompany">Company Managers</system:String>
+    <system:String x:Key="LoginTextCompany">CÔNG TY</system:String>
+    <system:String x:Key="LoginTextEmployee">NHÂN VIÊN</system:String>
+    <system:String x:Key="LoginTextRememberAccount">Ghi nhớ tài khoản</system:String>
+    <system:String x:Key="LoginTextForgotPassword">Quên mật khẩu ?</system:String>
+    <system:String x:Key="LoginTextButtonLogin">Đăng nhập</system:String>
+    <system:String x:Key="LoginTextButtonRegister">Đăng ký</system:String>
+    <system:String x:Key="LoginTextQuestionAccount">Bạn chưa có tài khoản? </system:String>
+    <system:String x:Key="LoginTextHidenUserAccount">Nhập Email hoặc số điện thoại</system:String>
+    <system:String x:Key="LoginTextHidenUserPassword">Nhập mật khẩu</system:String>
+    <!--Text Form Logout-->
+    <system:String x:Key="LogoutTextButtonLogout">Đăng xuất</system:String>
+    <system:String x:Key="LogoutTextButtonCancel">Hủy</system:String>
+    <system:String x:Key="LogoutTextQuestionLogout">Bạn chắc chắn muốn đăng xuất?</system:String>
+    <!--Text Form ProfileUser-->
+    <system:String x:Key="ProfileUserText">Thông tin tài khoản</system:String>
+    <system:String x:Key="ProfileUserTextNumberPhone">SĐT</system:String>
+    <system:String x:Key="ProfileUserTextChangePassword">Đổi mật khẩu</system:String>
+    <!--Text Form Home-->
+    <system:String x:Key="HomeTextBackToBack">Quay lại</system:String>
+    <system:String x:Key="HomeTextSearch">Tìm Kiếm</system:String>
+    <!--Text Form HomePropose-->
+    <system:String x:Key="HomeProposeTextCreate">Tạo đề xuất</system:String>
+    <system:String x:Key="HomeProposeTextIsMe">Đề xuất của tôi</system:String>
+    <system:String x:Key="HomeProposeTextSumPropose">Đề xuất của tôi</system:String>
+    <system:String x:Key="HomeProposeTextWait">Đang chờ duyệt</system:String>
+    <system:String x:Key="HomeProposeTextNecessary">Cần duyệt</system:String>
+    <system:String x:Key="HomeProposeTextApproved">Đã duyệt</system:String>
+    <system:String x:Key="HomeProposeTextProposeRecently">Đề xuất gần đây</system:String>
+    <system:String x:Key="HomeProposeTextCreator">Người tạo</system:String>
+    <system:String x:Key="HomeProposeTextNamePropose">Tên đề xuất</system:String>
+    <system:String x:Key="HomeProposeTextCategoryPropose">Loại đề xuất</system:String>
+    <system:String x:Key="HomeProposeTextStatus">Trạng thái</system:String>
+    <system:String x:Key="HomeProposeTextTimeCreate">Thời gian tạo</system:String>
+    <!--Text Form CategoryPropose-->
+    <system:String x:Key="CategoryProposeTextSearch">Tìm theo tên đề xuất ...</system:String>
+    <!--Text Form ProposeMine-->
+    <system:String x:Key="ProposeMineTextISender">Tôi gửi đi</system:String>
+    <system:String x:Key="ProposeMineTextSendToMe">Gửi đến tôi</system:String>
+    <system:String x:Key="ProposeMineTextFollower">Đang theo dõi</system:String>
+    <system:String x:Key="ProposeMineTextFilterAll">Tất cả</system:String>
+    <system:String x:Key="ProposeMineTextFilterWait">Đang chờ duyệt</system:String>
+    <system:String x:Key="ProposeMineTextFilterApproved">Đã phê duyệt</system:String>
+    <system:String x:Key="ProposeMineTextFilterGivingUp">Đã từ chối</system:String>
+    <system:String x:Key="ProposeMineTextHidenSelectRecipient">Đã từ chối</system:String>
+    <system:String x:Key="ProposeMineTextHidenSender">Người gửi đề xuất</system:String>
+    <system:String x:Key="ProposeMineTextHidenSearchName">Tìm tên đề xuất</system:String>
+    <!--Text Form CreateNewPropose-->
+    <system:String x:Key="CreateNewProposeTextNameUser">Họ và tên</system:String>
+    <system:String x:Key="CreateNewProposeTextTypeComfirm">Kiểu kiểm duyệt</system:String>
+    <system:String x:Key="CreateNewProposeTextReason">Lý do</system:String>
+    <system:String x:Key="CreateNewProposeTextUserComfirm">Người xét duyệt</system:String>
+    <system:String x:Key="CreateNewProposeTextUserFollow">Người theo dõi</system:String>
+    <system:String x:Key="CreateNewProposeTextDocumentGim">Tài liệu đính kèm</system:String>
+    <system:String x:Key="CreateNewProposeTextProposalHavePlan">Đề xuất có kế hoạc</system:String>
+    <system:String x:Key="CreateNewProposeTextProposalSudden">Đề xuất có kế hoạc</system:String>
+    <system:String x:Key="CreateNewProposeTextVacationStartDate">Ngày bắt đầu</system:String>
+    <system:String x:Key="CreateNewProposeTextVacationEndDate">Ngày kết thúc</system:String>
+    <system:String x:Key="CreateNewProposeTextShiftDate">Ca nghỉ</system:String>
+    <system:String x:Key="CreateNewProposeTextDelete">Xóa</system:String>
+    <system:String x:Key="CreateNewProposeTextCycle">Chu kỳ</system:String>
+    <system:String x:Key="CreateNewProposeTextRevenueByTime">Doanh thu theo thời điểm</system:String>
+    <system:String x:Key="CreateNewProposeTextSumRevenue">Tổng doanh thu</system:String>
+    <system:String x:Key="CreateNewProposeTextLeverRevenue">Mức doanh thu</system:String>
+    <system:String x:Key="CreateNewProposeTextTimeConfirm">Thời gian xác nhận công</system:String>
+    <system:String x:Key="CreateNewProposeTextShiftWork">Ca làm việc</system:String>
+    <system:String x:Key="CreateNewProposeTextInputTimeShift">Xác nhận giờ vào ca</system:String>
+    <system:String x:Key="CreateNewProposeTextOutputTimeShift">Xác nhận giờ ra ca</system:String>
+    <system:String x:Key="CreateNewProposeTextSelectCalendar">Chọn lịch làm việc</system:String>
+    <!--Text Form DetailPropose-->
+    <system:String x:Key="DetailProposeText">Chi tiết đề xuất</system:String>
+    <system:String x:Key="DetailProposeTextInforConfirm">Thông tin duyệt</system:String>
+    <system:String x:Key="DetailProposeTextInforPropose">Thông tin đề xuất</system:String>
+    <system:String x:Key="DetailProposeTextUserCreate">Người tạo:</system:String>
+    <system:String x:Key="DetailProposeTextGroundPropose">Nhóm đề xuất:</system:String>
+    <system:String x:Key="DetailProposeTextTimeCreate">Thời gian tạo:</system:String>
+    <system:String x:Key="DetailProposeTextUpdate">Cập nhật:</system:String>
+    <system:String x:Key="DetailProposeTypePropose">Kiểu đề xuất:</system:String>
+    <system:String x:Key="DetailProposeInforAll">Thông tin chung</system:String>
+    <system:String x:Key="DetailProposeCalendarOnLeave">Lịch nghỉ</system:String>
+    <system:String x:Key="DetailProposeTextVacationStartDate">- Ngày bắt đầu:</system:String>
+    <system:String x:Key="DetailProposeTextVacationEndDate">- Ngày kết thúc:</system:String>
+    <system:String x:Key="DetailProposeTextShiftDate">- Ca nghỉ:</system:String>
+    <system:String x:Key="DetailProposeTextUserHandOverCRM">Người bàn giao CRM:</system:String>
+    <system:String x:Key="DetailProposeTextCycleRose">Chu kỳ hoa hồng:</system:String>
+    <system:String x:Key="DetailProposeTextTimeRose">Thời gian hoa hồng:</system:String>
+    <system:String x:Key="DetailProposeTextRevenue">Doanh thu:</system:String>
+    <system:String x:Key="DetailProposeLeverRose">Mức hoa hồng:</system:String>
+    <system:String x:Key="DetailProposeCalendarWeek">Lịch làm việc tuần:</system:String>
+    <system:String x:Key="DetailProposeMonthApply">Tháng áp dụng:</system:String>
+    <system:String x:Key="DetailProposeDayStart">Ngày bắt đầu:</system:String>
+    <system:String x:Key="DetailProposeDetailCalendarWork">Chi tiết lịch làm việc:</system:String>
+    <system:String x:Key="DetailProposeTimeComfirm">Thời gian xác nhận công:</system:String>
+    <system:String x:Key="DetailProposeShiftComfirm">Ca xác nhận công:</system:String>
+    <system:String x:Key="DetailProposeTextInputTimeShift">Thời gian vào ca</system:String>
+    <system:String x:Key="DetailProposeTextOutTimeShift">Thời gian hết ca</system:String>
+    <system:String x:Key="DetailProposeTextReasonRefuse">Lý do từ trối</system:String>
+    <system:String x:Key="DetailProposeTextApproved">Được chấp thuận</system:String>
+    <system:String x:Key="DetailProposeTextWaitingForApproval">Đang chờ duyệt</system:String>
+    <system:String x:Key="DetailProposeTextRefuse">Bị từ trối</system:String>
+    <system:String x:Key="DetailProposeTextForcedWork">Buộc đi làm</system:String>
+    <system:String x:Key="DetailProposeTextBeenReceived">Đã được tiếp nhận</system:String>
+    <system:String x:Key="DetailProposeTextWaitLeaderComfirm">Chờ lãnh đạo còn lại duyệt</system:String>
+    <system:String x:Key="DetailProposeTextWaitCompanyComfirm">Chờ công ty duyệt</system:String>
+    <system:String x:Key="DetailProposeTextDeleted">Đã bị xóa</system:String>
+    <system:String x:Key="DetailProposeTextOverdueConfirm">Quá hạn duyệt</system:String>
+    <system:String x:Key="DetailProposeTextReceived">Tiếp nhận</system:String>
+    <system:String x:Key="DetailProposeTextComfirmNext">Duyệt chuyển tiếp</system:String>
+    <system:String x:Key="DetailProposeTextForcedToDo">Buộc đi làm</system:String>
+    <system:String x:Key="DetailProposeTextAcceptComfirm">Chấp thuận</system:String>
+    <system:String x:Key="DetailProposeTextRefuseComfirm">Từ chối</system:String>
+    <system:String x:Key="DetailProposeTextAbortComfirm">Hủy bỏ</system:String>
+    <system:String x:Key="DetailProposeTextEditPropose">Chỉnh sửa</system:String>
+    <system:String x:Key="DetailProposeTextDeletePropose">Xóa đề xuất</system:String>
+    <system:String x:Key="DetailProposeTextLeaderComfirm">Xóa đề xuất</system:String>
+    <system:String x:Key="DetailProposeTextStatusComfirm">Trạng thái đề duyệt đề xuất</system:String>
+    <system:String x:Key="DetailProposeTextMonthWork">Lịch làm việc tháng:</system:String>
+    <system:String x:Key="DetailProposeTextComfirm">Xác nhận</system:String>
+    <system:String x:Key="DetailProposeTextUserComfirmNext">Người duyệt chuyển tiếp</system:String>
+</ResourceDictionary>

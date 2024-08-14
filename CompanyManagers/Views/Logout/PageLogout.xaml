@@ -9,8 +9,8 @@
         <Border  Effect="{StaticResource z-depth1}" x:Name="borderPopupLogout" CornerRadius="10"  Background="{DynamicResource colorWriter}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Border>
         <StackPanel Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <Path Data="{StaticResource LogoLogout}" Fill="{DynamicResource colorBlue}" Width="50" Stretch="Fill" Height="50" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            <TextBlock x:Name="tb_HeaderLogout" Foreground="{DynamicResource colorBlue}" Margin="0 15 0 15" FontSize="20" FontWeight="Bold" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Text="Đăng xuất"></TextBlock>
-            <TextBlock x:Name="tb_TextExplain" Foreground="{DynamicResource colorBlue}" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Bạn chắc chắn muốn đăng xuất?"></TextBlock>
+            <TextBlock x:Name="tb_HeaderLogout" Foreground="{DynamicResource colorBlue}" Margin="0 15 0 15" FontSize="20" FontWeight="Bold" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Text="{DynamicResource LogoutTextButtonLogout}"></TextBlock>
+            <TextBlock x:Name="tb_TextExplain" Foreground="{DynamicResource colorBlue}" HorizontalAlignment="Center" VerticalAlignment="Top" Text="{DynamicResource LogoutTextQuestionLogout}"></TextBlock>
             <Grid HorizontalAlignment="Center" Width="295" Margin="0 15 0 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -27,7 +27,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock Text="Hủy" TextAlignment="Center" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="{DynamicResource LogoutTextButtonCancel}" TextAlignment="Center" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorBlue}"/>
@@ -53,7 +53,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock x:Name="tb_ButtonLogout" Text="Đăng xuất" TextAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock x:Name="tb_ButtonLogout" Text="{DynamicResource LogoutTextButtonLogout}" TextAlignment="Center" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>

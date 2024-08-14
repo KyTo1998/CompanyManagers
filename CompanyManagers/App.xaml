@@ -9,6 +9,7 @@
             <math:MathConvert x:Key="MathConvert"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Colors/ResourceColor.xaml"/>
+                <ResourceDictionary Source="Resources/Languege/VietNamese.xaml"/>
                 <ResourceDictionary Source="Resources/Colors/ResourceThemeBlue.xaml"/>
                 <ResourceDictionary Source="Resources/ResourceIcon.xaml"/>
                 <ResourceDictionary Source="Resources/Style.xaml"/>
