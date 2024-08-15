@@ -20,6 +20,8 @@ using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using CompanyManagers.Models.ModelRose;
+using static CompanyManagers.Common.Tool.DatePicker;
+using System.Drawing;
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -90,11 +92,62 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             InitializeComponent();
             managerHome = _managerHome;
-            dataCategoryProposing = _dataCategoryProposing;
-            txbBackToBack.Text = _dataCategoryProposing.name_cate_dx_display;
-            typeCategoryProposing = _dataCategoryProposing.cate_dx;
+            if (_dataCategoryProposing != null)
+            {
+                dataCategoryProposing = _dataCategoryProposing;
+                txbBackToBack.Text = _dataCategoryProposing.name_cate_dx_display;
+                typeCategoryProposing = _dataCategoryProposing.cate_dx;
+                tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx_display;
+            }
+            if (_detailPropose != null)
+            {
+                typeCategoryProposing = _detailPropose.nhom_de_xuat;
+                txbBackToBack.Text = _detailPropose.ten_de_xuat;
+                SelectTypeComfirm.SelectedItemSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet));
+                SelectTypeComfirm.TextSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet)).name_Custom;
+                if (_detailPropose.thong_tin_chung.nghi_phep.loai_np == 1)
+                {
+                    typePlan = _detailPropose.thong_tin_chung.nghi_phep.loai_np;
+                    cbSelectYesPlan.IsChecked = true;
+                }
+                if (listShiftSelect == null) listShiftSelect = new List<JsonOnLeave>();
+                lsvListShifForDay.Visibility = Visibility.Visible;
+                foreach (var item in _detailPropose.thong_tin_chung.nghi_phep.nd)
+                {
+                    JsonOnLeave addData = new JsonOnLeave();
+                    addData.nameShif = item.ca_nghi_string;
+                    addData.startDate = item.bd_nghi;
+                    addData.endDate = item.kt_nghi ;
+                    listShiftSelect.Add(addData);
+                }
+                tb_InputReasonCreateProposing.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
+                if (dataListUserComfrim == null) { dataListUserComfrim = new List<LanhDaoDuyet>(); }
+                lsvUserComfirmSelected.Visibility = Visibility.Visible;
+                dataListUserComfrim = _detailPropose.lanh_dao_duyet.ToList();
+                foreach (var item in _managerHome.dataListUserFollow)
+                {
+                    if (item.idQLC == _detailPropose.nguoi_theo_doi[0].idQLC)
+                    {
+                        SelectUserFollow.SelectedItem = item;
+                        SelectUserFollow.Text = item.userName;
+                    }
+                }
+                lsvFileGim.Visibility = Visibility.Visible;
+                TextHidenFileGim.Visibility = Visibility.Collapsed;
+                InfoFile SetFile = new InfoFile();
+                foreach (var item in _detailPropose.file_kem)
+                {
+                    SetFile.FullName = item.file_name;
+                    SetFile.TypeFile = item.type_file;
+                    SetFile.Source = null; 
+                    SetFile.ImageSource = item.file;
+                    if (!lsvFileGim.Items.Contains(SetFile))
+                    {
+                        lsvFileGim.Items.Add(SetFile);
+                    }
+                }
+            }
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
-            tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx_display;
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
             SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();

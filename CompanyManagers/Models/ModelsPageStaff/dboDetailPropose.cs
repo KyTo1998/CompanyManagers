@@ -351,7 +351,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
                 }
             }
         }
-        public int? loai_np { get; set; }
+        public int loai_np { get; set; }
         public string ly_do { get; set; }
     }
 
