@@ -63,24 +63,58 @@
                 </Grid>
             </Grid>
             <Separator x:Name="LineInEditUserName" Visibility="Hidden" Background="{DynamicResource colorTheme}" Height="2" Width="373" VerticalAlignment="Top"/>
-            <StackPanel Orientation="Vertical">
+            <StackPanel Margin="20 0 20 0" Orientation="Vertical">
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
-                <StackPanel Orientation="Horizontal" Height="60">
-                    <Path Data="{StaticResource iconPhone}"  Width="22" StrokeThickness="0.7" Margin="28,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorGray1}" Stroke="{DynamicResource ColorGray1}" />
-                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Text="{DynamicResource ProfileUserTextNumberPhone}"/>
-                    <TextBlock x:Name="NumberPhoneUser" Text="{Binding UserCurrent.Email}" Margin="0" TextAlignment="Right" FontWeight="Medium" FontSize="18" Foreground="{DynamicResource colorTextForTheme}" Padding="0,19,24,0" Width="413"/>
-                </StackPanel>
+                <Grid Height="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="{StaticResource iconPhone}" Width="22" Height="22" StrokeThickness="0.7"  Stretch="Fill" Fill="{DynamicResource ColorGray1}" Stroke="{DynamicResource ColorGray1}" />
+                    <TextBlock Grid.Column="1" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}"  Text="{DynamicResource ProfileUserTextNumberPhone}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" x:Name="NumberPhoneUser" Text="{Binding UserCurrent.Email}" FontWeight="Medium" FontSize="18" Foreground="{DynamicResource colorTextForTheme}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                </Grid>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
-                <StackPanel Cursor="Hand" Orientation="Horizontal" Height="60" Background="#00000000">
-                    <Path Data="{StaticResource password}"  Width="22" StrokeThickness="2" Margin="28,0,0,0" Stretch="Uniform" Fill="{DynamicResource ColorGray1}" />
-                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="{DynamicResource ProfileUserTextChangePassword}"/>
-                </StackPanel>
+                <Grid Height="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="{StaticResource password}" Width="22" Height="22" StrokeThickness="0.7"  Stretch="Fill" Fill="{DynamicResource ColorGray1}" Stroke="{DynamicResource ColorGray1}" />
+                    <TextBlock Grid.Column="1" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}"  Text="{DynamicResource ProfileUserTextChangePassword}" VerticalAlignment="Center"/>
+                </Grid>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
-                <StackPanel x:Name="LogOut" MouseLeftButtonUp="ShowPopupLogout" Cursor="Hand" Orientation="Horizontal" Height="60" Background="#00000000">
-                    <Path Data="{StaticResource iconLogout}"  Width="22" StrokeThickness="2" Margin="28,0,0,0" Stretch="Uniform" Stroke="{DynamicResource ColorGray1}" />
-                    <TextBlock Margin="0" TextAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Padding="14,19,0,0" Width="466" Text="{DynamicResource LogoutTextButtonLogout}"/>
-                </StackPanel>
+                <Grid Height="60" x:Name="LogOut" MouseLeftButtonUp="ShowPopupLogout" Cursor="Hand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="{StaticResource iconLogout}" Width="22" Height="22" StrokeThickness="2"  Stretch="Fill" Stroke="{DynamicResource ColorGray1}"  />
+                    <TextBlock Grid.Column="1" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Text="{DynamicResource LogoutTextButtonLogout}" VerticalAlignment="Center"/>
+                </Grid>
                 <Separator Background="{DynamicResource colorTheme}" Height="2" Width="465"></Separator>
+                <Grid Height="60" x:Name="Language" MouseLeftButtonDown="ChangeLanguage" Cursor="Hand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" Data="{StaticResource iconLaguage}" Width="25" Height="25" Stretch="Fill" Fill="{DynamicResource ColorGray1}"  />
+                    <TextBlock Grid.Column="1" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" Text="{DynamicResource ProfileUserTextLaguage}" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2"  FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource colorText1}" VerticalAlignment="Center" TextAlignment="Right" HorizontalAlignment="Stretch">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Text" Value="VietNamese"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding selecteLaguage,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="US">
+                                        <Setter Property="Text" Value="English"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,15,0,20" HorizontalAlignment="Center">
                 <Border Cursor="Hand" x:Name="ThemeGradienBlue" Width="50" Height="50" CornerRadius="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,0,0,0" MouseLeftButtonDown="ChangeThemeClick">

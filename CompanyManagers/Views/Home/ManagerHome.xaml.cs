@@ -256,9 +256,7 @@ namespace CompanyManagers.Views.Home
                     break;
             }
             StartDynamicText();
-            AddFunctionSytem();
-            ListFunction lstFunction = new ListFunction(this);
-            PageFunction.Content = lstFunction;
+            ChangeSettingLanguageApp();
             GetListStaffAll();
             GetListShiftAll();
             if (Properties.Settings.Default.Type365 == "2")
@@ -272,6 +270,41 @@ namespace CompanyManagers.Views.Home
             }
             SettingApp();
             GetListLevelRevernue();
+            TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+            TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+            if (Properties.Settings.Default.Language == null)
+            {
+                if (localTimeZone.Id == vietnamTimeZone.Id)
+                {
+                    SettingLanguageApp("VN");
+                    Properties.Settings.Default.Language = "VN";
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    SettingLanguageApp("US");
+                    Properties.Settings.Default.Language = "US";
+                    Properties.Settings.Default.Save();
+                }
+            }
+            else
+            {
+                SettingLanguageApp(Properties.Settings.Default.Language);
+            }
+        }
+
+        public void ChangeSettingLanguageApp()
+        {
+            if (Properties.Settings.Default.Language == "VN")
+            {
+                AddFunctionSytemVietNamese();
+            }
+            else
+            {
+                AddFunctionSytemEnglish();
+            }
+            ListFunction lstFunction = new ListFunction(this);
+            PageFunction.Content = lstFunction;
         }
 
         public void GetShaftAll(string _comID, string _idQLC)
@@ -363,6 +396,35 @@ namespace CompanyManagers.Views.Home
             }
             catch (Exception)
             {}
+        }
+
+        public void SettingLanguageApp(string Mode)
+        {
+            try
+            {
+                if (Mode.Equals("VN"))
+                {
+                    ResourceDictionary english = new ResourceDictionary();
+                    english.Source = new Uri("..\\Resources\\Languege\\English.xaml", UriKind.Relative);
+                    ResourceDictionary vietNamese = new ResourceDictionary();
+                    vietNamese.Source = new Uri("..\\Resources\\Languege\\VietNamese.xaml", UriKind.Relative);
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Remove(english);
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(vietNamese);
+                }
+                else if (Mode.Equals("US"))
+                {
+                    ResourceDictionary english = new ResourceDictionary();
+                    english.Source = new Uri("..\\Resources\\Languege\\English.xaml", UriKind.Relative);
+                    ResourceDictionary vietNamese = new ResourceDictionary();
+                    vietNamese.Source = new Uri("..\\Resources\\Languege\\VietNamese.xaml", UriKind.Relative);
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Remove(vietNamese);
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(english);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private Thread textUpdateThread;
@@ -952,7 +1014,7 @@ namespace CompanyManagers.Views.Home
                 PagePopup.NavigationService.Navigate(new PopupNoticationAll(this, "", "Lỗi hệ thống, thử lại sau ít phút", ""));
             }
         }
-        public void AddFunctionSytem()
+        public void AddFunctionSytemVietNamese()
         {
             try
             {
@@ -1059,8 +1121,124 @@ namespace CompanyManagers.Views.Home
                         }
                     }); 
                 }
+                dataFunctionHome = dataFunctionHome.ToList();
             }
             catch (Exception) { }
+        }
+
+        public void AddFunctionSytemEnglish()
+        {
+            try
+            {
+                dataFunctionHome = new List<DataFunction>();
+                if (Properties.Settings.Default.Type365 == "1")
+                {
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 1,
+                        nameFunction = "Company Management",
+                        colorFunction1 = "#FFA13B",
+                        colorFunction2 = "#E8811A",
+                        dataChildFunction = new List<DataChildFunction>
+                        {
+                            new DataChildFunction { idChildFunction = 1, nameChildFunction = "Organizational Structure Setup" },
+                            new DataChildFunction { idChildFunction = 2, nameChildFunction = "Position Setup"},
+                            new DataChildFunction { idChildFunction = 3, nameChildFunction = "Employee Management"},
+                            new DataChildFunction { idChildFunction = 2, nameChildFunction = "Organizational Structure Setup"}
+                        }
+                    });
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 2,
+                        nameFunction = "Timekeeping",
+                        colorFunction1 = "#97C25F",
+                        colorFunction2 = "#7DA047",
+                        dataChildFunction = new List<DataChildFunction>
+                        {
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Timekeeping Configuration"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Shift Management"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Work Schedule Management"},
+                            new DataChildFunction() { idChildFunction = 4, nameChildFunction = "Export Timekeeping"},
+                            new DataChildFunction() { idChildFunction = 5, nameChildFunction = "Attendance History"}
+                        }
+                    });
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 3,
+                        nameFunction = "Salary Configuration",
+                        colorFunction1 = "#8069FF",
+                        colorFunction2 = "#5E53C9",
+                        dataChildFunction = new List<DataChildFunction>
+                        {
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Basic Salary Setup"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Late Arrival and Early Departure Settings"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Leave Settings"},
+                            new DataChildFunction() { idChildFunction = 4, nameChildFunction = "Insurance Settings"},
+                            new DataChildFunction() { idChildFunction = 5, nameChildFunction = "Allowance Settings"},
+                            new DataChildFunction() { idChildFunction = 6, nameChildFunction = "Tax Settings"},
+                            new DataChildFunction() { idChildFunction = 7, nameChildFunction = "Add Timekeep"},
+                            new DataChildFunction() { idChildFunction = 8, nameChildFunction = "Rewards and Penalties"},
+                            new DataChildFunction() { idChildFunction = 9, nameChildFunction = "Commission"}
+                        }
+                    });
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 4,
+                        nameFunction = "Proposal Settings",
+                        colorFunction1 = "#FF5B4D",
+                        colorFunction2 = "#C1403A",
+                        dataChildFunction = new List<DataChildFunction>
+                        {
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Proposal Settings"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Proposal List"}
+                        }
+                    });
+                }
+                else
+                {
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 1,
+                        nameFunction = "Create Proposal",
+                        colorFunction1 = "#FFA13B",
+                        colorFunction2 = "#E8811A",
+                        dataChildFunction = new List<DataChildFunction>
+                        {
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Proposal Type"}
+                        }
+                    });
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 2,
+                        nameFunction = "History",
+                        colorFunction1 = "#97C25F",
+                        colorFunction2 = "#7DA047",
+                        dataChildFunction = new List<DataChildFunction>
+                        {
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Timekeeping"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Current Salary"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Individual Timekeeping Report"}
+                        }
+                    });
+                    dataFunctionHome.Add(new DataFunction()
+                    {
+                        idFunction = 3,
+                        nameFunction = "Calculate Salary",
+                        colorFunction1 = "#FF5B4D",
+                        colorFunction2 = "#C1403A",
+                        dataChildFunction = new List<DataChildFunction>
+                        {
+                            new DataChildFunction() { idChildFunction = 1, nameChildFunction = "Timekeeping Sheet"},
+                            new DataChildFunction() { idChildFunction = 2, nameChildFunction = "Payroll"},
+                            new DataChildFunction() { idChildFunction = 3, nameChildFunction = "Work Schedule"}
+                        }
+                    });
+                }
+                dataFunctionHome = dataFunctionHome.ToList();
+            }
+            catch (Exception)
+            {
+            }
         }
         private void Minimimize_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

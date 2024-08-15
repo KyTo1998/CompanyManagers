@@ -77,7 +77,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                                     {
                                         if (itemProposingHome.type_dx == itemCategoyProposing.cate_dx)
                                         {
-                                            itemProposingHome.type_dx_string = itemCategoyProposing.name_cate_dx;
+                                            itemProposingHome.type_dx_string = itemCategoyProposing.name_cate_dx_display;
                                         }
                                     }
                                 }

@@ -20,13 +20,14 @@
     <system:String x:Key="ProfileUserText">Thông tin tài khoản</system:String>
     <system:String x:Key="ProfileUserTextNumberPhone">SĐT</system:String>
     <system:String x:Key="ProfileUserTextChangePassword">Đổi mật khẩu</system:String>
+    <system:String x:Key="ProfileUserTextLaguage">Ngôn ngữ</system:String>
     <!--Text Form Home-->
     <system:String x:Key="HomeTextBackToBack">Quay lại</system:String>
     <system:String x:Key="HomeTextSearch">Tìm Kiếm</system:String>
     <!--Text Form HomePropose-->
     <system:String x:Key="HomeProposeTextCreate">Tạo đề xuất</system:String>
     <system:String x:Key="HomeProposeTextIsMe">Đề xuất của tôi</system:String>
-    <system:String x:Key="HomeProposeTextSumPropose">Đề xuất của tôi</system:String>
+    <system:String x:Key="HomeProposeTextSumPropose">Tổng số đề xuất</system:String>
     <system:String x:Key="HomeProposeTextWait">Đang chờ duyệt</system:String>
     <system:String x:Key="HomeProposeTextNecessary">Cần duyệt</system:String>
     <system:String x:Key="HomeProposeTextApproved">Đã duyệt</system:String>
@@ -46,7 +47,7 @@
     <system:String x:Key="ProposeMineTextFilterWait">Đang chờ duyệt</system:String>
     <system:String x:Key="ProposeMineTextFilterApproved">Đã phê duyệt</system:String>
     <system:String x:Key="ProposeMineTextFilterGivingUp">Đã từ chối</system:String>
-    <system:String x:Key="ProposeMineTextHidenSelectRecipient">Đã từ chối</system:String>
+    <system:String x:Key="ProposeMineTextHidenSelectRecipient">Chọn người nhận</system:String>
     <system:String x:Key="ProposeMineTextHidenSender">Người gửi đề xuất</system:String>
     <system:String x:Key="ProposeMineTextHidenSearchName">Tìm tên đề xuất</system:String>
     <!--Text Form CreateNewPropose-->
@@ -56,8 +57,8 @@
     <system:String x:Key="CreateNewProposeTextUserComfirm">Người xét duyệt</system:String>
     <system:String x:Key="CreateNewProposeTextUserFollow">Người theo dõi</system:String>
     <system:String x:Key="CreateNewProposeTextDocumentGim">Tài liệu đính kèm</system:String>
-    <system:String x:Key="CreateNewProposeTextProposalHavePlan">Đề xuất có kế hoạc</system:String>
-    <system:String x:Key="CreateNewProposeTextProposalSudden">Đề xuất có kế hoạc</system:String>
+    <system:String x:Key="CreateNewProposeTextProposalHavePlan">Đề xuất có kế hoạch</system:String>
+    <system:String x:Key="CreateNewProposeTextProposalSudden">Đề xuất đột xuất</system:String>
     <system:String x:Key="CreateNewProposeTextVacationStartDate">Ngày bắt đầu</system:String>
     <system:String x:Key="CreateNewProposeTextVacationEndDate">Ngày kết thúc</system:String>
     <system:String x:Key="CreateNewProposeTextShiftDate">Ca nghỉ</system:String>
@@ -116,9 +117,10 @@
     <system:String x:Key="DetailProposeTextAbortComfirm">Hủy bỏ</system:String>
     <system:String x:Key="DetailProposeTextEditPropose">Chỉnh sửa</system:String>
     <system:String x:Key="DetailProposeTextDeletePropose">Xóa đề xuất</system:String>
-    <system:String x:Key="DetailProposeTextLeaderComfirm">Xóa đề xuất</system:String>
+    <system:String x:Key="DetailProposeTextLeaderComfirm">Lãnh đạo duyệt</system:String>
     <system:String x:Key="DetailProposeTextStatusComfirm">Trạng thái đề duyệt đề xuất</system:String>
     <system:String x:Key="DetailProposeTextMonthWork">Lịch làm việc tháng:</system:String>
     <system:String x:Key="DetailProposeTextComfirm">Xác nhận</system:String>
     <system:String x:Key="DetailProposeTextUserComfirmNext">Người duyệt chuyển tiếp</system:String>
+    <system:String x:Key="DetailProposeTextMonth">Tháng</system:String>
 </ResourceDictionary>

@@ -133,7 +133,7 @@
                 </Border.Effect>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="tb_CountNecessaryProposing" Text="2" Margin="0 0 0 5" HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
-                    <TextBlock Text="Cần duyệt" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
+                    <TextBlock Text="{DynamicResource HomeProposeTextNecessary}" TextWrapping="Wrap" TextAlignment="Center" Margin="0 5 0 0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource colorTextForTheme}"/>
                 </StackPanel>
             </Border>
             <Border Grid.Column="3" MouseLeftButtonDown="ProposeApprovedProposing" Cursor="Hand" Margin="10 0 0 0"  CornerRadius="50" Background="{StaticResource colorWriter}" BorderThickness="0.5" BorderBrush="{StaticResource ColorGray1}">

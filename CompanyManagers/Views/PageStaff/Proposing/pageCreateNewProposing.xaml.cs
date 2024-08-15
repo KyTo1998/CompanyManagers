@@ -91,10 +91,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             InitializeComponent();
             managerHome = _managerHome;
             dataCategoryProposing = _dataCategoryProposing;
-            txbBackToBack.Text = _dataCategoryProposing.name_cate_dx;
+            txbBackToBack.Text = _dataCategoryProposing.name_cate_dx_display;
             typeCategoryProposing = _dataCategoryProposing.cate_dx;
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;
-            tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
+            tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx_display;
             SelectUserComfirm.ItemsSource = _managerHome.dataListUserComfrim.ToList();
             SelectUserFollow.ItemsSource = _managerHome.dataListUserFollow.ToList();
             SelectTypeComfirm.ItemsSourceSelected = _managerHome.lstTypeConfirms.ToList();

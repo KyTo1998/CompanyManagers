@@ -111,7 +111,7 @@ namespace CompanyManagers.Models.ModelsPageStaff
                     }
                 }
             }
-            nameCategotyPropose = listCategoyPropose.Find(x => x.cate_dx == type_dx)?.name_cate_dx;
+            nameCategotyPropose = listCategoyPropose.Find(x => x.cate_dx == type_dx)?.name_cate_dx_display;
         }
         public string name_user { get; set; }
         public int id_user { get; set; }

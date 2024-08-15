@@ -99,6 +99,13 @@ namespace CompanyManagers.Views.Popoup.PopupAll
             get { return _LinkAvatar; }
             set { _LinkAvatar = value; OnPropertyChanged("LinkAvatar"); }
         }
+
+        private string _selecteLaguage;
+        public string selecteLaguage
+        {
+            get { return _selecteLaguage; }
+            set { _selecteLaguage = value; OnPropertyChanged("selecteLaguage"); }
+        }
         ManagerHome managerHome;
         LoginHome loginHome { get; set; }
         public ProfileUser(ManagerHome _managerHome, LoginHome _loginHome)
@@ -110,6 +117,7 @@ namespace CompanyManagers.Views.Popoup.PopupAll
             this.loginHome = loginHome;
             this.managerHome = _managerHome;
             LinkAvatar = _managerHome.LinkAvatar;
+            selecteLaguage = Properties.Settings.Default.Language;
         }
 
         private void ChangeThemeClick(object sender, MouseButtonEventArgs e)
@@ -143,6 +151,15 @@ namespace CompanyManagers.Views.Popoup.PopupAll
             catch (Exception)
             {
             }
+        }
+
+        private void ChangeLanguage(object sender, MouseButtonEventArgs e)
+        {
+            selecteLaguage = selecteLaguage == "VN" ? "US" : "VN";
+            Properties.Settings.Default.Language = selecteLaguage;
+            Properties.Settings.Default.Save();
+            managerHome.SettingLanguageApp(selecteLaguage);
+            managerHome.ChangeSettingLanguageApp();
         }
     }
 }

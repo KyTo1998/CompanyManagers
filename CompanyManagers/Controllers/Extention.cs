@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace CompanyManagers.Controllers
 {
     static class Extention
@@ -21,6 +23,5 @@ namespace CompanyManagers.Controllers
                 return text;
             }
         }
-
     }
 }

@@ -70,7 +70,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 {
                     if (str.name_cate_dx != null)
                     {
-                        if (str.name_cate_dx.ToLower().RemoveUnicode().Contains(tb_SearchProposing.Text.ToLower().RemoveUnicode()))
+                        if (str.name_cate_dx_display.ToLower().RemoveUnicode().Contains(tb_SearchProposing.Text.ToLower().RemoveUnicode()))
                         {
                            listCategoyProposingSearch.Add(str);
                         }

@@ -83,7 +83,7 @@
                                                     </Path>
                                                 </Border>
                                                 <StackPanel Grid.Column="1">
-                                                    <TextBlock Text="{Binding name_cate_dx}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium">
+                                                    <TextBlock Text="{Binding name_cate_dx_display}" MinWidth="320" TextWrapping="Wrap" FontSize="16" FontWeight="Medium">
                                                         <TextBlock.Style>
                                                             <Style TargetType="TextBlock">
                                                                 <Setter Property="Foreground" Value="{DynamicResource colorText1}"/>

@@ -458,7 +458,7 @@
                         <StackPanel>
                             <StackPanel x:Name="stp_ShowCalendar" Margin="10 0 10 0">
                                 <TextBlock FontSize="20" FontWeight="Medium" Foreground="{DynamicResource colorTextForTheme}" HorizontalAlignment="Center">
-                            <Run Text="Tháng"/>
+                            <Run Text="{DynamicResource DetailProposeTextMonth}"/>
                             <Run x:Name="MonthCalendar"/>
                                 </TextBlock>
                                 <Border x:Name="HeaderCalendarWork" Background="{DynamicResource colorTheme}" Margin="0 20 0 20" CornerRadius="10 10 0 0">

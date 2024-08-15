@@ -91,13 +91,11 @@ namespace CompanyManagers.Views.Functions.HomeFunction
                 {
                     if (Properties.Settings.Default.Type365 == "2")
                     {
-                        switch (dataChildFunction.nameChildFunction)
+                        if (dataChildFunction.nameChildFunction == "Loại đề xuất" || dataChildFunction.nameChildFunction == "Proposal Type")
                         {
-                            case "Loại đề xuất":
-                                ProposingHome proposingHome = new ProposingHome(ManagerHome);
-                                ManagerHome.PageFunction.Content = proposingHome;
-                                ManagerHome.backToBack = "BackToManagerHome";
-                                break;
+                            ProposingHome proposingHome = new ProposingHome(ManagerHome);
+                            ManagerHome.PageFunction.Content = proposingHome;
+                            ManagerHome.backToBack = "BackToManagerHome";
                         }
                     }
                 }

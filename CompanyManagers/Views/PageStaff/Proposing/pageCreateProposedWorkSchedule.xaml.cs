@@ -168,7 +168,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             if (_dataCategoryProposing != null)
             {
                 typeCategoryProposing = _dataCategoryProposing.cate_dx;
-                tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx;
+                tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx_display;
                 tb_InputNameProposing.Text = $"Lịch làm việc cá nhân của {managerHome.UserName}";
                 tb_InputReasonCreateProposing.Text = "Tạo lịch làm việc theo tuần";
                 SelectUserComfirm.PlaceHolder = $"Bạn cần chọn {managerHome.userNumberConfirm} người duyệt";
@@ -187,6 +187,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 if (dataListUserComfrim == null){dataListUserComfrim = new List<LanhDaoDuyet>();}
                 lsvUserComfirmSelected.Visibility = Visibility.Visible;
                 dataListUserComfrim = _detailPropose.lanh_dao_duyet.ToList();
+                MonthCalendar.Text = _detailPropose.thong_tin_chung.lich_lam_viec.thang_ap_dung_display;
                 foreach (var item in _managerHome.dataListUserFollow)
                 {
                     if (item.idQLC == _detailPropose.nguoi_theo_doi[0].idQLC)
