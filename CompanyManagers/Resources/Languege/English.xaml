@@ -26,6 +26,7 @@
     <system:String x:Key="HomeTextSearch">Search</system:String>
     <!--Text Form HomePropose-->
     <system:String x:Key="HomeProposeTextCreate">Create a Proposal</system:String>
+    <system:String x:Key="HomeProposeTextEdit">Edit a Proposal</system:String>
     <system:String x:Key="HomeProposeTextIsMe">My Proposal</system:String>
     <system:String x:Key="HomeProposeTextSumPropose">Total Proposals</system:String>
     <system:String x:Key="HomeProposeTextWait">Pending Approval</system:String>

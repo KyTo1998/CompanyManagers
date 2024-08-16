@@ -292,17 +292,23 @@ namespace CompanyManagers.Models.ModelsPageStaff
                 day = bd_nghi
             };
             string jsonData = JsonConvert.SerializeObject(data);
-            using (WebClient webClient = new WebClient())
+            try
             {
-                webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
-                webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
-                var resData = webClient.UploadString(UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftForDay, "POST", jsonData);
-                byte[] bytesData = Encoding.Default.GetBytes(resData);
-                Root_StaffShiftInDay dataStaffShiftInDay = JsonConvert.DeserializeObject<Root_StaffShiftInDay>(Encoding.UTF8.GetString(bytesData));
-                if (dataStaffShiftInDay != null)
+                using (WebClient webClient = new WebClient())
                 {
-                    shiftName = dataStaffShiftInDay.list.Find(x => x.shift_id == ca_nghi || x.shift_id == (Int32.Parse(ca_nghi) + 1).ToString() || x.shift_id == (Int32.Parse(ca_nghi) - 1).ToString())?.shift_name;
+                    webClient.Headers[HttpRequestHeader.ContentType] = "application/json";
+                    webClient.Headers[HttpRequestHeader.Authorization] = "Bearer " + Properties.Settings.Default.Token;
+                    var resData = webClient.UploadString(UrlApi.Url_Api_Shift + UrlApi.Name_Api_ListShiftForDay, "POST", jsonData);
+                    byte[] bytesData = Encoding.Default.GetBytes(resData);
+                    Root_StaffShiftInDay dataStaffShiftInDay = JsonConvert.DeserializeObject<Root_StaffShiftInDay>(Encoding.UTF8.GetString(bytesData));
+                    if (dataStaffShiftInDay != null)
+                    {
+                        shiftName = dataStaffShiftInDay.list.Find(x => x.shift_id == ca_nghi || x.shift_id == (Int32.Parse(ca_nghi) + 1).ToString() || x.shift_id == (Int32.Parse(ca_nghi) - 1).ToString())?.shift_name;
+                    }
                 }
+            }
+            catch (Exception)
+            {
             }
         }
 

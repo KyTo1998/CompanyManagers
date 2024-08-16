@@ -26,6 +26,7 @@
     <system:String x:Key="HomeTextSearch">Tìm Kiếm</system:String>
     <!--Text Form HomePropose-->
     <system:String x:Key="HomeProposeTextCreate">Tạo đề xuất</system:String>
+    <system:String x:Key="HomeProposeTextEdit">Chỉnh sửa đề xuất</system:String>
     <system:String x:Key="HomeProposeTextIsMe">Đề xuất của tôi</system:String>
     <system:String x:Key="HomeProposeTextSumPropose">Tổng số đề xuất</system:String>
     <system:String x:Key="HomeProposeTextWait">Đang chờ duyệt</system:String>

@@ -942,7 +942,18 @@
                                                                 <WrapPanel Margin="0 0 10 5" Orientation="Horizontal" Background="{DynamicResource colorMoveMouseItem}">
                                                                     <Border CornerRadius="5" BorderThickness="1" BorderBrush="{DynamicResource colorTheme}">
                                                                         <DockPanel Margin="2">
-                                                                            <TextBlock Text="{Binding Path = NameDisplay}" FontSize="16" Foreground="{DynamicResource colorText1}" VerticalAlignment="Center"/>
+                                                                            <TextBlock FontSize="16" Foreground="{DynamicResource colorText1}" VerticalAlignment="Center">
+                                                                                <TextBlock.Style>
+                                                                                    <Style TargetType="TextBlock">
+                                                                                        <Setter Property="Text" Value="{Binding Path = NameDisplay}"/>
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger Binding="{Binding typeFile,RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Edit">
+                                                                                                <Setter Property="Text" Value="{Binding Path = FullName}"/>
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </TextBlock.Style>
+                                                                            </TextBlock>
                                                                             <Border x:Name="btnDeleteFileGim" MouseLeftButtonDown="DeleteFileGim" Cursor="Hand" Margin="5 -15 -10 0" CornerRadius="20" Width="15" Height="15" >
                                                                                 <Border.Style>
                                                                                     <Style TargetType="Border">
@@ -1018,13 +1029,17 @@
                                             </Style.Triggers>
                                         </Style>
                                     </Border.Style>
-                                    <TextBlock Text="{DynamicResource HomeProposeTextCreate}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
+                                    <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium">
                                         <TextBlock.Style>
                                             <Style TargetType="TextBlock">
                                                 <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                                <Setter Property="Text" Value="{DynamicResource HomeProposeTextCreate}"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding ElementName=CreateProposing, Path=IsMouseOver}" Value="true">
                                                         <Setter Property="Foreground" Value="{StaticResource colorWriter}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding typeFile, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="Edit">
+                                                        <Setter Property="Text" Value="{DynamicResource HomeProposeTextEdit}"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

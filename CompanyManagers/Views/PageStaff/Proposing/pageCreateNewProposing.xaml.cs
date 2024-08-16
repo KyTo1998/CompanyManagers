@@ -20,8 +20,9 @@ using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using CompanyManagers.Models.ModelRose;
-using static CompanyManagers.Common.Tool.DatePicker;
-using System.Drawing;
+using System.Windows.Navigation;
+using System.Security.Policy;
+
 
 
 namespace CompanyManagers.Views.PageStaff.Proposing
@@ -84,6 +85,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _stringValidateKey; }
             set { _stringValidateKey = value; OnPropertyChanged("stringValidateKey"); }
         }
+
+        private string _typeFile;
+        public string typeFile
+        {
+            get { return _typeFile; }
+            set { _typeFile = value; OnPropertyChanged("typeFile"); }
+        }
+        List<string> lstFilePath = new List<string>();
         ManagerHome managerHome { set; get; }
         int typePlan {  get; set; }
         Result_CategoryProposing dataCategoryProposing;
@@ -92,35 +101,21 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             InitializeComponent();
             managerHome = _managerHome;
+            detailPropose = _detailPropose;
             if (_dataCategoryProposing != null)
             {
                 dataCategoryProposing = _dataCategoryProposing;
                 txbBackToBack.Text = _dataCategoryProposing.name_cate_dx_display;
                 typeCategoryProposing = _dataCategoryProposing.cate_dx;
                 tb_CategoryProposingCreate.Text = _dataCategoryProposing.name_cate_dx_display;
+                typeFile = "Create";
             }
             if (_detailPropose != null)
             {
+                typeFile = "Edit";
                 typeCategoryProposing = _detailPropose.nhom_de_xuat;
                 txbBackToBack.Text = _detailPropose.ten_de_xuat;
-                SelectTypeComfirm.SelectedItemSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet));
-                SelectTypeComfirm.TextSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet)).name_Custom;
-                if (_detailPropose.thong_tin_chung.nghi_phep.loai_np == 1)
-                {
-                    typePlan = _detailPropose.thong_tin_chung.nghi_phep.loai_np;
-                    cbSelectYesPlan.IsChecked = true;
-                }
-                if (listShiftSelect == null) listShiftSelect = new List<JsonOnLeave>();
-                lsvListShifForDay.Visibility = Visibility.Visible;
-                foreach (var item in _detailPropose.thong_tin_chung.nghi_phep.nd)
-                {
-                    JsonOnLeave addData = new JsonOnLeave();
-                    addData.nameShif = item.ca_nghi_string;
-                    addData.startDate = item.bd_nghi;
-                    addData.endDate = item.kt_nghi ;
-                    listShiftSelect.Add(addData);
-                }
-                tb_InputReasonCreateProposing.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
+                tb_InputNameProposing.Text = _detailPropose.ten_de_xuat;
                 if (dataListUserComfrim == null) { dataListUserComfrim = new List<LanhDaoDuyet>(); }
                 lsvUserComfirmSelected.Visibility = Visibility.Visible;
                 dataListUserComfrim = _detailPropose.lanh_dao_duyet.ToList();
@@ -132,18 +127,50 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         SelectUserFollow.Text = item.userName;
                     }
                 }
-                lsvFileGim.Visibility = Visibility.Visible;
-                TextHidenFileGim.Visibility = Visibility.Collapsed;
-                InfoFile SetFile = new InfoFile();
-                foreach (var item in _detailPropose.file_kem)
+                if (_detailPropose.nhom_de_xuat == 1)
                 {
-                    SetFile.FullName = item.file_name;
-                    SetFile.TypeFile = item.type_file;
-                    SetFile.Source = null; 
-                    SetFile.ImageSource = item.file;
-                    if (!lsvFileGim.Items.Contains(SetFile))
+                    SelectTypeComfirm.SelectedItemSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet));
+                    SelectTypeComfirm.TextSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet)).name_Custom;
+                    StartDateOnLeave.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.nghi_phep.nd[0].bd_nghi, "yyyy-MM-dd", null);
+                    EndDateOnLeave.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.nghi_phep.nd[0].kt_nghi, "yyyy-MM-dd", null);
+                    if (_detailPropose.thong_tin_chung.nghi_phep.loai_np == 1)
                     {
-                        lsvFileGim.Items.Add(SetFile);
+                        typePlan = _detailPropose.thong_tin_chung.nghi_phep.loai_np;
+                        cbSelectYesPlan.IsChecked = true;
+                    }
+                    if (listShiftSelect == null) listShiftSelect = new List<JsonOnLeave>();
+                    lsvListShifForDay.Visibility = Visibility.Visible;
+                    foreach (var item in _detailPropose.thong_tin_chung.nghi_phep.nd)
+                    {
+                        JsonOnLeave addData = new JsonOnLeave();
+                        addData.nameShif = item.ca_nghi_string;
+                        addData.startDate = item.bd_nghi;
+                        addData.endDate = item.kt_nghi;
+                        addData.nghi_phep = new List<object> { $"{item.bd_nghi}", $"{item.kt_nghi}", item.ca_nghi };
+                        listShiftSelect.Add(addData);
+                    }
+                    tb_InputReasonCreateProposing.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
+                    lsvFileGim.Visibility = Visibility.Visible;
+                    TextHidenFileGim.Visibility = Visibility.Collapsed;
+
+                    var filePathGim = Environment.GetEnvironmentVariable("Downloads") + @"\filePathGim";
+                    if (!Directory.Exists(filePathGim))
+                    {
+                        Directory.CreateDirectory(filePathGim);
+                    }
+                    InfoFile SetFile = new InfoFile();
+                    foreach (var item in _detailPropose.file_kem)
+                    {
+
+                        SetFile.FullName = item.file_name;
+                        SetFile.TypeFile = item.type_file;
+                        SetFile.Source = null;
+                        SetFile.ImageSource = item.file;
+                        /*DowloadFileGim(SetFile, filePathGim);*/
+                        if (!lsvFileGim.Items.Contains(SetFile))
+                        {
+                            lsvFileGim.Items.Add(SetFile);
+                        }
                     }
                 }
             }
@@ -154,6 +181,29 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             SelectLeverRevenue.ItemsSourceSelected = _managerHome.listLeverlRevernue.ToList();
         }
         
+        public async void DowloadFileGim(InfoFile SetFile, string filePath)
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    try
+                    {
+                        byte[] imageBytes = await client.GetByteArrayAsync(SetFile.ImageSource);
+                        File.WriteAllBytes(filePath, imageBytes);
+                        lstFilePath.Add(filePath);
+                        Console.WriteLine("Download successful!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error downloading image: {ex.Message}");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
         #region Nghỉ Phép
         public async void CreateProposingOnLeave()
         {
@@ -173,7 +223,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_ValidateProposing.Text = "Chưa chọn ngày bắt đầu hoặc kết thúc";
                     statusValidate = false;
                 }
-                else if (ShiftOnLeave.SelectedIndexSelected < 0)
+                else if (listShiftSelect.Count <= 0)
                 {
                     tb_ValidateProposing.Visibility = Visibility.Visible;
                     stringValidateKey = "ShiftOnLeave";
@@ -197,9 +247,21 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     }
                     string userConfirm = String.Join(",", listUserConfirm);
                     var client = HttpClientSingleton.Instance;
-                    var request = new HttpRequestMessage(HttpMethod.Post,UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CreateProposingOnLeave);
+                    HttpRequestMessage request = new HttpRequestMessage();
+                    if (typeFile == "Edit")
+                    {
+                        request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Proposing + UrlApi.Name_Api_EditProposeOnLeave);
+                    }
+                    else
+                    {
+                        request = new HttpRequestMessage(HttpMethod.Post, UrlApi.Url_Api_Proposing + UrlApi.Name_Api_CreateProposingOnLeave);
+                    }
                     request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.Token);
                     var content = new MultipartFormDataContent();
+                    if (typeFile == "Edit") 
+                    {
+                        content.Add(new StringContent(detailPropose.id_de_xuat), "id_dx");
+                    }
                     content.Add(new StringContent(jsonString), "noi_dung");
                     content.Add(new StringContent(tb_InputNameProposing.Text), "name_dx");
                     content.Add(new StringContent(((typeConfirm)SelectTypeComfirm.SelectedItemSelected).id_Custom.ToString()), "kieu_duyet");
@@ -208,27 +270,55 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     content.Add(new StringContent(userConfirm), "id_user_duyet");
                     content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
                     int numberFile = 0;
-                    if (managerHome.lstInfoFileCreateProposing != null)
+                    if (typeFile == "Edit" && detailPropose.nhom_de_xuat == 1)
                     {
-                        foreach (var item in managerHome.lstInfoFileCreateProposing)
+                        foreach (var item in detailPropose.file_kem)
                         {
-                            content.Add(new StreamContent(File.OpenRead(item.FullName)), $"fileKem[{numberFile}]", item.FullName);
+                            content.Add(new StreamContent(File.OpenRead(item.file)), $"fileKem[{numberFile}]", item.file);
                             numberFile++;
                         }
                     }
+                    else
+                    {
+                        if (managerHome.lstInfoFileCreateProposing != null)
+                        {
+                            foreach (var item in managerHome.lstInfoFileCreateProposing)
+                            {
+                                content.Add(new StreamContent(File.OpenRead(item.FullName)), $"fileKem[{numberFile}]", item.FullName);
+                                numberFile++;
+                            }
+                        }
+                    }
+                    
                     request.Content = content;
                     var response = await client.SendAsync(request);
                     if (response.IsSuccessStatusCode)
                     {
                         dataListUserComfrim.Clear();
                         listShiftSelect.Clear();
-                        managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thành công", ""));
+                        if (typeFile == "Edit")
+                        {
+                            managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", $"Chỉnh sửa đề xuất xin nghỉ phép thành công", ""));
+                        }
+                        else
+                        {
+                            managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thành công", ""));
+                        }
+                        ProposingHome proposingHome = new ProposingHome(managerHome);
+                        managerHome.PageFunction.Content = proposingHome;
                     }
                 }
             }
             catch (System.Exception)
             {
-                managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thất bại, vui lòng thử lại sau ít phút", ""));
+                if (typeFile == "Edit")
+                {
+                    managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Chỉnh sửa đề xuất xin nghỉ phép thất bại, vui lòng thử lại sau ít phút", ""));
+                }
+                else
+                {
+                    managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", "Tạo đề xuất xin nghỉ phép thất bại, vui lòng thử lại sau ít phút", ""));
+                }
             }
         }
        
@@ -615,6 +705,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             try
             {
+                if (typeFile == "Edit") 
+                {
+                    SelectTypeComfirm.SelectedIndexSelected = int.Parse(detailPropose.kieu_phe_duyet);
+                    SelectUserFollow.SelectedIndex = detailPropose.nguoi_theo_doi.Count - 1;
+                }
                 if (string.IsNullOrEmpty(tb_InputNameProposing.Text))
                 {
                
@@ -625,7 +720,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                    
                     
                 }
-                else if (SelectTypeComfirm.SelectedIndexSelected < 0)
+                else if (SelectTypeComfirm.SelectedIndexSelected <= -1 || SelectTypeComfirm.TextSelected == "")
                 {
                    
                         tb_ValidateProposing.Visibility = Visibility.Visible;
@@ -644,7 +739,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         statusValidate = false;
                    
                 }
-                else if (SelectUserFollow.SelectedIndex < 0)
+                else if (SelectUserFollow.SelectedIndex <= -1)
                 {
                     
                         tb_ValidateProposing.Visibility = Visibility.Visible;
@@ -679,18 +774,37 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                 CheckValidateProposing();
                 if (statusValidate)
                 {
-                    switch (dataCategoryProposing.cate_dx)
+                    if (typeFile == "Edit")
                     {
-                        case 1:
-                            CreateProposingOnLeave();
-                            break; 
-                        case 20:
-                            CreateProposingRoseRevenue();
-                            break;
-                        case 17:
-                            CreateProposingCongCong();
-                            break;
+                        switch (detailPropose.nhom_de_xuat)
+                        {
+                            case 1:
+                                CreateProposingOnLeave();
+                                break;
+                            case 20:
+                                CreateProposingRoseRevenue();
+                                break;
+                            case 17:
+                                CreateProposingCongCong();
+                                break;
+                        }
                     }
+                    else
+                    {
+                        switch (dataCategoryProposing.cate_dx)
+                        {
+                            case 1:
+                                CreateProposingOnLeave();
+                                break;
+                            case 20:
+                                CreateProposingRoseRevenue();
+                                break;
+                            case 17:
+                                CreateProposingCongCong();
+                                break;
+                        }
+                    }    
+                    
                 }
             }
             catch (System.Exception)
