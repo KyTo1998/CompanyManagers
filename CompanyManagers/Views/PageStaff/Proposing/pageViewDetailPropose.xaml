@@ -216,8 +216,8 @@
                                                                         </TextBlock>
                                                                         <DockPanel Margin="0 5 0 5">
                                                                             <TextBlock FontSize="16" Text="{DynamicResource DetailProposeDetailCalendarWork}" Foreground="{DynamicResource colorText1}" FontWeight="Regular" TextWrapping="Wrap"/>
-                                                                            <Border MouseLeftButtonDown="ShowDetailCalendaWork">
-                                                                                <Path Data="{StaticResource iconEyes}" Cursor="Hand" Margin="20 0 0 0" Height="17" Width="25" Stretch="Fill" HorizontalAlignment="Left" Fill="{DynamicResource colorTextForTheme}"/>
+                                                                                <Border MouseLeftButtonDown="ShowDetailCalendaWork" Cursor="Hand" Background="Transparent">
+                                                                                <Path Data="{StaticResource iconEyes}"  Margin="20 0 0 0" Height="17" Width="25" Stretch="Fill" HorizontalAlignment="Left" Fill="{DynamicResource colorTextForTheme}"/>
                                                                             </Border>
                                                                         </DockPanel>
                                                                         <TextBlock FontSize="16" Margin="0 5 0 5" FontWeight="Regular" TextWrapping="Wrap">
@@ -899,77 +899,94 @@
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ListViewItem">
-                                                                <Grid x:Name="FileAndImage" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonUp="DowloadFile">
-                                                                    <Grid.Triggers>
-                                                                        <EventTrigger RoutedEvent="MouseLeftButtonDown">
-                                                                            <BeginStoryboard>
-                                                                                <Storyboard>
-                                                                                    <DoubleAnimation
-                                                                                        Storyboard.TargetProperty="LayoutTransform.ScaleX"
-                                                                                        To="26"
-                                                                                        Duration="0:0:2"/>
-                                                                                    <DoubleAnimation
-                                                                                        Storyboard.TargetProperty="LayoutTransform.ScaleY"
-                                                                                        To="26"
-                                                                                        Duration="0:0:2" />
-                                                                                </Storyboard>
-                                                                            </BeginStoryboard>
-                                                                        </EventTrigger>
-                                                                        <EventTrigger RoutedEvent="PreviewMouseWheel">
-                                                                            <BeginStoryboard>
-                                                                                <Storyboard>
-                                                                                    <DoubleAnimation
-                                                                                        Storyboard.TargetProperty="LayoutTransform.ScaleX"
-                                                                                        To="1.0"
-                                                                                        Duration="0:0:0.10" />
-                                                                                    <DoubleAnimation
-                                                                                        Storyboard.TargetProperty="LayoutTransform.ScaleY"
-                                                                                        To="1.0"
-                                                                                        Duration="0:0:0.10" />
-                                                                                </Storyboard>
-                                                                            </BeginStoryboard>
-                                                                        </EventTrigger>
-                                                                    </Grid.Triggers>
-                                                                    <Grid.LayoutTransform>
-                                                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                                                    </Grid.LayoutTransform>
-                                                                    <Border x:Name="bor_ImageInTextbox" Width="20" Height="20" CornerRadius="2">
-                                                                        <Border.Style>
-                                                                            <Style TargetType="Border">
-                                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                <WrapPanel>
+                                                                    <Grid x:Name="FileAndImage" Margin="5 0 0 0" VerticalAlignment="Center" Cursor="Hand">
+                                                                        <Grid.Style>
+                                                                            <Style TargetType="Grid">
                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
-                                                                                <Setter Property="BorderThickness" Value="0.5"/>
-                                                                                <Setter Property="BorderBrush" Value="#FFF"/>
-                                                                                <Setter Property="TextBlock.Visibility" Value="Visible"/>
                                                                                 <Style.Triggers>
                                                                                     <DataTrigger Binding="{Binding type_file}" Value="img">
                                                                                         <Setter Property="Visibility" Value="Visible"/>
                                                                                     </DataTrigger>
                                                                                 </Style.Triggers>
                                                                             </Style>
-                                                                        </Border.Style>
-                                                                        <Border.Background>
-                                                                            <ImageBrush ImageSource="{Binding file}"/>
-                                                                        </Border.Background>
-                                                                    </Border>
-                                                                    <Border CornerRadius="2" MaxHeight="20">
-                                                                        <Border.Style>
-                                                                            <Style TargetType="Border">
-                                                                                <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                                        </Grid.Style>
+                                                                        <Grid.Triggers>
+                                                                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                                                <BeginStoryboard>
+                                                                                    <Storyboard>
+                                                                                        <DoubleAnimation
+                                                                                            Storyboard.TargetProperty="LayoutTransform.ScaleX"
+                                                                                            To="26"
+                                                                                            Duration="0:0:2"/>
+                                                                                        <DoubleAnimation
+                                                                                            Storyboard.TargetProperty="LayoutTransform.ScaleY"
+                                                                                            To="26"
+                                                                                            Duration="0:0:2" />
+                                                                                    </Storyboard>
+                                                                                </BeginStoryboard>
+                                                                            </EventTrigger>
+                                                                            <EventTrigger RoutedEvent="PreviewMouseWheel">
+                                                                                <BeginStoryboard>
+                                                                                    <Storyboard>
+                                                                                        <DoubleAnimation
+                                                                                            Storyboard.TargetProperty="LayoutTransform.ScaleX"
+                                                                                            To="1.0"
+                                                                                            Duration="0:0:0.10" />
+                                                                                        <DoubleAnimation
+                                                                                            Storyboard.TargetProperty="LayoutTransform.ScaleY"
+                                                                                            To="1.0"
+                                                                                            Duration="0:0:0.10" />
+                                                                                    </Storyboard>
+                                                                                </BeginStoryboard>
+                                                                            </EventTrigger>
+                                                                        </Grid.Triggers>
+                                                                        <Grid.LayoutTransform>
+                                                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                                                        </Grid.LayoutTransform>
+                                                                        <Border x:Name="bor_ImageInTextbox" Width="20" Height="20" CornerRadius="2">
+                                                                            <Border.Style>
+                                                                                <Style TargetType="Border">
+                                                                                    <Setter Property="Background" Value="Transparent"/>
+                                                                                    <Setter Property="BorderThickness" Value="0.5"/>
+                                                                                    <Setter Property="BorderBrush" Value="#FFF"/>
+                                                                                </Style>
+                                                                            </Border.Style>
+                                                                            <Border.Background>
+                                                                                <ImageBrush ImageSource="{Binding file}"/>
+                                                                            </Border.Background>
+                                                                        </Border>
+                                                                    </Grid>
+                                                                    <Grid x:Name="File" Margin="5 0 0 0" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="DowloadFile">
+                                                                        <Grid.Style>
+                                                                            <Style TargetType="Grid">
                                                                                 <Setter Property="Visibility" Value="Collapsed"/>
-                                                                                <Setter Property="BorderThickness" Value="1"/>
-                                                                                <Setter Property="BorderBrush" Value="#AAA"/>
                                                                                 <Style.Triggers>
                                                                                     <DataTrigger Binding="{Binding type_file}" Value="file">
                                                                                         <Setter Property="Visibility" Value="Visible"/>
-                                                                                        <Setter Property="BorderThickness" Value="0"/>
                                                                                     </DataTrigger>
                                                                                 </Style.Triggers>
                                                                             </Style>
-                                                                        </Border.Style>
-                                                                        <TextBlock Text="{Binding file_name}" Margin="5 0 5 0" Foreground="{StaticResource colorWriter}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
-                                                                    </Border>
-                                                                </Grid>
+                                                                        </Grid.Style>
+                                                                        <Border CornerRadius="2" Height="20">
+                                                                            <Border.Style>
+                                                                                <Style TargetType="Border">
+                                                                                    <Setter Property="Background" Value="{DynamicResource colorTheme}"/>
+                                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                                                    <Setter Property="BorderBrush" Value="#AAA"/>
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger Binding="{Binding type_file}" Value="file">
+                                                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Border.Style>
+                                                                            <TextBlock Text="{Binding file_name}" Margin="5 0 5 0" Foreground="{StaticResource colorWriter}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
+                                                                        </Border>
+                                                                    </Grid>
+                                                                </WrapPanel>
                                                             </ControlTemplate>
                                                         </Setter.Value>
                                                     </Setter>

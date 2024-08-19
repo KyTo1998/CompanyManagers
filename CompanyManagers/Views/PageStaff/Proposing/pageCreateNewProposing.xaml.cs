@@ -22,6 +22,7 @@ using System.Globalization;
 using CompanyManagers.Models.ModelRose;
 using System.Windows.Navigation;
 using System.Security.Policy;
+using System.Windows.Shell;
 
 
 
@@ -133,9 +134,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     SelectTypeComfirm.TextSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet)).name_Custom;
                     StartDateOnLeave.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.nghi_phep.nd[0].bd_nghi, "yyyy-MM-dd", null);
                     EndDateOnLeave.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.nghi_phep.nd[0].kt_nghi, "yyyy-MM-dd", null);
-                    if (_detailPropose.thong_tin_chung.nghi_phep.loai_np == 1)
+                    if (_detailPropose.thong_tin_chung.nghi_phep.loai_np == "1")
                     {
-                        typePlan = _detailPropose.thong_tin_chung.nghi_phep.loai_np;
+                        typePlan = int.Parse(_detailPropose.thong_tin_chung.nghi_phep.loai_np);
                         cbSelectYesPlan.IsChecked = true;
                     }
                     if (listShiftSelect == null) listShiftSelect = new List<JsonOnLeave>();
@@ -152,12 +153,12 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     tb_InputReasonCreateProposing.Text = _detailPropose.thong_tin_chung.nghi_phep.ly_do;
                     lsvFileGim.Visibility = Visibility.Visible;
                     TextHidenFileGim.Visibility = Visibility.Collapsed;
-
-                    var filePathGim = Environment.GetEnvironmentVariable("Downloads") + @"\filePathGim";
-                    if (!Directory.Exists(filePathGim))
+                    string filePathGim = Path.GetTempPath();
+                    //string filePathGim = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+               /*     if (!Directory.Exists(filePathGim))
                     {
                         Directory.CreateDirectory(filePathGim);
-                    }
+                    }*/
                     InfoFile SetFile = new InfoFile();
                     foreach (var item in _detailPropose.file_kem)
                     {
@@ -166,7 +167,7 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         SetFile.TypeFile = item.type_file;
                         SetFile.Source = null;
                         SetFile.ImageSource = item.file;
-                        /*DowloadFileGim(SetFile, filePathGim);*/
+                        DowloadFileGim(SetFile, filePathGim);
                         if (!lsvFileGim.Items.Contains(SetFile))
                         {
                             lsvFileGim.Items.Add(SetFile);
@@ -190,8 +191,9 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     try
                     {
                         byte[] imageBytes = await client.GetByteArrayAsync(SetFile.ImageSource);
-                        File.WriteAllBytes(filePath, imageBytes);
-                        lstFilePath.Add(filePath);
+                        string filePathSave = Path.Combine(filePath, SetFile.FullName);
+                        File.WriteAllBytes(filePathSave, imageBytes);
+                        lstFilePath.Add(filePathSave);
                         Console.WriteLine("Download successful!");
                     }
                     catch (Exception ex)
@@ -270,11 +272,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     content.Add(new StringContent(userConfirm), "id_user_duyet");
                     content.Add(new StringContent(((ListUsersTheoDoi)SelectUserFollow.SelectedItem).idQLC.ToString()), "id_user_theo_doi");
                     int numberFile = 0;
-                    if (typeFile == "Edit" && detailPropose.nhom_de_xuat == 1)
+                    if (typeFile == "Edit" && detailPropose.nhom_de_xuat == 1 && managerHome.lstInfoFileCreateProposing == null)
                     {
-                        foreach (var item in detailPropose.file_kem)
+                        foreach (var item in lstFilePath)
                         {
-                            content.Add(new StreamContent(File.OpenRead(item.file)), $"fileKem[{numberFile}]", item.file);
+                            content.Add(new StreamContent(File.OpenRead(item)), $"fileKem[{numberFile}]", item);
                             numberFile++;
                         }
                     }
@@ -296,6 +298,8 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     {
                         dataListUserComfrim.Clear();
                         listShiftSelect.Clear();
+                        managerHome.lstInfoFileCreateProposing.Clear();
+                        lstFilePath.Clear();
                         if (typeFile == "Edit")
                         {
                             managerHome.PagePopup.NavigationService.Navigate(new PopupNoticationAll(managerHome, "", $"Chỉnh sửa đề xuất xin nghỉ phép thành công", ""));
