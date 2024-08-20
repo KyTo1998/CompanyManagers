@@ -128,10 +128,11 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         SelectUserFollow.Text = item.userName;
                     }
                 }
+                SelectTypeComfirm.SelectedItemSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet));
+                SelectTypeComfirm.TextSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet)).name_Custom;
                 if (_detailPropose.nhom_de_xuat == 1)
                 {
-                    SelectTypeComfirm.SelectedItemSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet));
-                    SelectTypeComfirm.TextSelected = _managerHome.lstTypeConfirms.FirstOrDefault(x => x.id_Custom == int.Parse(_detailPropose.kieu_phe_duyet)).name_Custom;
+                    
                     StartDateOnLeave.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.nghi_phep.nd[0].bd_nghi, "yyyy-MM-dd", null);
                     EndDateOnLeave.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.nghi_phep.nd[0].kt_nghi, "yyyy-MM-dd", null);
                     if (_detailPropose.thong_tin_chung.nghi_phep.loai_np == "1")
@@ -154,11 +155,6 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     lsvFileGim.Visibility = Visibility.Visible;
                     TextHidenFileGim.Visibility = Visibility.Collapsed;
                     string filePathGim = Path.GetTempPath();
-                    //string filePathGim = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-               /*     if (!Directory.Exists(filePathGim))
-                    {
-                        Directory.CreateDirectory(filePathGim);
-                    }*/
                     InfoFile SetFile = new InfoFile();
                     foreach (var item in _detailPropose.file_kem)
                     {
@@ -173,6 +169,19 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                             lsvFileGim.Items.Add(SetFile);
                         }
                     }
+                }
+                else if (_detailPropose.nhom_de_xuat == 17)
+                {
+                    _managerHome.GetShiftForDay(_detailPropose.thong_tin_chung.xac_nhan_cong.time_xnc_display_Date, _detailPropose.id_nguoi_tao.ToString());
+                    _managerHome.dataListStaffShiftInDay.RemoveAt(0);
+                    ShiftWorkCongCong.ItemsSourceSelected = _managerHome.dataListStaffShiftInDay;
+                    ShiftWorkCongCong.IsEnabled = true;
+                    tb_InputReasonCreateProposing.Text = _detailPropose.thong_tin_chung.xac_nhan_cong.ly_do;
+                    StartDateComfirmCongCong.SelectedDate = DateTime.ParseExact(_detailPropose.thong_tin_chung.xac_nhan_cong.time_xnc_display_Date, "yyyy-MM-dd", null);
+                    ShiftWorkCongCong.SelectedItemSelected = _managerHome.dataListStaffShiftInDay.FirstOrDefault(x => x.shift_id == _detailPropose.thong_tin_chung.xac_nhan_cong.id_ca_xnc);
+                    ShiftWorkCongCong.TextSelected = _detailPropose.thong_tin_chung.xac_nhan_cong.ca_xnc;
+                    InputTimeShift.Time = _detailPropose.thong_tin_chung.xac_nhan_cong.time_vao_ca;
+                    OutputTimeShift.Time = _detailPropose.thong_tin_chung.xac_nhan_cong.time_het_ca;
                 }
             }
             tb_UserNameCreate.Text = _managerHome.UserCurrent.user_info.ep_name;

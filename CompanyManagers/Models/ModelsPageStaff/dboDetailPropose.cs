@@ -495,10 +495,25 @@ namespace CompanyManagers.Models.ModelsPageStaff
             }
             set { }
         }
+        public string time_xnc_display_Date
+        {
+            get
+            {
+                if (time_xnc != null)
+                {
+                    DateTime utcDateTime = DateTime.Parse(time_xnc, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                    TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+                    DateTime vietnamDateTime = TimeZoneInfo.ConvertTimeFromUtc(utcDateTime, vietnamTimeZone);
+                    return vietnamDateTime.ToString("yyyy-MM-dd");
+                }
+                return null;
+            }
+            set { }
+        }
         public string time_vao_ca { get; set; }
         public string time_het_ca { get; set; }
         public string ca_xnc { get; set; }
-        public int? id_ca_xnc { get; set; }
+        public string id_ca_xnc { get; set; }
         public string ly_do { get; set; }
     }
 }
