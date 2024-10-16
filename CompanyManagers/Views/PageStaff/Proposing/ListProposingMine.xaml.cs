@@ -161,14 +161,17 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                         time_e = dateTimeStopSend.SelectedDate.Value.ToString("yyyy-MM-dd")
                     };
                 }
-                if (searchKeySend.SelectedItem != null && ((Info_StaffAll)searchKeySend.SelectedItem).ep_id > 0 && dateTimeStartSend.SelectedDate != null || dateTimeStopSend.SelectedDate != null)
+                if (searchKeySend.SelectedItem != null)
                 {
-                    data = new
+                    if (((Info_StaffAll)searchKeySend.SelectedItem).ep_id > 0 && dateTimeStartSend.SelectedDate != null || dateTimeStopSend.SelectedDate != null)
                     {
-                        id_user_duyet = ((Info_StaffAll)searchKeySend.SelectedItem).ep_id.ToString(),
-                        time_s = dateTimeStartSend.SelectedDate.Value.ToString("yyyy-MM-dd"),
-                        time_e = dateTimeStopSend.SelectedDate.Value.ToString("yyyy-MM-dd")
-                    };
+                        data = new
+                        {
+                            id_user_duyet = ((Info_StaffAll)searchKeySend.SelectedItem).ep_id.ToString(),
+                            time_s = dateTimeStartSend.SelectedDate.Value.ToString("yyyy-MM-dd"),
+                            time_e = dateTimeStopSend.SelectedDate.Value.ToString("yyyy-MM-dd")
+                        };
+                    }
                 }
                 string jsonData = JsonConvert.SerializeObject(data);
                 using (WebClient webClient = new WebClient())
