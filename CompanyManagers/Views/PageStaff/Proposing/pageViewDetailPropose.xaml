@@ -401,7 +401,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="11"/>
                                                                             <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                                         </MultiDataTrigger.Conditions>
-                                                                        <Setter Property="Text" Value="DetailProposeTextWaitCompanyComfirm"/>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitCompanyComfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -688,7 +688,7 @@
                                                                     <Condition Binding="{Binding nhom_de_xuat, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="1"/>
                                                                     <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                 </MultiDataTrigger.Conditions>
-                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Setter Property="Visibility" Value="Visible"/>
                                                             </MultiDataTrigger>
                                                             <MultiDataTrigger>
                                                                 <MultiDataTrigger.Conditions>
