@@ -107,6 +107,7 @@
     <system:String x:Key="DetailProposeTextForcedWork">Buộc đi làm</system:String>
     <system:String x:Key="DetailProposeTextBeenReceived">Đã được tiếp nhận</system:String>
     <system:String x:Key="DetailProposeTextWaitLeaderComfirm">Chờ lãnh đạo còn lại duyệt</system:String>
+    <system:String x:Key="DetailProposeTextWaitYouComfirm">Đang chờ bạn duyệt</system:String>
     <system:String x:Key="DetailProposeTextWaitCompanyComfirm">Chờ công ty duyệt</system:String>
     <system:String x:Key="DetailProposeTextDeleted">Đã bị xóa</system:String>
     <system:String x:Key="DetailProposeTextOverdueConfirm">Quá hạn duyệt</system:String>

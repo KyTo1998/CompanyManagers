@@ -26,6 +26,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using SocketIOClient;
 
 namespace CompanyManagers.Views.Home
 {
@@ -221,6 +222,7 @@ namespace CompanyManagers.Views.Home
             get { return _listLeverlRevernue; }
             set { _listLeverlRevernue = value; OnPropertyChanged("listLeverlRevernue"); }
         }
+        public ConnectSocket Socket { get; set; }
         public SettingPropose dataSettingPro { get; set; }
         public List<ListPrivateType> listPrivateType { get; set; }
         public List<ListPrivateTime> listPrivateTime { get; set; }
@@ -239,6 +241,7 @@ namespace CompanyManagers.Views.Home
             Properties.Settings.Default.IdUser = userCurrent.user_info.ep_id.ToString();
             Properties.Settings.Default.Save();
             loginHome = _loginHome;
+            connectionSocket();
             switch (userCurrent.type)
             {
                 case 1:
@@ -293,6 +296,81 @@ namespace CompanyManagers.Views.Home
             }
         }
 
+        private void connectionSocket()
+        {
+            try
+            {
+                Socket = new ConnectSocket();
+                Socket.WIO.OnConnected += WIO_OnConnected;
+                Socket.WIO.OnReconnected += WIO_OnReconnected;
+                Socket.WIO.OnDisconnected += WIO_OnDisconnected;
+                Socket.WIO.On("SendMessage", response =>
+                {
+                    if (true)
+                    {
+                        Thread t = new Thread(() =>
+                        {
+                            try
+                            {
+
+                                
+                            }
+                            catch (Exception ex)
+                            {
+                            }
+                        });
+                        t.Start();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private void WIO_OnDisconnected(object sender, string e)
+        {
+            try
+            {
+          
+                if (!Socket.WIO.Connected)
+                {
+                    Socket.WIO.ConnectAsync();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+        private void WIO_OnReconnected(object sender, int e)
+        {
+            try
+            {
+                if (!Socket.WIO.Connected)
+                {
+                    Socket.WIO.ConnectAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        private int countConnectSocket { get; set; } = 0;
+        private void WIO_OnConnected(object sender1, EventArgs e1)
+        {
+            try
+            {
+               if (!Socket.WIO.Connected)
+                   Socket.WIO.ConnectAsync();
+               countConnectSocket++;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         public void ChangeSettingLanguageApp()
         {
             if (Properties.Settings.Default.Language == "VN")

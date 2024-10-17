@@ -307,7 +307,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
                     {
                         dataListUserComfrim.Clear();
                         listShiftSelect.Clear();
-                        managerHome.lstInfoFileCreateProposing.Clear();
+                        if(managerHome.lstInfoFileCreateProposing != null)
+                        {
+                            managerHome.lstInfoFileCreateProposing.Clear();
+                        }
                         lstFilePath.Clear();
                         if (typeFile == "Edit")
                         {

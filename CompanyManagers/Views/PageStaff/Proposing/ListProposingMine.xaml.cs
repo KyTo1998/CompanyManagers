@@ -50,6 +50,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _typeClickFilterProposing; }
             set { _typeClickFilterProposing = value; OnPropertyChanged("typeClickFilterProposing"); }
         }
+
+        private bool _RoseUserComfirm;
+        public bool RoseUserComfirm
+        {
+            get { return _RoseUserComfirm; }
+            set { _RoseUserComfirm = value; OnPropertyChanged("RoseUserComfirm"); }
+        }
+
         private List<Result_CategoryProposing> _listCategoryProposingHome;
         public List<Result_CategoryProposing> listCategoyProposingHome
         {
@@ -106,6 +114,13 @@ namespace CompanyManagers.Views.PageStaff.Proposing
         {
             if (dataProposing.data.data != null && dataProposing.data.data.Count > 0)
             {
+                foreach (var item in dataProposing.data.data)
+                {
+                    if (item.name_user != managerHome.UserName)
+                    {
+                        item.rose_user_comfirm = true;
+                    }
+                }
                 ListProposingSendAll.UpdateOrder(dataProposing.data.data);
                 listProposingSendAllLocal = dataProposing.data.data.ToList();
                 listProposingSendAll = dataProposing.data.data.ToList();

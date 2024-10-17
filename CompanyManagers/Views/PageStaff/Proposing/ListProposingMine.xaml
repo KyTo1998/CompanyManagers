@@ -897,9 +897,25 @@
                                                                         <DataTrigger Binding="{Binding type_duyet}" Value="7">
                                                                             <Setter Property="Text" Value="Đã được tiếp nhận"/>
                                                                         </DataTrigger>
-                                                                        <DataTrigger Binding="{Binding type_duyet}" Value="10">
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding type_duyet}" Value="10"/>
+                                                                                <Condition Binding="{Binding rose_user_comfirm}" Value="true"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitYouComfirm}"/>
+                                                                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                        </MultiDataTrigger>
+                                                                        <MultiDataTrigger>
+                                                                            <MultiDataTrigger.Conditions>
+                                                                                <Condition Binding="{Binding type_duyet}" Value="10"/>
+                                                                                <Condition Binding="{Binding rose_user_comfirm}" Value="false"/>
+                                                                            </MultiDataTrigger.Conditions>
+                                                                            <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitLeaderComfirm}"/>
+                                                                            <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                        </MultiDataTrigger>
+                                                                        <!--<DataTrigger Binding="{Binding type_duyet}" Value="10">
                                                                             <Setter Property="Text" Value="Chờ lãnh đạo còn lại duyệt"/>
-                                                                        </DataTrigger>
+                                                                        </DataTrigger>-->
                                                                         <DataTrigger Binding="{Binding type_duyet}" Value="11">
                                                                             <Setter Property="Text" Value="Chờ công ty duyệt"/>
                                                                         </DataTrigger>

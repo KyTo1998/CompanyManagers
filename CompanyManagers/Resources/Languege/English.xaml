@@ -106,7 +106,8 @@
     <system:String x:Key="DetailProposeTextRefuse">Rejected</system:String>
     <system:String x:Key="DetailProposeTextForcedWork">Mandatory Work</system:String>
     <system:String x:Key="DetailProposeTextBeenReceived">Received</system:String>
-    <system:String x:Key="DetailProposeTextWaitLeaderComfirm">Awaiting Final Approval from Leadership</system:String>
+    <system:String x:Key="DetailProposeTextWaitLeaderComfirm">Waiting for your approval</system:String>
+    <system:String x:Key="DetailProposeTextWaitYouComfirm">Awaiting Final Approval from Leadership</system:String>
     <system:String x:Key="DetailProposeTextWaitCompanyComfirm">Awaiting Company Approval</system:String>
     <system:String x:Key="DetailProposeTextDeleted">Deleted</system:String>
     <system:String x:Key="DetailProposeTextOverdueConfirm">Past Due for Approval</system:String>

@@ -121,8 +121,8 @@ namespace CompanyManagers.Models.ModelsPageStaff
         public string id_user_theo_doi { get; set; }
         public List<object> file_kem { get; set; }
         public string type_duyet { get; set; }
-
-         public string status_duyet
+        public bool rose_user_comfirm { get; set; }
+        public string status_duyet
         {
             get
             {

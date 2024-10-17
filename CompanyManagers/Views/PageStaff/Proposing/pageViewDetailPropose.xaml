@@ -314,7 +314,7 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
                                                                         </MultiDataTrigger.Conditions>
                                                                         <Setter Property="Data" Value="{StaticResource iconDone}"/>
-                                                                        <Setter Property="Fill" Value="{DynamicResource colorTextForTheme}"/>
+                                                                        <Setter Property="Fill" Value="{DynamicResource ColorGreen}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
@@ -359,13 +359,21 @@
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="5"/>
                                                                         </MultiDataTrigger.Conditions>
                                                                         <Setter Property="Text" Value="{DynamicResource DetailProposeTextApproved}"/>
-                                                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                        <Setter Property="Foreground" Value="{DynamicResource ColorGreen}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
                                                                         </MultiDataTrigger.Conditions>
                                                                         <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitingForApproval}"/>
+                                                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                    </MultiDataTrigger>
+                                                                    <MultiDataTrigger>
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="0"/>
+                                                                            <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitYouComfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -392,8 +400,17 @@
                                                                     <MultiDataTrigger>
                                                                         <MultiDataTrigger.Conditions>
                                                                             <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                            <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                                         </MultiDataTrigger.Conditions>
                                                                         <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitLeaderComfirm}"/>
+                                                                        <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
+                                                                    </MultiDataTrigger>
+                                                                    <MultiDataTrigger>
+                                                                        <MultiDataTrigger.Conditions>
+                                                                            <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                            <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
+                                                                        </MultiDataTrigger.Conditions>
+                                                                        <Setter Property="Text" Value="{DynamicResource DetailProposeTextWaitYouComfirm}"/>
                                                                         <Setter Property="Foreground" Value="{DynamicResource colorTextForTheme}"/>
                                                                     </MultiDataTrigger>
                                                                     <MultiDataTrigger>
@@ -510,6 +527,7 @@
                                                                     <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
                                                                     <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                     <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                    <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                                 </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </MultiDataTrigger>
@@ -518,6 +536,7 @@
                                                                     <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
                                                                     <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                     <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                    <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                                 </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </MultiDataTrigger>
@@ -581,7 +600,7 @@
                                                     </TextBlock.Style>
                                                 </TextBlock>
                                             </Border>
-                                            <Border x:Name="AcceptComfirm" MouseLeftButtonDown="ClickAcceptComfirm" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource colorTheme}" BorderBrush="{DynamicResource colorTextForTheme}">
+                                            <Border x:Name="AcceptComfirm" MouseLeftButtonDown="ClickAcceptComfirm" Cursor="Hand" Margin="0 10 0 10" CornerRadius="5" BorderThickness="1" Background="{DynamicResource ColorGreen}" BorderBrush="{DynamicResource colorTextForTheme}">
                                                 <Border.Style>
                                                     <Style TargetType="Border">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -591,13 +610,16 @@
                                                                     <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
                                                                     <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                     <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                    <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                                 </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </MultiDataTrigger>
                                                             <MultiDataTrigger>
                                                                 <MultiDataTrigger.Conditions>
-                                                                    <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="7"/>
+                                                                    <Condition Binding="{Binding type_duyet, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="10"/>
+                                                                    <Condition Binding="{Binding RoseUserComfirm, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="true"/>
                                                                     <Condition Binding="{Binding confirm_status, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
+                                                                    <Condition Binding="{Binding confirmOverdue, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="false"/>
                                                                 </MultiDataTrigger.Conditions>
                                                                 <Setter Property="Visibility" Value="Visible"/>
                                                             </MultiDataTrigger>

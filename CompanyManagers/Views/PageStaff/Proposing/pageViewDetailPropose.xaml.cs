@@ -154,6 +154,14 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             get { return _RoseUserComfirm; }
             set { _RoseUserComfirm = value; OnPropertyChanged("RoseUserComfirm"); }
         }
+
+        /*private bool _IsMeConfirming;
+        public bool IsMeConfirming
+        {
+            get { return _IsMeConfirming; }
+            set { _IsMeConfirming = value; OnPropertyChanged("IsMeConfirming"); }
+        }*/
+
         private List<lichlamviec> _listLichProposing;
         public List<lichlamviec> listLichProposing
         {
@@ -228,6 +236,10 @@ namespace CompanyManagers.Views.PageStaff.Proposing
             detailPropose = _detailPropose;
             listProposingHome = _listProposingHome;
             listProposingSendAll = _listProposingSendAll;
+            /*if (!detailPropose.lich_su_duyet.Any(x => x.ng_duyet == managerHome.UserCurrent.user_info.ep_name))
+            {
+                IsMeConfirming = true;
+            }*/
             if (_detailPropose.nguoi_tao != _managerHome.UserName)
             {
                 RoseUserComfirm = true;
